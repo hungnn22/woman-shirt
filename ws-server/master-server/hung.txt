@@ -1,0 +1,39 @@
+user with role admin has id is: fb6e037a-9f6b-49e0-826e-d1d1539413f6
+
+order-sql:
+select distinct o1.id                                                  as orderId,
+                u1.gender                                              as cusGender,
+                coalesce(concat(u1.first_name, ' ', u1.last_name), '') as cusName,
+                u1.phone                                               as cusPhone,
+                os3.orderDate                                          as orderDate,
+                coalesce(concat(a1.exact, ', ', a1.combination), '')   as shipAddress,
+                (select coalesce(sum(od1.qty * od1.price), 0)
+                 from order_detail od1)                                as orderTotal,
+                o1.note                                                as orderNote,
+                os4.status                                             as statusNow,
+                os4.note                                               as statusNote,
+                os4.created_date                                       as statusDate,
+                coalesce(concat(u2.first_name, ' ', u2.last_name), '') as statusBy,
+                u2.role                                                as statusRole
+from orders o1
+         left join users u1 on o1.user_id = u1.id
+         left join address a1 on o1.address_id = a1.id
+         left join order_detail od1 on o1.id = od1.order_id
+         left join order_status os1 on o1.id = os1.order_id
+         right join (select o2.created_date as orderDate
+                     from orders o2
+                              left join order_status os2 on o2.id = os2.order_id and os2.status = 'PENDING'
+                     group by os2.order_id) as os3 on o1.created_date = os3.orderDate
+         right join (select os3.order_id,
+                            os3.status,
+                            os3.created_date,
+                            os3.note,
+                            os3.created_by
+                     from order_status os3
+                     where os3.created_date = (select max(os1.created_date)
+                                               from order_status os1
+                                               where os3.order_id = os1.order_id
+                                               group by os3.order_id)) as os4 on os4.order_id = o1.id
+         left join users u2 on os4.created_by = u2.id
+;
+

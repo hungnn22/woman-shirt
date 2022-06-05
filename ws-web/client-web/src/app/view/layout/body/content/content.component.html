@@ -1,0 +1,45 @@
+<div id="search-bar">
+  <div class="container">
+    <mat-form-field appearance="outline">
+      <mat-label>Tìm kiếm sản phẩm</mat-label>
+      <input type="text" matInput>
+    </mat-form-field>
+
+    <!-- KÍCH THƯỚC -->
+    <mat-form-field fxFlex="40" appearance="outline">
+      <mat-label>Kích cỡ</mat-label>
+      <mat-select>
+        <mat-option *ngFor="let option of options1" [value]="option">{{option}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+
+    <mat-form-field appearance="outline">
+      <mat-label>Loại sản phẩm</mat-label>
+      <mat-select>
+        <mat-option *ngFor="let option of options1" [value]="option">{{option}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Sắp xếp theo</mat-label>
+      <mat-select>
+        <mat-option *ngFor="let option of options1" [value]="option">{{option}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+  </div>
+</div>
+
+<div  id="content-body" (click)="openDialog()">
+  <div class="container" id="content">
+    <div *ngFor="let item of listProduct" class="card" width="100%" height="100%" style="width: 18rem;">
+      <img src="{{item.img}}" class="card-img-top" width="200px" height="300px">
+      <div class="card-body">
+        <h5 class="card-title">{{item.name}}</h5>
+        <p class="card-text">{{item.price}}</p>
+      </div>
+    </div>
+  </div>
+
+
+</div>

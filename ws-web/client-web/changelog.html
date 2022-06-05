@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Changelog for Kendo UI Professional v2022.2.510 (Tue May 10 2022)</title>
+    <style>
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font: .75em/1.5 Tahoma, sans-serif;
+        }
+
+        h1 {
+            font-size: 2.2em;
+            font-size: normal;
+        }
+
+        h2 {
+            font-size: 2em;
+            font-weight: normal;
+            margin: 1.2em 0 .3em;
+            padding-bottom: .2em;
+        }
+
+        .breaking {
+            background-color: #e10c01;
+            color: #fff;
+            border-radius: 3px;
+            padding: 3px 4px;
+            display: inline-block;
+            font-size: 11px;
+            line-height: 1;
+            font-weight: bold;
+        }
+
+        #page {
+            width: 50em;
+            margin: 0 auto 2em;
+            border-radius: 0 0 1em 1em;
+            box-shadow: 0 0 10px #ccc;
+            padding: 1em 2em 2em;
+        }
+
+        .poBoxIcon {
+            float: left;
+            font-size: 2em;
+            margin: 1.2em .5em 0 0;
+        }
+
+        .poTopLine {
+            border-top: 2px solid #e1e1e1;
+            margin: 17px 0 40px 0;
+        }
+    </style>
+    <base href="https://www.telerik.com/support/whats-new/kendo-ui-web/release-history">
+</head>
+
+<body>
+    <div id="page">
+        <h1 class="title">Release notes</h1>
+        <div class="tClear poTopLine"></div>
+        <h1>Common</h1>
+        <div class="tClear poTopLine">
+            <div class="poBoxIconText">
+                <p><strong>What's fixed</strong></p>
+                <ul>
+                    <li>Fix AMD path for SystemJS <a href="https://github.com/telerik/kendo-ui-core/issues/6752">(#6752)</a></li>
+                    <li>Sorting grid on infinite scroll <a href="https://github.com/telerik/kendo-ui-core/issues/5284">(#5284)</a></li>
+                </ul>
+            </div>
+        </div>
+        <h1>Features and Updates</h1>
+        <div class="tClear poTopLine">
+            <h2>Breadcrumb</h2>
+            <p><strong>What's fixed</strong></p>
+            <ul>
+                <li>Add aria-disabled attribute to BreadCrumb disabled items</li>
+            </ul>
+        </div>
+        <div class="tClear poTopLine">
+            <h2>Button</h2>
+            <p><strong>What's fixed</strong></p>
+            <ul>
+                <li>Button has incorrect active/selected state classes</li>
+            </ul>
+        </div>
+        <div class="tClear poTopLine">
+            <h2>DropDownList</h2>
+            <p><strong>What's new</strong></p>
+            <ul>
+                <li>Change DropDownList role attribute to combobox</li>
+            </ul>
+        </div>
+        <div class="tClear poTopLine">
+            <h2>DropDownTree</h2>
+            <p><strong>What's fixed</strong></p>
+            <ul>
+                <li>Error is thrown when using setOptions for checkboxes in DropDownTree</li>
+            </ul>
+        </div>
+        <div class="tClear poTopLine">
+            <h2>Editor</h2>
+            <p><strong>What's fixed</strong></p>
+            <ul>
+                <li>Editor wrapping new paragraphs in span tags <a href="https://github.com/telerik/kendo-ui-core/issues/6327">(#6327)</a></li>
+                <li>Pasted table gets incorrect layout after formatting <a href="https://github.com/telerik/kendo-ui-core/issues/5818">(#5818)</a></li>
+            </ul>
+        </div>
+        <div class="tClear poTopLine">
+            <h2>Gantt</h2>
+            <p><strong>What's fixed</strong></p>
+            <ul>
+                <li>Incorrect value is returned for e.task.end in the save event in Gantt <a href="https://github.com/telerik/kendo-ui-core/issues/6793">(#6793)</a></li>
+            </ul>
+        </div>
+        <div class="tClear poTopLine">
+            <h2>Grid</h2>
+            <p><strong>What's new</strong></p>
+            <ul>
+                <li>Expose conditional drag to select for grid</li>
+            </ul>
+            <p><strong>What's fixed</strong></p>
+            <ul>
+                <li>Grid Group Paging and Filter Checkboxes aren't compatible</li>
+                <li>Filter icon not showing on all grids when one of the grids is sortable <a href="https://github.com/telerik/kendo-ui-core/issues/6780">(#6780)</a></li>
+                <li>Incorrect query when Search panel is used with Grid's GroupPaging <a href="https://github.com/telerik/kendo-ui-core/issues/6633">(#6633)</a></li>
+            </ul>
+        </div>
+        <div class="tClear poTopLine">
+            <h2>ListView</h2>
+            <p><strong>What's fixed</strong></p>
+            <ul>
+                <li>Cancel changes removes 'k-listview-item' class from the item</li>
+                <li>Listview item's actions can't be executed with keyboard</li>
+            </ul>
+        </div>
+        <div class="tClear poTopLine">
+            <h2>NumericTextBox</h2>
+            <p><strong>What's fixed</strong></p>
+            <ul>
+                <li>NumericTextBox cannot be initialized when element with id options is present on the page <a href="https://github.com/telerik/kendo-ui-core/issues/6821">(#6821)</a></li>
+            </ul>
+        </div>
+        <div class="tClear poTopLine">
+            <h2>PDFViewer</h2>
+            <p><strong>What's fixed</strong></p>
+            <ul>
+                <li>In PDFViewer, using the execute method to change the pdf width does not update the ComboBox.</li>
+            </ul>
+        </div>
+        <div class="tClear poTopLine">
+            <h2>Switch</h2>
+            <p><strong>What's fixed</strong></p>
+            <ul>
+                <li>Add aria-hidden to the currently hidden label k-switch-label-on or k-switch-label-off</li>
+            </ul>
+        </div>
+        <div class="tClear poTopLine">
+            <h2>ToolBar</h2>
+            <p><strong>What's fixed</strong></p>
+            <ul>
+                <li>SplitButton toggle function within ToolBar has no effect <a href="https://github.com/telerik/kendo-ui-core/issues/6784">(#6784)</a></li>
+            </ul>
+        </div>
+    </div>
+</body>
+
+</html>
