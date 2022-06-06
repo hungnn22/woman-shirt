@@ -1,7 +1,5 @@
 package com.ws.masterserver.entity;
 
-import com.ws.masterserver.utils.constants.enums.ColorEnum;
-import com.ws.masterserver.utils.constants.enums.SizeEnum;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,33 +13,42 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.*;
 import java.util.Date;
 
+/**
+ * @author hungnn22
+ */
+
 @Entity
-@Table(name = "product_option")
+@Table(name = "promotions")
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 @EntityListeners(AuditingEntityListener.class)
-public class ProductOptionEntity {
+public class PromotionEntity {
     @Id
     private String id;
 
-    @Column(name = "product_id")
-    private String productId;
+    private String voucher;
 
-    @Enumerated(EnumType.STRING)
-    private SizeEnum size;
+    private String name;
 
-    @Column(name = "color_id")
-    private String colorId;
+    //id loại voucher
+    @Column(name = "promotion_type_id")
+    private String prmTypeId;
 
-    private Long qty;
+    //% giảm giá
+    @Column(name = "percent_discount")
+    private Double percentDiscount;
 
-    private Long price;
-
-    private String image;
+    //thời gian kết thúc
+    @Column(name = "expired_date")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date expiredDate;
 
     private Boolean active;
+
+    //số lượng tối đa đơn hàng được áp dụng
+    private Long limit;
 
     @CreatedDate
     @Temporal(TemporalType.TIMESTAMP)

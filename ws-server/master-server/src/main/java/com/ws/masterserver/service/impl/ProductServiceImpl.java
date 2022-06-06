@@ -44,7 +44,7 @@ public class ProductServiceImpl implements ProductService {
                 .id(UidUtils.generateUid())
                 .name(dto.getName().trim())
                 .categoryId(dto.getCategoryId())
-                .material(dto.getMaterial())
+//                .material(dto.getMaterial())
                 .des(dto.getDes().trim())
                 .type(dto.getType())
                 .build();
@@ -56,7 +56,7 @@ public class ProductServiceImpl implements ProductService {
                         .id(UidUtils.generateUid())
                         .productId(product.getId())
                         .size(item.getSize())
-                        .color(item.getColor())
+//                        .color(item.getColor())
                         .price(Long.valueOf(item.getPrice()))
                         .image("")
                         .build()).collect(Collectors.toList()));

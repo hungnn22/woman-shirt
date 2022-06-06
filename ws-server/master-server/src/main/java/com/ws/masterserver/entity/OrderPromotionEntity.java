@@ -4,28 +4,28 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
-import java.util.Date;
+
+/**
+ * @author hungnn22
+ */
 
 @Entity
-@Table(name = "email_log")
+@Table(name = "order_promotion")
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
-public class EmailLogEntity {
+public class OrderPromotionEntity {
     @Id
     private String id;
-    private String email;
-    private String content;
-    private Boolean sent;
 
-    @CreatedDate
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "created_date")
-    private Date createdDate;
+    @Column(name = "order_id")
+    private String orderId;
+
+    @Column(name = "promotion_id")
+    private String promotionId;
 }

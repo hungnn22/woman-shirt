@@ -4,6 +4,7 @@ import com.ws.masterserver.entity.*;
 import com.ws.masterserver.utils.base.WsRepository;
 import com.ws.masterserver.utils.common.BeanUtils;
 import com.ws.masterserver.utils.common.JsonUtils;
+import com.ws.masterserver.utils.common.UidUtils;
 import com.ws.masterserver.utils.constants.WsConst;
 import com.ws.masterserver.utils.constants.enums.*;
 import lombok.extern.slf4j.Slf4j;
@@ -14,7 +15,7 @@ import java.util.*;
 
 @Transactional
 @Slf4j
-public class UserSeeder implements Seeder {
+public class ChainSeeder implements Seeder {
 
     private static final WsRepository repository = BeanUtils.getBean(WsRepository.class);
 
@@ -22,8 +23,10 @@ public class UserSeeder implements Seeder {
     public void seed() {
         var category = initCategory();
         if (category != null) {
-            var product = initProduct(category);
-            var productOptions = initProductOptions(product);
+            var color = initColors();
+            var materials = initMaterials();
+            var product = initProduct(category, materials);
+            var productOptions = initProductOptions(product, color);
             var users = initUsers();
             var customer = users.get("customer@gmail.com");
             var address = initAddress4Customer(customer);
@@ -35,11 +38,83 @@ public class UserSeeder implements Seeder {
         }
     }
 
-    private List<ProductOptionEntity> initProductOptions(ProductEntity product) {
+    private List<MaterialEntity> initMaterials() {
+        var materials = List.of(
+                MaterialEntity.builder()
+                        .id(UidUtils.generateUid())
+                        .name(MaterialEnum.MTR01.getName())
+                        .active(Boolean.TRUE)
+                        .build(),
+                MaterialEntity.builder()
+                        .id(UidUtils.generateUid())
+                        .name(MaterialEnum.MTR02.getName())
+                        .active(Boolean.TRUE)
+                        .build(),
+                MaterialEntity.builder()
+                        .id(UidUtils.generateUid())
+                        .name(MaterialEnum.MTR03.getName())
+                        .active(Boolean.TRUE)
+                        .build()
+        );
+        repository.materialRepository.saveAll(materials);
+        return materials;
+    }
+
+    private List<ColorEntity> initColors() {
+        var colors = List.of(
+                ColorEntity.builder()
+                        .id(UidUtils.generateUid())
+                        .name(ColorEnum.BLUE.getViName())
+                        .hex(ColorEnum.BLUE.getHex())
+                        .active(Boolean.TRUE)
+                        .build(),
+                ColorEntity.builder()
+                        .id(UidUtils.generateUid())
+                        .name(ColorEnum.WHITE.getViName())
+                        .hex(ColorEnum.WHITE.getHex())
+                        .active(Boolean.TRUE)
+                        .build(),
+                ColorEntity.builder()
+                        .id(UidUtils.generateUid())
+                        .name(ColorEnum.BLACK.getViName())
+                        .hex(ColorEnum.BLACK.getHex())
+                        .active(Boolean.TRUE)
+                        .build(),
+                ColorEntity.builder()
+                        .id(UidUtils.generateUid())
+                        .name(ColorEnum.GREEN.getViName())
+                        .hex(ColorEnum.GREEN.getHex())
+                        .active(Boolean.TRUE)
+                        .build(),
+                ColorEntity.builder()
+                        .id(UidUtils.generateUid())
+                        .name(ColorEnum.GREY.getViName())
+                        .hex(ColorEnum.GREY.getHex())
+                        .active(Boolean.TRUE)
+                        .build(),
+                ColorEntity.builder()
+                        .id(UidUtils.generateUid())
+                        .name(ColorEnum.VIOLET.getViName())
+                        .hex(ColorEnum.VIOLET.getHex())
+                        .active(Boolean.TRUE)
+                        .build(),
+                ColorEntity.builder()
+                        .id(UidUtils.generateUid())
+                        .name(ColorEnum.RED.getViName())
+                        .hex(ColorEnum.RED.getHex())
+                        .active(Boolean.TRUE)
+                        .build()
+        );
+        repository.colorRepository.saveAll(colors);
+        return colors;
+    }
+
+    private List<ProductOptionEntity> initProductOptions(ProductEntity product, List<ColorEntity> colors) {
         var productOptions = List.of(
                 ProductOptionEntity.builder()
-                        .id(product.getId())
-                        .color(ColorEnum.BLUE)
+                        .id(UidUtils.generateUid())
+                        .productId(product.getId())
+                        .colorId(colors.get(new Random().nextInt(colors.size())).getId())
                         .image(WsConst.Seeders.PRODUCT_OPTION_BLUE_IMG)
                         .size(SizeEnum.S)
                         .active(Boolean.TRUE)
@@ -47,10 +122,11 @@ public class UserSeeder implements Seeder {
                         .price(WsConst.Seeders.PRODUCT_OPTION_BLUE_PRICE)
                         .build(),
                 ProductOptionEntity.builder()
-                        .id(product.getId())
-                        .color(ColorEnum.GREY)
+                        .id(UidUtils.generateUid())
+                        .productId(product.getId())
+                        .colorId(colors.get(new Random().nextInt(colors.size())).getId())
                         .image(WsConst.Seeders.PRODUCT_OPTION_GREY_IMG)
-                        .size(SizeEnum.S)
+                        .size(SizeEnum.M)
                         .active(Boolean.TRUE)
                         .qty(5L)
                         .price(WsConst.Seeders.PRODUCT_OPTION_GREY_PRICE)
@@ -62,13 +138,13 @@ public class UserSeeder implements Seeder {
         return productOptions;
     }
 
-    private ProductEntity initProduct(CategoryEntity category) {
+    private ProductEntity initProduct(CategoryEntity category, List<MaterialEntity> materials) {
         var product = ProductEntity.builder()
                 .id(WsConst.Seeders.PRODUCT_ID)
                 .categoryId(category.getId())
                 .name(WsConst.Seeders.PRODUCT_NAME)
                 .des(WsConst.Seeders.PRODUCT_DES)
-                .material(MaterialEnum.MTR01)
+                .materialId(materials.get(new Random().nextInt(materials.size())).getId())
                 .type(TypeEnum.MALE)
                 .active(Boolean.TRUE)
                 .build();
@@ -104,7 +180,7 @@ public class UserSeeder implements Seeder {
                         OrderStatusEntity.builder()
                                 .id(UUID.randomUUID().toString())
                                 .orderId(order.getId())
-                                .status(StatusEnum.ACCEPTED)
+                                .status(StatusEnum.ACCEPT)
                                 .createdDate(plusHourOfDate(new Date(), 5))
                                 .build())
         );
@@ -115,11 +191,11 @@ public class UserSeeder implements Seeder {
         List<OrderDetailEntity> ods = new ArrayList<>();
         productOptions.forEach(po -> {
             var orderDetail = OrderDetailEntity.builder()
-                    .id(UUID.randomUUID().toString())
+                    .id(UidUtils.generateUid())
                     .orderId(order.getId())
                     .productOptionId(po.getId())
                     .price(po.getPrice())
-                    .qty(po.getQty())
+                    .qty(Long.valueOf(new Random().nextInt(Integer.parseInt(po.getQty().toString()))))
                     .build();
             ods.add(orderDetail);
         });
@@ -136,13 +212,13 @@ public class UserSeeder implements Seeder {
                         .id(UUID.randomUUID().toString())
                         .userId(customer.getId())
                         .addressId(address.get(0) == null ? null : address.get(0).getId())
-                        .note("NOTE 1")
+                        .note("Giao hàng giờ hành chính")
                         .build(),
                 OrderEntity.builder()
                         .id(UUID.randomUUID().toString())
                         .userId(customer.getId())
                         .addressId(address.get(1) == null ? null : address.get(1).getId())
-                        .note("NOTE 2")
+                        .note("Giao cuối tuần")
                         .build()
         );
         repository.orderRepository.saveAll(orders);
@@ -153,7 +229,7 @@ public class UserSeeder implements Seeder {
     private List<AddressEntity> initAddress4Customer(UserEntity customer) {
         var addressList = List.of(
                 AddressEntity.builder()
-                        .id(WsConst.Seeders.CUSTOMER_ADDRESS_ID1)
+                        .id(UidUtils.generateUid())
                         .provinceCode(WsConst.Seeders.CUSTOMER_ADDRESS_PROVINCE_CODE1)
                         .provinceName(WsConst.Seeders.CUSTOMER_ADDRESS_PROVINCE_NAME1)
                         .districtCode(WsConst.Seeders.CUSTOMER_ADDRESS_DISTRICT_CODE1)
@@ -164,9 +240,10 @@ public class UserSeeder implements Seeder {
                         .combination(WsConst.Seeders.CUSTOMER_ADDRESS_COMBINATION1)
                         .userId(customer.getId())
                         .active(Boolean.TRUE)
+                        .isDefault(Boolean.FALSE)
                         .build(),
                 AddressEntity.builder()
-                        .id(WsConst.Seeders.CUSTOMER_ADDRESS_ID2)
+                        .id(UidUtils.generateUid())
                         .provinceCode(WsConst.Seeders.CUSTOMER_ADDRESS_PROVINCE_CODE2)
                         .provinceName(WsConst.Seeders.CUSTOMER_ADDRESS_PROVINCE_NAME2)
                         .districtCode(WsConst.Seeders.CUSTOMER_ADDRESS_DISTRICT_CODE2)
@@ -177,6 +254,7 @@ public class UserSeeder implements Seeder {
                         .combination(WsConst.Seeders.CUSTOMER_ADDRESS_COMBINATION2)
                         .userId(customer.getId())
                         .active(Boolean.TRUE)
+                        .isDefault(Boolean.FALSE)
                         .build()
         );
         addressList.forEach(address -> {

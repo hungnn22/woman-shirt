@@ -161,7 +161,7 @@ public class WsConst {
         public static final String CUSTOMER_ADDRESS_WARD_CODE1 = "1";
         public static final String CUSTOMER_ADDRESS_WARD_NAME1 = "Phường Phúc Xá";
         public static final String CUSTOMER_ADDRESS_EXACT1 = "Số nhà 200";
-        public static final String CUSTOMER_ADDRESS_COMBINATION1 = "Phường Phúc Xá-Quận Ba Đình-Thành phố Hà Nội";
+        public static final String CUSTOMER_ADDRESS_COMBINATION1 = "Phường Phúc Xá, Quận Ba Đình, Thành phố Hà Nội";
 
         //address2
         public static final String CUSTOMER_ADDRESS_ID2 = "2bcb151c-5001-4187-9e63-dd555c0c186b";
@@ -172,7 +172,7 @@ public class WsConst {
         public static final String CUSTOMER_ADDRESS_WARD_CODE2 = "4";
         public static final String CUSTOMER_ADDRESS_WARD_NAME2 = "Phường Trúc Bạch";
         public static final String CUSTOMER_ADDRESS_EXACT2 = "Số nhà 170";
-        public static final String CUSTOMER_ADDRESS_COMBINATION2 = "Phường Trúc Bạch-Quận Ba Đình-Thành phố Hà Nội";
+        public static final String CUSTOMER_ADDRESS_COMBINATION2 = "Phường Trúc Bạch, Quận Ba Đình, Thành phố Hà Nội";
 
         /** category */
 

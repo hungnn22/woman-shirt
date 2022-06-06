@@ -6,10 +6,15 @@ public enum StatusEnum {
      */
     PROCESSING("Khách hàng đang mua - chưa checkin"),
     PENDING("Đơn hàng đang đợi xử lý!"),
+    PAYED("Đã thanh toán"),
     CANCEL("Đã hủy"),
     REJECT("Bị từ chối"),
-    ACCEPTED("Được chấp nhận"),
-    SHIPPING("Đang giao hàng")
+    ACCEPT("Được chấp nhận"),
+    SHIPPING("Đang giao hàng"),
+    EXCHANGE("Đổi hàng"),
+    REFUND("Trả hàng"),
+    RECEIVED("Đã nhận được hàng")
+
     ;
 
     private String value;

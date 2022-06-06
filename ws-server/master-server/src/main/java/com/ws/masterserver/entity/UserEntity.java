@@ -10,7 +10,6 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-
 import javax.persistence.*;
 import java.util.Date;
 
@@ -48,6 +47,10 @@ public class UserEntity {
     private RoleEnum role;
 
     private String avatar;
+
+    //loại khách hàng
+    @Column(name = "customer_type_id")
+    private String customerTypeId;
 
     private Boolean active;
 

@@ -1,9 +1,11 @@
 package com.ws.masterserver.repository.custom.impl;
 
-import com.ws.masterserver.dto.admin.order.response.detail.Item;
+import com.ws.masterserver.dto.admin.order.response.detail.CategoryDto;
+import com.ws.masterserver.dto.admin.order.response.detail.ItemDto;
 import com.ws.masterserver.dto.admin.order.response.detail.OrderDetailRes;
 import com.ws.masterserver.repository.custom.OrderDetailCustomRepository;
-import com.ws.masterserver.utils.base.enums.ColorDto;
+import com.ws.masterserver.utils.base.enum_dto.ColorDto;
+import com.ws.masterserver.utils.base.enum_dto.MaterialDto;
 import com.ws.masterserver.utils.base.rest.CurrentUser;
 import com.ws.masterserver.utils.base.rest.PageData;
 import com.ws.masterserver.utils.common.*;
@@ -31,28 +33,32 @@ public class OrderDetailCustomRepositoryImpl implements OrderDetailCustomReposit
     public PageData<OrderDetailRes> findByOrderId4Admin(CurrentUser currentUser, String id) {
         var prefix = "select                                                    \n";
         var distinct = "distinct                                                \n";
-        var select = "" +
-                "od1.id              as odId,                                   \n" +
-                "od1.qty             as odQty,                                  \n" +
-                "od1.price            as odPrice,                                \n" +
-                "od1.qty * od1.price as odTotal,                                \n" +
-                "od1.created_date    as odDate,                                 \n" +
-                "po1.id              as poId,                                   \n" +
-                "po1.color           as poColor,                                \n" +
-                "po1.image           as poImg,                                  \n" +
-                "po1.price           as poPrice,                                \n" +
-                "po1.qty             as poQty,                                  \n" +
-                "po1.size            as poSize,                                 \n" +
-                "p1.id               as pId,                                    \n" +
-                "p1.name             as pName,                                  \n" +
-                "p1.material         as pMaterial,                              \n" +
-                "p1.type             as pType,                                  \n" +
-                "p1.des              as pDes,                                   \n" +
-                "c1.name             as cName                                   \n";
-        var fromAndJoins = "from order_detail od1                               \n" +
-                "left join product_option po1 on od1.product_option_id = po1.id \n" +
-                "left join product p1 on po1.product_id = p1.id                 \n" +
-                "left join category c1 on c1.id = p1.category_id                \n";
+        var select = "od1.id         as oId,\n" +
+                "                od1.qty        as oQty,\n" +
+                "                od1.price      as oPrice,\n" +
+                "                po1.id         as poId,\n" +
+                "                po1.color_id   as poColorId,\n" +
+                "                c1.name        as cName,\n" +
+                "                c1.hex         as cHex,\n" +
+                "                po1.size       as poSize,\n" +
+                "                po1.image      as poImage,\n" +
+                "                po1.qty        as poQty,\n" +
+                "                po1.price      as poPrice,\n" +
+                "                p1.id          as pId,\n" +
+                "                p1.name        as pName,\n" +
+                "                p1.material_id as pMaterialId,\n" +
+                "                m1.name        as mName,\n" +
+                "                p1.type        as pType,\n" +
+                "                p1.des         as pDes,\n" +
+                "                p1.category_id as pCategoryId,\n" +
+                "                c2.name        as c2Name,\n" +
+                "                c2.des         as c2Des\n";
+        var fromAndJoins = "from order_detail od1\n" +
+                "         left join product_option po1 on po1.id = od1.product_option_id\n" +
+                "         left join color c1 on po1.color_id = c1.id\n" +
+                "         left join product p1 on po1.product_id = p1.id\n" +
+                "         left join material m1 on p1.material_id = m1.id\n" +
+                "         left join category c2 on p1.category_id = c2.id\n";
 
         var where = "where od1.order_id = '" + id + "'\n";
 
@@ -71,30 +77,42 @@ public class OrderDetailCustomRepositoryImpl implements OrderDetailCustomReposit
         }
 
         return new PageData<>(
-                objects.stream().map(obj -> OrderDetailRes.builder()
-                        .id(JpaUtils.getString(obj[0]))
-                        .qty(JpaUtils.getLong(obj[1]))
-                        .price(JpaUtils.getLong(obj[2]))
-                        .priceFmt(MoneyUtils.format(JpaUtils.getLong(obj[2])))
-                        .total(JpaUtils.getLong(obj[3]))
-                        .totalFmt(MoneyUtils.format(JpaUtils.getLong(obj[3])))
-                        .item(Item.builder()
-                                .id(JpaUtils.getString(obj[5]))
-                                .color(ColorUtils.getColorDto(JpaUtils.getString(obj[6])))
-                                .img(JpaUtils.getString(obj[7]))
-                                .price(JpaUtils.getLong(obj[8]))
-                                .priceFmt(MoneyUtils.format(JpaUtils.getLong(obj[8])))
-                                .qty(JpaUtils.getLong(obj[9]))
-                                .size(SizeUtils.getSizeDto(JpaUtils.getString(obj[10])))
-                                .productId(JpaUtils.getString(obj[11]))
-                                .name(JpaUtils.getString(obj[12]))
-                                .material(MaterialUtils.getMaterialDto(JpaUtils.getString(obj[13])))
-                                .type(TypeUtils.getTypeDto(JpaUtils.getString(obj[14])))
-                                .des(JpaUtils.getString(obj[15]))
-                                .des4Menu(HtmlUtils.convert4Menu(JpaUtils.getString(obj[15])))
-                                .category(JpaUtils.getString(obj[16]))
-                                .build())
-                        .build()).collect(Collectors.toList()),
+                objects.stream().map(obj -> {
+                    Long total = JpaUtils.getLong(obj[1]) == null || JpaUtils.getLong(obj[2]) == null ? 0L : JpaUtils.getLong(obj[1]) * JpaUtils.getLong(obj[2]);
+                    return OrderDetailRes.builder()
+                            .id(JpaUtils.getString(obj[0]))
+                            .qty(JpaUtils.getLong(obj[1]))
+                            .price(JpaUtils.getLong(obj[2]))
+                            .priceFmt(JpaUtils.getString(MoneyUtils.format(JpaUtils.getLong(obj[2]))))
+                            .total(total)
+                            .totalFmt(MoneyUtils.format(total))
+                            .item(ItemDto.builder()
+                                    .id(JpaUtils.getString(obj[3]))
+                                    .color(ColorDto.builder()
+                                            .id(JpaUtils.getString(obj[4]))
+                                            .name(JpaUtils.getString(obj[5]))
+                                            .hex(JpaUtils.getString(obj[6]))
+                                            .build())
+                                    .size(SizeUtils.getSizeDto(JpaUtils.getString(obj[7])))
+                                    .img(JpaUtils.getString(obj[8]))
+                                    .qty(JpaUtils.getLong(obj[9]))
+                                    .price(JpaUtils.getLong(obj[10]))
+                                    .productId(JpaUtils.getString(obj[11]))
+                                    .name(JpaUtils.getString(obj[12]))
+                                    .material(MaterialDto.builder()
+                                            .id(JpaUtils.getString(obj[13]))
+                                            .name(JpaUtils.getString(obj[14]))
+                                            .build())
+                                    .type(TypeUtils.getTypeDto(JpaUtils.getString(obj[15])))
+                                    .des(JpaUtils.getString(obj[16]))
+                                    .des4Menu(HtmlUtils.convert4Menu(JpaUtils.getString(obj[16])))
+                                    .category(CategoryDto.builder()
+                                            .id(JpaUtils.getString(obj[17]))
+                                            .name(JpaUtils.getString(obj[18]))
+                                            .des(JpaUtils.getString(obj[19]))
+                                            .build())
+                                    .build())
+                            .build();}).collect(Collectors.toList()),
                 0,
                 10000,
                 totalElements,

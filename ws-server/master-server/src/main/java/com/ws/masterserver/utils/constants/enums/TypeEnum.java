@@ -12,6 +12,10 @@ public enum TypeEnum {
     private String enName;
 
     TypeEnum(int typeCode, Boolean typeValue, String viName, String enName) {
+        this.typeCode = typeCode;
+        this.typeValue = typeValue;
+        this.viName = viName;
+        this.enName = enName;
     }
 
     public Boolean getTypeValue() {

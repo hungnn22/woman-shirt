@@ -1,6 +1,6 @@
 package com.ws.masterserver.utils.common;
 
-import com.ws.masterserver.utils.base.enums.SizeDto;
+import com.ws.masterserver.utils.base.enum_dto.SizeDto;
 import com.ws.masterserver.utils.constants.enums.SizeEnum;
 
 /**

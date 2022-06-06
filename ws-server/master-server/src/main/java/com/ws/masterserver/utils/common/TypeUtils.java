@@ -1,6 +1,6 @@
 package com.ws.masterserver.utils.common;
 
-import com.ws.masterserver.utils.base.enums.TypeDto;
+import com.ws.masterserver.utils.base.enum_dto.TypeDto;
 import com.ws.masterserver.utils.constants.enums.TypeEnum;
 
 /**
@@ -13,9 +13,7 @@ public class TypeUtils {
         if (type == null) return new TypeDto();
         return TypeDto.builder()
                 .code(type.name())
-                .code(String.valueOf(type.getTypeCode()))
-                .viName(type.getViName())
-                .enName(type.getEnName())
+                .name(type.getViName())
                 .build();
     }
 }

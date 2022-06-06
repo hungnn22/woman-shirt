@@ -18,17 +18,17 @@ public class MoneyUtils {
      * @ex 10.000, 2.000.000
      * */
     public static String format(Long money) {
-        var result = "";
         try {
+            var result = "";
             NumberFormat numberFormat = NumberFormat.getCurrencyInstance();
             DecimalFormat decimalFormat = (DecimalFormat) DecimalFormat.getInstance(Locale.ENGLISH);
             decimalFormat.applyPattern("###,###,###,###,###,###,###,###,###,###,###,###,###,###,###,###,###,###,###,###,###,###,###,###,###,###,###,###");
             decimalFormat.setRoundingMode(RoundingMode.CEILING);
             result = decimalFormat.format(money).replace(",", ".");
+            return result;
         } catch (Exception e) {
             log.error("getString error: {}", e.getMessage());
+            return "";
         }
-        log.info("getString: {}", result);
-        return result;
     }
 }

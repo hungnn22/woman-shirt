@@ -111,50 +111,48 @@ public class OrderCustomRepositoryImpl implements OrderCustomRepository {
             return (PageData<OrderRes>) PageData.setEmpty(req.getPageReq());
         }
 
-        var responses = objects.stream().map(obj -> OrderRes.builder()
-                .id(JpaUtils.getString(obj[0]))
-                .orderDate(DateUtils.toStr((JpaUtils.getDate(obj[1])), DateUtils.F_VI))
-                .total(JpaUtils.getLong(obj[2]))
-                .totalFmt(MoneyUtils.format(JpaUtils.getLong(obj[2])))
-                .address(JpaUtils.getString(obj[3]))
-                .note(JpaUtils.getString(obj[4]))
-                .status(StatusDto.builder()
-                        .status(StatusUtils.getFromStr(JpaUtils.getString(obj[5])))
-                        .note(JpaUtils.getString(obj[6]))
-                        .createdDate(DateUtils.toStr(JpaUtils.getDate(obj[7]), DateUtils.F_VI))
-                        .combination(OrderUtils.getStatusCombination(JpaUtils.getString(obj[5]),
-                                JpaUtils.getDate(obj[7]),
-                                JpaUtils.getString(obj[14]),
-                                JpaUtils.getString(obj[13])))
-                        .user(UserDto.builder()
-                                .id(JpaUtils.getString(obj[8]))
-                                .firstName(JpaUtils.getString(obj[9]))
-                                .lastName(JpaUtils.getString(obj[10]))
-                                .gender(JpaUtils.getBoolean(obj[11]))
-                                .phone(JpaUtils.getString(obj[12]))
-                                .role(RoleUtils.getRoleFromStr(JpaUtils.getString(obj[13])))
-                                .combination(UserUtils.getCombination(JpaUtils.getString(obj[14]),
-                                        JpaUtils.getString(obj[9]),
-                                        JpaUtils.getString(obj[10]),
-                                        JpaUtils.getBoolean(obj[11])))
-                                .build())
-                        .build())
-                .customer(UserDto.builder()
-                        .id(JpaUtils.getString(obj[15]))
-                        .firstName(JpaUtils.getString(obj[16]))
-                        .lastName(JpaUtils.getString(obj[17]))
-                        .gender(JpaUtils.getBoolean(obj[18]))
-                        .phone(JpaUtils.getString(obj[19]))
-                        .role(RoleUtils.getRoleFromStr(JpaUtils.getString(obj[20])))
-                        .combination(UserUtils.getCombination(JpaUtils.getString(obj[21]),
-                                JpaUtils.getString(obj[16]),
-                                JpaUtils.getString(obj[17]),
-                                JpaUtils.getBoolean(obj[18])))
-                        .build())
-                .build()).collect(Collectors.toList());
-
         return new PageData<>(
-                responses,
+                objects.stream().map(obj -> OrderRes.builder()
+                        .id(JpaUtils.getString(obj[0]))
+                        .orderDate(DateUtils.toStr((JpaUtils.getDate(obj[1])), DateUtils.F_VI))
+                        .total(JpaUtils.getLong(obj[2]))
+                        .totalFmt(MoneyUtils.format(JpaUtils.getLong(obj[2])))
+                        .address(JpaUtils.getString(obj[3]))
+                        .note(JpaUtils.getString(obj[4]))
+                        .status(StatusDto.builder()
+                                .status(StatusUtils.getFromStr(JpaUtils.getString(obj[5])))
+                                .note(JpaUtils.getString(obj[6]))
+                                .createdDate(DateUtils.toStr(JpaUtils.getDate(obj[7]), DateUtils.F_VI))
+                                .combination(OrderUtils.getStatusCombination(JpaUtils.getString(obj[5]),
+                                        JpaUtils.getDate(obj[7]),
+                                        JpaUtils.getString(obj[14]),
+                                        JpaUtils.getString(obj[13])))
+                                .user(UserDto.builder()
+                                        .id(JpaUtils.getString(obj[8]))
+                                        .firstName(JpaUtils.getString(obj[9]))
+                                        .lastName(JpaUtils.getString(obj[10]))
+                                        .gender(JpaUtils.getBoolean(obj[11]))
+                                        .phone(JpaUtils.getString(obj[12]))
+                                        .role(RoleUtils.getRoleFromStr(JpaUtils.getString(obj[13])))
+                                        .combination(UserUtils.getCombination(JpaUtils.getString(obj[14]),
+                                                JpaUtils.getString(obj[9]),
+                                                JpaUtils.getString(obj[10]),
+                                                JpaUtils.getBoolean(obj[11])))
+                                        .build())
+                                .build())
+                        .customer(UserDto.builder()
+                                .id(JpaUtils.getString(obj[15]))
+                                .firstName(JpaUtils.getString(obj[16]))
+                                .lastName(JpaUtils.getString(obj[17]))
+                                .gender(JpaUtils.getBoolean(obj[18]))
+                                .phone(JpaUtils.getString(obj[19]))
+                                .role(RoleUtils.getRoleFromStr(JpaUtils.getString(obj[20])))
+                                .combination(UserUtils.getCombination(JpaUtils.getString(obj[21]),
+                                        JpaUtils.getString(obj[16]),
+                                        JpaUtils.getString(obj[17]),
+                                        JpaUtils.getBoolean(obj[18])))
+                                .build())
+                        .build()).collect(Collectors.toList()),
                 req.getPageReq().getPage(),
                 req.getPageReq().getPageSize(),
                 totalElements,

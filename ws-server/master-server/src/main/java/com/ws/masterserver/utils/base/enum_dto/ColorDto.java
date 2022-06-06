@@ -1,4 +1,4 @@
-package com.ws.masterserver.utils.base.enums;
+package com.ws.masterserver.utils.base.enum_dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -6,13 +6,16 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * @author myname
+ * @author hungnn22
  */
+
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class SizeDto {
-    private String code;
+public class ColorDto {
+    private String id;
     private String name;
+    private String hex;
+
 }

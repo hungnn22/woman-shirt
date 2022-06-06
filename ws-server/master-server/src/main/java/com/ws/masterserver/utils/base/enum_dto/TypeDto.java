@@ -1,4 +1,4 @@
-package com.ws.masterserver.utils.base.enums;
+package com.ws.masterserver.utils.base.enum_dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,6 +14,5 @@ import lombok.NoArgsConstructor;
 @Data
 public class TypeDto {
     private String code;
-    private String viName;
-    private String enName;
+    private String name;
 }

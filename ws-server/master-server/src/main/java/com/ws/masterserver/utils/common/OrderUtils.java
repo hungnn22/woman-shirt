@@ -35,7 +35,7 @@ public class OrderUtils {
                 case REJECT:
                     result = "Đã bị từ chối bởi " + role.getValue() + " " + combinationName + " vào lúc " + dateFmt;
                     break;
-                case ACCEPTED:
+                case ACCEPT:
                     result = "Được chấp nhận bởi " + role.getValue() + " " + combinationName + " vào lúc: " + dateFmt;
                     break;
                 default:

@@ -32,6 +32,17 @@ public class OrderEntity {
 
     private String note;
 
+    //đã thanh toán chưa
+    @Column(name = "payed ")
+    private Boolean payed;
+
+    //hình thức thanh toán
+    private String type;
+
+    //tiền ship
+    @Column(name = "ship_price")
+    private Long shipPrice;
+
     @CreatedDate
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_date")

@@ -1,7 +1,5 @@
 package com.ws.masterserver.entity;
 
-import com.ws.masterserver.utils.constants.enums.ColorEnum;
-import com.ws.masterserver.utils.constants.enums.SizeEnum;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,31 +13,22 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.*;
 import java.util.Date;
 
+/**
+ * @author hungnn22
+ */
+
 @Entity
-@Table(name = "product_option")
+@Table(name = "customer_type")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @EntityListeners(AuditingEntityListener.class)
-public class ProductOptionEntity {
+public class CustomerTypeEntity {
     @Id
     private String id;
 
-    @Column(name = "product_id")
-    private String productId;
-
-    @Enumerated(EnumType.STRING)
-    private SizeEnum size;
-
-    @Column(name = "color_id")
-    private String colorId;
-
-    private Long qty;
-
-    private Long price;
-
-    private String image;
+    private String name;
 
     private Boolean active;
 

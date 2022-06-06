@@ -1,9 +1,9 @@
 package com.ws.masterserver.dto.admin.order.response.detail;
 
-import com.ws.masterserver.utils.base.enums.ColorDto;
-import com.ws.masterserver.utils.base.enums.MaterialDto;
-import com.ws.masterserver.utils.base.enums.SizeDto;
-import com.ws.masterserver.utils.base.enums.TypeDto;
+import com.ws.masterserver.utils.base.enum_dto.ColorDto;
+import com.ws.masterserver.utils.base.enum_dto.MaterialDto;
+import com.ws.masterserver.utils.base.enum_dto.SizeDto;
+import com.ws.masterserver.utils.base.enum_dto.TypeDto;
 import lombok.Builder;
 import lombok.Data;
 
@@ -15,7 +15,7 @@ import java.util.List;
 
 @Data
 @Builder
-public class Item {
+public class ItemDto {
     //productOptionId
     private String id;
 
@@ -45,5 +45,5 @@ public class Item {
 
     private List<String> des4Menu;
 
-    private String category;
+    private CategoryDto category;
 }

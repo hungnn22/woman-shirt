@@ -1,7 +1,6 @@
 package com.ws.masterserver.entity;
 
 import com.ws.masterserver.utils.constants.enums.TypeEnum;
-import com.ws.masterserver.utils.constants.enums.MaterialEnum;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -33,8 +32,8 @@ public class ProductEntity {
     @Column(name = "category_id")
     private String categoryId;
 
-    @Enumerated(EnumType.STRING)
-    private MaterialEnum material;
+    @Column(name = "material_id")
+    private String materialId;
 
     private String des;
 

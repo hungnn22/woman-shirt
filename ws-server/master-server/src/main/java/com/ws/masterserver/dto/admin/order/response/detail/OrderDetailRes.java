@@ -14,5 +14,5 @@ public class OrderDetailRes {
     private Long qty;
     private Long total;
     private String totalFmt;
-    private Item item;
+    private ItemDto item;
 }
