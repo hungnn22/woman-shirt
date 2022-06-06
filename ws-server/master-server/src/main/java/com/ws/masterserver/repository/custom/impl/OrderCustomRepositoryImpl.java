@@ -1,9 +1,9 @@
 package com.ws.masterserver.repository.custom.impl;
 
-import com.ws.masterserver.dto.admin.order.request.OrderReq;
-import com.ws.masterserver.dto.admin.order.response.OrderRes;
-import com.ws.masterserver.dto.admin.order.response.StatusDto;
-import com.ws.masterserver.dto.admin.order.response.UserDto;
+import com.ws.masterserver.dto.admin.order.search.StatusDto;
+import com.ws.masterserver.dto.admin.order.search.UserDto;
+import com.ws.masterserver.dto.admin.order.search.OrderReq;
+import com.ws.masterserver.dto.admin.order.search.OrderRes;
 import com.ws.masterserver.repository.custom.OrderCustomRepository;
 import com.ws.masterserver.utils.base.rest.CurrentUser;
 import com.ws.masterserver.utils.base.rest.PageData;
@@ -13,7 +13,6 @@ import com.ws.masterserver.utils.constants.WsConst;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-
 import javax.persistence.EntityManager;
 import java.util.List;
 import java.util.Locale;

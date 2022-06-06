@@ -1,8 +1,9 @@
-package com.ws.masterserver.dto.admin.order.response;
+package com.ws.masterserver.dto.admin.order.search;
 
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import java.util.List;
 
 @Builder
 @Getter
@@ -24,8 +25,6 @@ public class OrderRes {
 
     private String totalFmt;
 
-    private Long discount;
-
     //note của khách hàng
     private String note;
 
@@ -39,7 +38,15 @@ public class OrderRes {
      */
     private UserDto customer;
 
-    //mã voucher
-    private String voucherCode;
+    private List<PromotionDto> promotions;
+
+    private Boolean payed;
+
+    private Long shipPrice;
+
+    private String shipPriceFmt;
+
+    private String type;
+
 
 }

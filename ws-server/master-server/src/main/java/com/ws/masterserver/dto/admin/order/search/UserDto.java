@@ -1,4 +1,4 @@
-package com.ws.masterserver.dto.admin.order.response;
+package com.ws.masterserver.dto.admin.order.search;
 
 import com.ws.masterserver.utils.constants.enums.RoleEnum;
 import lombok.Builder;

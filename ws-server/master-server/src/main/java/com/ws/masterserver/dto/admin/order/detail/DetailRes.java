@@ -1,4 +1,4 @@
-package com.ws.masterserver.dto.admin.order.response.detail;
+package com.ws.masterserver.dto.admin.order.detail;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Builder
-public class OrderDetailRes {
+public class DetailRes {
     private String id;
     private Long price;
     private String priceFmt;
