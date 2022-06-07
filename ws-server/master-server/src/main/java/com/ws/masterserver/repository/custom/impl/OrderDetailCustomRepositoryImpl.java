@@ -1,8 +1,8 @@
 package com.ws.masterserver.repository.custom.impl;
 
-import com.ws.masterserver.dto.admin.order.response.detail.CategoryDto;
-import com.ws.masterserver.dto.admin.order.response.detail.ItemDto;
-import com.ws.masterserver.dto.admin.order.response.detail.OrderDetailRes;
+import com.ws.masterserver.dto.admin.order.detail.CategoryDto;
+import com.ws.masterserver.dto.admin.order.detail.ItemDto;
+import com.ws.masterserver.dto.admin.order.detail.DetailRes;
 import com.ws.masterserver.repository.custom.OrderDetailCustomRepository;
 import com.ws.masterserver.utils.base.enum_dto.ColorDto;
 import com.ws.masterserver.utils.base.enum_dto.MaterialDto;
@@ -30,7 +30,7 @@ public class OrderDetailCustomRepositoryImpl implements OrderDetailCustomReposit
     private final EntityManager entityManager;
 
     @Override
-    public PageData<OrderDetailRes> findByOrderId4Admin(CurrentUser currentUser, String id) {
+    public PageData<DetailRes> findByOrderId4Admin(CurrentUser currentUser, String id) {
         var prefix = "select                                                    \n";
         var distinct = "distinct                                                \n";
         var select = "od1.id         as oId,\n" +
@@ -79,7 +79,7 @@ public class OrderDetailCustomRepositoryImpl implements OrderDetailCustomReposit
         return new PageData<>(
                 objects.stream().map(obj -> {
                     Long total = JpaUtils.getLong(obj[1]) == null || JpaUtils.getLong(obj[2]) == null ? 0L : JpaUtils.getLong(obj[1]) * JpaUtils.getLong(obj[2]);
-                    return OrderDetailRes.builder()
+                    return DetailRes.builder()
                             .id(JpaUtils.getString(obj[0]))
                             .qty(JpaUtils.getLong(obj[1]))
                             .price(JpaUtils.getLong(obj[2]))

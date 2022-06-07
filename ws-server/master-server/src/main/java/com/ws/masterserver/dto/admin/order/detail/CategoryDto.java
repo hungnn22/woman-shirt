@@ -1,4 +1,4 @@
-package com.ws.masterserver.dto.admin.order.response.detail;
+package com.ws.masterserver.dto.admin.order.detail;
 
 import lombok.Builder;
 import lombok.Data;

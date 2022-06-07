@@ -1,5 +1,6 @@
 package com.ws.masterserver.entity;
 
+import com.ws.masterserver.utils.constants.enums.PromotionTypeEnum;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -32,6 +33,8 @@ public class PromotionTypeEntity {
     //promotion: khuyến mãi
     //new member
     private String name;
+
+    private String code;
 
     private Boolean active;
 

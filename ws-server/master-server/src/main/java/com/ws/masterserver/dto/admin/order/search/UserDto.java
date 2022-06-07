@@ -1,4 +1,4 @@
-package com.ws.masterserver.dto.admin.order.response;
+package com.ws.masterserver.dto.admin.order.search;
 
 import com.ws.masterserver.utils.constants.enums.RoleEnum;
 import lombok.Builder;
@@ -12,6 +12,6 @@ public class UserDto {
     private String lastName;
     private Boolean gender;
     private String phone;
-    private RoleEnum role;
+    private RoleDto role;
     private String combination;
 }

@@ -18,7 +18,7 @@ import java.util.Date;
  */
 
 @Entity
-@Table(name = "promotions")
+@Table(name = "promotion")
 @Data
 @Builder
 @AllArgsConstructor
@@ -34,7 +34,7 @@ public class PromotionEntity {
 
     //id loại voucher
     @Column(name = "promotion_type_id")
-    private String prmTypeId;
+    private String promotionTypeId;
 
     //% giảm giá
     @Column(name = "percent_discount")
@@ -48,7 +48,7 @@ public class PromotionEntity {
     private Boolean active;
 
     //số lượng tối đa đơn hàng được áp dụng
-    private Long limit;
+    private Long useLimit;
 
     @CreatedDate
     @Temporal(TemporalType.TIMESTAMP)

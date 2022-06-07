@@ -1,4 +1,4 @@
-package com.ws.masterserver.dto.admin.order.request;
+package com.ws.masterserver.dto.admin.order.detail;
 
 import com.ws.masterserver.utils.base.rest.PageReq;
 import lombok.Data;
@@ -7,7 +7,7 @@ import lombok.Data;
  * @author hungnn22
  */
 @Data
-public class OrderDetailReq {
+public class DetailReq {
     private String id;
     private PageReq pageReq;
 }

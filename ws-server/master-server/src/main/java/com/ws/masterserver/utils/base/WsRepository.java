@@ -16,6 +16,7 @@ public class WsRepository {
     public final MaterialRepository materialRepository;
     public final OrderRepository orderRepository;
     public final OrderDetailRepository orderDetailRepository;
+    public final OrderPromotionRepository orderPromotionRepository;
     public final OrderStatusRepository orderStatusRepository;
     public final ProductRepository productRepository;
     public final ProductOptionRepository productOptionRepository;
