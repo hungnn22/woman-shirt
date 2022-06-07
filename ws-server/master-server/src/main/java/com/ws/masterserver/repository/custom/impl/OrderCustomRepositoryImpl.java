@@ -1,10 +1,8 @@
 package com.ws.masterserver.repository.custom.impl;
 
-import com.ws.masterserver.dto.admin.order.request.OrderReq;
-import com.ws.masterserver.dto.admin.order.response.OrderRes;
-import com.ws.masterserver.dto.admin.order.response.StatusDto;
-import com.ws.masterserver.dto.admin.order.response.UserDto;
+import com.ws.masterserver.dto.admin.order.search.*;
 import com.ws.masterserver.repository.custom.OrderCustomRepository;
+import com.ws.masterserver.utils.base.WsRepository;
 import com.ws.masterserver.utils.base.rest.CurrentUser;
 import com.ws.masterserver.utils.base.rest.PageData;
 import com.ws.masterserver.utils.common.*;
@@ -28,32 +26,35 @@ public class OrderCustomRepositoryImpl implements OrderCustomRepository {
 
     @Override
     public PageData<OrderRes> search4Admin(CurrentUser currentUser, OrderReq req) {
+        var repository = BeanUtils.getBean(WsRepository.class);
         var prefix = "select\n";
         var distinct = "distinct\n";
-        var select = "" +
-                "                o1.id                                                  as orderId,                 \n" +
-                "                os3.orderDate                                          as orderDate,               \n" +
+        var select = "o1.id                                                  as orderId,\n" +
+                "                os3.orderDate                                          as orderDate,\n" +
+                "                coalesce(concat(a1.exact, ', ', a1.combination), '')   as address,\n" +
+                "                o1.note                                                as note,\n" +
+                "                os4.status                                             as statusNow,\n" +
+                "                os4.note                                               as statusNote,\n" +
+                "                os4.created_date                                       as statusDate,\n" +
+                "                u2.id                                                  as statusUserId,\n" +
+                "                u2.first_name                                          as statusUserFirstName,\n" +
+                "                u2.last_name                                           as statusUserLastName,\n" +
+                "                u2.gender                                              as statusUserGender,\n" +
+                "                u2.phone                                               as statusUserPhone,\n" +
+                "                u2.role                                                as statusUserRole,\n" +
+                "                coalesce(concat(u2.first_name, ' ', u2.last_name), '') as statusUserCombination,\n" +
+                "                o1.user_id                                             as cusId,\n" +
+                "                u1.first_name                                          as cusFirstName,\n" +
+                "                u1.last_name                                           as cusLastName,\n" +
+                "                u1.gender                                              as cusGender,\n" +
+                "                u1.phone                                               as cusPhone,\n" +
+                "                u1.role                                                as cusRole,\n" +
+                "                coalesce(concat(u1.first_name, ' ', u1.last_name), '') as cusCombination,\n" +
+                "                o1.ship_price                                          as oShipPrice,\n" +
+                "                o1.payed                                               as oPayed,\n" +
+                "                o1.type                                                as oType,\n" +
                 "                (select coalesce(sum(od1.qty * od1.price), 0)\n" +
-                "                 from order_detail od1)                                as total,                   \n" +
-                "                coalesce(concat(a1.exact, ', ', a1.combination), '')   as address,                 \n" +
-                "                o1.note                                                as note,                    \n" +
-                "                os4.status                                             as statusNow,               \n" +
-                "                os4.note                                               as statusNote,              \n" +
-                "                os4.created_date                                       as statusDate,              \n" +
-                "                u2.id                                                  as statusUserId,            \n" +
-                "                u2.first_name                                          as statusUserFirstName,     \n" +
-                "                u2.last_name                                           as statusUserLastName,      \n" +
-                "                u2.gender                                              as statusUserGender,        \n" +
-                "                u2.phone                                               as statusUserPhone,         \n" +
-                "                u2.role                                                as statusUserRole,          \n" +
-                "                coalesce(concat(u2.first_name, ' ', u2.last_name), '') as statusUserCombination,   \n" +
-                "                o1.user_id                                             as cusId,                   \n" +
-                "                u1.first_name                                          as cusFirstName,            \n" +
-                "                u1.last_name                                           as cusLastName,             \n" +
-                "                u1.gender                                              as cusGender,               \n" +
-                "                u1.phone                                               as cusPhone,                \n" +
-                "                u1.role                                                as cusRole,                 \n" +
-                "                coalesce(concat(u1.first_name, ' ', u1.last_name), '') as cusCombination           \n";
+                "                 from order_detail od1)                                as orderTotal\n";
 
         var fromAndJoins = "from orders o1                                                                                  \n" +
                 "         left join     users u1                                                        on o1.user_id = u1.id                                   \n" +
@@ -112,47 +113,29 @@ public class OrderCustomRepositoryImpl implements OrderCustomRepository {
         }
 
         return new PageData<>(
-                objects.stream().map(obj -> OrderRes.builder()
-                        .id(JpaUtils.getString(obj[0]))
-                        .orderDate(DateUtils.toStr((JpaUtils.getDate(obj[1])), DateUtils.F_VI))
-                        .total(JpaUtils.getLong(obj[2]))
-                        .totalFmt(MoneyUtils.format(JpaUtils.getLong(obj[2])))
-                        .address(JpaUtils.getString(obj[3]))
-                        .note(JpaUtils.getString(obj[4]))
-                        .status(StatusDto.builder()
-                                .status(StatusUtils.getFromStr(JpaUtils.getString(obj[5])))
-                                .note(JpaUtils.getString(obj[6]))
-                                .createdDate(DateUtils.toStr(JpaUtils.getDate(obj[7]), DateUtils.F_VI))
-                                .combination(OrderUtils.getStatusCombination(JpaUtils.getString(obj[5]),
-                                        JpaUtils.getDate(obj[7]),
-                                        JpaUtils.getString(obj[14]),
-                                        JpaUtils.getString(obj[13])))
-                                .user(UserDto.builder()
-                                        .id(JpaUtils.getString(obj[8]))
-                                        .firstName(JpaUtils.getString(obj[9]))
-                                        .lastName(JpaUtils.getString(obj[10]))
-                                        .gender(JpaUtils.getBoolean(obj[11]))
-                                        .phone(JpaUtils.getString(obj[12]))
-                                        .role(RoleUtils.getRoleFromStr(JpaUtils.getString(obj[13])))
-                                        .combination(UserUtils.getCombination(JpaUtils.getString(obj[14]),
-                                                JpaUtils.getString(obj[9]),
-                                                JpaUtils.getString(obj[10]),
-                                                JpaUtils.getBoolean(obj[11])))
-                                        .build())
-                                .build())
-                        .customer(UserDto.builder()
-                                .id(JpaUtils.getString(obj[15]))
-                                .firstName(JpaUtils.getString(obj[16]))
-                                .lastName(JpaUtils.getString(obj[17]))
-                                .gender(JpaUtils.getBoolean(obj[18]))
-                                .phone(JpaUtils.getString(obj[19]))
-                                .role(RoleUtils.getRoleFromStr(JpaUtils.getString(obj[20])))
-                                .combination(UserUtils.getCombination(JpaUtils.getString(obj[21]),
-                                        JpaUtils.getString(obj[16]),
-                                        JpaUtils.getString(obj[17]),
-                                        JpaUtils.getBoolean(obj[18])))
-                                .build())
-                        .build()).collect(Collectors.toList()),
+                objects.stream().map(obj -> {
+                    var shipPrice = JpaUtils.getLong(obj[21]);
+                    var promotions = repository.orderPromotionRepository.findByOrderId(JpaUtils.getString(obj[0]));
+                    var total = OrderUtils.getTotal(JpaUtils.getLong(obj[24]), shipPrice, promotions);
+                    return OrderRes.builder()
+                            .id(JpaUtils.getString(obj[0]))
+                            .orderDate(DateUtils.toStr((JpaUtils.getDate(obj[1])), DateUtils.F_VI))
+                            .address(JpaUtils.getString(obj[2]))
+                            .note(JpaUtils.getString(obj[3]))
+                            .status(OrderUtils.getStatusCombination(JpaUtils.getString(obj[4]),
+                                    JpaUtils.getDate(obj[6]),
+                                    JpaUtils.getString(obj[13]),
+                                    JpaUtils.getString(obj[12])))
+                            .customer(UserUtils.getCombination(JpaUtils.getString(obj[20]),
+                                    JpaUtils.getString(obj[15]),
+                                    JpaUtils.getString(obj[16]),
+                                    JpaUtils.getBoolean(obj[17])))
+                            .payed(JpaUtils.getBoolean(obj[22]) ? "Đã thanh toán" : "Chưa thanh toán")
+                            .type(OrderTypeUtils.getOrderTypeStr(JpaUtils.getString(obj[23])))
+                            .total(total)
+                            .totalFmt(MoneyUtils.format(total))
+                            .build();
+                }).collect(Collectors.toList()),
                 req.getPageReq().getPage(),
                 req.getPageReq().getPageSize(),
                 totalElements,

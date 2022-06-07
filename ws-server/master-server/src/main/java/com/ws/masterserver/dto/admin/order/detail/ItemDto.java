@@ -1,4 +1,4 @@
-package com.ws.masterserver.dto.admin.order.response.detail;
+package com.ws.masterserver.dto.admin.order.detail;
 
 import com.ws.masterserver.utils.base.enum_dto.ColorDto;
 import com.ws.masterserver.utils.base.enum_dto.MaterialDto;

@@ -1,4 +1,4 @@
-package com.ws.masterserver.dto.admin.order.request;
+package com.ws.masterserver.dto.admin.order.search;
 
 import com.ws.masterserver.utils.base.rest.PageReq;
 import lombok.Getter;
