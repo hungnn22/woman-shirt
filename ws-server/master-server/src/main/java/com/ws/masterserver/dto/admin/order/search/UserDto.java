@@ -12,6 +12,6 @@ public class UserDto {
     private String lastName;
     private Boolean gender;
     private String phone;
-    private RoleEnum role;
+    private RoleDto role;
     private String combination;
 }

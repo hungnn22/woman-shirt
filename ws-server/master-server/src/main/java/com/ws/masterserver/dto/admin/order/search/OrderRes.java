@@ -25,28 +25,30 @@ public class OrderRes {
 
     private String totalFmt;
 
+    //tien ship
+//    private Long shipPrice;
+//
+//    private String shipPriceFmt;
+
+
     //note của khách hàng
     private String note;
 
     /**
      * status
      */
-    private StatusDto status;
+    private String status;
 
     /**
      * Thông tin khách hàng
      */
-    private UserDto customer;
+    private String customer;
 
-    private List<PromotionDto> promotions;
-
-    private Boolean payed;
-
-    private Long shipPrice;
-
-    private String shipPriceFmt;
+    private String payed;
 
     private String type;
+
+//    private List<PromotionDto> promotions;
 
 
 }

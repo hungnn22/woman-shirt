@@ -5,14 +5,15 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
-@Builder
+/**
+ * @author myname
+ */
+
 @AllArgsConstructor
 @NoArgsConstructor
-public class PromotionDto {
-    private String voucher;
-    private Double percentDiscount;
+@Data
+@Builder
+public class RoleDto {
+    private String code;
     private String name;
-    private String typeName;
-    private String typeCode;
 }

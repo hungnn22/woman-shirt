@@ -1,13 +1,27 @@
 package com.ws.masterserver.utils.common;
 
+import com.ws.masterserver.dto.admin.order.search.RoleDto;
 import com.ws.masterserver.utils.constants.enums.RoleEnum;
 
 public class RoleUtils {
-    public static RoleEnum getRoleFromStr(String value) {
+    public static RoleDto getRoleDto(String value) {
         try {
-            return RoleEnum.valueOf(value);
+            var role = RoleEnum.valueOf(value);
+            return RoleDto.builder()
+                    .code(role.name())
+                    .name(role.getName())
+                    .build();
         } catch (Exception e) {
-            return null;
+            return new RoleDto();
+        }
+    }
+
+    public static String getRoleNameFromCode(String code) {
+        try {
+            var role = RoleEnum.valueOf(code);
+            return role.getName();
+        } catch (Exception e) {
+            return "";
         }
     }
 }
