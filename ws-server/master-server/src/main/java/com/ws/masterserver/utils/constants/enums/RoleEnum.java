@@ -10,14 +10,14 @@ public enum RoleEnum {
     ROLE_GUEST(""),
     ;
 
-    private String value;
+    private String name;
 
-    RoleEnum(String value) {
-        this.value = value;
+    RoleEnum(String name) {
+        this.name = name;
     }
 
-    public String getValue() {
-        return value;
+    public String getName() {
+        return name;
     }
 
 }

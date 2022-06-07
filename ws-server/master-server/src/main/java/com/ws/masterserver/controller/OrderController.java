@@ -1,9 +1,8 @@
 package com.ws.masterserver.controller;
 
-import com.ws.masterserver.dto.admin.order.request.OrderDetailReq;
-import com.ws.masterserver.dto.admin.order.request.OrderReq;
-import com.ws.masterserver.dto.admin.order.response.OrderRes;
-import com.ws.masterserver.dto.admin.order.response.detail.OrderDetailRes;
+import com.ws.masterserver.dto.admin.order.search.OrderReq;
+import com.ws.masterserver.dto.admin.order.search.OrderRes;
+import com.ws.masterserver.dto.admin.order.detail.DetailRes;
 import com.ws.masterserver.dto.customer.order.add_to_cart.AddToCartDto;
 import com.ws.masterserver.dto.customer.order.add_to_cart.AddToCartResponse;
 import com.ws.masterserver.dto.customer.order.checkin.CheckinDto;
@@ -59,7 +58,7 @@ public class OrderController extends WsController {
 
     @GetMapping("/admin/detail/{id}")
     @Operation(summary = "API chi tiet hoa don")
-    public ResponseEntity<PageData<OrderDetailRes>> detail4Admin(@PathVariable String id) {
+    public ResponseEntity<PageData<DetailRes>> detail4Admin(@PathVariable String id) {
         return ResponseEntity.ok(service.orderService.detail4Admin(getCurrentUser(), id));
     }
 

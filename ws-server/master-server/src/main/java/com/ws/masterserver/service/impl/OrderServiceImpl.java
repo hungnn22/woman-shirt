@@ -1,14 +1,14 @@
 package com.ws.masterserver.service.impl;
 
-import com.ws.masterserver.dto.admin.order.response.detail.OrderDetailRes;
+import com.ws.masterserver.dto.admin.order.detail.DetailRes;
 import com.ws.masterserver.dto.customer.order.add_to_cart.AddToCartDto;
 import com.ws.masterserver.dto.customer.order.add_to_cart.AddToCartResponse;
 import com.ws.masterserver.dto.customer.order.checkin.CheckinDto;
 import com.ws.masterserver.dto.customer.order.checkin.CheckinResponse;
 import com.ws.masterserver.dto.customer.order.me.MyOrderRequest;
 import com.ws.masterserver.dto.customer.order.me.MyOrderResponse;
-import com.ws.masterserver.dto.admin.order.request.OrderReq;
-import com.ws.masterserver.dto.admin.order.response.OrderRes;
+import com.ws.masterserver.dto.admin.order.search.OrderReq;
+import com.ws.masterserver.dto.admin.order.search.OrderRes;
 import com.ws.masterserver.entity.AddressEntity;
 import com.ws.masterserver.service.OrderService;
 import com.ws.masterserver.utils.base.WsRepository;
@@ -147,7 +147,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public PageData<OrderDetailRes> detail4Admin(CurrentUser currentUser, String id) {
+    public PageData<DetailRes> detail4Admin(CurrentUser currentUser, String id) {
         if (!repository.orderRepository.existsById(id)) {
             return new PageData<>(true);
         }
