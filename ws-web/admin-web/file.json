@@ -1,0 +1,113 @@
+{
+    "data": [
+        {
+            "id": "e0d3d005-de16-467c-8ed5-bfc9555ac982",
+            "orderDate": "09:53:00 07/06/2022",
+            "address": "Số nhà 200, Phường Phúc Xá, Quận Ba Đình, Thành phố Hà Nội",
+            "total": 1660000,
+            "totalFmt": "1.660.000",
+            "shipPrice": 30000,
+            "shipPriceFmt": "30.000",
+            "note": "Giao hàng giờ hành chính",
+            "status": {
+                "code": "CANCEL",
+                "note": null,
+                "createdDate": "09:53:00 09/06/2022",
+                "combination": "Đã bị hủy bới khách hàng vào lúc 09:53:00 09/06/2022",
+                "user": {
+                    "id": "3099fa4e-5d5c-43ee-baab-e7715d4bf099",
+                    "firstName": "System",
+                    "lastName": "Customer",
+                    "gender": true,
+                    "phone": "0988777888",
+                    "role": {
+                        "code": "ROLE_CUSTOMER",
+                        "name": "Khách hàng"
+                    },
+                    "combination": "(Anh) System Customer"
+                }
+            },
+            "customer": {
+                "id": "3099fa4e-5d5c-43ee-baab-e7715d4bf099",
+                "firstName": "System",
+                "lastName": "Customer",
+                "gender": true,
+                "phone": "0988777888",
+                "role": {
+                    "code": "ROLE_CUSTOMER",
+                    "name": "Khách hàng"
+                },
+                "combination": "(Anh) System Customer"
+            },
+            "payed": "Chưa thanh toán",
+            "type": {
+                "code": "VNP",
+                "tittle": "VN Pay",
+                "name": "Thanh toán qua VN-Pay"
+            },
+            "promotions": []
+        },
+        {
+            "id": "0e8e84bc-0391-4443-ad82-8b1f6f1ae43d",
+            "orderDate": "09:53:00 07/06/2022",
+            "address": "Số nhà 170, Phường Trúc Bạch, Quận Ba Đình, Thành phố Hà Nội",
+            "total": 1640000,
+            "totalFmt": "1.640.000",
+            "shipPrice": 20000,
+            "shipPriceFmt": "20.000",
+            "note": "Giao cuối tuần",
+            "status": {
+                "code": "ACCEPT",
+                "note": null,
+                "createdDate": "09:53:00 08/06/2022",
+                "combination": "Được chấp nhận bởi Admin System Admin vào lúc: 09:53:00 08/06/2022",
+                "user": {
+                    "id": "fb6e037a-9f6b-49e0-826e-d1d1539413f6",
+                    "firstName": "System",
+                    "lastName": "Admin",
+                    "gender": true,
+                    "phone": null,
+                    "role": {
+                        "code": "ROLE_ADMIN",
+                        "name": "Admin"
+                    },
+                    "combination": "(Anh) System Admin"
+                }
+            },
+            "customer": {
+                "id": "3099fa4e-5d5c-43ee-baab-e7715d4bf099",
+                "firstName": "System",
+                "lastName": "Customer",
+                "gender": true,
+                "phone": "0988777888",
+                "role": {
+                    "code": "ROLE_CUSTOMER",
+                    "name": "Khách hàng"
+                },
+                "combination": "(Anh) System Customer"
+            },
+            "payed": "Chưa thanh toán",
+            "type": {
+                "code": "CASH",
+                "tittle": "Tiền mặt",
+                "name": "Thanh toán bằng tiền mặt"
+            },
+            "promotions": [
+                {
+                    "voucher": "d2a5c611",
+                    "percentDiscount": 100.0,
+                    "name": "Miễn phí vận chuyển cho đơn hàng",
+                    "typeName": "Vận chuyển",
+                    "typeCode": "TYPE1"
+                }
+            ]
+        }
+    ],
+    "page": 0,
+    "pageSize": 10,
+    "totalPages": 1,
+    "totalElements": 2,
+    "statusCode": 200,
+    "message": "Thành công!",
+    "timeStamp": "2022-06-07T10:03:35.103+00:00"
+}
