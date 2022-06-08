@@ -1,20 +1,30 @@
 import { DialogComponent } from './../../../dialog/dialog.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { BaseService } from './../../../../service/base.service';
 import { Product } from './../../../../model/product/product.model';
 import { Component, OnInit } from '@angular/core';
-
+import { LabelType, Options } from '@angular-slider/ngx-slider';
 @Component({
   selector: 'app-content',
   templateUrl: './content.component.html',
   styleUrls: ['./content.component.css']
 })
 export class ContentComponent implements OnInit {
+  p:number=1;
   url = "PRODUCTS";
   listProduct: Product[] = [];
-  constructor(private http: HttpClient, private baseService: BaseService, private modalService:NgbModal) { }
+  public value: [number, number] = [50, 900];
+  public min = 50;
+  public max = 900;
+  public largeStep = 2;
+  public smallStep = 100;
+
+  ////////////////
+
+  constructor(private http: HttpClient, private baseService: BaseService, private modalService:NgbModal) {
+
+   }
 
   ngOnInit(): void {
     this.getAllTutorial();

@@ -22,6 +22,8 @@ import {MatNativeDateModule} from '@angular/material/core';
 import {HttpClientModule} from '@angular/common/http';
 import {MatInputModule} from '@angular/material/input';
 import { DialogComponent } from './view/dialog/dialog.component';
+import {NgxPaginationModule} from 'ngx-pagination';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -40,6 +42,7 @@ import { DialogComponent } from './view/dialog/dialog.component';
     BrowserAnimationsModule,
     MatIconModule,
     MatButtonModule,
+    NgxPaginationModule,
     MatGridListModule,
     MatCardModule,
     MatAutocompleteModule,
