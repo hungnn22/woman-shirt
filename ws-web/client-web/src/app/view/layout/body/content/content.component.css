@@ -27,7 +27,16 @@
 .mat-form-field {
   margin: 10px;
 }
+/* /////// */
 
+#titleProduct{
+  width: 20%;
+margin-left: 108px;
+margin-top: 20px;
+font-weight: bold;
+font-size: 28px;
+}
+/*  */
 .content {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -52,4 +61,13 @@
 .card:hover {
   transform: scale(1.05);
   box-shadow: 0 10px 20px rgba(0, 0, 0, .12), 0 4px 8px rgba(0, 0, 0, .06);
+}
+.pagination{
+  position: relative;
+  right: 35%;
+  left: 35%;
+  top: 40px;
+  font-size: 14px;
+  width: 50%;
+  height: auto;
 }
