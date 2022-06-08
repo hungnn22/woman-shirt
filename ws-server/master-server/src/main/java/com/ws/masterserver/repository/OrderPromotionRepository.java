@@ -1,6 +1,6 @@
 package com.ws.masterserver.repository;
 
-import com.ws.masterserver.dto.admin.order.search.PromotionDto;
+import com.ws.masterserver.dto.admin.order.detail.PromotionDto;
 import com.ws.masterserver.entity.OrderPromotionEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -13,7 +13,7 @@ import java.util.List;
  */
 public interface OrderPromotionRepository extends JpaRepository<OrderPromotionEntity, String> {
 
-    @Query("select new com.ws.masterserver.dto.admin.order.search.PromotionDto(\n" +
+    @Query("select new com.ws.masterserver.dto.admin.order.detail.PromotionDto(\n" +
             "p.voucher,\n" +
             "p.percentDiscount,\n" +
             "p.name,\n" +

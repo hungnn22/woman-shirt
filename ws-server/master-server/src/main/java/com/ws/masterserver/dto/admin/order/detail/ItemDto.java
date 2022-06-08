@@ -33,17 +33,15 @@ public class ItemDto {
 
     private String material;
 
-    private String type;
-
     private Long price;
 
     private String priceFmt;
 
     private Long qty;
 
-    private String des;
-
-    private List<String> des4Menu;
-
     private String category;
+
+    private Long total;
+
+    private String totalFmt;
 }

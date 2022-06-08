@@ -11,7 +11,7 @@ import java.util.List;
 @Builder
 public class DetailRes {
     private String id;
-    private Long total;
-    private String totalFmt;
-    private List<ItemDto> item;
+    private List<ItemDto> items;
+    private List<PromotionDto> promotions;
+    private ResultDto result;
 }
