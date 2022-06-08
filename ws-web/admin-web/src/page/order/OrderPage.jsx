@@ -1,8 +1,8 @@
 import axios from 'axios'
-import React, {useEffect, useState} from 'react'
+import React, { useEffect, useState } from 'react'
 import AxiosApi from '../../api/AxiosApi'
 import WsUrl from "../../utils/constants/WsUrl";
-import {useForm} from "react-hook-form";
+import { useForm } from "react-hook-form";
 
 let location = {
     provinceCode: null,
@@ -43,9 +43,9 @@ const OrderPage = () => {
     const [req, setReq] = useState(initReq)
     const [orders, setOrders] = useState([])
     const [pageInfo, setPageInfo] = useState(initPageInfo)
-    const [detail, setDetail] = useState([])
+    const [detail, setDetail] = useState({})
 
-    const {register, handleSubmit, formState: {errors}} = useForm()
+    const { register, handleSubmit, formState: { errors } } = useForm()
 
     useEffect(() => {
         const getProvincesFromOpenApi = async () => {
@@ -55,7 +55,7 @@ const OrderPage = () => {
         }
         const getOrderList = async () => {
             const axiosRes = await AxiosApi.postAuth(`${WsUrl.ORDER_BASE}${WsUrl.ADMIN_ORDER_SEARCH}`, req)
-            const {data} = axiosRes
+            const { data } = axiosRes
             setOrders(data.data)
             setPageInfo({
                 ...pageInfo,
@@ -182,7 +182,7 @@ const OrderPage = () => {
                 <div className="card-body">
                     <div className='row d-flex align-items-center py-1'>
                         <div className='col d-flex align-items-center'>
-                            <span className='' style={{minWidth: '64px'}}>Trạng thái:</span>
+                            <span className='' style={{ minWidth: '64px' }}>Trạng thái:</span>
                             <select className='border-1 form-control col-2 mx-2' onChange={handleChangeStatusFilter}>
                                 <option value="">Tất cả</option>
                                 <option value="PENDING">Đang chờ xử lý</option>
@@ -194,15 +194,15 @@ const OrderPage = () => {
                         </div>
 
                         <form className="d-none d-sm-inline-block form-inline navbar-search col-4"
-                              onSubmit={handleSubmit(handleChangeTextSearchFilter)}>
+                            onSubmit={handleSubmit(handleChangeTextSearchFilter)}>
                             <div className="input-group">
                                 <input type="text" className="form-control bg-light border-0 small"
-                                       placeholder="Tìm kiếm..." aria-label="Search" aria-describedby="basic-addon2"
-                                       defaultValue=""
-                                       {...register("textSearch")} />
+                                    placeholder="Tìm kiếm..." aria-label="Search" aria-describedby="basic-addon2"
+                                    defaultValue=""
+                                    {...register("textSearch")} />
                                 <div className="input-group-append">
                                     <button className="btn btn-primary" type="submit">
-                                        <i className="fas fa-search fa-sm"/>
+                                        <i className="fas fa-search fa-sm" />
                                     </button>
                                 </div>
                             </div>
@@ -210,24 +210,24 @@ const OrderPage = () => {
                     </div>
 
                     <div className='row d-flex align-items-center px-3 py-1'>
-                        <span className='' style={{minWidth: '64px'}}>Địa chỉ:</span>
+                        <span className='' style={{ minWidth: '64px' }}>Địa chỉ:</span>
                         <div className='col d-flex align-items-center'>
                             <select id='provinceFilter' className='border-1 form-control mx-1 col-2'
-                                    onChange={handleChangeProvinceFilter}>
+                                onChange={handleChangeProvinceFilter}>
                                 <option value="" disabled selected text-muted>---Tỉnh/T.Phố---</option>
                                 {provinces && provinces.map(p => (
                                     <option key={p.code} value={p.code}>{p.name}</option>
                                 ))}
                             </select>
                             <select id='districtFilter' className='border-1 form-control mx-1 col-2'
-                                    onChange={handleChangeDistrictFilter} onClick={handleClickDistrictFilter}>
+                                onChange={handleChangeDistrictFilter} onClick={handleClickDistrictFilter}>
                                 <option value="" disabled selected text-muted>---Quận/Huyện---</option>
                                 {districts && districts.map(d => (
                                     <option key={d.code} value={d.code}>{d.name}</option>
                                 ))}
                             </select>
                             <select id='wardFilter' className='border-1 form-control mx-1 col-2'
-                                    onClick={handleClickWardFilter} onChange={handleChangeWardFilter}>
+                                onClick={handleClickWardFilter} onChange={handleChangeWardFilter}>
                                 <option value="" disabled selected>---Phường/Xã---</option>
                                 {wards && wards.map(w => (
                                     <option value={w.code}>{w.name}</option>
@@ -252,136 +252,164 @@ const OrderPage = () => {
                         </div>
                     </div>
 
-                    <hr className='pb-2'/>
+                    <hr className='pb-2' />
                     <h6>Tìm thấy {pageInfo.totalElements} dữ liệu phù hợp.</h6>
                     <table className="table table-bordered mt-4" id="dataTable" width="100%" cellSpacing={0}>
                         <thead>
-                        <tr className='text-bold text-dark'>
-                            <th>No</th>
-                            <th>Khách hàng</th>
-                            <th>SDT</th>
-                            <th>Thời gian đặt</th>
-                            <th>Địa chỉ giao</th>
-                            <th>Tổng(VND)</th>
-                            <th>Phương thức</th>
-                            <th>Ghi chú</th>
-                            <th>Trạng thái</th>
-                            <th>More</th>
-                        </tr>
+                            <tr className='text-bold text-dark'>
+                                <th>No</th>
+                                <th>Khách hàng</th>
+                                <th>SDT</th>
+                                <th>Thời gian đặt</th>
+                                <th>Địa chỉ giao</th>
+                                <th>Tổng(VND)</th>
+                                <th>Phương thức</th>
+                                <th>Ghi chú</th>
+                                <th>Trạng thái</th>
+                                <th>More</th>
+                            </tr>
                         </thead>
                         <tbody>
-                        {orders && orders.map((order, index) => (
-                            <tr key={order.id}>
-                                <td className="text-center">{index + 1}</td>
-                                <td className='col-1'>{order.customer}</td>
-                                <td>{order.orderDate}</td>
-                                <td className="col-1">{order.phone}</td>
-                                <td className="col-2">{order.address}</td>
-                                <td className="col-1">{order.totalFmt}</td>
-                                <td>{order.type}({order.payed})</td>
-                                <td>{order.note}</td>
-                                <td className="col-2">{order.status}</td>
-                                <td>
-                                    <div className="btn-group dropleft">
-                                        <a className="btn text-dark" type="button" id="dropdownMenuButton"
-                                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <i className="fa fa-ellipsis-h" aria-hidden="true"/>
-                                        </a>
-                                        <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                            <a className="dropdown-item" href="#" data-toggle="modal"
-                                               data-target={`#detailModal${order.id}`}
-                                               onClick={() => handleGetDetail(order.id)}>Chi tiết</a>
-                                            <a className="dropdown-item" href="#">Chỉnh sửa trạng thái</a>
-                                        </div>
-                                    </div>
-
-                                    {detail && <div className="modal fade" id={`detailModal${order.id}`} tabIndex={-1}
-                                                    role="dialog"
-                                                    aria-labelledby="detailModalLabel" aria-hidden="true">
-                                        <div className="modal-dialog modal-xl" role="document">
-                                            <div className="modal-content">
-                                                <div className="modal-header">
-                                                    <h5 className="modal-title" id="exampleModalLabel">Chi tiết đơn
-                                                        hàng</h5>
-                                                    <button type="button" className="close" data-dismiss="modal"
-                                                            aria-label="Close">
-                                                        <span aria-hidden="true">×</span>
-                                                    </button>
-                                                </div>
-                                                <div className="modal-body p-4">
-                                                    <table className="table table-bordered mt-4" id="dataTable"
-                                                           width="100%" cellSpacing={0}>
-                                                        <thead>
-                                                        <tr className='text-bold text-dark'>
-                                                            <th>No</th>
-                                                            <th>Sản phẩm</th>
-                                                            <th>Đơn giá</th>
-                                                            <th>Số lượng</th>
-                                                            <th>Size</th>
-                                                            <th>Màu sắc</th>
-                                                            <th>Mô tả</th>
-                                                            <th>Tổng(VND)</th>
-                                                        </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                        {detail.map((obj, index) => (
-                                                            <tr key={obj.id}>
-                                                                <td>{index + 1}</td>
-                                                                <td>{obj.item.name}</td>
-                                                                <td>{obj.priceFmt}</td>
-                                                                <td>{obj.qty}</td>
-                                                                <td>{obj.item.size}</td>
-                                                                <td>{obj.item.color}</td>
-                                                                <td>{obj.item.des}</td>
-                                                                <td>{obj.totalFmt}</td>
-                                                            </tr>
-                                                        ))}
-                                                        </tbody>
-                                                        <tfoot>
-                                                        <th colSpan={7} className="text-right">Tổng tiền:</th>
-                                                        <th>100.000</th>
-                                                        </tfoot>
-                                                    </table>
-                                                </div>
-                                                <div className="modal-footer">
-                                                    <button type="button" className="btn btn-secondary"
-                                                            data-dismiss="modal">Close
-                                                    </button>
-                                                    <button type="button" className="btn btn-primary">Save changes
-                                                    </button>
-                                                </div>
+                            {orders && orders.map((order, index) => (
+                                <tr key={order.id}>
+                                    <td className="text-center">{index + 1}</td>
+                                    <td className='col-1'>{order.customer}</td>
+                                    <td>{order.orderDate}</td>
+                                    <td className="col-1">{order.phone}</td>
+                                    <td className="col-2">{order.address}</td>
+                                    <td className="col-1">{order.totalFmt}</td>
+                                    <td>{order.type}({order.payed})</td>
+                                    <td>{order.note}</td>
+                                    <td className="col-2">{order.status}</td>
+                                    <td>
+                                        <div className="btn-group dropleft">
+                                            <a className="btn text-dark" type="button" id="dropdownMenuButton"
+                                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <i className="fa fa-ellipsis-h" aria-hidden="true" />
+                                            </a>
+                                            <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                <a className="dropdown-item" href="#" data-toggle="modal"
+                                                    data-target={`#detailModal${order.id}`}
+                                                    onClick={() => handleGetDetail(order.id)}>Chi tiết</a>
+                                                <a className="dropdown-item" href="#">Chỉnh sửa trạng thái</a>
                                             </div>
                                         </div>
-                                    </div>}
-                                </td>
-                            </tr>))}
+
+                                        {detail && <div className="modal fade" id={`detailModal${order.id}`} tabIndex={-1}
+                                            role="dialog"
+                                            aria-labelledby="detailModalLabel" aria-hidden="true">
+                                            <div className="modal-dialog modal-xl" role="document">
+                                                <div className="modal-content">
+                                                    <div className="modal-header">
+                                                        <h5 className="modal-title" id="exampleModalLabel">Chi tiết đơn
+                                                            hàng</h5>
+                                                        <button type="button" className="close" data-dismiss="modal"
+                                                            aria-label="Close">
+                                                            <span aria-hidden="true">×</span>
+                                                        </button>
+                                                    </div>
+                                                    <div className="modal-body p-4">
+                                                        <div>
+                                                            <h6 className='text-dark'><b>1. Sản phẩm</b></h6>
+                                                            <table className="table table-bordered mt-2" id="dataTable"
+                                                                width="100%" cellSpacing={0}>
+                                                                <thead>
+                                                                    <tr className='text-bold text-dark'>
+                                                                        <th className='text-center'>No</th>
+                                                                        <th>Sản phẩm</th>
+                                                                        <th>Đơn giá</th>
+                                                                        <th>Số lượng</th>
+                                                                        <th>Size</th>
+                                                                        <th>Màu sắc</th>
+                                                                        <th>Chất liệu</th>
+                                                                        <th>Tổng(VND)</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    {detail.items && detail.items.map((obj, index) => (
+                                                                        <tr key={obj.id}>
+                                                                            <td className='text-center'>{index + 1}</td>
+                                                                            <td>{obj.name}</td>
+                                                                            <td>{obj.priceFmt}</td>
+                                                                            <td>{obj.qty}</td>
+                                                                            <td>{obj.size}</td>
+                                                                            <td>{obj.color}</td>
+                                                                            <td>{obj.material}</td>
+                                                                            <td>{obj.totalFmt}</td>
+                                                                        </tr>
+                                                                    ))}
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                        <div className='mt-4'>
+                                                            <h6 className='text-dark'><b>2. Khuyến mãi</b></h6>
+                                                            <table className="table table-bordered mt-2" id="dataTable"
+                                                                width="100%" cellSpacing={0}>
+                                                                <thead>
+                                                                    <tr className='text-bold text-dark'>
+                                                                        <th className='text-center'>No</th>
+                                                                        <th>Tên</th>
+                                                                        <th>Voucher</th>
+                                                                        <th>Giảm giá(%)</th>
+                                                                        <th>Loại</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    {detail.promotions && detail.promotions.map((pro, index) => (
+                                                                        <tr key={index}>
+                                                                            <td className='text-center'>{index + 1}</td>
+                                                                            <td>{pro.name}</td>
+                                                                            <td>{pro.voucher}</td>
+                                                                            <td>{pro.percentDiscount}</td>
+                                                                            <td>{pro.typeName}</td>
+                                                                        </tr>
+                                                                    ))}
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                        <div className='mt-4'>
+                                                            <h6 className='text-dark'><b>3. Tổng tiền</b></h6>
+                                                        </div>
+                                                    </div>
+                                                    <div className="modal-footer">
+                                                        <button type="button" className="btn btn-secondary"
+                                                            data-dismiss="modal">Đóng
+                                                        </button>
+                                                        <button type="button" className="btn btn-primary">Lưu
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>}
+                                    </td>
+                                </tr>))}
                         </tbody>
                     </table>
                     <div className='p-2 row align-items-center justify-content-between'>
                         <div className='col d-flex align-items-center'>
                             Hiển thị: <select className='border-1 form-control col-1 mx-2'
-                                              onChange={handleChangePageSizeFilter}>
-                            <option value={10}>10</option>
-                            <option value={20}>20</option>
-                            <option value={50}>50</option>
-                            <option value={100}>100</option>
-                        </select>
+                                onChange={handleChangePageSizeFilter}>
+                                <option value={10}>10</option>
+                                <option value={20}>20</option>
+                                <option value={50}>50</option>
+                                <option value={100}>100</option>
+                            </select>
                         </div>
                         <div className=''>
                             <button className='btn btn-outline-dark btn-sm mx-1 px-2'
-                                    onClick={() => handleChangePageFilter(pageInfo.page - 1)}
-                                    disabled={pageInfo.page == 0}>Trước
+                                onClick={() => handleChangePageFilter(pageInfo.page - 1)}
+                                disabled={pageInfo.page == 0}>Trước
                             </button>
                             <button className='btn btn-outline-dark btn-sm mx-1 px-2'
-                                    onClick={() => handleChangePageFilter(pageInfo.page + 1)}
-                                    disabled={pageInfo.page == pageInfo.totalPages - 1}>Sau
+                                onClick={() => handleChangePageFilter(pageInfo.page + 1)}
+                                disabled={pageInfo.page == pageInfo.totalPages - 1}>Sau
                             </button>
                             <span>Trang {pageInfo.page + 1}/{pageInfo.totalPages}</span>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </div >
     )
 }
 
