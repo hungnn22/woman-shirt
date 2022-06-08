@@ -19,8 +19,6 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 public class ProductController extends WsController {
 
-    private final WsService service;
-
     @PostMapping("/search")
     public ResponseEntity<?> search(@RequestBody ProductReq req){
         return ResponseEntity.status(HttpStatus.OK).body(service.productService.search(getCurrentUser(), req));

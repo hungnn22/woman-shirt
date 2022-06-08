@@ -13,8 +13,6 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/v1/user")
 @RequiredArgsConstructor
 public class UserController extends WsController {
-    private final WsService service;
-
 
     /**
      * API KH đăng ký tài khoản

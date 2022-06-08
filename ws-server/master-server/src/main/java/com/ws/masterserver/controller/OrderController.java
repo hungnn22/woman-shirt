@@ -26,8 +26,6 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 public class OrderController extends WsController {
 
-    private final WsService service;
-
     @Operation(summary = "API checkin")
     @PostMapping("/checkin")
     public ResponseEntity<ResData<CheckinResponse>> createCustomerOrder(@RequestBody CheckinDto body) {
@@ -58,7 +56,7 @@ public class OrderController extends WsController {
 
     @GetMapping("/admin/detail/{id}")
     @Operation(summary = "API chi tiet hoa don")
-    public ResponseEntity<PageData<DetailRes>> detail4Admin(@PathVariable String id) {
+    public ResponseEntity<ResData<DetailRes>> detail4Admin(@PathVariable String id) {
         return ResponseEntity.ok(service.orderService.detail4Admin(getCurrentUser(), id));
     }
 

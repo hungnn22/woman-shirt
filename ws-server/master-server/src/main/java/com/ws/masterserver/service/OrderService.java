@@ -22,5 +22,5 @@ public interface OrderService {
      * For Admin
      * */
     PageData<OrderRes> search4Admin(CurrentUser currentUser, OrderReq req);
-    PageData<DetailRes> detail4Admin(CurrentUser currentUser, String id);
+    ResData<DetailRes> detail4Admin(CurrentUser currentUser, String id);
 }
