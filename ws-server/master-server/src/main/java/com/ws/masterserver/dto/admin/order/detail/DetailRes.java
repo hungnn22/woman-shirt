@@ -4,15 +4,14 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @Builder
 public class DetailRes {
     private String id;
-    private Long price;
-    private String priceFmt;
-    private Long qty;
     private Long total;
     private String totalFmt;
-    private ItemDto item;
+    private List<ItemDto> item;
 }

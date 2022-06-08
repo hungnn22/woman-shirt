@@ -57,11 +57,7 @@ public class OrderServiceImpl implements OrderService {
             if (address == null) {
                 address = AddressEntity.builder()
                         .id(UidUtils.generateUid())
-//                        .detail(body.getDetail())
-                        .isDefault(Boolean.FALSE)
-//                        .createdAt(new Date().getTime())
-                        .userId(currentUser.getId())
-//                        .wardId(body.getWardId())
+                        .isDefault(Boolean.FALSE).userId(currentUser.getId())
                         .build();
                 repository.addressRepository.save(address);
             }
@@ -70,59 +66,16 @@ public class OrderServiceImpl implements OrderService {
              * Kiểm tra KH đang có order nào đang trong trạng thái PROCESSING không
              *      1. Nếu chưa có thì tạo mới và set status = PROCESSING
              * */
-//            var order = repository.orderRepository.findCustomerProcessOrder(currentUser.getId());
-//            if (null == order) {
-//                order = new OrderEntity();
-//                order.setId(UUID.randomUUID().toString());
-//                order.setAddressId(address.getId());
-//                if (Objects.equals(Boolean.FALSE, StringUtils.isNullOrEmpty(body.getNote()))) {
-//                    order.setNote(body.getNote().trim());
-//                }
-//                order.setUserId(currentUser.getId());
-//                repository.orderRepository.save(order);
-//
-//                repository.orderStatusRepository.save(OrderStatusEntity.builder()
-//                        .id(UUID.randomUUID().toString())
-//                        .orderId(order.getId())
-//                        .createdBy(currentUser.getId())
-//                        .createdAt(new Date().getTime())
-//                        .build());
-//            }
 
 
             /**
              * Update giỏ hàng vào bảng order_detail
              * */
-//            var finalOrder = order;
-            body.getItems().forEach(item -> {
                 /**
                  * Kiểm tra xem sản phẩm đã có trong giỏ hàng chưa
                  *  1. Nếu có thì tăng số lượng = sl cũ + sl mới
                  *  2. Nếu không thì tạo mới
                  * */
-//                var orderDetail = repository.orderDetailRepository.findByOrderIdAndProductId(finalOrder.getId(), item.getProductId());
-//                if (null == orderDetail) {
-//                    orderDetail = OrderDetailEntity.builder()
-//                            .id(UUID.randomUUID().toString())
-//                            .orderId(finalOrder.getId())
-//                            .price(item.getPrice())
-//                            .qty(item.getQty())
-//                            .productId(item.getProductId())
-//                            .build();
-//                } else {
-//                    orderDetail.setQty(orderDetail.getQty() + item.getQty());
-//                }
-//                repository.orderDetailRepository.save(orderDetail);
-            });
-//            return new ResData<CheckinResponse>(
-//                    CheckinResponse.builder()
-//                            .id(order.getId())
-//                            .customerFullName(currentUser.getFirstName() != null && currentUser.getLastName() != null ? currentUser.getFirstName() + WsMessage.SPACE + currentUser.getLastName() : null)
-//                            .customerId(order.getUserId())
-//                            .build(),
-//                    HttpStatus.CREATED.value(),
-//                    "Check in thành công!"
-//            );
             return null;
         }
         throw new ResponseStatusException(HttpStatus.FORBIDDEN, WsConst.Messages.FORBIDDEN);
@@ -147,12 +100,12 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public PageData<DetailRes> detail4Admin(CurrentUser currentUser, String id) {
+    public ResData<DetailRes> detail4Admin(CurrentUser currentUser, String id) {
         if (!repository.orderRepository.existsById(id)) {
-            return new PageData<>(true);
+            return new ResData<>(true);
         }
         AuthValidator.checkRole(currentUser, RoleEnum.ROLE_ADMIN, RoleEnum.ROLE_ADMIN);
-        return repository.orderDetailCustomRepository.findByOrderId4Admin(currentUser, id);
+        return repository.orderCustomRepository.detail4Admin(currentUser, id);
     }
 
     private void validateOrderCreateDto(CheckinDto body) {
@@ -169,9 +122,7 @@ public class OrderServiceImpl implements OrderService {
             /**
              * check số lượng đặt không được lớn hơn sl có trong kho
              * */
-//            if (qty > product.getQty()) {
-//                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, WsMessage.CART_QTY_EXCEPTION);
-//            }
+
         });
     }
 }

@@ -141,7 +141,6 @@ const OrderPage = () => {
 
     const handleChangeTextSearchFilter = values => {
         const textSearch = values.textSearch.trim() == '' ? null : values.textSearch.trim()
-        console.log("TeS", textSearch)
         setReq({
             ...req,
             textSearch: textSearch
@@ -274,14 +273,14 @@ const OrderPage = () => {
                         {orders && orders.map((order, index) => (
                             <tr key={order.id}>
                                 <td className="text-center">{index + 1}</td>
-                                <td>{order.customer.combination}</td>
-                                <td className='col-1'>{order.customer.phone}</td>
-                                <td className="col-1">{order.orderDate}</td>
+                                <td className='col-1'>{order.customer}</td>
+                                <td>{order.orderDate}</td>
+                                <td className="col-1">{order.phone}</td>
                                 <td className="col-2">{order.address}</td>
                                 <td className="col-1">{order.totalFmt}</td>
-                                <td></td>
+                                <td>{order.type}({order.payed})</td>
                                 <td>{order.note}</td>
-                                <td className="col-2">{order.status.combination}</td>
+                                <td className="col-2">{order.status}</td>
                                 <td>
                                     <div className="btn-group dropleft">
                                         <a className="btn text-dark" type="button" id="dropdownMenuButton"
