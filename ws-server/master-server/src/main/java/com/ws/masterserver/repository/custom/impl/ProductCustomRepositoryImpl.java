@@ -23,27 +23,35 @@ public class ProductCustomRepositoryImpl implements ProductCustomRepository {
     private final EntityManager entityManager;
 
     @Override
-    public PageData<ProductResponse> search(CurrentUser currentUser, ProductReq req) {
+    public PageData<ProductResponse> search(ProductReq req) {
         var prefix = "select\n";
         var select = "new com.ws.masterserver.dto.customer.product.ProductResponse(\n" +
                 "p.id as productId,\n" +
                 "p.name as productName,\n" +
                 "p.active as active,\n" +
+                "p.thumbnail as thumbnail,\n" +
+                "p.price as price,\n" +
                 "c.name as categoryName,\n" +
                 "p.des as description,\n" +
-                "p.material as material,\n" +
+                "m.name as material,\n" +
                 "p.type as type,\n" +
                 "p.createdDate as productCreatedDate,\n" +
                 "p.createdBy as productCreatedBy,\n" +
                 "trim(concat(coalesce(u.firstName, ''), ' ', coalesce(u.lastName, ''))) as createdName)\n";
         var from = "from ProductEntity p\n";
         var joins = "left join CategoryEntity c on p.categoryId = c.id\n" +
+                "left join MaterialEntity m on p.materialId = m.id\n" +
                 "left join UserEntity u on p.createdBy = u.id\n";
         var where = "where 1 = 1 and c.active = 1\n";
 
         if (Boolean.FALSE.equals(StringUtils.isNullOrEmpty(req.getTextSearch()))) {
             where += "and (lower(p.name) like concat('%', '" + req.getTextSearch().trim().toLowerCase(Locale.ROOT) + "', '%')\n" +
-                    "or lower(p.des) like concat('%', '" + req.getTextSearch().trim().toLowerCase(Locale.ROOT) + "', '%'))\n";
+                    "or lower(c.name) like concat('%', '" + req.getTextSearch().trim().toLowerCase(Locale.ROOT) + "', '%'))\n";
+        }
+
+        if (Boolean.FALSE.equals(StringUtils.isNullOrEmpty(req.getPriceMin()))
+                && Boolean.FALSE.equals(StringUtils.isNullOrEmpty(req.getPriceMax()))) {
+            where += "and p.price BETWEEN " + req.getPriceMin().trim() + " AND " + req.getPriceMax().trim() + "\n";
         }
 
         var order = "order by ";
@@ -51,8 +59,8 @@ public class ProductCustomRepositoryImpl implements ProductCustomRepository {
             case "name":
                 order += "p.name";
                 break;
-            case "des":
-                order += "p.des";
+            case "price":
+                order += "p.price";
                 break;
             case "createdName":
                 order += "u.lastName";

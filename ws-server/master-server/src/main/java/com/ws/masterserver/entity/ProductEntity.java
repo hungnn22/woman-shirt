@@ -35,12 +35,16 @@ public class ProductEntity {
     @Column(name = "material_id")
     private String materialId;
 
+    @Column(name = "type_id")
+    private String type;
+
     private String des;
 
-    @Enumerated(EnumType.STRING)
-    private TypeEnum type;
-
     private Boolean active;
+
+    private String thumbnail;
+
+    private Long price;
 
     @CreatedDate
     @Temporal(TemporalType.TIMESTAMP)

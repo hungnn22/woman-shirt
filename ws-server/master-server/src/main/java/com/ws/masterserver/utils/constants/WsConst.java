@@ -185,16 +185,17 @@ public class WsConst {
         /** product */
 
         public static final String PRODUCT_ID = "3166675c-8def-42a0-b9f6-975a25738ce8";
-        public static final String PRODUCT_NAME = "Áo khoác nam Adidas";
+        public static final String PRODUCT_NAME = "Áo phông nam Adidas";
         public static final String PRODUCT_DES = "Chất liệu : dù 2 lớp , trong lót dù\n" +
                 "Màu sắc đa dạng tha hồ lựa chọn nhé các chị em.\n" +
                 "Size : chỉ có 1 size cân nặng từ 45-60kg , chiều cao từ 1m45- 1m6\n" +
                 "Công dụng : chống nắng , tránh gió , giữ ấm ";
 
+        public static final String PRODUCT_THUMBNAIL = "https://media.coolmate.me/cdn-cgi/image/width=672,height=990,quality=100/uploads/March2022/6-0_55.jpg";
         public static final String PRODUCT_OPTION_BLUE_IMG = "https://media.coolmate.me/cdn-cgi/image/width=672,height=990,quality=100/uploads/March2022/6-0_55.jpg";
         public static final String PRODUCT_OPTION_GREY_IMG = "https://media.coolmate.me/cdn-cgi/image/width=672,height=990,quality=100/uploads/March2022/5-0_copy.jpg";
 
-
+        public static final Long PRODUCT_PRICE = 90000L;
         public static final Long PRODUCT_OPTION_GREY_PRICE = 100000L;
         public static final Long PRODUCT_OPTION_BLUE_PRICE = 80000L;
     }

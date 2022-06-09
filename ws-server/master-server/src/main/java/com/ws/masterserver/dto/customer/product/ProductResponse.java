@@ -21,9 +21,11 @@ public class ProductResponse {
     private String id;
     private String name;
     private Boolean active;
+    private String thumbnail;
+    private Long price;
     private String categoryName;
     private String des;
-    private MaterialEnum material;
+    private String materialName;
     private TypeEnum type;
     private Date createdDate;
     private String createdBy;
