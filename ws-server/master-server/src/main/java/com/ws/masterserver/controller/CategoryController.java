@@ -24,8 +24,6 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 public class CategoryController extends WsController {
 
-    private final WsService service;
-
     @PostMapping("/search")
     @Operation(summary = "API tìm kiếm danh sách loại sp")
     public ResponseEntity<PageData<CategoryRes>> search(@RequestBody CategoryReq req) {

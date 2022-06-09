@@ -1,6 +1,7 @@
 package com.ws.masterserver.utils.common;
 
-import com.ws.masterserver.dto.admin.order.search.PromotionDto;
+import com.ws.masterserver.dto.admin.order.detail.PromotionDto;
+import com.ws.masterserver.dto.admin.order.detail.ResultDto;
 import com.ws.masterserver.utils.base.WsException;
 import com.ws.masterserver.utils.constants.WsCode;
 import com.ws.masterserver.utils.constants.enums.PromotionTypeEnum;
@@ -52,15 +53,20 @@ public class OrderUtils {
     }
 
     /**
-     * @param defaultTotal Tổng tiền mặc định.
+     * @param defaultTotal Tổng tiền sản phẩm chưa trừ đi khuyến mãi sản phẩm.
      * @param shipPrice    Tiền ship
      * @param promotions   Danh sách khuyến mãi
-     * @apiNote Dựa vào loại khuyến mãi và % giảm giá sẽ trừ đi vào giá
      * @return giá phải trả
+     * @apiNote Dựa vào loại khuyến mãi và % giảm giá sẽ trừ đi vào giá
      */
     public static Long getTotal(Long defaultTotal, Long shipPrice, List<PromotionDto> promotions) {
         try {
-            if (!promotions.isEmpty()) {
+            /**
+             * Nếu không có khuyến mãi thì = defaultTotal + shipPrice
+             * */
+            if (promotions.isEmpty()) {
+                return defaultTotal + shipPrice;
+            } else {
                 for (var promotion : promotions) {
                     var type = PromotionTypeEnum.valueOf(promotion.getTypeCode());
                     switch (type) {
@@ -88,6 +94,34 @@ public class OrderUtils {
         } finally {
             return defaultTotal;
         }
+    }
 
+    public static ResultDto getResultDto(long shopPrice, Long shipPrice, List<PromotionDto> promotions) {
+        var result = ResultDto.builder().ship(shipPrice).shipFmt(MoneyUtils.format(shipPrice));
+        try {
+            if (promotions.isEmpty()) {
+
+            } else {
+                for (var promotion : promotions) {
+                    var type = PromotionTypeEnum.valueOf(promotion.getTypeCode());
+                    switch (type) {
+                        case TYPE1:
+
+                            break;
+
+                        case TYPE2:
+
+                            break;
+
+                        default:
+                            throw new WsException(WsCode.INTERNAL_SERVER);
+                    }
+
+                }
+            }
+        } catch (Exception e) {
+
+        }
+        return result.build();
     }
 }

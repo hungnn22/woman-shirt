@@ -25,15 +25,13 @@ public class ItemDto {
     //product name
     private String name;
 
-    private ColorDto color;
+    private String color;
 
-    private SizeDto size;
+    private String size;
 
     private String img;
 
-    private MaterialDto material;
-
-    private TypeDto type;
+    private String material;
 
     private Long price;
 
@@ -41,9 +39,9 @@ public class ItemDto {
 
     private Long qty;
 
-    private String des;
+    private String category;
 
-    private List<String> des4Menu;
+    private Long total;
 
-    private CategoryDto category;
+    private String totalFmt;
 }

@@ -1,0 +1,9 @@
+<div class="container">
+    <div class="col" style="margin-bottom:10px;margin-top:10px">
+        <p style="color:rgb(0, 0, 0); font-style: normal;"><b>Khoảng giá: {{ value[0] }}.000đ - {{ value[1] }}.000đ</b>
+        </p>
+        <kendo-rangeslider style="width:100%" [(ngModel)]="value" [min]="min" [max]="max" [smallStep]="smallStep" (ngModelChange)="change()">
+        </kendo-rangeslider>
+    </div>
+    <div><button style="width:100%;margin-bottom:10px" mat-raised-button color="primary">Áp dụng</button></div>
+</div>

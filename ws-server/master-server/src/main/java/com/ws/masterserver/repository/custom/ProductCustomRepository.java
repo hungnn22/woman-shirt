@@ -6,5 +6,6 @@ import com.ws.masterserver.utils.base.rest.CurrentUser;
 import com.ws.masterserver.utils.base.rest.PageData;
 
 public interface ProductCustomRepository {
-    PageData<ProductResponse> search(CurrentUser currentUser, ProductReq req);
+//    PageData<ProductResponse> search(CurrentUser currentUser, ProductReq req);
+    PageData<ProductResponse> search(ProductReq req);
 }

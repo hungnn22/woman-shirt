@@ -106,11 +106,11 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public PageData<ProductResponse> search(CurrentUser currentUser, ProductReq req) {
+    public PageData<ProductResponse> search( ProductReq req) {
         //Nếu là khách hàng thì không cho search theo trạng thái
-        if (req.getActive() != null && RoleEnum.ROLE_CUSTOMER.equals(currentUser.getRole())) {
-            return new PageData<>(true);
-        }
-        return repository.productCustomRepository.search(currentUser, req);
+//        if (req.getActive() != null && RoleEnum.ROLE_CUSTOMER.equals(currentUser.getRole())) {
+//            return new PageData<>(true);
+//        }
+        return repository.productCustomRepository.search( req);
     }
 }

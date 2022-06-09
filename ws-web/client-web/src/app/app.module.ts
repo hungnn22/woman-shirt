@@ -23,6 +23,7 @@ import {HttpClientModule} from '@angular/common/http';
 import {MatInputModule} from '@angular/material/input';
 import { DialogComponent } from './view/dialog/dialog.component';
 import {NgxPaginationModule} from 'ngx-pagination';
+import { PriceComponent } from './component/price/price.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import {NgxPaginationModule} from 'ngx-pagination';
     FooterComponent,
     ContentComponent,
     DialogComponent,
+    PriceComponent,
   ],
   imports: [
     BrowserModule,

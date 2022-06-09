@@ -19,6 +19,7 @@ public class WsRepository {
     public final OrderPromotionRepository orderPromotionRepository;
     public final OrderStatusRepository orderStatusRepository;
     public final ProductRepository productRepository;
+    public final PromotionRepository promotionRepository;
     public final ProductOptionRepository productOptionRepository;
     public final ResetTokenRepository resetTokenRepository;
     public final ReviewMediaRepository reviewMediaRepository;
