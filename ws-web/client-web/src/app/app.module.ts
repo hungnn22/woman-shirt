@@ -24,6 +24,7 @@ import {MatInputModule} from '@angular/material/input';
 import { DialogComponent } from './view/dialog/dialog.component';
 import {NgxPaginationModule} from 'ngx-pagination';
 import { PriceComponent } from './component/price/price.component';
+import { SizeComponent } from './component/size/size.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { PriceComponent } from './component/price/price.component';
     ContentComponent,
     DialogComponent,
     PriceComponent,
+    SizeComponent,
   ],
   imports: [
     BrowserModule,
