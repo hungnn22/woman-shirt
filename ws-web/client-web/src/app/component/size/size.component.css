@@ -1,0 +1,122 @@
+/* .mat-raised-button {
+  height: 50px;
+  position: relative;
+  top: -7px;
+  left: 10px;
+  width: 100%;
+}
+
+article{
+  float: left;
+}
+aside{
+  float: left
+}
+
+form {
+  width: 300px;
+  background-color: red;
+}
+input{
+  width:50%;
+  float: left;
+  border: none;
+  outline:none;
+  }
+input:active{
+  border: none;
+  outline:none;
+  } */
+.option {
+  /* margin-top: 0px; */
+}
+
+
+
+article {
+  width: 69%;
+  float: left;
+  padding: 20px;
+}
+
+aside {
+  width: 30%;
+  float: left;
+  /* padding: 20px; */
+  /* border: 1px solid; */
+  margin-top: 30px;
+
+}
+
+.height {
+  width: 50%;
+  float: left;
+  padding: 0 10px 10px 10px;
+}
+
+.weight {
+  width: 50%;
+  float: left;
+  padding: 0 10px 10px 10px;
+
+
+}
+
+
+.findSize {
+  width: 44%;
+  float: left;
+  margin-left: 14px;
+  background-color: #F1F1F1;
+  font-weight: 200px;
+  }
+
+
+.applySize {
+  width: 44%;
+  float: left;
+  /* top:-15px; */
+  /* margin: -10px; */
+  margin-left: 15px;
+  background-color: #F1F1F1;
+font-weight: 200px;
+
+
+
+}
+
+
+td {
+  font-weight: bold;
+}
+
+table {
+  text-align: center;
+  border-style: solid;
+  border-color: #F1F1F1;
+}
+
+.border1 {
+  background-color: white;
+  height: 259px;
+  margin-top: 50px;
+
+}
+
+.table-secondary {
+  border-color: #F1F1F1;
+}
+
+.border2 {
+  height: 385px;
+  background-color: #F1F1F1;
+  padding: 28px;
+
+}
+
+.title {
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  font-size: 25px;
+
+}
+

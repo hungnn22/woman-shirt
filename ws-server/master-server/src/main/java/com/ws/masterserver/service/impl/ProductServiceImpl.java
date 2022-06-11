@@ -5,12 +5,13 @@ import com.ws.masterserver.dto.admin.product.ProductDetailResponse;
 import com.ws.masterserver.dto.admin.product.ProductDto;
 import com.ws.masterserver.dto.admin.product_option.ProductOptionResponse;
 import com.ws.masterserver.dto.customer.product.ProductResponse;
-import com.ws.masterserver.entity.CategoryEntity;
-import com.ws.masterserver.entity.ProductEntity;
-import com.ws.masterserver.entity.ProductOptionEntity;
+import com.ws.masterserver.dto.customer.review.response.ReviewResponse;
+import com.ws.masterserver.entity.*;
 import com.ws.masterserver.service.ProductService;
 import com.ws.masterserver.utils.base.WsRepository;
 import com.ws.masterserver.utils.base.rest.PageData;
+import com.ws.masterserver.utils.common.DateUtils;
+import com.ws.masterserver.utils.common.MoneyUtils;
 import com.ws.masterserver.utils.common.UidUtils;
 import com.ws.masterserver.utils.constants.WsCode;
 import com.ws.masterserver.utils.constants.WsConst;
@@ -46,7 +47,7 @@ public class ProductServiceImpl implements ProductService {
                 .categoryId(dto.getCategoryId())
 //                .material(dto.getMaterial())
                 .des(dto.getDes().trim())
-                .type(dto.getType())
+ //               .type(dto.getType())
                 .build();
         repository.productRepository.save(product);
 
@@ -76,9 +77,18 @@ public class ProductServiceImpl implements ProductService {
         response.setProductName(product.getName());
         response.setDescription(product.getDes());
 
+        MaterialEntity material = repository.materialRepository.findById(product.getMaterialId())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, String.format(WsConst.Messages.NOT_FOUND, WsConst.Nouns.MATERIAL_VI)));
+
+        response.setMaterial(material.getName());
+        response.setType("");
+
+
         CategoryEntity category = repository.categoryRepository.findById(product.getCategoryId())
                 .orElseThrow(() -> new RuntimeException("Not found category with id = " + id));
         response.setCategoryName(category.getName());
+
+
 
         List<ProductOptionEntity> productOptions = repository.productOptionRepository.findByProductId(id);
 
@@ -87,30 +97,56 @@ public class ProductServiceImpl implements ProductService {
 
                     ProductOptionResponse productOptionResponse = new ProductOptionResponse();
                     productOptionResponse.setImage(option.getImage());
-                    productOptionResponse.setColorName("");
+
+                    ColorEntity color = repository.colorRepository.findById(option.getColorId())
+                            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, String.format(WsConst.Messages.NOT_FOUND, WsConst.Nouns.COLOR_VI)));
+
+                    productOptionResponse.setColorName(color.getName());
                     productOptionResponse.setId(option.getId());
                     productOptionResponse.setQty(option.getQty());
-                    productOptionResponse.setSizeName("");
-                    productOptionResponse.setProductName(product.getName());
+                    productOptionResponse.setSizeName(option.getSize().getName());
                     productOptionResponse.setImage(option.getImage());
+                    productOptionResponse.setPrice(MoneyUtils.format(option.getPrice()));
 
                     return productOptionResponse;
 
                 }).collect(Collectors.toList())
         );
 
-        response.setMaterial("");
-        response.setType("");
+        Integer countRating = repository.reviewRepository.countRatingActive();
+        response.setCountRating(countRating);
+
+        Float avgRating = repository.reviewRepository.avgRating();
+        response.setAvgRating(avgRating);
+
+        List<ReviewEntity> listReview = repository.reviewRepository.findByProductIdAndActive(id,Boolean.TRUE);
+
+        response.setReview(
+                listReview.stream().map(review -> {
+                    ReviewResponse reviewResponse = new ReviewResponse();
+
+                    String userName = repository.reviewRepository.getUserNameReview(review.getUserId());
+
+                    reviewResponse.setReviewId(review.getId());
+                    reviewResponse.setUserName(userName);
+                    reviewResponse.setActive(review.getActive());
+                    reviewResponse.setContent(review.getContent());
+                    reviewResponse.setRating(review.getRating());
+                    reviewResponse.setCreatedDate(DateUtils.parseDateToStr(DateUtils.DATE_TIME_FORMAT_VI,review.getCreatedDate()));
+
+                    return reviewResponse;
+                }).collect(Collectors.toList())
+        );
 
         return new ResData<>(response, WsCode.OK);
     }
 
     @Override
-    public PageData<ProductResponse> search(CurrentUser currentUser, ProductReq req) {
+    public PageData<ProductResponse> search( ProductReq req) {
         //Nếu là khách hàng thì không cho search theo trạng thái
-        if (req.getActive() != null && RoleEnum.ROLE_CUSTOMER.equals(currentUser.getRole())) {
-            return new PageData<>(true);
-        }
-        return repository.productCustomRepository.search(currentUser, req);
+//        if (req.getActive() != null && RoleEnum.ROLE_CUSTOMER.equals(currentUser.getRole())) {
+//            return new PageData<>(true);
+//        }
+        return repository.productCustomRepository.search( req);
     }
 }

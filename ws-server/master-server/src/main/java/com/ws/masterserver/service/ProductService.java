@@ -11,5 +11,6 @@ import com.ws.masterserver.utils.base.rest.ResData;
 public interface ProductService {
     ResData<String> create(CurrentUser currentUser, ProductDto dto);
     ResData<ProductDetailResponse> getProductDetail(String id);
-    PageData<ProductResponse> search(CurrentUser currentUser, ProductReq productReq);
+//    PageData<ProductResponse> search(CurrentUser currentUser, ProductReq productReq);
+    PageData<ProductResponse> search( ProductReq productReq);
 }

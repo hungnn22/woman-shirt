@@ -144,8 +144,10 @@ public class ChainSeeder implements Seeder {
                 .categoryId(category.getId())
                 .name(WsConst.Seeders.PRODUCT_NAME)
                 .des(WsConst.Seeders.PRODUCT_DES)
+                .price(WsConst.Seeders.PRODUCT_PRICE)
+                .thumbnail(WsConst.Seeders.PRODUCT_THUMBNAIL)
                 .materialId(materials.get(new Random().nextInt(materials.size())).getId())
-                .type(TypeEnum.MALE)
+//                .type(TypeEnum.MALE)
                 .active(Boolean.TRUE)
                 .build();
         repository.productRepository.save(product);

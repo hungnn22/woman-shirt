@@ -19,9 +19,13 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 public class ProductController extends WsController {
 
+//    @PostMapping("/search")
+//    public ResponseEntity<?> search(@RequestBody ProductReq req){
+//        return ResponseEntity.status(HttpStatus.OK).body(service.productService.search(getCurrentUser(), req));
+//    }
     @PostMapping("/search")
     public ResponseEntity<?> search(@RequestBody ProductReq req){
-        return ResponseEntity.status(HttpStatus.OK).body(service.productService.search(getCurrentUser(), req));
+        return ResponseEntity.status(HttpStatus.OK).body(service.productService.search( req));
     }
 
     @Operation(summary = "ADMIN: API thêm sản phầm")

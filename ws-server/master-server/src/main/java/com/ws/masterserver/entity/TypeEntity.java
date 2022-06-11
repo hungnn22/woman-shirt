@@ -1,50 +1,23 @@
 package com.ws.masterserver.entity;
 
-import com.ws.masterserver.utils.constants.enums.TypeEnum;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.experimental.Accessors;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name = "product")
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
-@Accessors(chain = true)
-@EntityListeners(AuditingEntityListener.class)
-public class ProductEntity {
+@Table(name = "type")
+
+public class TypeEntity {
     @Id
     private String id;
-
     private String name;
-
-    @Column(name = "category_id")
-    private String categoryId;
-
-    @Column(name = "material_id")
-    private String materialId;
-
-    @Column(name = "type_id")
-    private String type;
-
-    private String des;
-
     private Boolean active;
-
-    private String thumbnail;
-
-    private Long price;
 
     @CreatedDate
     @Temporal(TemporalType.TIMESTAMP)
@@ -63,4 +36,5 @@ public class ProductEntity {
     @LastModifiedBy
     @Column(name = "updated_by")
     private String updatedBy;
+
 }
