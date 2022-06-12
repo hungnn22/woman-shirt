@@ -36,15 +36,11 @@ public class ProductEntity {
     private String materialId;
 
     @Column(name = "type_id")
-    private String type;
+    private String typeId;
 
     private String des;
 
     private Boolean active;
-
-    private String thumbnail;
-
-    private Long price;
 
     @CreatedDate
     @Temporal(TemporalType.TIMESTAMP)
