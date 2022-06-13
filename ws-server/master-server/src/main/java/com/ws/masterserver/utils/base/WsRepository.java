@@ -25,7 +25,7 @@ public class WsRepository {
     public final ReviewMediaRepository reviewMediaRepository;
     public final ReviewRepository reviewRepository;
     public final UserRepository userRepository;
-
+    public final CartRepository cartRepository;
     /** custom */
     public final CategoryCustomRepository categoryCustomRepository;
     public final OrderCustomRepository orderCustomRepository;
