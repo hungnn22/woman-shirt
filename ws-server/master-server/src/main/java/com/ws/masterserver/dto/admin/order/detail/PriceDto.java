@@ -5,19 +5,13 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-/**
- * @author hungnn22
- */
-
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ResultDto {
-    private PriceDto shop;
-
-    private PriceDto ship;
-
-    //tổng
+public class PriceDto {
+    private String name;
+    private String price;
+    private String discount;
     private String total;
 }

@@ -52,7 +52,7 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
                     response.setStatus(HttpStatus.FORBIDDEN.value());
                     response.setContentType(MediaType.APPLICATION_JSON_VALUE);
                     HashMap<String, Object> errors = new HashMap<>();
-                    errors.put("code", HttpStatus.FORBIDDEN.value());
+                    errors.put("statusCode", HttpStatus.FORBIDDEN.value());
                     errors.put("error", e.getMessage());
                     errors.put("timeStamp", new Date());
                     errors.put("path", request.getServletPath());

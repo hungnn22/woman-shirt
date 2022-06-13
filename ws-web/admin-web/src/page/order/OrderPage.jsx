@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import AxiosApi from '../../api/AxiosApi'
 import WsUrl from "../../utils/constants/WsUrl";
 import { useForm } from "react-hook-form";
+import OrderDetail from './OrderDetail';
 
 let location = {
     provinceCode: null,
@@ -43,7 +44,7 @@ const OrderPage = () => {
     const [req, setReq] = useState(initReq)
     const [orders, setOrders] = useState([])
     const [pageInfo, setPageInfo] = useState(initPageInfo)
-    const [detail, setDetail] = useState({})
+    const [detail, setDetail] = useState(null)
 
     const { register, handleSubmit, formState: { errors } } = useForm()
 
@@ -274,8 +275,8 @@ const OrderPage = () => {
                                 <tr key={order.id}>
                                     <td className="text-center">{index + 1}</td>
                                     <td className='col-1'>{order.customer}</td>
-                                    <td>{order.orderDate}</td>
                                     <td className="col-1">{order.phone}</td>
+                                    <td>{order.orderDate}</td>
                                     <td className="col-2">{order.address}</td>
                                     <td className="col-1">{order.totalFmt}</td>
                                     <td>{order.type}({order.payed})</td>
@@ -294,93 +295,7 @@ const OrderPage = () => {
                                                 <a className="dropdown-item" href="#">Chỉnh sửa trạng thái</a>
                                             </div>
                                         </div>
-
-                                        {detail && <div className="modal fade" id={`detailModal${order.id}`} tabIndex={-1}
-                                            role="dialog"
-                                            aria-labelledby="detailModalLabel" aria-hidden="true">
-                                            <div className="modal-dialog modal-xl" role="document">
-                                                <div className="modal-content">
-                                                    <div className="modal-header">
-                                                        <h5 className="modal-title" id="exampleModalLabel">Chi tiết đơn
-                                                            hàng</h5>
-                                                        <button type="button" className="close" data-dismiss="modal"
-                                                            aria-label="Close">
-                                                            <span aria-hidden="true">×</span>
-                                                        </button>
-                                                    </div>
-                                                    <div className="modal-body p-4">
-                                                        <div>
-                                                            <h6 className='text-dark'><b>1. Sản phẩm</b></h6>
-                                                            <table className="table table-bordered mt-2" id="dataTable"
-                                                                width="100%" cellSpacing={0}>
-                                                                <thead>
-                                                                    <tr className='text-bold text-dark'>
-                                                                        <th className='text-center'>No</th>
-                                                                        <th>Sản phẩm</th>
-                                                                        <th>Đơn giá</th>
-                                                                        <th>Số lượng</th>
-                                                                        <th>Size</th>
-                                                                        <th>Màu sắc</th>
-                                                                        <th>Chất liệu</th>
-                                                                        <th>Tổng(VND)</th>
-                                                                    </tr>
-                                                                </thead>
-                                                                <tbody>
-                                                                    {detail.items && detail.items.map((obj, index) => (
-                                                                        <tr key={obj.id}>
-                                                                            <td className='text-center'>{index + 1}</td>
-                                                                            <td>{obj.name}</td>
-                                                                            <td>{obj.priceFmt}</td>
-                                                                            <td>{obj.qty}</td>
-                                                                            <td>{obj.size}</td>
-                                                                            <td>{obj.color}</td>
-                                                                            <td>{obj.material}</td>
-                                                                            <td>{obj.totalFmt}</td>
-                                                                        </tr>
-                                                                    ))}
-                                                                </tbody>
-                                                            </table>
-                                                        </div>
-                                                        <div className='mt-4'>
-                                                            <h6 className='text-dark'><b>2. Khuyến mãi</b></h6>
-                                                            <table className="table table-bordered mt-2" id="dataTable"
-                                                                width="100%" cellSpacing={0}>
-                                                                <thead>
-                                                                    <tr className='text-bold text-dark'>
-                                                                        <th className='text-center'>No</th>
-                                                                        <th>Tên</th>
-                                                                        <th>Voucher</th>
-                                                                        <th>Giảm giá(%)</th>
-                                                                        <th>Loại</th>
-                                                                    </tr>
-                                                                </thead>
-                                                                <tbody>
-                                                                    {detail.promotions && detail.promotions.map((pro, index) => (
-                                                                        <tr key={index}>
-                                                                            <td className='text-center'>{index + 1}</td>
-                                                                            <td>{pro.name}</td>
-                                                                            <td>{pro.voucher}</td>
-                                                                            <td>{pro.percentDiscount}</td>
-                                                                            <td>{pro.typeName}</td>
-                                                                        </tr>
-                                                                    ))}
-                                                                </tbody>
-                                                            </table>
-                                                        </div>
-                                                        <div className='mt-4'>
-                                                            <h6 className='text-dark'><b>3. Tổng tiền</b></h6>
-                                                        </div>
-                                                    </div>
-                                                    <div className="modal-footer">
-                                                        <button type="button" className="btn btn-secondary"
-                                                            data-dismiss="modal">Đóng
-                                                        </button>
-                                                        <button type="button" className="btn btn-primary">Lưu
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>}
+                                        {detail && <OrderDetail detail={detail} order={order} />}
                                     </td>
                                 </tr>))}
                         </tbody>

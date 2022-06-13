@@ -1,5 +1,6 @@
 package com.ws.masterserver.utils.common;
 
+import com.ws.masterserver.dto.admin.order.detail.PriceDto;
 import com.ws.masterserver.dto.admin.order.detail.PromotionDto;
 import com.ws.masterserver.dto.admin.order.detail.ResultDto;
 import com.ws.masterserver.utils.base.WsException;
@@ -9,11 +10,16 @@ import com.ws.masterserver.utils.constants.enums.RoleEnum;
 import com.ws.masterserver.utils.constants.enums.StatusEnum;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 @Slf4j
 public class OrderUtils {
+
+    private OrderUtils() {
+    }
+
     /**
      * @param statusStr       trạng thái hiện tại
      * @param createdDate     thời gian tạo trạng thái hiện tại
@@ -91,26 +97,38 @@ public class OrderUtils {
             }
         } catch (Exception e) {
             log.error("getTotal: {}", e.getMessage());
-        } finally {
-            return defaultTotal;
         }
+        return defaultTotal;
     }
 
     public static ResultDto getResultDto(long shopPrice, Long shipPrice, List<PromotionDto> promotions) {
-        var result = ResultDto.builder().ship(shipPrice).shipFmt(MoneyUtils.format(shipPrice));
+        var result = ResultDto.builder();
+        var shipTotal = shipPrice;
+        var shopTotal = shopPrice;
         try {
-            if (promotions.isEmpty()) {
-
-            } else {
+            var ship = PriceDto.builder()
+                    .name(PromotionTypeEnum.TYPE1.getName())
+                    .price(MoneyUtils.format(shipPrice))
+                    .total(MoneyUtils.format(shipPrice));
+            var shop = PriceDto.builder()
+                    .name(PromotionTypeEnum.TYPE2.getName())
+                    .price(MoneyUtils.format(shopPrice))
+                    .total(MoneyUtils.format(shopPrice));
+            if (!promotions.isEmpty()) {
                 for (var promotion : promotions) {
                     var type = PromotionTypeEnum.valueOf(promotion.getTypeCode());
                     switch (type) {
                         case TYPE1:
-
+                            var shipDiscount = shipPrice * promotion.getPercentDiscount().longValue() / 100;
+                            shipTotal = shipPrice - shipDiscount;
+                            ship.discount(MoneyUtils.format(shipDiscount))
+                                    .total(MoneyUtils.format(shipTotal));
                             break;
-
                         case TYPE2:
-
+                            var shopDiscount = shopPrice * promotion.getPercentDiscount().longValue() / 100;
+                            shopTotal = shopPrice - shopDiscount;
+                            shop.discount(MoneyUtils.format(shopDiscount))
+                                    .total(MoneyUtils.format(shopTotal));
                             break;
 
                         default:
@@ -119,8 +137,11 @@ public class OrderUtils {
 
                 }
             }
+            result.ship(ship.build())
+                    .shop(shop.build())
+                    .total(MoneyUtils.format(shipTotal + shipTotal));
         } catch (Exception e) {
-
+            log.error("getResultDto: {}", e.getMessage());
         }
         return result.build();
     }

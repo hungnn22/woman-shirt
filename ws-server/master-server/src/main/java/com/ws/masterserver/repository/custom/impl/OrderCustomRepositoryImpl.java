@@ -22,6 +22,7 @@ import javax.persistence.EntityManager;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Component
@@ -117,12 +118,41 @@ public class OrderCustomRepositoryImpl implements OrderCustomRepository {
             return (PageData<OrderRes>) PageData.setEmpty(req.getPageReq());
         }
 
-        return new PageData<>(objects.stream().map(obj -> {
-            var shipPrice = JpaUtils.getLong(obj[21]);
+        var data = objects.stream().map(obj -> {
+            var shipPrice = Optional.ofNullable(JpaUtils.getLong(obj[21])).orElse(0L);
             var promotions = repository.orderPromotionRepository.findByOrderId(JpaUtils.getString(obj[0]));
             var total = OrderUtils.getTotal(JpaUtils.getLong(obj[24]), shipPrice, promotions);
-            return OrderRes.builder().id(JpaUtils.getString(obj[0])).orderDate(DateUtils.toStr((JpaUtils.getDate(obj[1])), DateUtils.F_VI)).address(JpaUtils.getString(obj[2])).note(JpaUtils.getString(obj[3])).status(OrderUtils.getStatusCombination(JpaUtils.getString(obj[4]), JpaUtils.getDate(obj[6]), JpaUtils.getString(obj[13]), JpaUtils.getString(obj[12]))).customer(UserUtils.getCombination(JpaUtils.getString(obj[20]), JpaUtils.getString(obj[15]), JpaUtils.getString(obj[16]), JpaUtils.getBoolean(obj[17]))).phone(JpaUtils.getString(obj[18])).payed(JpaUtils.getBoolean(obj[22]) ? "Đã thanh toán" : "Chưa thanh toán").type(OrderTypeUtils.getOrderTypeStr(JpaUtils.getString(obj[23]))).total(total).totalFmt(MoneyUtils.format(total)).build();
-        }).collect(Collectors.toList()), req.getPageReq().getPage(), req.getPageReq().getPageSize(), totalElements, WsCode.OK);
+            return OrderRes.builder()
+                    .id(JpaUtils.getString(obj[0]))
+                    .orderDate(DateUtils.toStr((JpaUtils.getDate(obj[1])), DateUtils.F_VI))
+                    .address(JpaUtils.getString(obj[2]))
+                    .note(JpaUtils.getString(obj[3]))
+                    .status(OrderUtils.getStatusCombination(
+                            JpaUtils.getString(obj[4]),
+                            JpaUtils.getDate(obj[6]),
+                            JpaUtils.getString(obj[13]),
+                            JpaUtils.getString(obj[12])))
+                    .customer(UserUtils.getCombination(
+                            JpaUtils.getString(obj[20]),
+                            JpaUtils.getString(obj[15]),
+                            JpaUtils.getString(obj[16]),
+                            JpaUtils.getBoolean(obj[17])))
+                    .phone(JpaUtils.getString(obj[18]))
+                    .payed(Optional.ofNullable(JpaUtils.getBoolean(obj[22])).orElse(false) ?
+                            "Đã thanh toán" :
+                            "Chưa thanh toán")
+                    .type(OrderTypeUtils.getOrderTypeStr(JpaUtils.getString(obj[23])))
+                    .total(total)
+                    .totalFmt(MoneyUtils.format(total))
+                    .build();
+        }).collect(Collectors.toList());
+
+        return new PageData<>(
+                data,
+                req.getPageReq().getPage(),
+                req.getPageReq().getPageSize(),
+                totalElements,
+                WsCode.OK);
     }
 
     @Override
@@ -176,10 +206,11 @@ public class OrderCustomRepositoryImpl implements OrderCustomRepository {
                         .totalFmt(MoneyUtils.format(total))
                         .build());
             }
-            if (!items.isEmpty()) res.items(items);
+            res.items(items);
         }
 
         var promotions = repository.orderPromotionRepository.findByOrderId(id);
+        promotions = promotions.stream().peek(p -> p.setTypeName(PromotionTypeUtils.getName(p.getTypeCode()))).collect(Collectors.toList());
 
         res.promotions(promotions);
 
