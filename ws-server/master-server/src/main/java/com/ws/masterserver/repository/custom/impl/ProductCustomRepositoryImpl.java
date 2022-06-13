@@ -29,20 +29,26 @@ public class ProductCustomRepositoryImpl implements ProductCustomRepository {
                 "p.id as productId,\n" +
                 "p.name as productName,\n" +
                 "p.active as active,\n" +
-                "p.thumbnail as thumbnail,\n" +
-                "p.price as price,\n" +
+                "po.image as thumbnail,\n" +
+                "po.price as price,\n" +
                 "c.name as categoryName,\n" +
                 "p.des as description,\n" +
-                "m.name as material,\n" +
-                "p.type as type,\n" +
+                "m.name as materialName,\n" +
+                "t.name as typeName,\n" +
                 "p.createdDate as productCreatedDate,\n" +
                 "p.createdBy as productCreatedBy,\n" +
                 "trim(concat(coalesce(u.firstName, ''), ' ', coalesce(u.lastName, ''))) as createdName)\n";
         var from = "from ProductEntity p\n";
         var joins = "left join CategoryEntity c on p.categoryId = c.id\n" +
                 "left join MaterialEntity m on p.materialId = m.id\n" +
-                "left join UserEntity u on p.createdBy = u.id\n";
-        var where = "where 1 = 1 and c.active = 1\n";
+                "left join TypeEntity t on p.typeId = t.id\n" +
+                "left join UserEntity u on p.createdBy = u.id\n" +
+                "left join ProductOptionEntity po on p.id = po.productId\n";
+        var where = "where 1 = 1\n" +
+                "and c.active = 1\n" +
+                "and p.active = 1\n" +
+                "and po.price in (select price from ProductOptionEntity where po.productId = p.id)\n" +
+                "and po.image in (select image from ProductOptionEntity where po.productId = p.id)\n";
 
         if (Boolean.FALSE.equals(StringUtils.isNullOrEmpty(req.getTextSearch()))) {
             where += "and (lower(p.name) like concat('%', '" + req.getTextSearch().trim().toLowerCase(Locale.ROOT) + "', '%')\n" +
@@ -51,7 +57,7 @@ public class ProductCustomRepositoryImpl implements ProductCustomRepository {
 
         if (Boolean.FALSE.equals(StringUtils.isNullOrEmpty(req.getPriceMin()))
                 && Boolean.FALSE.equals(StringUtils.isNullOrEmpty(req.getPriceMax()))) {
-            where += "and p.price BETWEEN " + req.getPriceMin().trim() + " AND " + req.getPriceMax().trim() + "\n";
+            where += "and po.price BETWEEN " + req.getPriceMin().trim() + " AND " + req.getPriceMax().trim() + "\n";
         }
 
         var order = "order by ";
@@ -60,7 +66,7 @@ public class ProductCustomRepositoryImpl implements ProductCustomRepository {
                 order += "p.name";
                 break;
             case "price":
-                order += "p.price";
+                order += "po.price";
                 break;
             case "createdName":
                 order += "u.lastName";
