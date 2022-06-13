@@ -1,9 +1,15 @@
+<div style="background-color: #F4F4F4;height: 40px;">
+  <p style="text-align: center; padding-top: 10px;font-size: 16px;"><b>Vui lòng chọn khoảng giá</b></p>
+</div>
 <div class="container">
-    <div class="col" style="margin-bottom:10px;margin-top:10px">
-        <p style="color:rgb(0, 0, 0); font-style: normal;"><b>Khoảng giá: {{ value[0] }}.000đ - {{ value[1] }}.000đ</b>
-        </p>
-        <kendo-rangeslider style="width:100%" [(ngModel)]="value" [min]="min" [max]="max" [smallStep]="smallStep" (ngModelChange)="change()">
-        </kendo-rangeslider>
-    </div>
-    <div><button style="width:100%;margin-bottom:10px" mat-raised-button >Áp dụng</button></div>
+  <div class="col" style="margin-bottom:10px;margin-top:10px">
+
+    <p style="color:rgb(0, 0, 0); font-style: normal;margin-top: 20px;margin-bottom: 20px;">Giá từ<b>
+        {{ value[0] }}.000</b>đ - <b>{{ value[1] }}.000</b>đ
+    </p>
+    <kendo-rangeslider class="rangeslider"style="width:100%" [(ngModel)]="value" [min]="min" [max]="max" [smallStep]="smallStep"
+      (ngModelChange)="change()">
+    </kendo-rangeslider>
+  </div>
+  <div><button style="width:100%;margin-bottom:10px" mat-raised-button>Áp dụng</button></div>
 </div>

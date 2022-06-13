@@ -41,6 +41,7 @@ import { SizeComponent } from './component/size/size.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
+    ReactiveFormsModule,
     NgbModule,
     InputsModule,
     BrowserAnimationsModule,
