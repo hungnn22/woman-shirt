@@ -26,7 +26,7 @@ public class ProductResponse {
     private String categoryName;
     private String des;
     private String materialName;
-    private TypeEnum type;
+    private String typeName;
     private Date createdDate;
     private String createdBy;
     private String createdName;

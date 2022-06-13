@@ -3,7 +3,7 @@ package com.ws.masterserver.utils.constants.enums;
 public enum TypeEnum {
     MALE(1, Boolean.TRUE, "Nam", "MALE"),
     FEMALE(0, Boolean.FALSE, "Nữ", "FEMALE"),
-    NONE(-1, null, "Chưa xác định | Cả hai", "NONE")
+    UNISEX(-1, null, "Unisex", "Unisex")
     ;
 
     private int typeCode;

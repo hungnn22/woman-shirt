@@ -11,31 +11,125 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.transaction.Transactional;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.util.*;
 
 @Transactional
 @Slf4j
 public class ChainSeeder implements Seeder {
 
-    private static final WsRepository repository = BeanUtils.getBean(WsRepository.class);
+    private WsRepository repository = BeanUtils.getBean(WsRepository.class);
+
+    private Random random = SecureRandom.getInstanceStrong();
+
+    public ChainSeeder() throws NoSuchAlgorithmException {
+        //add cmt vao k d' pass sonar
+    }
 
     @Override
     public void seed() {
-        var category = initCategory();
-        if (category != null) {
-            var color = initColors();
-            var materials = initMaterials();
-            var product = initProduct(category, materials);
-            var productOptions = initProductOptions(product, color);
-            var users = initUsers();
-            var customer = users.get("customer@gmail.com");
-            var address = initAddress4Customer(customer);
-            var orders = initOrders(customer, address);
-            orders.forEach(order -> {
-                initOrderDetails(order, productOptions);
-                initOrderStatus(order);
-            });
+        var types = initTypes();
+        var colors = initColors();
+        var promotionTypes = initPromotionTypes();
+        var promotions = initPromotions(promotionTypes);
+        var materials = initMaterials();
+        var category = initCategory(types);
+        var product = initProduct(category, materials);
+        var productOptions = initProductOptions(product, colors);
+        var users = initUsers();
+        var customer = users.get("customer@gmail.com");
+        var staff = users.get("staff@gmail.com");
+        var address = initAddress4Customer(customer);
+        var orders = initOrders(customer, address);
+        orders.forEach(order -> {
+            initOrderDetails(order, productOptions);
+            initOrderStatus(order, customer, staff);
+            initOrderPromotions(order, promotions);
+        });
+
+    }
+
+    private List<OrderPromotionEntity> initOrderPromotions(OrderEntity order, List<PromotionEntity> promotions) {
+        var orderPromotions = List.of(
+                OrderPromotionEntity.builder()
+                        .id(UidUtils.generateUid())
+                        .orderId(order.getId())
+                        .promotionId(promotions.get(getRandomIndex(promotions.size())).getId())
+                        .build()
+        );
+        repository.orderPromotionRepository.saveAll(orderPromotions);
+
+        return orderPromotions;
+    }
+
+    private List<PromotionEntity> initPromotions(List<PromotionTypeEntity> promotionTypes) {
+        var promotions = List.of(
+                PromotionEntity.builder()
+                        .id(UidUtils.generateUid())
+                        .active(true)
+                        .name("Free ship nội thành")
+                        .expiredDate(new Date())
+                        .percentDiscount(100.0)
+                        .useLimit(1L)
+                        .voucher(UidUtils.generateVoucher())
+                        .promotionTypeId(promotionTypes.get(getRandomIndex(promotionTypes.size())).getId())
+                        .build(),
+                PromotionEntity.builder()
+                        .id(UidUtils.generateUid())
+                        .active(true)
+                        .name("Giảm 5% giá trị đơn hàng")
+                        .expiredDate(new Date())
+                        .percentDiscount(5.0)
+                        .useLimit(1L)
+                        .voucher(UidUtils.generateVoucher())
+                        .promotionTypeId(promotionTypes.get(getRandomIndex(promotionTypes.size())).getId())
+                        .build()
+        );
+        repository.promotionRepository.saveAll(promotions);
+
+        return promotions;
+    }
+
+    private List<PromotionTypeEntity> initPromotionTypes() {
+        var promotionTypes = List.of(
+                PromotionTypeEntity.builder()
+                        .id(UidUtils.generateUid())
+                        .active(true)
+                        .name(PromotionTypeEnum.TYPE1.name())
+                        .build(),
+                PromotionTypeEntity.builder()
+                        .id(UidUtils.generateUid())
+                        .active(true)
+                        .name(PromotionTypeEnum.TYPE2.name())
+                        .build());
+        repository.promotionTypeRepository.saveAll(promotionTypes);
+        return promotionTypes;
+    }
+
+    private List<TypeEntity> initTypes() {
+        var typesCount = repository.typeRepository.count();
+        if (typesCount != 3) {
+            repository.typeRepository.deleteAll();
         }
+        var types = List.of(
+                TypeEntity.builder()
+                        .id(UidUtils.generateUid())
+                        .active(Boolean.TRUE)
+                        .name(TypeEnum.MALE.name())
+                        .build(),
+                TypeEntity.builder()
+                        .id(UidUtils.generateUid())
+                        .active(Boolean.TRUE)
+                        .name(TypeEnum.FEMALE.name())
+                        .build(),
+                TypeEntity.builder()
+                        .id(UidUtils.generateUid())
+                        .active(Boolean.TRUE)
+                        .name(TypeEnum.UNISEX.name())
+                        .build()
+        );
+        return repository.typeRepository.saveAll(types);
     }
 
     private List<MaterialEntity> initMaterials() {
@@ -114,7 +208,7 @@ public class ChainSeeder implements Seeder {
                 ProductOptionEntity.builder()
                         .id(UidUtils.generateUid())
                         .productId(product.getId())
-                        .colorId(colors.get(new Random().nextInt(colors.size())).getId())
+                        .colorId(colors.get(getRandomIndex(colors.size())).getId())
                         .image(WsConst.Seeders.PRODUCT_OPTION_BLUE_IMG)
                         .size(SizeEnum.S)
                         .active(Boolean.TRUE)
@@ -124,7 +218,7 @@ public class ChainSeeder implements Seeder {
                 ProductOptionEntity.builder()
                         .id(UidUtils.generateUid())
                         .productId(product.getId())
-                        .colorId(colors.get(new Random().nextInt(colors.size())).getId())
+                        .colorId(colors.get(getRandomIndex(colors.size())).getId())
                         .image(WsConst.Seeders.PRODUCT_OPTION_GREY_IMG)
                         .size(SizeEnum.M)
                         .active(Boolean.TRUE)
@@ -146,8 +240,7 @@ public class ChainSeeder implements Seeder {
                 .des(WsConst.Seeders.PRODUCT_DES)
                 .price(WsConst.Seeders.PRODUCT_PRICE)
                 .thumbnail(WsConst.Seeders.PRODUCT_THUMBNAIL)
-                .materialId(materials.get(new Random().nextInt(materials.size())).getId())
-                .type(TypeEnum.MALE)
+                .materialId(materials.get(getRandomIndex(materials.size())).getId())
                 .active(Boolean.TRUE)
                 .build();
         repository.productRepository.save(product);
@@ -155,52 +248,51 @@ public class ChainSeeder implements Seeder {
         return product;
     }
 
-    private CategoryEntity initCategory() {
-        var category = repository.categoryRepository.findByNameIgnoreCaseAndActive(WsConst.Seeders.CATEGORY_NAME, Boolean.TRUE);
-        if (category == null) {
-            category = CategoryEntity.builder()
-                    .id(UUID.randomUUID().toString())
-                    .name(WsConst.Seeders.CATEGORY_NAME)
-                    .active(Boolean.TRUE)
-                    .des(WsConst.Seeders.CATEGORY_DES)
-                    .build();
-            repository.categoryRepository.save(category);
-            log.info("1. Category: {}", JsonUtils.toJson(category));
-            return category;
-        }
-        return null;
+    private CategoryEntity initCategory(List<TypeEntity> types) {
+        var type = types.get(getRandomIndex(types.size()));
+        var category = CategoryEntity.builder()
+                .id(UUID.randomUUID().toString())
+                .name(WsConst.Seeders.CATEGORY_NAME)
+                .active(Boolean.TRUE)
+                .des(WsConst.Seeders.CATEGORY_DES)
+                .typeId(type.getId())
+                .build();
+        repository.categoryRepository.save(category);
+        log.info("1. Category: {}", JsonUtils.toJson(category));
+        return category;
+
     }
 
-    private void initOrderStatus(OrderEntity order) {
-        repository.orderStatusRepository.saveAll(
-                List.of(OrderStatusEntity.builder()
-                                .id(UUID.randomUUID().toString())
-                                .orderId(order.getId())
-                                .status(StatusEnum.PENDING)
-                                .createdDate(new Date())
-                                .build(),
-                        OrderStatusEntity.builder()
-                                .id(UUID.randomUUID().toString())
-                                .orderId(order.getId())
-                                .status(StatusEnum.ACCEPT)
-                                .createdDate(plusHourOfDate(new Date(), 5))
-                                .build())
-        );
-
+    private void initOrderStatus(OrderEntity order, UserEntity customer, UserEntity staff) {
+        var calendar = Calendar.getInstance();
+        repository.orderStatusRepository.save(OrderStatusEntity.builder()
+                .id(UUID.randomUUID().toString())
+                .orderId(order.getId())
+                .status(StatusEnum.PENDING)
+                .createdDate(calendar.getTime())
+                .createdBy(customer.getId())
+                .build());
+        calendar.add(Calendar.HOUR, 4);
+        repository.orderStatusRepository.save(OrderStatusEntity.builder()
+                .id(UUID.randomUUID().toString())
+                .orderId(order.getId())
+                .status(StatusEnum.ACCEPT)
+                .createdDate(calendar.getTime())
+                .createdBy(staff.getId())
+                .build());
     }
 
     private void initOrderDetails(OrderEntity order, List<ProductOptionEntity> productOptions) {
-        List<OrderDetailEntity> ods = new ArrayList<>();
-        productOptions.forEach(po -> {
-            var orderDetail = OrderDetailEntity.builder()
+        var ods = new ArrayList<OrderDetailEntity>();
+        for (var po : productOptions) {
+            ods.add(OrderDetailEntity.builder()
                     .id(UidUtils.generateUid())
                     .orderId(order.getId())
                     .productOptionId(po.getId())
                     .price(po.getPrice())
-                    .qty(Long.valueOf(new Random().nextInt(Integer.parseInt(po.getQty().toString()))))
-                    .build();
-            ods.add(orderDetail);
-        });
+                    .qty(2L)
+                    .build());
+        }
 
         if (!ods.isEmpty()) {
             repository.orderDetailRepository.saveAll(ods);
@@ -215,12 +307,18 @@ public class ChainSeeder implements Seeder {
                         .userId(customer.getId())
                         .addressId(address.get(0) == null ? null : address.get(0).getId())
                         .note("Giao hàng giờ hành chính")
+                        .payed(false)
+                        .type(OrderTypeEnum.CASH.name())
+                        .shipPrice(20000L)
                         .build(),
                 OrderEntity.builder()
                         .id(UUID.randomUUID().toString())
                         .userId(customer.getId())
                         .addressId(address.get(1) == null ? null : address.get(1).getId())
                         .note("Giao cuối tuần")
+                        .payed(false)
+                        .type(OrderTypeEnum.CASH.name())
+                        .shipPrice(20000L)
                         .build()
         );
         repository.orderRepository.saveAll(orders);
@@ -319,10 +417,7 @@ public class ChainSeeder implements Seeder {
         return userMaps;
     }
 
-    private Date plusHourOfDate(Date date, int hours) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date);
-        calendar.add(Calendar.HOUR_OF_DAY, hours);
-        return calendar.getTime();
+    private int getRandomIndex(int size) {
+        return random.nextInt(size);
     }
 }

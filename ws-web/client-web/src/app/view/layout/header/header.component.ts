@@ -1,3 +1,4 @@
+import { SizeComponent } from './../../../component/size/size.component';
 import { LoginComponent } from '../../../component/login/login.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Component, OnInit } from '@angular/core';
@@ -19,6 +20,22 @@ export class HeaderComponent implements OnInit {
       {
         backdrop: true,
         centered: true,
+      }
+    )
+      .result
+      .then((result) => {
+        // write your code here
+      });
+  }
+
+  ///////////////////////
+  openSize() {
+    this.modalService.open(
+      SizeComponent,
+      {
+        backdrop: true,
+        centered: true,
+        size:'xl'
       }
     )
       .result
