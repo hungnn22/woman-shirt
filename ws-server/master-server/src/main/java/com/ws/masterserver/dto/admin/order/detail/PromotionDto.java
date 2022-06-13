@@ -19,6 +19,14 @@ public class PromotionDto {
     private String voucher;
     private Double percentDiscount;
     private String name;
-    private String typeName;
     private String typeCode;
+
+    public PromotionDto(String voucher, Double percentDiscount, String name, String typeCode) {
+        this.voucher = voucher;
+        this.percentDiscount = percentDiscount;
+        this.name = name;
+        this.typeCode = typeCode;
+    }
+
+    private String typeName;
 }

@@ -17,8 +17,7 @@ public interface OrderPromotionRepository extends JpaRepository<OrderPromotionEn
             "p.voucher,\n" +
             "p.percentDiscount,\n" +
             "p.name,\n" +
-            "pt.name,\n" +
-            "pt.code)\n" +
+            "pt.name)\n" +
             "from OrderPromotionEntity op\n" +
             "left join PromotionEntity p on op.promotionId = p.id\n" +
             "left join PromotionTypeEntity pt on p.promotionTypeId = pt.id\n" +

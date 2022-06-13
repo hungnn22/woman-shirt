@@ -21,9 +21,11 @@ public class WsRepository {
     public final ProductRepository productRepository;
     public final PromotionRepository promotionRepository;
     public final ProductOptionRepository productOptionRepository;
+    public final PromotionTypeRepository promotionTypeRepository;
     public final ResetTokenRepository resetTokenRepository;
     public final ReviewMediaRepository reviewMediaRepository;
     public final ReviewRepository reviewRepository;
+    public final TypeRepository typeRepository;
     public final UserRepository userRepository;
     public final CartRepository cartRepository;
     /** custom */

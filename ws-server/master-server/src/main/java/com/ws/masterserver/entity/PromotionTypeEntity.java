@@ -34,8 +34,6 @@ public class PromotionTypeEntity {
     //new member
     private String name;
 
-    private String code;
-
     private Boolean active;
 
     @CreatedDate
