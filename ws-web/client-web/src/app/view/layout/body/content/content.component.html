@@ -1,50 +1,78 @@
 <div id="search-bar">
-  <div class="container" id="titleProduct">Sản phẩm phổ biến</div>
-  <div class="container" style="font-size: 14px">
-    <div class="row">
-      <div class="col-xl-10">
-        <mat-form-field appearance="outline">
-          <mat-label style="height: 30px">Tìm kiếm sản phẩm</mat-label>
-          <input type="text" matInput [value]="">
+  <div class="container">
+    <div class="row" style="padding-top: 10px;">
+      <div class="col"></div>
+      <div class="col-xl-auto center-block">
+        <p class="h2">
+          Sản phẩm
+        </p>
+      </div>
+      <div class="col"></div>
+    </div>
+    <div class="row" style="margin-left: 24px;">
+      <div class="align-self-center">
+        <mat-form-field style="width: 500px;">
+          <mat-icon matPrefix>search</mat-icon>
+          <input (keyup.enter)="onKeyUp($event)" (keyup)="keyUp($event)" matInput type="search"
+            placeholder="Nhập tên sản phẩm, loại sản phẩm,..." class="search-input">
         </mat-form-field>
+
         <!-- KÍCH THƯỚC -->
-        <mat-form-field style="width: 100px" fxFlex="40" appearance="outline">
+        <!-- <mat-form-field style="width: 100px" fxFlex="40" appearance="outline">
           <mat-label>Kích cỡ</mat-label>
           <mat-select>
             <mat-option *ngFor="let option of options1" [value]="option">{{option}}</mat-option>
           </mat-select>
-        </mat-form-field>
-        <mat-form-field appearance="outline" style="height: 20px;">
-          <mat-label>Loại sản phẩm</mat-label>
-          <mat-select [(value)]="typeOption">
-            <mat-option *ngFor="let option of ['Áo','Quần','Giày','Dép']" [value]="option">{{option}}</mat-option>
-          </mat-select>
-        </mat-form-field>
+        </mat-form-field> -->
+
+        <button (click)="openPrice()" id="priceButton">Giá+</button>
+
         <mat-form-field appearance="outline">
           <mat-label>Sắp xếp theo</mat-label>
           <mat-select [(value)]="sortOption" (valueChange)="sortOptionChange()">
-            <mat-option *ngFor="let option of ['Tên', 'Mới nhất','Bán chạy','Giá']"
-              [value]="option">{{option}}</mat-option>
+            <mat-option
+              *ngFor="let option of ['Mặc định','Hàng mới về','Sản phẩm bán chạy','Giá từ cao tới thấp', 'Giá từ thấp tới cao']; let index = index"
+              [value]="index">{{option}}
+            </mat-option>
           </mat-select>
         </mat-form-field>
-        <button (click)="openPrice()" style="height: 50px; position: relative; top: -5px; left: 10px" mat-raised-button color="basic">Giá+</button>
       </div>
     </div>
 
+    <div class="row" style="margin-left: 24px;">
+        <p class="h7">Tìm thấy x sản phẩm phù hợp!</p>
+    </div>
+
+    <div class="row justify-content-md-center" *ngIf="listProduct.length == 0">
+      <div class="col col-lg-2">
+      </div>
+      <div class="col-md-auto">
+        <mat-spinner></mat-spinner>
+      </div>
+      <div class="col col-lg-2">
+      </div>
+    </div>
+
+
     <div class="row">
-      <div id="content-body" (click)="openDialog()">
-        <div class="container" id="content">
+      <div class="content-body">
+        <div class="container" id="content" (click)="openDialog()">
           <div *ngFor="let item of listProduct| paginate: { itemsPerPage: 8, currentPage: p }" class="card" width="100%"
             height="100%" style="width: 18rem;">
-            <img src="{{item.thumbnail}}" class="card-img-top" width="200px" height="300px">
+            <img [src]="item.thumbnail" class="card-img-top" width="200px" height="300px">
             <div class="card-body">
-              <h5 class="card-title">{{item.name}}</h5>
-              <p class="card-text">{{item.price | currency :'VND' :true: '1.0-3'}}</p>
+              <h4 class="card-title">{{item.name}}</h4>
+              <div class="col">
+                <p class="card-text">{{item.price}} đ</p>
+                <button type="button" class="btn btn-info">Thêm vào giỏ hàng</button>
+              </div>
+
             </div>
           </div>
         </div>
       </div>
     </div>
+
     <div class="row">
       <div class="pagination">
         <pagination-controls (pageChange)="p = $event"></pagination-controls>
@@ -52,6 +80,3 @@
     </div>
   </div>
 </div>
-
-
-

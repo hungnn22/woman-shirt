@@ -1,3 +1,19 @@
+#priceButton {
+  background-color: #ffffff;
+  border: #e8e8e8 solid 1px;
+  border-radius: 7px;
+  height: 60px;
+  width: 100px;
+  position: relative;
+  top: -5px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+#priceButton:hover {
+  border: black 2px solid;
+}
+
 .card {
   float: left;
   margin: 10px;
@@ -27,15 +43,17 @@
 .mat-form-field {
   margin: 10px;
 }
+
 /* /////// */
 
-#titleProduct{
+#titleProduct {
   width: 20%;
-margin-left: 108px;
-margin-top: 20px;
-font-weight: bold;
-font-size: 28px;
+  margin-left: 108px;
+  margin-top: 20px;
+  font-weight: bold;
+  font-size: 28px;
 }
+
 /*  */
 .content {
   display: grid;
@@ -62,7 +80,8 @@ font-size: 28px;
   transform: scale(1.05);
   box-shadow: 0 10px 20px rgba(0, 0, 0, .12), 0 4px 8px rgba(0, 0, 0, .06);
 }
-.pagination{
+
+.pagination {
   position: relative;
   right: 35%;
   left: 35%;

@@ -25,6 +25,8 @@ import { DialogComponent } from './view/dialog/dialog.component';
 import {NgxPaginationModule} from 'ngx-pagination';
 import { PriceComponent } from './component/price/price.component';
 import { SizeComponent } from './component/size/size.component';
+import { NgxSliderModule } from '@angular-slider/ngx-slider';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [
@@ -56,7 +58,9 @@ import { SizeComponent } from './component/size/size.component';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    MatInputModule
+    MatInputModule,
+    NgxSliderModule,
+    MatProgressSpinnerModule
   ],
   providers: [],
   bootstrap: [AppComponent]
