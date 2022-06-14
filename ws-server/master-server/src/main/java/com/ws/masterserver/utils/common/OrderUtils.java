@@ -3,6 +3,7 @@ package com.ws.masterserver.utils.common;
 import com.ws.masterserver.dto.admin.order.detail.PriceDto;
 import com.ws.masterserver.dto.admin.order.detail.PromotionDto;
 import com.ws.masterserver.dto.admin.order.detail.ResultDto;
+import com.ws.masterserver.dto.admin.order.search.OptionDto;
 import com.ws.masterserver.utils.base.WsException;
 import com.ws.masterserver.utils.constants.WsCode;
 import com.ws.masterserver.utils.constants.enums.PromotionTypeEnum;
@@ -10,9 +11,7 @@ import com.ws.masterserver.utils.constants.enums.RoleEnum;
 import com.ws.masterserver.utils.constants.enums.StatusEnum;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Slf4j
 public class OrderUtils {
@@ -144,5 +143,39 @@ public class OrderUtils {
             log.error("getResultDto: {}", e.getMessage());
         }
         return result.build();
+    }
+
+    public static List<OptionDto> getOptions4Admin(String statusNow) {
+        var result = new ArrayList<OptionDto>();
+        try {
+            var status = StatusEnum.valueOf(statusNow);
+            switch (status) {
+                case PENDING:
+                    result.add(OptionDto.builder()
+                            .name("Chấp nhận đơn hàng")
+                            .status(StatusEnum.ACCEPT.name().toLowerCase(Locale.ROOT))
+                            .clazz("success")
+                            .build());
+                    result.add(OptionDto.builder()
+                            .name("Hủy đơn hàng")
+                            .status(StatusEnum.REJECT.name().toLowerCase(Locale.ROOT))
+                            .clazz("danger")
+                            .build());
+                    break;
+                case ACCEPT:
+                    result.add(OptionDto.builder()
+                            .name("Hủy đơn hàng")
+                            .status(StatusEnum.REJECT.name().toLowerCase(Locale.ROOT))
+                            .clazz("danger")
+                            .build());
+                    break;
+                default:
+                    return Collections.emptyList();
+            }
+
+        } catch (Exception e) {
+            log.error("getOptions: {}", e.getMessage());
+        }
+        return result;
     }
 }
