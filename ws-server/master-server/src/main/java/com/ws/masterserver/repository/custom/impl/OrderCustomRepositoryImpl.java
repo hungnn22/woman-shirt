@@ -2,7 +2,6 @@ package com.ws.masterserver.repository.custom.impl;
 
 import com.ws.masterserver.dto.admin.order.detail.DetailRes;
 import com.ws.masterserver.dto.admin.order.detail.ItemDto;
-import com.ws.masterserver.dto.admin.order.detail.ResultDto;
 import com.ws.masterserver.dto.admin.order.search.*;
 import com.ws.masterserver.repository.custom.OrderCustomRepository;
 import com.ws.masterserver.utils.base.WsRepository;
@@ -119,7 +118,7 @@ public class OrderCustomRepositoryImpl implements OrderCustomRepository {
         }
 
         var data = objects.stream().map(obj -> {
-            var shipPrice = Optional.ofNullable(JpaUtils.getLong(obj[21])).orElse(0L);
+            var shipPrice = JpaUtils.getLong(obj[21]);
             var promotions = repository.orderPromotionRepository.findByOrderId(JpaUtils.getString(obj[0]));
             var total = OrderUtils.getTotal(JpaUtils.getLong(obj[24]), shipPrice, promotions);
             return OrderRes.builder()
@@ -144,6 +143,7 @@ public class OrderCustomRepositoryImpl implements OrderCustomRepository {
                     .type(OrderTypeUtils.getOrderTypeStr(JpaUtils.getString(obj[23])))
                     .total(total)
                     .totalFmt(MoneyUtils.format(total))
+                    .options(OrderUtils.getOptions4Admin(JpaUtils.getString(obj[4])))
                     .build();
         }).collect(Collectors.toList());
 
