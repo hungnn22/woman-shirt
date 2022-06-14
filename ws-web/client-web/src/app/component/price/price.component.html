@@ -1,9 +1,71 @@
-<div class="container">
-    <div class="col" style="margin-bottom:10px;margin-top:10px">
-        <p style="color:rgb(0, 0, 0); font-style: normal;"><b>Khoảng giá: {{ value[0] }}.000đ - {{ value[1] }}.000đ</b>
-        </p>
-        <kendo-rangeslider style="width:100%" [(ngModel)]="value" [min]="min" [max]="max" [smallStep]="smallStep" (ngModelChange)="change()">
-        </kendo-rangeslider>
+<div style="border: 1px solid red;">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <mat-card-title style="float: left; margin-top: 10px;">
+                    Lọc theo giá
+                </mat-card-title>
+            </div>
+            <div class="col-3"></div>
+            <div class="col-3">
+                <button mat-button style="float: right; margin-top: 10px;" (click)="deleteFilter()">Bỏ lọc</button>
+            </div>
+        </div>
     </div>
-    <div><button style="width:100%;margin-bottom:10px" mat-raised-button >Áp dụng</button></div>
+    <mat-card style="padding-top: 10px; padding-bottom: 25px;">
+        <div class="row">
+            <div class="col"></div>
+            <div class="col-center">
+
+            </div>
+            <div class="col"></div>
+        </div>
+
+        <div style="padding-top: 10px; padding-bottom: 10px;">
+            <ngx-slider [(value)]="minValue" [(highValue)]="maxValue" [options]="optionss">
+            </ngx-slider>
+        </div>
+
+
+        <!-- <label class="h6">Chọn khoảng giá</label>
+        <br>
+        <div class="form-check form-check-inline col-3" *ngFor="let option of ['0đ - 100.000đ', '100.000đ - 1.000.000đ','1.000.000đ - 5.000.000đ','5.000.000đ - 10.000.000đ','10.000.000đ - 20.000.000đ']; let index = index">
+            <input (change)="priceRangeChange($event)" class="form-check-input" type="radio" name="inlineRadioOptions" [id]="'inlineRadio' + index" value="{{index}}" />
+            <label class="form-check-label" [for]="'inlineRadio' + index">{{option}}</label>
+        </div> -->
+
+        <!-- <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1"
+                value="1" />
+            <label class="form-check-label" for="inlineRadio1">0đ -
+                100.000đ</label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input (onclick)="priceRangeChange($event)" class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="2" />
+            <label class="form-check-label" for="inlineRadio2">100.000đ -
+                1.000.000đ</label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="3" />
+            <label class="form-check-label" for="inlineRadio3">1.000.000đ -
+                5.000.000đ</label>
+        </div>
+        <br>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio4" value="4" />
+            <label class="form-check-label" for="inlineRadio4">5.000.000đ -
+                10.000.000đ</label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio5" value="5" />
+            <label class="form-check-label" for="inlineRadio5">10.000.000đ -
+                20.000.000đ</label>
+        </div>
+        <br> -->
+
+        <mat-card-actions align="end">
+            <button mat-button (click)="close()">Húy</button>
+            <button mat-button (click)="accept()">Áp dụng</button>
+        </mat-card-actions>
+    </mat-card>
 </div>

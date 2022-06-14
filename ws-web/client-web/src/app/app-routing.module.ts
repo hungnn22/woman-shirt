@@ -6,8 +6,8 @@ import { RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   { path: "login", component: LoginComponent },
   // { path: "", redirectTo: "/login", pathMatch: "full" },
-  { path: "home", component: LayoutComponent },
-  { path: "**", redirectTo:"/home",pathMatch:'full' },
+  { path: "", component: LayoutComponent },
+  { path: "**", redirectTo: "", pathMatch: 'full' },
 
 
 ];
