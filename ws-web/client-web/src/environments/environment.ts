@@ -1,7 +1,7 @@
-const baseAPIURL = "http://localhost:8080";
+const baseAPIURL = "http://localhost:8888";
 
 export const environment = {
   base_api: baseAPIURL,
-  product_api: 'http://localhost:8080/api/v1/product',
+  product_api: 'http://localhost:8888/api/v1/product',
   production: false
 };

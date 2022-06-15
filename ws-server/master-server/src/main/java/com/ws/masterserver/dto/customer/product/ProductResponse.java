@@ -22,11 +22,11 @@ public class ProductResponse {
     private String name;
     private Boolean active;
     private String thumbnail;
-    private Long price;
+    private String price;
     private String categoryName;
     private String des;
     private String materialName;
-    private String typeName;
+//    private String typeName;
     private Date createdDate;
     private String createdBy;
     private String createdName;

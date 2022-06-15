@@ -7,20 +7,37 @@ import { Component, OnInit } from '@angular/core';
 import { LabelType, Options } from '@angular-slider/ngx-slider';
 import { PriceComponent } from 'src/app/component/price/price.component';
 import { ProductService } from 'src/app/service/product.service';
+import { PageEvent } from '@angular/material/paginator/paginator';
+import { delay, of } from 'rxjs';
+import { CustomMaterialPaginatorService } from 'src/app/service/custom-material-paginator.service';
 @Component({
   selector: 'app-content',
+
   templateUrl: './content.component.html',
-  styleUrls: ['./content.component.css']
+  styleUrls: ['./content.component.css'],
 })
 export class ContentComponent implements OnInit {
+  isFilter : boolean = false;
   typeOption?: String;
-  sortOption?: String;
-  p: number = 1;
-  url = "PRODUCTS";
+  sortOption: number = 0;
+  loading = true;
+  resultSearch: string = '';
   listProduct: Product[] = [];
 
+  //page
+  length = 0;
+  pageSize = 8;
+  pageIndex = 0;
+  pageSizeOptions = [4, 8, 16, 32, 64];
+  showFirstLastButtons = true;
+
+
+  //search
+  priceMin: number = 0;
+  priceMax: number = 10000000;
   textSearch?: String;
 
+  //request
   req: any = {
     "id": "",
     "active": null,
@@ -29,43 +46,33 @@ export class ContentComponent implements OnInit {
     "priceMax": "",
     "pageReq": {
       "page": 0,
-      "pageSize": 10,
+      "pageSize": 8,
       "sortField": "",
       "sortDirection": ""
     }
   }
 
-
-
   constructor(private http: HttpClient,
     private modalService: NgbModal,
-    private productService: ProductService
-  ) {
-
-  }
+    private productService: ProductService,
+    private customMaterialPaginator: CustomMaterialPaginatorService
+  ) {}
 
   ngOnInit(): void {
     this.getListProduct(this.req);
   }
 
   getListProduct(req: any) {
-    this.productService.listProduct(req).subscribe(products => {
-      this.listProduct = products.data;
+    this.productService.listProduct(req).subscribe(datas => {
+      this.loading = true;
+      this.listProduct = datas.data;
+      this.length = datas.totalElements;
+      this.loading = false;
     })
   }
-  ///////////////////////
-  // getAllTutorial(): void {
-  //   this.baseService.getAll(this.url).subscribe({
-  //     next: (res) => {
-  //       console.log(res);
-  //       this.listProduct = res;
-  //       console.log('Get Thành công');
-  //     },
-  //     error: (e) => console.error(e + "lỗi")
-  //   })
-  // }
-  options: string[] = ['One', 'Two', 'Three'];
-  options1: string[] = ["S", "M", "L", "XL"];
+
+  // options: string[] = ['One', 'Two', 'Three'];
+  // options1: string[] = ["S", "M", "L", "XL"];
 
 
   /////////////////////////////////
@@ -84,55 +91,91 @@ export class ContentComponent implements OnInit {
       });
   }
 
-
-  ///////////////////////////
-  openPrice() {
-    this.modalService.open(
-      PriceComponent,
-      {
-        backdrop: true,
-        centered: true,
-      }
-    )
-      .result
-      .then((result) => {
-        // write your code here
-
-      });
-  }
-
   sortOptionChange() {
+    console.log(this.sortOption);
     this.req.pageReq.sortField = this.sortOption;
     switch (this.sortOption) {
-      case 'Tên':
-        this.req.pageReq.sortField = 'name';
+      case 1:
+        this.req.pageReq.sortField = 'createdDate';
+        this.req.pageReq.sortDirection = 'DESC';
         break;
-      case 'Mới nhất':
+      case 2:
         this.req.pageReq.sortField = 'latest';
         break;
-      case 'Bán chạy':
-        this.req.pageReq.sortField = 'bestseller';
-        break;
-      case 'Giá':
+      case 3:
         this.req.pageReq.sortField = 'price';
+        this.req.pageReq.sortDirection = 'DESC';
+        break;
+      case 4:
+        this.req.pageReq.sortField = 'price';
+        this.req.pageReq.sortDirection = 'ASC';
         break;
       default:
-        this.req.pageReq.sortField = 'name';
+        this.req.pageReq.sortField = 'createdDate';
+        this.req.pageReq.sortDirection = 'DESC';
         break;
     }
+    this.getListProduct(this.req);
+    this.isFilter = true;
+  }
 
-    if (this.req.pageReq.sortDirection == '') {
-      this.req.pageReq.sortDirection = 'ASC';
-    } else if (this.req.sortDirection == 'ASC') {
-      this.req.pageReq.sortDirection = 'DESC';
-    } else {
-      this.req.pageReq.sortDirection = 'ASC';
+  openPrice() {
+    const modalRef = this.modalService.open(PriceComponent,
+      {
+        scrollable: true,
+        backdrop: true,
+        centered: true,
+        size: 'lg'
+      });
+
+    let data = {
+      min: this.priceMin,
+      max: this.priceMax
     }
 
-    console.log(this.req);
+    modalRef.componentInstance.fromParent = data;
+    modalRef.result.then((result) => {
+      this.priceMin = result.min;
+      this.priceMax = result.max;
+      this.req.priceMin = result.min;
+      this.req.priceMax = result.max;
+      this.getListProduct(this.req);
+      this.isFilter = true;
+    }, (reason) => {
+    });
+  }
 
+  onKeyUp(event: any) {
+    // setTimeout(() => {
+
+    // }, 3000);
+
+    console.log(event.target.value);
+    this.req.textSearch = event.target.value;
+    console.log(this.req);
     this.getListProduct(this.req);
   }
 
+  keyUp(event: any) {
+    this.req.textSearch = event.target.value;
+    if (this.req.textSearch.trim().length == 0) {
+      this.getListProduct(this.req);
+    }
+  }
 
+  handlePageEvent(event: PageEvent) {
+    this.length = event.length;
+    this.pageSize = event.pageSize;
+    this.pageIndex = event.pageIndex;
+    this.req.pageReq.page = this.pageIndex;
+    this.req.pageReq.pageSize = this.pageSize;
+    this.pageProduct(this.req);
+    this.isFilter = true;
+  }
+
+  pageProduct(req: any) {
+    this.productService.listProduct(req).subscribe(datas => {
+      this.listProduct = datas.data;
+    })
+  }
 }
