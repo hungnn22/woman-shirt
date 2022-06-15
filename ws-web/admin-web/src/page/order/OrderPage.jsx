@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import AxiosApi from '../../api/AxiosApi'
 import WsUrl from "../../utils/constants/WsUrl";
 import { useForm } from "react-hook-form";
-// import OrderDetail from './OrderDetail';
+import OrderDetail from './OrderDetail';
 
 let location = {
     provinceCode: null,
@@ -292,36 +292,10 @@ const OrderPage = () => {
                                                 <a className="dropdown-item" href="#" data-toggle="modal"
                                                     data-target={`#detailModal${order.id}`}
                                                     onClick={() => handleGetDetail(order.id)}>Chi tiết</a>
-                                                <a className="dropdown-item" href="#" data-toggle="modal"
-                                                    data-target={`#statusModal${order.id}`}>Chỉnh sửa trạng thái</a>
+                                                <a className="dropdown-item" href="#">Chỉnh sửa trạng thái</a>
                                             </div>
                                         </div>
-                                        {/* {detail && <OrderDetail detail={detail} order={order} />} */}
-
-                                        <div className="modal fade" id={`statusModal${order.id}`} tabIndex={-1}
-                                            role="dialog"
-                                            aria-labelledby="statusModalLabel" aria-hidden="true">
-                                            <div className="modal-dialog modal-lg" role="document">
-                                                <div className="modal-content">
-                                                    <div className="modal-header">
-                                                        <h5 className="modal-title" id="exampleModalLabel">Chỉnh sửa trạng thái</h5>
-                                                        <button type="button" className="close" data-dismiss="modal"
-                                                            aria-label="Close">
-                                                            <span aria-hidden="true">×</span>
-                                                        </button>
-                                                    </div>
-                                                    {order.options && <div className="modal-body p-4">
-                                                        <h6 className='text-dark'><b>Chọn trạng thái mới cho đơn hàng</b></h6>
-                                                        <div className='row d-flex justify-content-left p-2'>
-                                                            {order.options.map((obj, index) => (
-                                                                <button key={index} className={`btn mr-2 btn-${obj.clazz}`}>{obj.name}</button>
-                                                            ))}
-                                                        </div>
-
-                                                    </div>}
-                                                </div>
-                                            </div>
-                                        </div>
+                                        {detail && <OrderDetail detail={detail} order={order} />}
                                     </td>
                                 </tr>))}
                         </tbody>

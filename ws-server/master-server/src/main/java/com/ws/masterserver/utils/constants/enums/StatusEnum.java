@@ -17,13 +17,13 @@ public enum StatusEnum {
 
     ;
 
-    private String name;
+    private String value;
 
-    StatusEnum(String name) {
-        this.name = name;
+    StatusEnum(String value) {
+        this.value = value;
     }
 
-    public String getName() {
-        return name;
+    public String getValue() {
+        return value;
     }
 }

@@ -4,8 +4,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.List;
-
 @Builder
 @Getter
 @Setter
@@ -44,7 +42,5 @@ public class OrderRes {
     private String payed;
 
     private String type;
-
-    private List<OptionDto> options;
 
 }

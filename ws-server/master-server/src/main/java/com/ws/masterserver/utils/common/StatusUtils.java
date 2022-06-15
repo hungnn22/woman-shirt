@@ -1,6 +1,5 @@
 package com.ws.masterserver.utils.common;
 
-import com.ws.masterserver.dto.admin.order.search.StatusDto;
 import com.ws.masterserver.utils.constants.enums.StatusEnum;
 
 public class StatusUtils {
@@ -10,12 +9,5 @@ public class StatusUtils {
         } catch (Exception e) {
             return null;
         }
-    }
-
-    public static StatusDto getStatusDto(StatusEnum statusEnum) {
-        return StatusDto.builder()
-                .code(statusEnum.name())
-                .name(statusEnum.getName())
-                .build();
     }
 }
