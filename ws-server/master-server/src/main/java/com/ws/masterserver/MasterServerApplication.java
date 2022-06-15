@@ -13,10 +13,10 @@ public class MasterServerApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(MasterServerApplication.class, args);
-//        try {
-//            new BatchSeeder().seed();
-//        } catch (NoSuchAlgorithmException e) {
-//            e.printStackTrace();
-//        }
+        try {
+            new BatchSeeder().seed();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
     }
 }

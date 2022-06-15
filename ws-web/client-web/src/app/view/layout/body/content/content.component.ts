@@ -7,6 +7,9 @@ import { Component, OnInit } from '@angular/core';
 import { LabelType, Options } from '@angular-slider/ngx-slider';
 import { PriceComponent } from 'src/app/component/price/price.component';
 import { ProductService } from 'src/app/service/product.service';
+import { PageEvent } from '@angular/material/paginator/paginator';
+import { delay, of } from 'rxjs';
+import { CustomMaterialPaginatorService } from 'src/app/service/custom-material-paginator.service';
 @Component({
   selector: 'app-content',
 
@@ -14,16 +17,27 @@ import { ProductService } from 'src/app/service/product.service';
   styleUrls: ['./content.component.css'],
 })
 export class ContentComponent implements OnInit {
+  isFilter : boolean = false;
   typeOption?: String;
   sortOption: number = 0;
-  p: number = 1;
-  url = "PRODUCTS";
+  loading = true;
+  resultSearch: string = '';
   listProduct: Product[] = [];
 
+  //page
+  length = 0;
+  pageSize = 8;
+  pageIndex = 0;
+  pageSizeOptions = [4, 8, 16, 32, 64];
+  showFirstLastButtons = true;
+
+
+  //search
   priceMin: number = 0;
   priceMax: number = 10000000;
   textSearch?: String;
 
+  //request
   req: any = {
     "id": "",
     "active": null,
@@ -40,24 +54,25 @@ export class ContentComponent implements OnInit {
 
   constructor(private http: HttpClient,
     private modalService: NgbModal,
-    private productService: ProductService
-  ) {
-
-  }
+    private productService: ProductService,
+    private customMaterialPaginator: CustomMaterialPaginatorService
+  ) {}
 
   ngOnInit(): void {
     this.getListProduct(this.req);
   }
 
   getListProduct(req: any) {
-    this.productService.listProduct(req).subscribe(products => {
-      this.listProduct = products.data;
-      console.log(this.listProduct);
+    this.productService.listProduct(req).subscribe(datas => {
+      this.loading = true;
+      this.listProduct = datas.data;
+      this.length = datas.totalElements;
+      this.loading = false;
     })
   }
 
-  options: string[] = ['One', 'Two', 'Three'];
-  options1: string[] = ["S", "M", "L", "XL"];
+  // options: string[] = ['One', 'Two', 'Three'];
+  // options1: string[] = ["S", "M", "L", "XL"];
 
 
   /////////////////////////////////
@@ -100,18 +115,8 @@ export class ContentComponent implements OnInit {
         this.req.pageReq.sortDirection = 'DESC';
         break;
     }
-
-    // if (this.req.pageReq.sortDirection == '') {
-    //   this.req.pageReq.sortDirection = 'ASC';
-    // } else if (this.req.sortDirection == 'ASC') {
-    //   this.req.pageReq.sortDirection = 'DESC';
-    // } else {
-    //   this.req.pageReq.sortDirection = 'ASC';
-    // }
-
-    console.log(this.req);
-
     this.getListProduct(this.req);
+    this.isFilter = true;
   }
 
   openPrice() {
@@ -130,13 +135,12 @@ export class ContentComponent implements OnInit {
 
     modalRef.componentInstance.fromParent = data;
     modalRef.result.then((result) => {
-      console.log(result);
       this.priceMin = result.min;
       this.priceMax = result.max;
       this.req.priceMin = result.min;
       this.req.priceMax = result.max;
       this.getListProduct(this.req);
-
+      this.isFilter = true;
     }, (reason) => {
     });
   }
@@ -159,4 +163,19 @@ export class ContentComponent implements OnInit {
     }
   }
 
+  handlePageEvent(event: PageEvent) {
+    this.length = event.length;
+    this.pageSize = event.pageSize;
+    this.pageIndex = event.pageIndex;
+    this.req.pageReq.page = this.pageIndex;
+    this.req.pageReq.pageSize = this.pageSize;
+    this.pageProduct(this.req);
+    this.isFilter = true;
+  }
+
+  pageProduct(req: any) {
+    this.productService.listProduct(req).subscribe(datas => {
+      this.listProduct = datas.data;
+    })
+  }
 }

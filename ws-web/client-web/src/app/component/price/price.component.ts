@@ -11,7 +11,7 @@ export class PriceComponent implements OnInit {
   @Input() fromParent: any;
   constructor(public activeModal: NgbActiveModal) { }
   minValue: number = 0;
-  maxValue: number = 0;
+  maxValue: number = 10000000;
   ngOnInit(): void {
     this.minValue = this.fromParent.min;
     this.maxValue = this.fromParent.max;
