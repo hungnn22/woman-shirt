@@ -6,6 +6,7 @@ import com.ws.masterserver.dto.admin.product.ProductDto;
 import com.ws.masterserver.utils.base.WsController;
 import com.ws.masterserver.utils.base.WsService;
 import com.ws.masterserver.utils.base.rest.ResData;
+import com.ws.masterserver.utils.common.JsonUtils;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -40,6 +41,12 @@ public class ProductController extends WsController {
         return ResponseEntity.status(HttpStatus.OK).body(service.productService.getProductDetail(id));
     }
 
+    @Operation(summary = "API GET Product Detail")
+    @PostMapping("/admin/search")
+    public ResponseEntity<Object> search4Admin(@RequestBody ProductReq req) {
+        log.info("start api /api/v1/product/admin/search with req: {}", JsonUtils.toJson(req));
+        return ResponseEntity.status(HttpStatus.OK).body(service.productService.search4Admin(getCurrentUser(), req));
+    }
 
 
 }
