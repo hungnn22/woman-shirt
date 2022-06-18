@@ -26,25 +26,25 @@ export class SizeComponent implements OnInit {
   findSize() {
     const h = this.height.value;
     const w = this.weight.value;
-    if (h == "" || w == "") {
+    if (h == "" || w == ""||h==null||w==null) {
       this.message = "Vui lòng điền đầy đủ thông tin";
       return;
     }
     this.findByHeight();
     this.findByWeight();
-    console.log("Ban đầu: H:"+this.sizeH+",W:"+this.sizeW);
+    console.log("Ban đầu: H:" + this.sizeH + ",W:" + this.sizeW);
 
     if (this.sizeH === this.sizeW) {
       this.findMatch()
-      console.log("H:"+this.sizeH+",W:"+this.sizeW);
+      console.log("H:" + this.sizeH + ",W:" + this.sizeW);
       console.log("Hợp");
     } else if (this.sizeH > this.sizeW) {
       this.findByHeight()
-      console.log("H:"+this.sizeH+",W:"+this.sizeW);
+      console.log("H:" + this.sizeH + ",W:" + this.sizeW);
       console.log("Chiều cao");
     } else if (this.sizeH < this.sizeW) {
       this.findByWeight()
-      console.log("H:"+this.sizeH+",W:"+this.sizeW);
+      console.log("H:" + this.sizeH + ",W:" + this.sizeW);
       console.log("Cân nặng");
     }
   }
@@ -53,7 +53,7 @@ export class SizeComponent implements OnInit {
     const h = this.height.value;
     const w = this.weight.value;
     if (h == "" || w == "") {
-      this.message = "Vui lòng điền đầy đủ thông tin";
+      this.message = "(*)Vui lòng điền đầy đủ thông tin";
       return;
     }
     if (h >= 140 && h <= 160 && w >= 40 && w <= 50) {
@@ -64,18 +64,22 @@ export class SizeComponent implements OnInit {
       this.message = "(*)Size phù hợp với bạn là Size L"
     } else if (h > 170 && h <= 175 && w > 65 && w <= 72) {
       this.message = "(*)Size phù hợp với bạn là Size XL"
-    } else if (h > 176 && w <= 190 && w > 73 ) {
+    } else if (h < 190 && h > 176 && w <= 190 && w > 73) {
       this.message = "(*)Size phù hợp với bạn là Size XXL"
-    }else{
-      this.message=""
+    } else {
+      this.message = ""
     }
 
   }
 
 
   findByHeight() {
-
     const h = this.height.value;
+    const w = this.weight.value;
+    if (h == "" || w == "") {
+      this.message = "(*)Vui lòng điền đầy đủ thông tin";
+      return;
+    }
     if (h >= 140 && h <= 160) {
       this.sizeH = 1;
       this.message = "(*)Size phù hợp với bạn là Size S"
@@ -88,18 +92,23 @@ export class SizeComponent implements OnInit {
     } else if (h > 170 && h <= 175) {
       this.sizeH = 4;
       this.message = "(*)Size phù hợp với bạn là Size XL"
-    } else if (h > 176) {
+    } else if (h > 176 && h < 190) {
       this.sizeH = 5;
       this.message = "(*)Size phù hợp với bạn là Size XXL"
-    }else{
-      this.message=""
+    } else {
+      this.message = ""
     }
     console.log(this.message + " " + this.sizeH);
-    console.log("Chiều cao: "+h);
+    console.log("Chiều cao: " + h);
   }
 
   findByWeight() {
+    const h = this.height.value;
     const w = this.weight.value;
+    if (h == "" || w == "") {
+      this.message = "(*)Vui lòng điền đầy đủ thông tin";
+      return;
+    }
     if (w >= 40 && w <= 50) {
       this.sizeW = 1;
 
@@ -113,13 +122,13 @@ export class SizeComponent implements OnInit {
     } else if (w > 65 && w <= 72) {
       this.sizeW = 4;
       this.message = "(*)Size phù hợp với bạn là Size XL"
-    } else if (w <= 190 && w > 73) {
+    } else if (w <= 90 && w > 73) {
       this.sizeW = 5;
       this.message = "(*)Size phù hợp với bạn là Size XXL"
-    }else{
-      this.message=""
+    } else {
+      this.message = ""
     }
     console.log(this.message + " " + this.sizeW);
-    console.log("cân nặng: "+w);
+    console.log("cân nặng: " + w);
   }
 }
