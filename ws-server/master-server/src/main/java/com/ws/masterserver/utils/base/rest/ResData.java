@@ -26,4 +26,9 @@ public class ResData<T> {
         this.message = HttpStatus.NO_CONTENT.getReasonPhrase();
         this.timeStamp = new Date();
     }
+
+    public static <T> ResData ok(T data) {
+        return new ResData(data, WsCode.OK);
+
+    }
 }
