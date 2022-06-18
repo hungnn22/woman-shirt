@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import AxiosApi from '../../api/AxiosApi'
 import WsUrl from "../../utils/constants/WsUrl";
 import { useForm } from "react-hook-form";
+import OrderDetail from './OrderDetail';
 // import OrderDetail from './OrderDetail';
 
 let location = {
@@ -296,7 +297,7 @@ const OrderPage = () => {
                                                     data-target={`#statusModal${order.id}`}>Chỉnh sửa trạng thái</a>
                                             </div>
                                         </div>
-                                        {/* {detail && <OrderDetail detail={detail} order={order} />} */}
+                                        {detail && <OrderDetail detail={detail} />}
 
                                         <div className="modal fade" id={`statusModal${order.id}`} tabIndex={-1}
                                             role="dialog"

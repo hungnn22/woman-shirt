@@ -1,5 +1,6 @@
 package com.ws.masterserver.controller;
 
+import com.ws.masterserver.dto.admin.order.change_status.ChangeStatusDto;
 import com.ws.masterserver.dto.admin.order.search.OrderReq;
 import com.ws.masterserver.dto.admin.order.search.OrderRes;
 import com.ws.masterserver.dto.admin.order.detail.DetailRes;
@@ -10,9 +11,9 @@ import com.ws.masterserver.dto.customer.order.checkin.CheckinResponse;
 import com.ws.masterserver.dto.customer.order.me.MyOrderRequest;
 import com.ws.masterserver.dto.customer.order.me.MyOrderResponse;
 import com.ws.masterserver.utils.base.WsController;
-import com.ws.masterserver.utils.base.WsService;
 import com.ws.masterserver.utils.base.rest.ResData;
 import com.ws.masterserver.utils.base.rest.PageData;
+import com.ws.masterserver.utils.common.JsonUtils;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -59,5 +60,13 @@ public class OrderController extends WsController {
     public ResponseEntity<ResData<DetailRes>> detail4Admin(@PathVariable String id) {
         return ResponseEntity.ok(service.orderService.detail4Admin(getCurrentUser(), id));
     }
+
+    @PostMapping("/admin/change-status")
+    @Operation(summary = "API thay đổi trạng thái đơn hàng")
+    public ResponseEntity<ResData<String>> rejectOrder(@RequestBody ChangeStatusDto dto) {
+        log.info("START API /api/v1/order//admin/change-status with dto: {}", JsonUtils.toJson(dto));
+        return ResponseEntity.ok(service.orderService.changeStatus4Admin(getCurrentUser(), dto));
+    }
+
 
 }
