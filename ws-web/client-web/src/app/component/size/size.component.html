@@ -14,28 +14,28 @@
         <tbody>
           <tr>
             <th class="table-secondary" >S</th>
-            <td>160-170</td>
-            <td>49-54</td>
+            <td>150-160</td>
+            <td>40-50</td>
           </tr>
           <tr>
             <th class="table-secondary" >M</th>
-            <td>160-170</td>
-            <td>55-60</td>
+            <td>160-165</td>
+            <td>50-57</td>
           </tr>
           <tr>
             <th class="table-secondary" >L</th>
-            <td>166-174</td>
-            <td>61-66</td>
+            <td>165-170</td>
+            <td>57-65</td>
           </tr>
           <tr>
             <th class="table-secondary" >XL</th>
-            <td>170-177</td>
-            <td>67-72</td>
+            <td>170-175</td>
+            <td>65-72</td>
           </tr>
           <tr>
             <th class="table-secondary" >XXL</th>
-            <td>175+</td>
-            <td>73+</td>
+            <td>176-182</td>
+            <td>73-80</td>
           </tr>
         </tbody>
       </table>
@@ -50,18 +50,19 @@
 
       <div class="height">
         <label for="exampleInputEmail1" class="form-label" style="font-weight: 200px;">Chiều cao(cm)</label>
-        <input type="text" placeholder="..." class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+        <input type="text" placeholder="..." class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+        [formControl]="height">
       </div>
 
       <div class="weight">
         <label for="exampleInputPassword1" class="form-label" style="font-weight: 200px;">Cân nặng(kg)</label>
-        <input type="text" placeholder="..." class="form-control" id="exampleInputPassword1">
+        <input type="text" placeholder="..." class="form-control" id="exampleInputPassword1"  [formControl]="weight">
       </div>
 
-      <p style="padding-left:10px"><b>Size phù hợp với bạn là XL</b></p>
+      <p style="padding-left:10px;color: red;"><b>{{message}}</b></p>
 
       <div class="">
-        <button class="findSize"  mat-stroked-button>Tìm size</button>
+        <button class="findSize" (click)="findSize()"  mat-stroked-button>Tìm size</button>
       </div>
 
       <div class="">
