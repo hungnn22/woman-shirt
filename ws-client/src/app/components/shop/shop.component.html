@@ -1,0 +1,152 @@
+<!-- Header -->
+
+<!-- <div class="header-left">
+  <ul class="nav justify-content-center">
+    <li class="nav-item">
+      <a class="nav-link active" aria-current="page" href="#">HOT SUMMER 2022</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#">Nam</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#">Nữ</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#">Phụ kiện</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" (click)="openSize()">Chọn size</a>
+    </li>
+  </ul>
+</div>
+
+<div class="header-right">
+  <ul class="nav justify-content-end">
+    <li class="nav-item">
+      <button mat-icon-button>
+        <mat-icon>search</mat-icon>
+      </button>
+
+    </li>
+    <li class="nav-item">
+      <button mat-icon-button>
+        <mat-icon>favorite_border</mat-icon>
+      </button>
+
+    </li>
+    <li class="nav-item">
+      <button mat-icon-button>
+        <mat-icon>shopping_cart</mat-icon>
+      </button>
+    </li>
+  </ul>
+</div>
+
+<div class="header-bottom">
+  <ul style="text-align:center;list-style: none;">
+    <li>
+      <p style="margin-top:12px" class="freeship">Freeship nội thành cho đơn từ 300.000</p>
+    </li>
+
+  </ul>
+</div> -->
+
+<!-- <button (click)="open()"></button> -->
+
+<!-- End Heder -->
+
+
+<div id="search-bar">
+  <div class="container">
+    <div class="row" style="padding-top: 10px;">
+      <div class="col"></div>
+      <div class="col-xl-auto center-block">
+        <p class="h2">
+          Sản phẩm
+        </p>
+      </div>
+      <div class="col"></div>
+    </div>
+    <div class="row" style="margin-left: 15px;">
+      <div class="align-self-center">
+        <mat-form-field style="width: 500px;">
+          <mat-icon matPrefix>search</mat-icon>
+          <input (keyup.enter)="onKeyUp($event)" (keyup)="keyUp($event)" matInput type="search"
+            placeholder="Nhập tên sản phẩm, loại sản phẩm,..." class="search-input">
+        </mat-form-field>
+
+        <!-- KÍCH THƯỚC -->
+        <!-- <mat-form-field style="width: 100px" fxFlex="40" appearance="outline">
+          <mat-label>Kích cỡ</mat-label>
+          <mat-select>
+            <mat-option *ngFor="let option of options1" [value]="option">{{option}}</mat-option>
+          </mat-select>
+        </mat-form-field> -->
+
+        <button (click)="openPrice()" id="priceButton">Giá+</button>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Sắp xếp theo</mat-label>
+          <mat-select [(value)]="sortOption" (valueChange)="sortOptionChange()">
+            <mat-option
+              *ngFor="let option of ['Mặc định','Hàng mới về','Sản phẩm bán chạy','Giá từ cao tới thấp', 'Giá từ thấp tới cao']; let index = index"
+              [value]="index">{{option}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="row" style="margin-left: 24px;" *ngIf="length > 0 && isFilter">
+      <p class="h7">Tìm thấy {{length}} sản phẩm phù hợp!</p>
+    </div>
+
+    <div class="row" style="margin-left: 24px;" *ngIf="length <= 0">
+      <p class="h7">Không tìm thấy sản phẩm phù hợp!</p>
+    </div>
+
+
+    <div class="row justify-content-md-center" *ngIf="loading else loaded">
+      <div class="col col-lg-2">
+      </div>
+      <div class="col-md-auto">
+        <mat-spinner></mat-spinner>
+      </div>
+      <div class="col col-lg-2">
+      </div>
+    </div>
+
+
+    <ng-template #loaded>
+      <div class="row">
+        <div class="content-body">
+          <div class="container" id="content" (click)="openDialog()">
+            <div *ngFor="let item of listProduct" class="card" width="100%" height="100%" style="width: 18rem;">
+              <a [routerLink]="['/product-detail/'+item.id]">
+                <img [src]="item.thumbnail" class="card-img-top" width="200px" height="300px">
+              </a>
+
+              <div class="card-body">
+                <a [routerLink]="['/product-detail/'+item.id]">
+                  <h4 class="card-title">{{item.name}}</h4>
+                </a>
+                <div class="col">
+                  <p class="card-text">{{item.price}} đ</p>
+                  <button type="button" class="btn btn-info">
+                    Thêm vào giỏ hàng
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+
+    <mat-paginator (page)="handlePageEvent($event)" [length]="length" [pageSize]="pageSize"
+      [showFirstLastButtons]="showFirstLastButtons" [pageSizeOptions]="pageSizeOptions" [pageIndex]="pageIndex"
+      aria-label="Select page" style="font-size: 14px;">
+    </mat-paginator>
+
+  </div>
+</div>

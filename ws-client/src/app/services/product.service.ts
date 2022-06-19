@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
+import { Observable } from 'rxjs';
 
 const API = environment.baseUrl;
 
@@ -14,6 +15,10 @@ export class ProductService {
 
   getProductDetails(id:string){
     return this.http.get(API + 'product/' + id);
+  }
+
+  listProduct(req: any): Observable<any> {
+    return this.http.post<any>(API + 'product/search', { ...req });
   }
 
 }
