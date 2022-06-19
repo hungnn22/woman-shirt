@@ -1,5 +1,6 @@
 package com.ws.masterserver.repository.custom.impl;
 
+import com.ws.masterserver.dto.admin.product.search.ProductRes;
 import com.ws.masterserver.dto.customer.product.ProductReq;
 import com.ws.masterserver.dto.customer.product.ProductResponse;
 import com.ws.masterserver.repository.custom.ProductCustomRepository;
@@ -110,5 +111,11 @@ public class ProductCustomRepositoryImpl implements ProductCustomRepository {
                         req.getPageReq().getPageSize(),
                         totalElements,
                         WsCode.OK);
+    }
+
+    @Override
+    public PageData<ProductRes> search4Admin(ProductReq req) {
+        var sql = "";
+        return new PageData<ProductRes>(true);
     }
 }

@@ -61,7 +61,8 @@ public class OrderCustomRepositoryImpl implements OrderCustomRepository {
                 "                o1.payed                                               as oPayed,\n" +
                 "                o1.type                                                as oType,\n" +
                 "                (select coalesce(sum(od1.qty * od1.price), 0)\n" +
-                "                 from order_detail od1)                                as orderTotal\n";
+                "                 from order_detail od1\n" +
+                "                 where od1.order_id = o1.id)                           as orderTotal\n";
         var fromAndJoins = "from orders o1\n" +
                 "         left join users u1 on o1.user_id = u1.id\n" +
                 "         left join address a1 on o1.address_id = a1.id\n" +
