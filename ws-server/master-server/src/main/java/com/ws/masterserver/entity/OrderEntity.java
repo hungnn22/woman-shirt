@@ -43,6 +43,14 @@ public class OrderEntity {
     @Column(name = "ship_price")
     private Long shipPrice;
 
+    @Column(name = "ship_type_id")
+    private String shipTypeId;
+
+    /**
+     * mã đơn hàng: DH0001(dùng seq)
+     */
+    private String code;
+
     @CreatedDate
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_date")
