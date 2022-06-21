@@ -10,21 +10,26 @@ import { HeaderComponent } from './view/layout/header/header.component';
 import { FooterComponent } from './view/layout/footer/footer.component';
 import { InputsModule } from '@progress/kendo-angular-inputs';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {MatGridListModule} from '@angular/material/grid-list';
-import {MatButtonModule} from '@angular/material/button';
-import {MatCardModule} from '@angular/material/card';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
 import { ContentComponent } from './view/layout/body/content/content.component';
-import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatSelectModule } from '@angular/material/select'
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {MatNativeDateModule} from '@angular/material/core';
-import {HttpClientModule} from '@angular/common/http';
-import {MatInputModule} from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatNativeDateModule } from '@angular/material/core';
+import { HttpClientModule } from '@angular/common/http';
+import { MatInputModule } from '@angular/material/input';
 import { DialogComponent } from './view/dialog/dialog.component';
-import {NgxPaginationModule} from 'ngx-pagination';
+import { NgxPaginationModule } from 'ngx-pagination';
 import { PriceComponent } from './component/price/price.component';
 import { SizeComponent } from './component/size/size.component';
+import { NgxSliderModule } from '@angular-slider/ngx-slider';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatPaginatorIntl, MatPaginatorModule } from '@angular/material/paginator';
+import { CustomMaterialPaginatorService } from './service/custom-material-paginator.service';
+
 
 @NgModule({
   declarations: [
@@ -56,9 +61,15 @@ import { SizeComponent } from './component/size/size.component';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    MatInputModule
+    MatInputModule,
+    NgxSliderModule,
+    MatProgressSpinnerModule,
+    MatPaginatorModule
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [{ provide: MatPaginatorIntl, useClass: CustomMaterialPaginatorService }],
+  bootstrap: [AppComponent],
 })
+
 export class AppModule { }
+
+

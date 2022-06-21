@@ -1,0 +1,45 @@
+<div class="container">
+  <div class="row my-5 shadow-lg sign__in-card">
+    <div class="col-lg-6 px-0">
+      <img
+        src="https://images.pexels.com/photos/1536619/pexels-photo-1536619.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+        alt="" />
+    </div>
+    <div class="col-lg-6 login__form d-flex flex-column justify-content-center">
+      <h3 class="text-center">Sign In</h3>
+      <form [formGroup]="loginForm" (ngSubmit)="login()">
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" class="form-control" placeholder="Enter email" formControlName="email" />
+
+          <div *ngIf="f['email'].touched && f['email'].invalid" class="alert alert-danger">
+            <div *ngIf="f['email'].errors && f['email'].errors['required']">Email is required.</div>
+            <div *ngIf="f['email'].errors && f['email'].errors['email']">Email is invalid.</div>
+          </div>
+
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" class="form-control" placeholder="Enter password" formControlName="password" />
+
+          <div *ngIf="f['password'].touched && f['password'].invalid" class="alert alert-danger">
+            <div *ngIf="f['password'].errors && f['password'].errors['required']">Password is required.</div>
+            <div *ngIf="f['password'].errors && f['password'].errors['minlength']">Password should be 6 character.
+            </div>
+          </div>
+        </div>
+        <a [routerLink]="['/sign-up']" class="d-block mb-3">Don't have account? Sign up now !</a>
+
+        <div class="d-flex justify-content-center">
+          <button type="submit" class="btn w-100 btn__submit" [disabled]="loginForm.invalid">
+            Log in
+          </button>
+        </div>
+      </form>
+
+      <div class="mb-4">
+        <p class="text-center">Forgot? <a href="#" class="text-decoration-none">password</a></p>
+      </div>
+    </div>
+  </div>
+</div>

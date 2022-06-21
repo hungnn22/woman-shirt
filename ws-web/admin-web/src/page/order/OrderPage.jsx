@@ -4,6 +4,10 @@ import AxiosApi from '../../api/AxiosApi'
 import WsUrl from "../../utils/constants/WsUrl";
 import { useForm } from "react-hook-form";
 import OrderDetail from './OrderDetail';
+import ToastUtils from '../../utils/ToastUtils';
+import WsToastType from '../../utils/constants/WsToastType';
+import WsMessage from '../../utils/constants/WsMessage';
+// import OrderDetail from './OrderDetail';
 
 let location = {
     provinceCode: null,
@@ -54,22 +58,22 @@ const OrderPage = () => {
             const res = await axios.get(url)
             setProvinces(res.data)
         }
-        const getOrderList = async () => {
-            const axiosRes = await AxiosApi.postAuth(`${WsUrl.ORDER_BASE}${WsUrl.ADMIN_ORDER_SEARCH}`, req)
-            const { data } = axiosRes
-            setOrders(data.data)
-            setPageInfo({
-                ...pageInfo,
-                page: data.page,
-                pageSize: data.pageSize,
-                totalElements: data.totalElements,
-                totalPages: data.totalPages
-            })
-        }
         getProvincesFromOpenApi()
         getOrderList()
     }, [req])
 
+    const getOrderList = async () => {
+        const axiosRes = await AxiosApi.postAuth(`${WsUrl.ORDER_BASE}${WsUrl.ADMIN_ORDER_SEARCH}`, req)
+        const { data } = axiosRes
+        setOrders(data.data)
+        setPageInfo({
+            ...pageInfo,
+            page: data.page,
+            pageSize: data.pageSize,
+            totalElements: data.totalElements,
+            totalPages: data.totalPages
+        })
+    }
 
     const handleChangeProvinceFilter = e => {
         location = {
@@ -174,6 +178,22 @@ const OrderPage = () => {
         setDetail(axiosRes.data.data)
     }
 
+    const handleChangeStatus = async (id, status) => {
+        try {
+            const obj = {
+                id: '12312',
+                status: status,
+                note: document.getElementById('reason').value
+            }
+            const axiosRes = await AxiosApi.postAuth('/order/admin/change-status', obj)
+            getOrderList()
+            console.log(axiosRes)
+            ToastUtils.createToast(WsToastType.SUCCESS, WsMessage.CHANGE_ORDER_STATUS_SUCCESS)
+        } catch(e) {
+            ToastUtils.createToast(WsToastType.ERROR, WsMessage.CHANGE_ORDER_STATUS_FAILED)
+        }
+    }
+
     return (
         <div className="container-fluid">
             <div className="card shadow mb-4">
@@ -187,7 +207,7 @@ const OrderPage = () => {
                             <select className='border-1 form-control col-2 mx-2' onChange={handleChangeStatusFilter}>
                                 <option value="">Tất cả</option>
                                 <option value="PENDING">Đang chờ xử lý</option>
-                                <option value="ACCEPTED">Đã xác nhận</option>
+                                <option value="ACCEPT">Đã xác nhận</option>
                                 <option value="CANCEL_OR_REJECT">Đã hủy</option>
                                 <option value="SHIPPING">Đang giao</option>
                                 <option value="FINISH">Đã nhận hàng</option>
@@ -292,10 +312,44 @@ const OrderPage = () => {
                                                 <a className="dropdown-item" href="#" data-toggle="modal"
                                                     data-target={`#detailModal${order.id}`}
                                                     onClick={() => handleGetDetail(order.id)}>Chi tiết</a>
-                                                <a className="dropdown-item" href="#">Chỉnh sửa trạng thái</a>
+                                                <a className="dropdown-item" href="#" data-toggle="modal"
+                                                    data-target={`#statusModal${order.id}`}>Chỉnh sửa trạng thái</a>
                                             </div>
                                         </div>
-                                        {detail && <OrderDetail detail={detail} order={order} />}
+                                        {detail && <OrderDetail detail={detail} />}
+
+                                        <div className="modal fade" id={`statusModal${order.id}`} tabIndex={-1}
+                                            role="dialog"
+                                            aria-labelledby="statusModalLabel" aria-hidden="true">
+                                            <div className="modal-dialog modal-lg" role="document">
+                                                <div className="modal-content">
+                                                    <div className="modal-header">
+                                                        <h5 className="modal-title" id="exampleModalLabel">Chỉnh sửa trạng thái</h5>
+                                                        <button type="button" className="close" data-dismiss="modal"
+                                                            aria-label="Close">
+                                                            <span aria-hidden="true">×</span>
+                                                        </button>
+                                                    </div>
+                                                    {order.options &&
+                                                        <div className="modal-body p-4">
+                                                            <div className="form-group mt-2">
+                                                                <h6 className='text-dark'><b>Lý do chỉnh sửa</b></h6>
+                                                                <textarea id='reason' className='form-control' rows={4}></textarea>
+                                                            </div>
+                                                            <h6 className='text-dark'><b>Chọn trạng thái mới cho đơn hàng</b></h6>
+                                                            <div className='row d-flex justify-content-left p-2'>
+                                                                {order.options.map((obj, index) => (
+                                                                    <button key={index} className={`btn mr-2 btn-${obj.clazz}`}
+                                                                        onClick={() => handleChangeStatus(order.id, obj.status)}
+                                                                        data-dismiss="modal"
+                                                                    >{obj.name}</button>
+                                                                ))}
+                                                            </div>
+
+                                                        </div>}
+                                                </div>
+                                            </div>
+                                        </div>
                                     </td>
                                 </tr>))}
                         </tbody>

@@ -1,5 +1,6 @@
 package com.ws.masterserver.service.impl;
 
+import com.ws.masterserver.dto.admin.order.change_status.ChangeStatusDto;
 import com.ws.masterserver.dto.admin.order.detail.DetailRes;
 import com.ws.masterserver.dto.customer.order.add_to_cart.AddToCartDto;
 import com.ws.masterserver.dto.customer.order.add_to_cart.AddToCartResponse;
@@ -10,6 +11,7 @@ import com.ws.masterserver.dto.customer.order.me.MyOrderResponse;
 import com.ws.masterserver.dto.admin.order.search.OrderReq;
 import com.ws.masterserver.dto.admin.order.search.OrderRes;
 import com.ws.masterserver.entity.AddressEntity;
+import com.ws.masterserver.entity.OrderStatusEntity;
 import com.ws.masterserver.service.OrderService;
 import com.ws.masterserver.utils.base.WsRepository;
 import com.ws.masterserver.utils.common.JsonUtils;
@@ -19,6 +21,7 @@ import com.ws.masterserver.utils.constants.enums.RoleEnum;
 import com.ws.masterserver.utils.base.rest.CurrentUser;
 import com.ws.masterserver.utils.base.rest.ResData;
 import com.ws.masterserver.utils.base.rest.PageData;
+import com.ws.masterserver.utils.constants.enums.StatusEnum;
 import com.ws.masterserver.utils.validate.AuthValidator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,6 +29,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import javax.transaction.Transactional;
+import java.util.Date;
 import java.util.Locale;
 
 @Service
@@ -88,6 +92,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    @Transactional
     public ResData<AddToCartResponse> addToCart(CurrentUser currentUser, AddToCartDto body) {
             log.info("START OrderServiceImpl-addToCart() with req: {}", JsonUtils.toJson(body));
         return null;
@@ -106,6 +111,32 @@ public class OrderServiceImpl implements OrderService {
         }
         AuthValidator.checkRole(currentUser, RoleEnum.ROLE_ADMIN, RoleEnum.ROLE_ADMIN);
         return repository.orderCustomRepository.detail4Admin(currentUser, id);
+    }
+
+    @Override
+    @Transactional
+    public ResData<String> changeStatus4Admin(CurrentUser currentUser, ChangeStatusDto dto) {
+        AuthValidator.checkRole(currentUser, RoleEnum.ROLE_ADMIN, RoleEnum.ROLE_CUSTOMER);
+        var order = repository.orderRepository.findById(dto.getId()).orElseThrow(() -> {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Không tìm thấy hóa đơn! ");
+        });
+        var status = StatusEnum.valueOf(dto.getStatus().toUpperCase(Locale.ROOT));
+        if (status == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Trạng thái không hợp lệ!");
+        }
+        order.setUpdatedBy(currentUser.getId());
+        order.setUpdatedDate(new Date());
+        repository.orderRepository.save(order);
+        var orderStatus = OrderStatusEntity.builder()
+                .id(UidUtils.generateUid())
+                .status(status)
+                .createdBy(currentUser.getId())
+                .createdDate(new Date())
+                .orderId(dto.getId())
+                .note(dto.getNote())
+                .build();
+        repository.orderStatusRepository.save(orderStatus);
+        return ResData.ok(order.getId(), "Chuyển trạng thái thành công");
     }
 
     private void validateOrderCreateDto(CheckinDto body) {

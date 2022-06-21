@@ -79,6 +79,7 @@ public class WsConst {
         public static final String PHONE_VI = "Số điện thoại";
         public static final String AVATAR_VI = "Avatar";
         public static final String PRODUCT_VI = "Sản phẩm";
+        public static final String PRODUCT_OPTION_VI = "Tùy chọn Sản phẩm";
         public static final String QTY_VI = "Số lượng";
         public static final String STATUS_VI = "Trạng thái";
         public static final String CATEGORY_VI = "Loại sản phẩm";

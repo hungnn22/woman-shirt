@@ -1,5 +1,6 @@
 package com.ws.masterserver.service.impl;
 
+import com.ws.masterserver.dto.admin.product.search.ProductRes;
 import com.ws.masterserver.dto.customer.product.ProductReq;
 import com.ws.masterserver.dto.admin.product.ProductDetailResponse;
 import com.ws.masterserver.dto.admin.product.ProductDto;
@@ -17,7 +18,6 @@ import com.ws.masterserver.utils.constants.WsCode;
 import com.ws.masterserver.utils.constants.WsConst;
 import com.ws.masterserver.utils.base.rest.CurrentUser;
 import com.ws.masterserver.utils.base.rest.ResData;
-import com.ws.masterserver.utils.constants.enums.RoleEnum;
 import com.ws.masterserver.utils.validate.AuthValidator;
 import com.ws.masterserver.utils.validate.ProductValidator;
 import lombok.RequiredArgsConstructor;
@@ -148,5 +148,11 @@ public class ProductServiceImpl implements ProductService {
 //            return new PageData<>(true);
 //        }
         return repository.productCustomRepository.search( req);
+    }
+
+    @Override
+    public PageData<ProductRes> search4Admin(CurrentUser currentUser, ProductReq req) {
+        AuthValidator.checkAdmin(currentUser);
+        return repository.productCustomRepository.search4Admin(req);
     }
 }

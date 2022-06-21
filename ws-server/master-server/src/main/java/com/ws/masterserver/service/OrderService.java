@@ -1,5 +1,6 @@
 package com.ws.masterserver.service;
 
+import com.ws.masterserver.dto.admin.order.change_status.ChangeStatusDto;
 import com.ws.masterserver.dto.admin.order.detail.DetailRes;
 import com.ws.masterserver.dto.customer.order.add_to_cart.AddToCartDto;
 import com.ws.masterserver.dto.customer.order.add_to_cart.AddToCartResponse;
@@ -23,4 +24,5 @@ public interface OrderService {
      * */
     PageData<OrderRes> search4Admin(CurrentUser currentUser, OrderReq req);
     ResData<DetailRes> detail4Admin(CurrentUser currentUser, String id);
+    ResData<String> changeStatus4Admin(CurrentUser currentUser, ChangeStatusDto dto);
 }

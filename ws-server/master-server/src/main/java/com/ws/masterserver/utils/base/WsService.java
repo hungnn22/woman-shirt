@@ -20,6 +20,6 @@ public class WsService {
     public final ReviewMediaService reviewMediaService;
     public final ReviewService reviewService;
     public final UserService userService;
-
+    public final CartService cartService;
 //    public final SimpMessagingTemplate ws;
 }

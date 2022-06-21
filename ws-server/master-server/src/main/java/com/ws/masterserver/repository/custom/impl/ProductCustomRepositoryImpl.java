@@ -1,10 +1,12 @@
 package com.ws.masterserver.repository.custom.impl;
 
+import com.ws.masterserver.dto.admin.product.search.ProductRes;
 import com.ws.masterserver.dto.customer.product.ProductReq;
 import com.ws.masterserver.dto.customer.product.ProductResponse;
 import com.ws.masterserver.repository.custom.ProductCustomRepository;
 import com.ws.masterserver.utils.base.rest.CurrentUser;
 import com.ws.masterserver.utils.base.rest.PageData;
+import com.ws.masterserver.utils.common.MoneyUtils;
 import com.ws.masterserver.utils.common.StringUtils;
 import com.ws.masterserver.utils.constants.WsCode;
 import lombok.RequiredArgsConstructor;
@@ -13,7 +15,8 @@ import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import java.util.Locale;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
@@ -25,29 +28,30 @@ public class ProductCustomRepositoryImpl implements ProductCustomRepository {
     @Override
     public PageData<ProductResponse> search(ProductReq req) {
         var prefix = "select\n";
-        var select = "new com.ws.masterserver.dto.customer.product.ProductResponse(\n" +
+        var select =
+                "new com.ws.masterserver.dto.customer.product.ProductResponse(\n" +
                 "p.id as productId,\n" +
-                "p.name as productName,\n" +
-                "p.active as active,\n" +
-                "po.image as thumbnail,\n" +
-                "po.price as price,\n" +
-                "c.name as categoryName,\n" +
-                "p.des as description,\n" +
-                "m.name as materialName,\n" +
-                "t.name as typeName,\n" +
-                "p.createdDate as productCreatedDate,\n" +
-                "p.createdBy as productCreatedBy,\n" +
-                "trim(concat(coalesce(u.firstName, ''), ' ', coalesce(u.lastName, ''))) as createdName)\n";
+                        "p.name as productName,\n" +
+                        "p.active as active,\n" +
+                        "po.image as thumbnail,\n" +
+                        "cast(po.price as string) as price,\n" +
+                        "c.name as categoryName,\n" +
+                        "p.des as description,\n" +
+                        "m.name as materialName,\n" +
+//                "t.name as typeName,\n" +
+                        "p.createdDate as productCreatedDate,\n" +
+                        "p.createdBy as productCreatedBy,\n" +
+                        "trim(concat(coalesce(u.firstName, ''), ' ', coalesce(u.lastName, ''))) as createdName)\n";
         var from = "from ProductEntity p\n";
         var joins = "left join CategoryEntity c on p.categoryId = c.id\n" +
                 "left join MaterialEntity m on p.materialId = m.id\n" +
-                "left join TypeEntity t on p.typeId = t.id\n" +
+//                "left join TypeEntity t on p.typeId = t.id\n" +
                 "left join UserEntity u on p.createdBy = u.id\n" +
                 "left join ProductOptionEntity po on p.id = po.productId\n";
         var where = "where 1 = 1\n" +
                 "and c.active = 1\n" +
                 "and p.active = 1\n" +
-                "and po.price in (select price from ProductOptionEntity where po.productId = p.id)\n" +
+                "and po.price in (select min(price) from ProductOptionEntity where po.productId = p.id)\n" +
                 "and po.image in (select image from ProductOptionEntity where po.productId = p.id)\n";
 
         if (Boolean.FALSE.equals(StringUtils.isNullOrEmpty(req.getTextSearch()))) {
@@ -87,16 +91,31 @@ public class ProductCustomRepositoryImpl implements ProductCustomRepository {
         query.setFirstResult(req.getPageReq().getPage() * req.getPageReq().getPageSize());
         query.setMaxResults(req.getPageReq().getPageSize());
 
-        var productList = query.getResultList();
+        List<ProductResponse> productList = query.getResultList();
+
         if (productList.isEmpty()) {
             return new PageData<>(true);
         }
+
+        productList.forEach(product -> {
+            Long price = Long.valueOf(product.getPrice());
+            String priceFormat = MoneyUtils.format(price);
+            product.setPrice(priceFormat);
+        });
+
+        var productMoneyFormatedList = (List) productList;
         return PageData
                 .setResult(
-                        productList,
+                        productMoneyFormatedList,
                         req.getPageReq().getPage(),
                         req.getPageReq().getPageSize(),
                         totalElements,
                         WsCode.OK);
+    }
+
+    @Override
+    public PageData<ProductRes> search4Admin(ProductReq req) {
+        var sql = "";
+        return new PageData<ProductRes>(true);
     }
 }

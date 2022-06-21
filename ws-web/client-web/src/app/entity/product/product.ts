@@ -4,10 +4,10 @@ export class Product {
     active? : boolean;
     categoryName? : string;
     thumbnail? : string;
-    price? : number;
+    price? : string;
     des? : string;
     materialName? : string;
-    type? : string;
+    // typeName? : string;
     createdDate? : Date;
     createdBy? : string;
     createdName? : string;

@@ -3,6 +3,7 @@ package com.ws.masterserver.utils.common;
 import com.ws.masterserver.dto.admin.order.detail.PriceDto;
 import com.ws.masterserver.dto.admin.order.detail.PromotionDto;
 import com.ws.masterserver.dto.admin.order.detail.ResultDto;
+import com.ws.masterserver.dto.admin.order.search.OptionDto;
 import com.ws.masterserver.utils.base.WsException;
 import com.ws.masterserver.utils.constants.WsCode;
 import com.ws.masterserver.utils.constants.enums.PromotionTypeEnum;
@@ -10,9 +11,8 @@ import com.ws.masterserver.utils.constants.enums.RoleEnum;
 import com.ws.masterserver.utils.constants.enums.StatusEnum;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.io.PrintWriter;
+import java.util.*;
 
 @Slf4j
 public class OrderUtils {
@@ -59,20 +59,18 @@ public class OrderUtils {
     }
 
     /**
-     * @param defaultTotal Tổng tiền sản phẩm chưa trừ đi khuyến mãi sản phẩm.
-     * @param shipPrice    Tiền ship
-     * @param promotions   Danh sách khuyến mãi
+     * @param shopPrice  Tổng tiền sản phẩm chưa trừ đi khuyến mãi sản phẩm.
+     * @param shipPrice  Tiền ship
+     * @param promotions Danh sách khuyến mãi
      * @return giá phải trả
      * @apiNote Dựa vào loại khuyến mãi và % giảm giá sẽ trừ đi vào giá
      */
-    public static Long getTotal(Long defaultTotal, Long shipPrice, List<PromotionDto> promotions) {
+    public static Long getTotal(Long shopPrice, Long shipPrice, List<PromotionDto> promotions) {
         try {
             /**
              * Nếu không có khuyến mãi thì = defaultTotal + shipPrice
              * */
-            if (promotions.isEmpty()) {
-                return defaultTotal + shipPrice;
-            } else {
+            if (!promotions.isEmpty()) {
                 for (var promotion : promotions) {
                     var type = PromotionTypeEnum.valueOf(promotion.getTypeCode());
                     switch (type) {
@@ -81,14 +79,14 @@ public class OrderUtils {
                          * Trừ tiền ship
                          * */
                         case TYPE1:
-                            defaultTotal -= shipPrice * promotion.getPercentDiscount().longValue() / 100;
+                            shipPrice -= shipPrice * promotion.getPercentDiscount().longValue() / 100;
                             break;
                         /**
                          * Loại 2: Mua sắm
                          * Trừ tiền sản phẩm
                          * */
                         case TYPE2:
-                            defaultTotal -= defaultTotal * promotion.getPercentDiscount().longValue() / 100;
+                            shopPrice -= shopPrice * promotion.getPercentDiscount().longValue() / 100;
                             break;
                         default:
                             throw new WsException(WsCode.INTERNAL_SERVER);
@@ -98,51 +96,83 @@ public class OrderUtils {
         } catch (Exception e) {
             log.error("getTotal: {}", e.getMessage());
         }
-        return defaultTotal;
+        return shopPrice + shipPrice;
     }
 
     public static ResultDto getResultDto(long shopPrice, Long shipPrice, List<PromotionDto> promotions) {
-        var result = ResultDto.builder();
-        var shipTotal = shipPrice;
-        var shopTotal = shopPrice;
-        try {
-            var ship = PriceDto.builder()
-                    .name(PromotionTypeEnum.TYPE1.getName())
-                    .price(MoneyUtils.format(shipPrice))
-                    .total(MoneyUtils.format(shipPrice));
-            var shop = PriceDto.builder()
-                    .name(PromotionTypeEnum.TYPE2.getName())
-                    .price(MoneyUtils.format(shopPrice))
-                    .total(MoneyUtils.format(shopPrice));
-            if (!promotions.isEmpty()) {
-                for (var promotion : promotions) {
-                    var type = PromotionTypeEnum.valueOf(promotion.getTypeCode());
-                    switch (type) {
-                        case TYPE1:
-                            var shipDiscount = shipPrice * promotion.getPercentDiscount().longValue() / 100;
-                            shipTotal = shipPrice - shipDiscount;
-                            ship.discount(MoneyUtils.format(shipDiscount))
-                                    .total(MoneyUtils.format(shipTotal));
-                            break;
-                        case TYPE2:
-                            var shopDiscount = shopPrice * promotion.getPercentDiscount().longValue() / 100;
-                            shopTotal = shopPrice - shopDiscount;
-                            shop.discount(MoneyUtils.format(shopDiscount))
-                                    .total(MoneyUtils.format(shopTotal));
-                            break;
+        var shipDiscount = 0L;
+        var shopDiscount = 0l;
 
-                        default:
-                            throw new WsException(WsCode.INTERNAL_SERVER);
-                    }
-
+        if (!promotions.isEmpty()) {
+            for (var promotion : promotions) {
+                var type = PromotionTypeEnum.valueOf(promotion.getTypeCode());
+                switch (type) {
+                    case TYPE1:
+                        shipDiscount += shipPrice * promotion.getPercentDiscount().longValue() / 100;
+                        break;
+                    case TYPE2:
+                        shopDiscount += shopPrice * promotion.getPercentDiscount().longValue() / 100;
+                        break;
+                    default:
+                        throw new WsException(WsCode.INTERNAL_SERVER);
                 }
+
             }
-            result.ship(ship.build())
-                    .shop(shop.build())
-                    .total(MoneyUtils.format(shipTotal + shipTotal));
-        } catch (Exception e) {
-            log.error("getResultDto: {}", e.getMessage());
         }
-        return result.build();
+
+        var shipTotal = shipPrice - shipDiscount;
+        var shopTotal = shopPrice - shopDiscount;
+
+        var total = shipTotal + shopTotal;
+
+        return ResultDto.builder()
+                .ship(PriceDto.builder()
+                        .name("Vận chuyển")
+                        .price(MoneyUtils.format(shipPrice))
+                        .discount(MoneyUtils.format(shipDiscount))
+                        .total(MoneyUtils.format(shipTotal))
+                        .build())
+                .shop(PriceDto.builder()
+                        .name("Mua sắm")
+                        .price(MoneyUtils.format(shopPrice))
+                        .discount(MoneyUtils.format(shopDiscount))
+                        .total(MoneyUtils.format(shopTotal))
+                        .build())
+                .total(MoneyUtils.format(total))
+                .build();
+    }
+
+    public static List<OptionDto> getOptions4Admin(String statusNow) {
+        var result = new ArrayList<OptionDto>();
+        try {
+            var status = StatusEnum.valueOf(statusNow);
+            switch (status) {
+                case PENDING:
+                    result.add(OptionDto.builder()
+                            .name("Chấp nhận đơn hàng")
+                            .status(StatusEnum.ACCEPT.name().toLowerCase(Locale.ROOT))
+                            .clazz("success")
+                            .build());
+                    result.add(OptionDto.builder()
+                            .name("Hủy đơn hàng")
+                            .status(StatusEnum.REJECT.name().toLowerCase(Locale.ROOT))
+                            .clazz("danger")
+                            .build());
+                    break;
+                case ACCEPT:
+                    result.add(OptionDto.builder()
+                            .name("Hủy đơn hàng")
+                            .status(StatusEnum.REJECT.name().toLowerCase(Locale.ROOT))
+                            .clazz("danger")
+                            .build());
+                    break;
+                default:
+                    return Collections.emptyList();
+            }
+
+        } catch (Exception e) {
+            log.error("getOptions: {}", e.getMessage());
+        }
+        return result;
     }
 }
