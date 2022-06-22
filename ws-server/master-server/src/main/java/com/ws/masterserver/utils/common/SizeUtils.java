@@ -4,7 +4,6 @@ import com.ws.masterserver.utils.base.enum_dto.SizeDto;
 import com.ws.masterserver.utils.constants.enums.SizeEnum;
 
 /**
- * @author hungnn22
  */
 public class SizeUtils {
     public static SizeDto getSizeDto(String input) {
