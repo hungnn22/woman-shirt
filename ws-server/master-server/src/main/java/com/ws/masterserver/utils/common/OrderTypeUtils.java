@@ -22,11 +22,12 @@ public class OrderTypeUtils {
     public static String getOrderTypeStr(String input, Boolean payed) {
         try {
             var orderType = OrderTypeEnum.valueOf(input);
+
             return TypeDto.builder()
                     .code(orderType.name())
                     .tittle(orderType.getTittle())
                     .name(orderType.getName())
-                    .build().getName() + "(" + (payed ? "Đã thanh toán" : "Chưa thanh toán") + ")";
+                    .build().getName()  + (payed ? "(Đã thanh toán)" : "(Chưa thanh toán)");
         } catch (Exception e) {
             log.error("OrderTypeUtils getOrderTypeStr error: {}", e.getMessage());
             return "";

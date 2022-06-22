@@ -98,7 +98,7 @@ public class OrderCustomRepositoryImpl implements OrderCustomRepository {
         if (!StringUtils.isNullOrEmpty(req.getTime())) {
             switch (req.getTime()) {
                 case "day":
-                    sql += "and os2.created_date::date = current_date::date\n";
+                    sql += "and cast(os2.created_date as date) = cast(current_date as date)\n";
                     break;
                 case "week":
                     sql += "and extract('week' from os2.created_date) = extract('week' from current_date)\n";
@@ -133,7 +133,7 @@ public class OrderCustomRepositoryImpl implements OrderCustomRepository {
                 .code(JpaUtils.getString(obj[1]))
                 .customer(UserUtils.getCustomerInfo(JpaUtils.getBoolean(obj[2]), JpaUtils.getString(obj[3])))
                 .phone(JpaUtils.getString(obj[4]))
-                .orderDate(DateUtils.toStr(JpaUtils.getDate(obj[5]), DateUtils.DATE_TIME_FORMAT_VI_OUTPUT))
+                .orderDate(DateUtils.toStr(JpaUtils.getDate(obj[5]), DateUtils.F_DDMMYYYYHHMMSS))
                 .address(JpaUtils.getString(obj[6]))
                 .total(MoneyUtils.format(OrderUtils.getTotal(JpaUtils.getLong(obj[7]), JpaUtils.getLong(obj[8]), repository.orderPromotionRepository.findByOrderId(JpaUtils.getString(obj[0])))))
                 .note(JpaUtils.getString(obj[9]))

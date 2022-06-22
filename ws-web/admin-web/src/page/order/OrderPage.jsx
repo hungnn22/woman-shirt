@@ -3,11 +3,10 @@ import React, { useEffect, useState } from 'react'
 import AxiosApi from '../../api/AxiosApi'
 import WsUrl from "../../utils/constants/WsUrl";
 import { useForm } from "react-hook-form";
-import OrderDetail from './OrderDetail';
 import ToastUtils from '../../utils/ToastUtils';
 import WsToastType from '../../utils/constants/WsToastType';
 import WsMessage from '../../utils/constants/WsMessage';
-// import OrderDetail from './OrderDetail';
+import { NavLink, Outlet } from 'react-router-dom'
 
 let location = {
     provinceCode: null,
@@ -176,6 +175,7 @@ const OrderPage = () => {
         const axiosRes = await AxiosApi.getAuth(`${WsUrl.ORDER_BASE}${WsUrl.ADMIN_ORDER_DETAIL}/${orderId}`)
         console.log(axiosRes)
         setDetail(axiosRes.data.data)
+        // setOrderId(orderId)
     }
 
     const handleChangeStatus = async (id, status) => {
@@ -189,7 +189,7 @@ const OrderPage = () => {
             getOrderList()
             console.log(axiosRes)
             ToastUtils.createToast(WsToastType.SUCCESS, WsMessage.CHANGE_ORDER_STATUS_SUCCESS)
-        } catch(e) {
+        } catch (e) {
             ToastUtils.createToast(WsToastType.ERROR, WsMessage.CHANGE_ORDER_STATUS_FAILED)
         }
     }
@@ -298,8 +298,8 @@ const OrderPage = () => {
                                     <td className="col-1">{order.phone}</td>
                                     <td>{order.orderDate}</td>
                                     <td className="col-2">{order.address}</td>
-                                    <td className="col-1">{order.totalFmt}</td>
-                                    <td>{order.type}({order.payed})</td>
+                                    <td className="col-1">{order.total}</td>
+                                    <td>{order.type}</td>
                                     <td>{order.note}</td>
                                     <td className="col-2">{order.status}</td>
                                     <td>
@@ -309,14 +309,98 @@ const OrderPage = () => {
                                                 <i className="fa fa-ellipsis-h" aria-hidden="true" />
                                             </a>
                                             <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                <a className="dropdown-item" href="#" data-toggle="modal"
-                                                    data-target={`#detailModal${order.id}`}
-                                                    onClick={() => handleGetDetail(order.id)}>Chi tiết</a>
+                                                <NavLink to={`${order.id}`} className="dropdown-item">Chi tiết</NavLink>
                                                 <a className="dropdown-item" href="#" data-toggle="modal"
                                                     data-target={`#statusModal${order.id}`}>Chỉnh sửa trạng thái</a>
                                             </div>
                                         </div>
-                                        {detail && <OrderDetail detail={detail} />}
+
+                                        {/* {detail && <div className="modal fade" id={`detailModal${order.id}`} tabIndex={-1}
+                                            role="dialog"
+                                            aria-labelledby="detailModalLabel" aria-hidden="true">
+                                            <div className="modal-dialog modal-xl" role="document">
+                                                <div className="modal-content">
+                                                    <div className="modal-header">
+                                                        <h5 className="modal-title" id="exampleModalLabel">Chi tiết đơn
+                                                            hàng</h5>
+                                                        <button type="button" className="close" data-dismiss="modal"
+                                                            aria-label="Close">
+                                                            <span aria-hidden="true">×</span>
+                                                        </button>
+                                                    </div>
+                                                    <div className="modal-body p-4">
+                                                        <div>
+                                                            <h6 className='text-dark'><b>1. Sản phẩm</b></h6>
+                                                            <table className="table table-bordered mt-2" id="dataTable"
+                                                                width="100%" cellSpacing={0}>
+                                                                <thead>
+                                                                    <tr className='text-bold text-dark'>
+                                                                        <th className='text-center'>No</th>
+                                                                        <th>Sản phẩm</th>
+                                                                        <th>Đơn giá</th>
+                                                                        <th>Số lượng</th>
+                                                                        <th>Size</th>
+                                                                        <th>Màu sắc</th>
+                                                                        <th>Chất liệu</th>
+                                                                        <th>Tổng(VND)</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    {detail.items && detail.items.map((obj, index) => (
+                                                                        <tr key={obj.id}>
+                                                                            <td className='text-center'>{index + 1}</td>
+                                                                            <td>{obj.name}</td>
+                                                                            <td>{obj.priceFmt}</td>
+                                                                            <td>{obj.qty}</td>
+                                                                            <td>{obj.size}</td>
+                                                                            <td>{obj.color}</td>
+                                                                            <td>{obj.material}</td>
+                                                                            <td>{obj.totalFmt}</td>
+                                                                        </tr>
+                                                                    ))}
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                        <div className='mt-4'>
+                                                            <h6 className='text-dark'><b>2. Khuyến mãi</b></h6>
+                                                            <table className="table table-bordered mt-2" id="dataTable"
+                                                                width="100%" cellSpacing={0}>
+                                                                <thead>
+                                                                    <tr className='text-bold text-dark'>
+                                                                        <th className='text-center'>No</th>
+                                                                        <th>Tên</th>
+                                                                        <th>Voucher</th>
+                                                                        <th>Giảm giá(%)</th>
+                                                                        <th>Loại</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    {detail.promotions && detail.promotions.map((pro, index) => (
+                                                                        <tr key={index}>
+                                                                            <td className='text-center'>{index + 1}</td>
+                                                                            <td>{pro.name}</td>
+                                                                            <td>{pro.voucher}</td>
+                                                                            <td>{pro.percentDiscount}</td>
+                                                                            <td>{pro.typeName}</td>
+                                                                        </tr>
+                                                                    ))}
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                        <div className='mt-4'>
+                                                            <h6 className='text-dark'><b>3. Tổng tiền</b></h6>
+                                                        </div>
+                                                    </div>
+                                                    <div className="modal-footer">
+                                                        <button type="button" className="btn btn-secondary"
+                                                            data-dismiss="modal">Đóng
+                                                        </button>
+                                                        <button type="button" className="btn btn-primary">Lưu
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>} */}
 
                                         <div className="modal fade" id={`statusModal${order.id}`} tabIndex={-1}
                                             role="dialog"
