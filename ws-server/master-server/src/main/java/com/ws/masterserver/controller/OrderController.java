@@ -63,7 +63,7 @@ public class OrderController extends WsController {
 
     @PostMapping("/admin/change-status")
     @Operation(summary = "API thay đổi trạng thái đơn hàng")
-    public ResponseEntity<ResData<String>> rejectOrder(@RequestBody ChangeStatusDto dto) {
+    public ResponseEntity<ResData<String>> changeStatus4Admin(@RequestBody ChangeStatusDto dto) {
         log.info("START API /api/v1/order//admin/change-status with dto: {}", JsonUtils.toJson(dto));
         return ResponseEntity.ok(service.orderService.changeStatus4Admin(getCurrentUser(), dto));
     }

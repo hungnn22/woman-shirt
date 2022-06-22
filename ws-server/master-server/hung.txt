@@ -37,3 +37,80 @@ from orders o1
          left join users u2 on os4.created_by = u2.id
 ;
 
+
+ select
+	os1.id,
+	os1.status
+from
+	order_status os1
+left join (
+	select
+		order_id as os_order_id,
+		max(created_date) as os_created_date
+	from
+		order_status os
+	group by
+		order_id
+) os2 on
+	os2.os_order_id = os1.order_id
+where
+	os1.created_date = os2.os_created_date
+	;
+
+
+select
+	o1.id as id,
+	u1.gender as customer_gender,
+	trim(concat(u1.first_name, ' ', u1.last_name)) as customer_name,
+	u1.phone as customer_phone,
+	os2.created_date as created_date,
+	concat(a1.exact, ', ', a1.combination) as address,
+	o1.ship_price as ship_price,
+	od2.od1_total as shop_price,
+	o1."type" as "type",
+	o1.payed as payed,
+	os5.status ,
+	os5.created_date ,
+	os5.note ,
+	status_user.gender ,
+	trim(concat(status_user.first_name, ' ', status_user.last_name)),
+	status_user."role"
+from
+	orders o1
+left join address a1 on
+	a1.id = o1.address_id
+left join (
+	select
+		os1.order_id as order_id,
+		os1.created_date as created_date
+	from
+		order_status os1
+	where
+		os1.status = 'PENDING') os2 on
+	os2.order_id = o1.id
+left join users u1 on
+	u1.id = o1.user_id
+left join (
+	select
+		od1.order_id as od1_order_id,
+		sum(od1.qty * od1.price) as od1_total
+	from
+		order_detail od1
+	group by
+		od1.order_id) od2 on
+	od2.od1_order_id = o1.id
+left join (
+	select
+		os3.order_id as os3_order_id,
+		max(os3.created_date) as os3_created_date
+	from
+		order_status os3
+	group by
+		os3.order_id) os4 on
+	os4.os3_order_id = o1.id
+left join order_status os5 on
+	os5.created_date = os4.os3_created_date
+left join users status_user on
+	status_user.id = os5.created_by
+  ;
+

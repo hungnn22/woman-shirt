@@ -20,4 +20,9 @@ public class UserUtils {
     public static String getCombination(String combination, Boolean gender) {
         return (gender == null ? "" : "(" + (gender ? "Anh" : "Chị") + ") ") + combination;
     }
+
+    public static String getCustomerInfo(Boolean gender, String fullName) {
+        var prefix = "(" + (gender ? "Anh" : "Chị") + ") ";
+        return prefix + fullName;
+    }
 }
