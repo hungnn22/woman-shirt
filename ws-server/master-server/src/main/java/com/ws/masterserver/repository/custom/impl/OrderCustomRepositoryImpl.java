@@ -2,6 +2,7 @@ package com.ws.masterserver.repository.custom.impl;
 
 import com.ws.masterserver.dto.admin.order.detail.DetailRes;
 import com.ws.masterserver.dto.admin.order.detail.ItemDto;
+import com.ws.masterserver.dto.admin.order.detail.PromotionDto;
 import com.ws.masterserver.dto.admin.order.search.*;
 import com.ws.masterserver.repository.custom.OrderCustomRepository;
 import com.ws.masterserver.utils.base.WsRepository;
@@ -112,8 +113,8 @@ public class OrderCustomRepositoryImpl implements OrderCustomRepository {
         }
         if (!StringUtils.isNullOrEmpty(req.getTextSearch())) {
             var textSearch = "'%" + req.getTextSearch().trim().toUpperCase(Locale.ROOT) + "%'";
-            sql += "and (upper(as customer_name) like " + textSearch + " or\n" +
-                    "u1.phone like " + textSearch + ")\n";
+            sql += "and (unaccent(upper(trim(concat(u1.first_name, ' ', u1.last_name)))) like " + textSearch + " or\n" +
+                    "u1.phone like " + textSearch + " or o1.code like" + textSearch +")\n";
         }
         log.info("OrderCustomRepositoryImpl search4Admin sql: {}", sql);
         Query query = entityManager.createNativeQuery(sql);
@@ -128,18 +129,28 @@ public class OrderCustomRepositoryImpl implements OrderCustomRepository {
 
         List<Object[]> objects = query.getResultList();
 
-        List<OrderRes> orderRes = objects.stream().map(obj -> OrderRes.builder()
-                .id(JpaUtils.getString(obj[0]))
-                .code(JpaUtils.getString(obj[1]))
-                .customer(UserUtils.getCustomerInfo(JpaUtils.getBoolean(obj[2]), JpaUtils.getString(obj[3])))
-                .phone(JpaUtils.getString(obj[4]))
-                .orderDate(DateUtils.toStr(JpaUtils.getDate(obj[5]), DateUtils.F_DDMMYYYYHHMMSS))
-                .address(JpaUtils.getString(obj[6]))
-                .total(MoneyUtils.format(OrderUtils.getTotal(JpaUtils.getLong(obj[7]), JpaUtils.getLong(obj[8]), repository.orderPromotionRepository.findByOrderId(JpaUtils.getString(obj[0])))))
-                .note(JpaUtils.getString(obj[9]))
-                .type(OrderTypeUtils.getOrderTypeStr(JpaUtils.getString(JpaUtils.getString(obj[10])), JpaUtils.getBoolean(obj[11])))
-                .status(OrderUtils.getStatusCombination(JpaUtils.getString(obj[12]), JpaUtils.getDate(obj[13]), JpaUtils.getString(obj[15]), JpaUtils.getString(obj[16])))
-                .build()).collect(Collectors.toList());
+        List<OrderRes> orderRes = objects.stream().map(obj -> {
+            var promotions = repository.orderPromotionRepository.findByOrderId(JpaUtils.getString(obj[0]));
+            var total = OrderUtils.getTotal(
+                    JpaUtils.getLong(obj[7]),
+                    JpaUtils.getLong(obj[8]),
+                    promotions);
+            var customer = UserUtils.getCustomerInfo(JpaUtils.getBoolean(obj[2]), JpaUtils.getString(obj[3]));
+            var orderDate = DateUtils.toStr(JpaUtils.getDate(obj[5]), DateUtils.F_DDMMYYYYHHMMSS);
+            var type = OrderTypeUtils.getOrderTypeStr(JpaUtils.getString(JpaUtils.getString(obj[10])), JpaUtils.getBoolean(obj[11]));
+            var status = OrderUtils.getStatusCombination(JpaUtils.getString(obj[12]), JpaUtils.getDate(obj[13]), JpaUtils.getString(obj[15]), JpaUtils.getString(obj[16]));
+            return OrderRes.builder()
+                    .id(JpaUtils.getString(obj[0]))
+                    .code(JpaUtils.getString(obj[1]))
+                    .customer(customer)
+                    .phone(JpaUtils.getString(obj[4]))
+                    .orderDate(orderDate)
+                    .address(JpaUtils.getString(obj[6]))
+                    .total(MoneyUtils.format(total))
+                    .note(JpaUtils.getString(obj[9]))
+                    .type(type)
+                    .status(status)
+                    .build();}).collect(Collectors.toList());
         return PageData.setResult(
                 orderRes,
                 req.getPageReq().getPage(),
