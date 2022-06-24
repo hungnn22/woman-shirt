@@ -1,83 +1,36 @@
-<div class="border2">
-  <p class="title" style="text-align:center">My Fit Size</p>
-  <div class="border1">
+<form>
+  <header>
+    <div class="title">
+      <h1 style="text-align:center; margin-top: 30px;">Hướng dẫn chọn size chuẩn</h1>
+      <img src="assets/size.png" width="100%">
+    </div>
+  </header>
 
+  <body>
     <article>
-      <table class="table">
-        <thead>
-          <tr class="table-active">
-            <th  scope="col">Kích thước</th>
-            <th scope="col">Chiều cao(cm)</th>
-            <th scope="col">Cân nặng(kg)</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <th class="table-secondary" >S</th>
-            <td>150-160</td>
-            <td>40-50</td>
-          </tr>
-          <tr>
-            <th class="table-secondary" >M</th>
-            <td>160-165</td>
-            <td>50-57</td>
-          </tr>
-          <tr>
-            <th class="table-secondary" >L</th>
-            <td>165-170</td>
-            <td>57-65</td>
-          </tr>
-          <tr>
-            <th class="table-secondary" >XL</th>
-            <td>170-175</td>
-            <td>65-72</td>
-          </tr>
-          <tr>
-            <th class="table-secondary" >XXL</th>
-            <td>176-182</td>
-            <td>73-80</td>
-          </tr>
-        </tbody>
-      </table>
+      <div class="dropdown">
+        <kendo-dropdownlist [data]="data" [filterable]="true" textField="text" valueField="value"
+          (filterChange)="handleFilter($event)">
+        </kendo-dropdownlist>
+        <img src="" alt="">
+      </div>
+      <div class="imgDropdown">
+
+      </div>
     </article>
-
-
-    <!-- ///////////////////////////// -->
-
-    <aside>
-
-    <p><b>Giúp bạn tìm size phù hợp</b></p>
-
-      <div class="height">
-        <label for="exampleInputEmail1" class="form-label" style="font-weight: 200px;">Chiều cao(cm)</label>
-        <input type="text" placeholder="..." class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-        [formControl]="height">
-      </div>
-
-      <div class="weight">
-        <label for="exampleInputPassword1" class="form-label" style="font-weight: 200px;">Cân nặng(kg)</label>
-        <input type="text" placeholder="..." class="form-control" id="exampleInputPassword1"  [formControl]="weight">
-      </div>
-
-      <p style="padding-left:10px;color: red;"><b>{{message}}</b></p>
-
-      <div class="">
-        <button class="findSize" (click)="findSize()"  mat-stroked-button>Tìm size</button>
-      </div>
-
-      <div class="">
-        <button class="applySize" mat-stroked-button>Áp dụng size</button>
-      </div>
-    <!-- <p style="padding-left:10px">Size phù hợp với bạn là XL</p>
-
-  <div class="option">
-    <button class="findSize"  mat-raised-button>Tìm size</button>
-    <button class="applySize" mat-raised-button>Áp dụng size</button>
-  </div> -->
-
-
-    </aside>
-
-
-  </div>
-</div>
+    <div class="middle">
+      <!-- <p>Value: <input type="number" [(ngModel)]="value"></p> -->
+      <!-- <ngx-slider [(value)]="value" [options]="options"></ngx-slider> -->
+     <mat-slider
+  thumbLabel
+  [displayWith]="formatLabel"
+  tickInterval="1000"
+  step="1000"
+  min="0"
+  max="100000"
+  aria-label="units"></mat-slider>
+    </div>
+    <aside>đây là right-side</aside>
+  </body>
+  <footer></footer>
+</form>
