@@ -64,7 +64,7 @@ public class OrderUtils {
      * @return giá phải trả
      * @apiNote Dựa vào loại khuyến mãi và % giảm giá sẽ trừ đi vào giá
      */
-    public static Long getTotal(Long shopPrice, Long shipPrice, List<PromotionDto> promotions) {
+    public static Long getTotal(Long shipPrice, Long shopPrice, List<PromotionDto> promotions) {
         try {
             /**
              * Nếu không có khuyến mãi thì = defaultTotal + shipPrice

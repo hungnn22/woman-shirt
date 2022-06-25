@@ -279,6 +279,7 @@ const OrderPage = () => {
                         <thead>
                             <tr className='text-bold text-dark'>
                                 <th>No</th>
+                                <th>Mã đơn hàng</th>
                                 <th>Khách hàng</th>
                                 <th>SDT</th>
                                 <th>Thời gian đặt</th>
@@ -294,6 +295,7 @@ const OrderPage = () => {
                             {orders && orders.map((order, index) => (
                                 <tr key={order.id}>
                                     <td className="text-center">{index + 1}</td>
+                                    <td>{order.code}</td>
                                     <td className='col-1'>{order.customer}</td>
                                     <td className="col-1">{order.phone}</td>
                                     <td>{order.orderDate}</td>
