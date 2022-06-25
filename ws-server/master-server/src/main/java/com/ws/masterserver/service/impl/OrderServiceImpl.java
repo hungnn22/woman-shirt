@@ -136,7 +136,7 @@ public class OrderServiceImpl implements OrderService {
                 .note(dto.getNote())
                 .build();
         repository.orderStatusRepository.save(orderStatus);
-        return ResData.ok(order.getId());
+        return ResData.ok(order.getId(), "Chuyển trạng thái thành công");
     }
 
     private void validateOrderCreateDto(CheckinDto body) {

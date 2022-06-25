@@ -9,6 +9,8 @@ import org.springframework.stereotype.Component;
 public class WsService {
     public final AddressService addressService;
     public final CategoryService categoryService;
+    public final ColorService colorService;
+    public final MaterialService materialService;
     public final EditHistoryService editHistoryService;
     public final EmailLogService emailLogService;
     public final OrderService orderService;

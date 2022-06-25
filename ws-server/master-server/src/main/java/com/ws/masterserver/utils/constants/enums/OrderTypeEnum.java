@@ -1,7 +1,6 @@
 package com.ws.masterserver.utils.constants.enums;
 
 /**
- * @author hungnn22
  */
 public enum OrderTypeEnum {
     CASH("CASH", "Tiền mặt", "Thanh toán bằng tiền mặt"),

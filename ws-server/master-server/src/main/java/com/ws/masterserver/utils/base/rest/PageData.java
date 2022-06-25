@@ -98,4 +98,8 @@ public class PageData<T> {
         pageData.setTimeStamp(new Date());
         return pageData;
     }
+
+    public static <T> PageData setResult(List<T> data, Integer page, Integer pageSize, Long totalElements) {
+        return new PageData(data, page, pageSize, totalElements, WsCode.OK);
+    }
 }

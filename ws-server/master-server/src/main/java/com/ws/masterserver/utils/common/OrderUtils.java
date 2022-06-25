@@ -26,13 +26,12 @@ public class OrderUtils {
      * @param combinationName tên người tạo ra trạng thái = firstName + lastName
      * @param roleStr         role người tạo ra trạng thái
      * @return vd: Đơn hàng đã được chấp nhận bởi Admin lúc 10:22:23 12/02/2022
-     * @author hungnn22
      */
     public static String getStatusCombination(String statusStr, Date createdDate, String combinationName, String roleStr) {
         var result = "";
         try {
             var status = StatusEnum.valueOf(statusStr);
-            var dateFmt = DateUtils.toStr(createdDate, DateUtils.F_VI);
+            var dateFmt = DateUtils.toStr(createdDate, DateUtils.F_DDMMYYYYHHMMSS);
             var role = RoleEnum.valueOf(roleStr);
 
             switch (status) {
@@ -43,7 +42,7 @@ public class OrderUtils {
                     result = "Đã bị hủy bới khách hàng vào lúc " + dateFmt;
                     break;
                 case REJECT:
-                    result = "Đã bị từ chối bởi " + role.getName() + " " + combinationName + " vào lúc " + dateFmt;
+                    result = "Đã bị từ chối bởi " + role.getName() + " " + combinationName + " vào lúc: " + dateFmt;
                     break;
                 case ACCEPT:
                     result = "Được chấp nhận bởi " + role.getName() + " " + combinationName + " vào lúc: " + dateFmt;
@@ -65,7 +64,7 @@ public class OrderUtils {
      * @return giá phải trả
      * @apiNote Dựa vào loại khuyến mãi và % giảm giá sẽ trừ đi vào giá
      */
-    public static Long getTotal(Long shopPrice, Long shipPrice, List<PromotionDto> promotions) {
+    public static Long getTotal(Long shipPrice, Long shopPrice, List<PromotionDto> promotions) {
         try {
             /**
              * Nếu không có khuyến mãi thì = defaultTotal + shipPrice

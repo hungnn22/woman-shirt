@@ -20,6 +20,13 @@ public class ResData<T> {
         this.timeStamp = new Date();
     }
 
+    public ResData(T data, WsCode wsCode, String message) {
+        this.data = data;
+        this.statusCode = Integer.parseInt(wsCode.getCode());
+        this.message = message;
+        this.timeStamp = new Date();
+    }
+
     public ResData(boolean isEmpty) {
         this.data = null;
         this.statusCode = HttpStatus.NO_CONTENT.value();
@@ -29,6 +36,9 @@ public class ResData<T> {
 
     public static <T> ResData ok(T data) {
         return new ResData(data, WsCode.OK);
+    }
 
+    public static <T> ResData ok(T data, String message) {
+        return new ResData(data, WsCode.OK, message);
     }
 }
