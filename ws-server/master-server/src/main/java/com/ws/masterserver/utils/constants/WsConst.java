@@ -132,8 +132,8 @@ public class WsConst {
          */
         public static final String ADMIN_ID = "fb6e037a-9f6b-49e0-826e-d1d1539413f6";
         public static final String ADMIN_EMAIL = "admin@gmail.com";
-        public static final String ADMIN_FIRST_NAME = "System";
-        public static final String ADMIN_LAST_NAME = "Admin";
+        public static final String ADMIN_FIRST_NAME = "Woman";
+        public static final String ADMIN_LAST_NAME = "Shop";
         public static final String ADMIN_PASSWORD = "admin123";
 
         /**
@@ -141,22 +141,28 @@ public class WsConst {
          */
         public static final String STAFF_ID = "53967738-d838-41f4-81df-60c9e65b9f8e";
         public static final String STAFF_EMAIL = "staff@gmail.com";
-        public static final String STAFF_FIRST_NAME = "System";
-        public static final String STAFF_LAST_NAME = "Staff";
+        public static final String STAFF_FIRST_NAME = "Nguyễn Nhân";
+        public static final String STAFF_LAST_NAME = "Viên";
         public static final String STAFF_PASSWORD = "staff123";
 
         /**
          * Customer
          */
-        public static final String CUSTOMER_ID = "3099fa4e-5d5c-43ee-baab-e7715d4bf099";
-        public static final String CUSTOMER_EMAIL = "customer@gmail.com";
-        public static final String CUSTOMER_FIRST_NAME = "System";
-        public static final String CUSTOMER_LAST_NAME = "Customer";
-        public static final String CUSTOMER_PASSWORD = "customer123";
-        public static final String CUSTOMER_PHONE = "0988777888";
+        public static final String CUSTOMER_EMAIL1 = "customer1@gmail.com";
+        public static final String CUSTOMER_FIRST_NAME1 = "Lê Thị";
+        public static final String CUSTOMER_LAST_NAME1 = "Xinh";
+        public static final String CUSTOMER_PASSWORD1 = "customer123";
+        public static final String CUSTOMER_PHONE1 = "0988777888";
 
-        //address1
-        public static final String CUSTOMER_ADDRESS_ID1 = "17d9e084-1421-4c91-b73f-e7c5811f7f3a";
+        public static final String CUSTOMER_EMAIL2 = "customer2@gmail.com";
+        public static final String CUSTOMER_FIRST_NAME2 = "Nguyễn Văn";
+        public static final String CUSTOMER_LAST_NAME2 = "An";
+        public static final String CUSTOMER_PASSWORD2 = "customer123";
+        public static final String CUSTOMER_PHONE2 = "0963012012";
+
+        /**
+         * address
+         * */
         public static final String CUSTOMER_ADDRESS_PROVINCE_CODE1 = "1";
         public static final String CUSTOMER_ADDRESS_PROVINCE_NAME1 = "Thành phố Hà Nội";
         public static final String CUSTOMER_ADDRESS_DISTRICT_CODE1 = "1";
@@ -166,8 +172,6 @@ public class WsConst {
         public static final String CUSTOMER_ADDRESS_EXACT1 = "Số nhà 200";
         public static final String CUSTOMER_ADDRESS_COMBINATION1 = "Phường Phúc Xá, Quận Ba Đình, Thành phố Hà Nội";
 
-        //address2
-        public static final String CUSTOMER_ADDRESS_ID2 = "2bcb151c-5001-4187-9e63-dd555c0c186b";
         public static final String CUSTOMER_ADDRESS_PROVINCE_CODE2 = "1";
         public static final String CUSTOMER_ADDRESS_PROVINCE_NAME2 = "Thành phố Hà Nội";
         public static final String CUSTOMER_ADDRESS_DISTRICT_CODE2 = "1";

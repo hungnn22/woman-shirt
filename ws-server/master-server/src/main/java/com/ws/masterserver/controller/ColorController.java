@@ -24,6 +24,8 @@ public class ColorController extends WsController {
         return ResponseEntity.status(HttpStatus.OK).body(service.colorService.create(getCurrentUser(), dto));
     }
 
+    //123213
+
     @PostMapping("/update")
     @Operation(summary = "API cập nhật màu sp")
     public ResponseEntity<ResData<String>> update(@RequestBody ColorDto dto){
