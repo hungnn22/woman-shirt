@@ -13,7 +13,7 @@ const AdminLayout = () => {
                     <div id="content">
                         <Topbar />
                         <Outlet />
-                        <Footer />
+                        {/*<Footer />*/}
                     </div>
                 </div>
 

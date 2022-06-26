@@ -69,7 +69,7 @@ public class OrderCustomRepositoryImpl implements OrderCustomRepository {
                 "    u2.id = os3.created_by\n" +
                 "where 1 = 1\n";
         if (!StringUtils.isNullOrEmpty(req.getStatus())) {
-            sql += "and os5.status = '" + req.getStatus() + "'\n";
+            sql += "and os3.status = '" + req.getStatus() + "'\n";
         }
         if (!StringUtils.isNullOrEmpty(req.getProvinceCode())) {
             sql += "and a1.province_code = '" + req.getProvinceCode() + "'\n";
@@ -100,6 +100,7 @@ public class OrderCustomRepositoryImpl implements OrderCustomRepository {
             sql += "and (unaccent(upper(trim(concat(u1.first_name, ' ', u1.last_name)))) like " + textSearch + " or\n" +
                     "u1.phone like " + textSearch + " or o1.code like" + textSearch + ")\n";
         }
+
 
         this.addOrderFilter(req.getPageReq());
 

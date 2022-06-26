@@ -7,6 +7,7 @@ import ToastUtils from '../../utils/ToastUtils';
 import WsToastType from '../../utils/constants/WsToastType';
 import WsMessage from '../../utils/constants/WsMessage';
 import {NavLink} from 'react-router-dom'
+import HashSpinner from "../../component/spinner/HashSpinner";
 
 let location = {
     provinceCode: null,
@@ -46,34 +47,40 @@ const OrderPage = () => {
     const [req, setReq] = useState(initReq)
     const [orders, setOrders] = useState([])
     const [pageInfo, setPageInfo] = useState(initPageInfo)
+    const [loading, setLoading] = useState(false)
 
     const {register, handleSubmit} = useForm()
 
     useEffect(() => {
-        const getProvincesFromOpenApi = async () => {
-            const url = 'https://provinces.open-api.vn/api/?depth=1';
-            const res = await axios.get(url)
-            setProvinces(res.data)
-        }
         getProvincesFromOpenApi()
+    }, [])
+
+    useEffect(() => {
         getOrderList()
     }, [req])
     const getOrderList = async () => {
             try {
+                setLoading(true)
                 const axiosRes = await AxiosApi.postAuth(`${WsUrl.ORDER_BASE}${WsUrl.ADMIN_ORDER_SEARCH}`, req)
-                const {data} = axiosRes
-                setOrders(data.data)
-                setPageInfo({
-                    ...pageInfo,
-                    page: data.page,
-                    pageSize: data.pageSize,
-                    totalElements: data.totalElements,
-                    totalPages: data.totalPages
-                })
+                if (axiosRes) {
+                    const {data} = axiosRes
+                    setOrders(data.data)
+                    setPageInfo({
+                        ...pageInfo,
+                        page: data.page,
+                        pageSize: data.pageSize,
+                        totalElements: data.totalElements,
+                        totalPages: data.totalPages
+                    })
+                    setLoading(false)
+                }
             } catch (e) {
-                console.log(e)
                 ToastUtils.createToast(WsToastType.ERROR, e.response.data.message || WsMessage.INTERNAL_SERVER_ERROR)
             }
+        }, getProvincesFromOpenApi = async () => {
+            const url = 'https://provinces.open-api.vn/api/?depth=1';
+            const res = await axios.get(url)
+            setProvinces(res.data)
         }, handleChangeProvinceFilter = e => {
             location = {
                 ...location,
@@ -197,7 +204,8 @@ const OrderPage = () => {
                     <div className='row d-flex align-items-center py-1'>
                         <div className='col d-flex align-items-center'>
                             <span className='' style={{minWidth: '64px'}}>Trạng thái:</span>
-                            <select className='border-1 form-control col-2 mx-2' onChange={handleChangeStatusFilter}>
+                            <select className='border-1 form-control col-2 mx-2'
+                                    onChange={handleChangeStatusFilter}>
                                 <option value="">Tất cả</option>
                                 <option value="PENDING">Đang chờ xử lý</option>
                                 <option value="ACCEPT">Đã xác nhận</option>
@@ -248,7 +256,8 @@ const OrderPage = () => {
                                     <option value={w.code}>{w.name}</option>
                                 ))}
                             </select>
-                            <button className='btn btn-outline-danger' onClick={handleRemoveLocationFilter}>Xóa</button>
+                            <button className='btn btn-outline-danger' onClick={handleRemoveLocationFilter}>Xóa
+                            </button>
                         </div>
                         <div className='row d-flex align-items-center'>
                             <select className='form-control col mx-1' onChange={handleChangeTimeFilter}>
@@ -290,70 +299,73 @@ const OrderPage = () => {
                         </tr>
                         </thead>
                         <tbody>
-                        {orders && orders.map((order, index) => (
-                            <tr key={order.id}>
-                                <td className="text-center">{index + 1}</td>
-                                <td>{order.code}</td>
-                                <td className='col-1'>{order.customer}</td>
-                                <td className="col-1">{order.phone}</td>
-                                <td>{order.orderDate}</td>
-                                <td className="col-2">{order.address}</td>
-                                <td className='col-1'>{order.total}</td>
-                                <td>{order.type}</td>
-                                <td>{order.note}</td>
-                                <td className="col-2">{order.status}</td>
-                                <td>
-                                    <div className="btn-group dropleft">
-                                        <a className="btn text-dark" type="button" id="dropdownMenuButton"
-                                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <i className="fa fa-ellipsis-h" aria-hidden="true"/>
-                                        </a>
-                                        <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                            <NavLink to={`${order.id}`} className="dropdown-item">Chi tiết</NavLink>
-                                            <a className="dropdown-item" href="#" data-toggle="modal"
-                                               data-target={`#statusModal${order.id}`}>Chỉnh sửa trạng thái</a>
-                                        </div>
-                                    </div>
-                                    <div className="modal fade" id={`statusModal${order.id}`} tabIndex={-1}
-                                         role="dialog"
-                                         aria-labelledby="statusModalLabel" aria-hidden="true">
-                                        <div className="modal-dialog modal-lg" role="document">
-                                            <div className="modal-content">
-                                                <div className="modal-header">
-                                                    <h5 className="modal-title" id="exampleModalLabel">Chỉnh sửa trạng
-                                                        thái</h5>
-                                                    <button type="button" className="close" data-dismiss="modal"
-                                                            aria-label="Close">
-                                                        <span aria-hidden="true">×</span>
-                                                    </button>
-                                                </div>
-                                                {order.options &&
-                                                    <div className="modal-body p-4">
-                                                        <div className="form-group mt-2">
-                                                            <h6 className='text-dark'><b>1. Lý do chỉnh sửa</b> (không bắt buộc)</h6>
-                                                            <textarea id='reason' className='form-control'
-                                                                      rows={4}></textarea>
-                                                        </div>
-                                                        <h6 className='text-dark'><b>2. Chọn trạng thái mới cho đơn
-                                                            hàng</b></h6>
-                                                        <div className='row d-flex justify-content-left p-2'>
-                                                            {order.options.map((obj, index1) => (
-                                                                <button key={index1}
-                                                                        className={`btn mr-2 btn-${obj.clazz}`}
-                                                                        onClick={() => handleChangeStatus(order.id, obj.status)}
-                                                                        data-dismiss="modal"
-                                                                >{obj.name}</button>
-                                                            ))}
-                                                        </div>
-                                                    </div>}
+                        {loading ? <HashSpinner/> :
+                            orders && orders.map((order, index) => (
+                                <tr key={order.id}>
+                                    <td className="text-center">{index + 1}</td>
+                                    <td>{order.code}</td>
+                                    <td className='col-1'>{order.customer}</td>
+                                    <td className="col-1">{order.phone}</td>
+                                    <td>{order.orderDate}</td>
+                                    <td className="col-2">{order.address}</td>
+                                    <td className='col-1'>{order.total}</td>
+                                    <td>{order.type}</td>
+                                    <td>{order.note}</td>
+                                    <td className="col-2">{order.status}</td>
+                                    <td>
+                                        <div className="btn-group dropleft">
+                                            <a className="btn text-dark" type="button" id="dropdownMenuButton"
+                                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <i className="fa fa-ellipsis-h" aria-hidden="true"/>
+                                            </a>
+                                            <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                <NavLink to={`${order.id}`} className="dropdown-item">Chi tiết</NavLink>
+                                                <a className="dropdown-item" href="#" data-toggle="modal"
+                                                   data-target={`#statusModal${order.id}`}>Chỉnh sửa trạng thái</a>
                                             </div>
                                         </div>
-                                    </div>
-                                </td>
-                            </tr>))}
+                                        <div className="modal fade" id={`statusModal${order.id}`} tabIndex={-1}
+                                             role="dialog"
+                                             aria-labelledby="statusModalLabel" aria-hidden="true">
+                                            <div className="modal-dialog modal-lg" role="document">
+                                                <div className="modal-content">
+                                                    <div className="modal-header">
+                                                        <h5 className="modal-title" id="exampleModalLabel">Chỉnh sửa
+                                                            trạng
+                                                            thái</h5>
+                                                        <button type="button" className="close" data-dismiss="modal"
+                                                                aria-label="Close">
+                                                            <span aria-hidden="true">×</span>
+                                                        </button>
+                                                    </div>
+                                                    {order.options &&
+                                                        <div className="modal-body p-4">
+                                                            <div className="form-group mt-2">
+                                                                <h6 className='text-dark'><b>1. Lý do chỉnh
+                                                                    sửa</b> (không bắt buộc)</h6>
+                                                                <textarea id='reason' className='form-control'
+                                                                          rows={4}></textarea>
+                                                            </div>
+                                                            <h6 className='text-dark'><b>2. Chọn trạng thái mới cho đơn
+                                                                hàng</b></h6>
+                                                            <div className='row d-flex justify-content-left p-2'>
+                                                                {order.options.map((obj, index1) => (
+                                                                    <button key={index1}
+                                                                            className={`btn mr-2 btn-${obj.clazz}`}
+                                                                            onClick={() => handleChangeStatus(order.id, obj.status)}
+                                                                            data-dismiss="modal"
+                                                                    >{obj.name}</button>
+                                                                ))}
+                                                            </div>
+                                                        </div>}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>))}
                         </tbody>
                     </table>
-                    <div className='p-2 row align-items-center justify-content-between'>
+                    {pageInfo.totalElements > 0 && <div className='p-2 row align-items-center justify-content-between'>
                         <div className='col d-flex align-items-center'>
                             Hiển thị: <select className='border-1 form-control col-1 mx-2'
                                               onChange={handleChangePageSizeFilter}>
@@ -374,7 +386,7 @@ const OrderPage = () => {
                             </button>
                             <span>Trang {pageInfo.page + 1}/{pageInfo.totalPages}</span>
                         </div>
-                    </div>
+                    </div>}
                 </div>
             </div>
         </div>
