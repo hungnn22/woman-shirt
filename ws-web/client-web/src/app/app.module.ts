@@ -32,6 +32,7 @@ import { CustomMaterialPaginatorService } from './service/custom-material-pagina
 import { DropDownListComponent, DropDownListModule } from '@progress/kendo-angular-dropdowns';
 import {MatSliderModule} from '@angular/material/slider';
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -46,8 +47,10 @@ import {MatSliderModule} from '@angular/material/slider';
   ],
   imports: [
     BrowserModule,
+    FormsModule,
     AppRoutingModule,
     NgbModule,
+    MatSelectModule,
     InputsModule,
     BrowserAnimationsModule,
     MatIconModule,
