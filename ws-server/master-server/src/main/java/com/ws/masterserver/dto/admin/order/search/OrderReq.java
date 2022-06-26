@@ -15,6 +15,5 @@ public class OrderReq {
     private String wardCode;
     private String time;
     private String textSearch;
-
     private PageReq pageReq;
 }

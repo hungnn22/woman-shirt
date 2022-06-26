@@ -10,41 +10,27 @@ import java.util.List;
 @Getter
 @Setter
 public class OrderRes {
-    /**
-     * Thông tin đơn hàng
-     */
     private String id;
 
-    //ngày đặt hàng
-    private String orderDate;
+    private String code;
 
-    //địa chỉ giao
-    private String address;
-
-    //tổng tiền
-    private Long total;
-
-    private String totalFmt;
-
-    //note của khách hàng
-    private String note;
-
-    /**
-     * status
-     */
-    private String status;
-
-    /**
-     * Thông tin khách hàng
-     */
     private String customer;
 
     private String phone;
 
-    private String payed;
+    private String orderDate;
+
+    private String address;
+
+    private String total;
+
+    private String note;
 
     private String type;
 
-    private List<OptionDto> options;
+    private String status;
 
+    private String customerId;
+
+    private List<OptionDto> options;
 }

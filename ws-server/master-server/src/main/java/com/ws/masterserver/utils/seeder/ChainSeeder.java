@@ -31,21 +31,15 @@ public class ChainSeeder implements Seeder {
     public void seed() {
         var types = initTypes();
         var colors = initColors();
+        var materials = initMaterials();
         var promotionTypes = initPromotionTypes();
         var promotions = initPromotions(promotionTypes);
-        var materials = initMaterials();
         var category = initCategory(types);
         var product = initProduct(category, materials);
         var productOptions = initProductOptions(product, colors);
-        var users = initUsers();
-        var customer = users.get("customer@gmail.com");
-        var staff = users.get("staff@gmail.com");
-        var address = initAddress4Customer(customer);
-        var orders = initOrders(customer, address);
+        var orders = initUsers();
         orders.forEach(order -> {
             initOrderDetails(order, productOptions);
-            initOrderStatus(order, customer, staff);
-            initOrderPromotions(order, promotions);
         });
 
     }
@@ -73,7 +67,7 @@ public class ChainSeeder implements Seeder {
                         .percentDiscount(100.0)
                         .useLimit(1L)
                         .voucher(UidUtils.generateVoucher())
-                        .promotionTypeId(promotionTypes.get(getRandomIndex(promotionTypes.size())).getId())
+                        .promotionTypeId(promotionTypes.get(0).getId())
                         .build(),
                 PromotionEntity.builder()
                         .id(UidUtils.generateUid())
@@ -83,11 +77,11 @@ public class ChainSeeder implements Seeder {
                         .percentDiscount(5.0)
                         .useLimit(1L)
                         .voucher(UidUtils.generateVoucher())
-                        .promotionTypeId(promotionTypes.get(getRandomIndex(promotionTypes.size())).getId())
+                        .promotionTypeId(promotionTypes.get(1).getId())
                         .build()
         );
+        log.info("5. save promotion list: {}", JsonUtils.toJson(promotions));
         repository.promotionRepository.saveAll(promotions);
-
         return promotions;
     }
 
@@ -103,15 +97,12 @@ public class ChainSeeder implements Seeder {
                         .active(true)
                         .name(PromotionTypeEnum.TYPE2.name())
                         .build());
+        log.info("4. save promotion type list: {}", JsonUtils.toJson(promotionTypes));
         repository.promotionTypeRepository.saveAll(promotionTypes);
         return promotionTypes;
     }
 
     private List<TypeEntity> initTypes() {
-        var typesCount = repository.typeRepository.count();
-        if (typesCount != 3) {
-            repository.typeRepository.deleteAll();
-        }
         var types = List.of(
                 TypeEntity.builder()
                         .id(UidUtils.generateUid())
@@ -129,6 +120,7 @@ public class ChainSeeder implements Seeder {
                         .name(TypeEnum.UNISEX.name())
                         .build()
         );
+        log.info("1. save type list: {}", JsonUtils.toJson(types));
         return repository.typeRepository.saveAll(types);
     }
 
@@ -150,6 +142,7 @@ public class ChainSeeder implements Seeder {
                         .active(Boolean.TRUE)
                         .build()
         );
+        log.info("3. save material list: {}", JsonUtils.toJson(materials));
         repository.materialRepository.saveAll(materials);
         return materials;
     }
@@ -199,6 +192,7 @@ public class ChainSeeder implements Seeder {
                         .active(Boolean.TRUE)
                         .build()
         );
+        log.info("2. save color list: {}", JsonUtils.toJson(colors));
         repository.colorRepository.saveAll(colors);
         return colors;
     }
@@ -228,7 +222,7 @@ public class ChainSeeder implements Seeder {
         );
 
         repository.productOptionRepository.saveAll(productOptions);
-        log.info("3. Product Option List: {}", JsonUtils.toJson(productOptions));
+        log.info("8. save Product Option List: {}", JsonUtils.toJson(productOptions));
         return productOptions;
     }
 
@@ -238,27 +232,24 @@ public class ChainSeeder implements Seeder {
                 .categoryId(category.getId())
                 .name(WsConst.Seeders.PRODUCT_NAME)
                 .des(WsConst.Seeders.PRODUCT_DES)
-//                .price(WsConst.Seeders.PRODUCT_PRICE)
-//                .thumbnail(WsConst.Seeders.PRODUCT_THUMBNAIL)
                 .materialId(materials.get(getRandomIndex(materials.size())).getId())
                 .active(Boolean.TRUE)
                 .build();
         repository.productRepository.save(product);
-        log.info("2. Product: {}", product);
+        log.info("7. save Product: {}", product);
         return product;
     }
 
     private CategoryEntity initCategory(List<TypeEntity> types) {
-        var type = types.get(getRandomIndex(types.size()));
         var category = CategoryEntity.builder()
                 .id(UUID.randomUUID().toString())
                 .name(WsConst.Seeders.CATEGORY_NAME)
                 .active(Boolean.TRUE)
                 .des(WsConst.Seeders.CATEGORY_DES)
-                .typeId(type.getId())
+                .typeId(types.get(getRandomIndex(types.size())).getId())
                 .build();
         repository.categoryRepository.save(category);
-        log.info("1. Category: {}", JsonUtils.toJson(category));
+        log.info("6. save category: {}", JsonUtils.toJson(category));
         return category;
 
     }
@@ -284,6 +275,7 @@ public class ChainSeeder implements Seeder {
 
     private void initOrderDetails(OrderEntity order, List<ProductOptionEntity> productOptions) {
         var ods = new ArrayList<OrderDetailEntity>();
+        var total = 0L;
         for (var po : productOptions) {
             ods.add(OrderDetailEntity.builder()
                     .id(UidUtils.generateUid())
@@ -292,83 +284,17 @@ public class ChainSeeder implements Seeder {
                     .price(po.getPrice())
                     .qty(2L)
                     .build());
+            total += po.getPrice() * 2L;
         }
+        log.info("12. Order Detail: {}", ods);
+        repository.orderDetailRepository.saveAll(ods);
 
-        if (!ods.isEmpty()) {
-            repository.orderDetailRepository.saveAll(ods);
-        }
-        log.info("8. Order Detail: {}", ods);
+        order.setTotal(total);
+        log.info("13: update order: ", JsonUtils.toJson(order));
+        repository.orderRepository.save(order);
     }
 
-    private List<OrderEntity> initOrders(UserEntity customer, List<AddressEntity> address) {
-        var orders = List.of(
-                OrderEntity.builder()
-                        .id(UUID.randomUUID().toString())
-                        .userId(customer.getId())
-                        .addressId(address.get(0) == null ? null : address.get(0).getId())
-                        .note("Giao hàng giờ hành chính")
-                        .payed(false)
-                        .type(OrderTypeEnum.CASH.name())
-                        .shipPrice(20000L)
-                        .build(),
-                OrderEntity.builder()
-                        .id(UUID.randomUUID().toString())
-                        .userId(customer.getId())
-                        .addressId(address.get(1) == null ? null : address.get(1).getId())
-                        .note("Giao cuối tuần")
-                        .payed(false)
-                        .type(OrderTypeEnum.CASH.name())
-                        .shipPrice(20000L)
-                        .build()
-        );
-        repository.orderRepository.saveAll(orders);
-        log.info("6. Order: {}", JsonUtils.toJson(orders));
-        return orders;
-    }
-
-    private List<AddressEntity> initAddress4Customer(UserEntity customer) {
-        var addressList = List.of(
-                AddressEntity.builder()
-                        .id(UidUtils.generateUid())
-                        .provinceCode(WsConst.Seeders.CUSTOMER_ADDRESS_PROVINCE_CODE1)
-                        .provinceName(WsConst.Seeders.CUSTOMER_ADDRESS_PROVINCE_NAME1)
-                        .districtCode(WsConst.Seeders.CUSTOMER_ADDRESS_DISTRICT_CODE1)
-                        .districtName(WsConst.Seeders.CUSTOMER_ADDRESS_DISTRICT_NAME1)
-                        .wardCode(WsConst.Seeders.CUSTOMER_ADDRESS_WARD_CODE1)
-                        .wardName(WsConst.Seeders.CUSTOMER_ADDRESS_WARD_NAME1)
-                        .exact(WsConst.Seeders.CUSTOMER_ADDRESS_EXACT1)
-                        .combination(WsConst.Seeders.CUSTOMER_ADDRESS_COMBINATION1)
-                        .userId(customer.getId())
-                        .active(Boolean.TRUE)
-                        .isDefault(Boolean.FALSE)
-                        .build(),
-                AddressEntity.builder()
-                        .id(UidUtils.generateUid())
-                        .provinceCode(WsConst.Seeders.CUSTOMER_ADDRESS_PROVINCE_CODE2)
-                        .provinceName(WsConst.Seeders.CUSTOMER_ADDRESS_PROVINCE_NAME2)
-                        .districtCode(WsConst.Seeders.CUSTOMER_ADDRESS_DISTRICT_CODE2)
-                        .districtName(WsConst.Seeders.CUSTOMER_ADDRESS_DISTRICT_NAME2)
-                        .wardCode(WsConst.Seeders.CUSTOMER_ADDRESS_WARD_CODE2)
-                        .wardName(WsConst.Seeders.CUSTOMER_ADDRESS_WARD_NAME2)
-                        .exact(WsConst.Seeders.CUSTOMER_ADDRESS_EXACT2)
-                        .combination(WsConst.Seeders.CUSTOMER_ADDRESS_COMBINATION2)
-                        .userId(customer.getId())
-                        .active(Boolean.TRUE)
-                        .isDefault(Boolean.FALSE)
-                        .build()
-        );
-        addressList.forEach(address -> {
-            if (Boolean.FALSE.equals(repository.addressRepository.existsByWardCodeAndExactIgnoreCase(address.getWardCode(), address.getExact().trim()))) {
-                repository.addressRepository.save(address);
-            }
-        });
-        log.info("5. Address List: {}", addressList);
-        return addressList;
-
-
-    }
-
-    private Map<String, UserEntity> initUsers() {
+    private List<OrderEntity> initUsers() {
         var passwordEncoder = BeanUtils.getBean(BCryptPasswordEncoder.class);
         var admin = UserEntity.builder()
                 .id(UUID.fromString(WsConst.Seeders.ADMIN_ID).toString())
@@ -390,31 +316,92 @@ public class ChainSeeder implements Seeder {
                 .role(RoleEnum.ROLE_STAFF)
                 .gender(Boolean.TRUE)
                 .build();
-        var customer = UserEntity.builder()
-                .id(UUID.fromString(WsConst.Seeders.CUSTOMER_ID).toString())
+        var customer1 = UserEntity.builder()
+                .id(UidUtils.generateUid())
                 .active(Boolean.TRUE)
-                .email(WsConst.Seeders.CUSTOMER_EMAIL)
-                .firstName(WsConst.Seeders.CUSTOMER_FIRST_NAME)
-                .lastName(WsConst.Seeders.CUSTOMER_LAST_NAME)
-                .password(passwordEncoder.encode(WsConst.Seeders.CUSTOMER_PASSWORD))
+                .email(WsConst.Seeders.CUSTOMER_EMAIL1)
+                .firstName(WsConst.Seeders.CUSTOMER_FIRST_NAME1)
+                .lastName(WsConst.Seeders.CUSTOMER_LAST_NAME1)
+                .password(passwordEncoder.encode(WsConst.Seeders.CUSTOMER_PASSWORD1))
                 .role(RoleEnum.ROLE_CUSTOMER)
                 .gender(Boolean.TRUE)
-                .phone(WsConst.Seeders.CUSTOMER_PHONE)
+                .phone(WsConst.Seeders.CUSTOMER_PHONE1)
                 .build();
-        Map<String, UserEntity> userMaps = new HashMap<>();
-        userMaps.put(admin.getEmail(), admin);
-        userMaps.put(staff.getEmail(), staff);
-        userMaps.put(customer.getEmail(), customer);
+        var customer2 = UserEntity.builder()
+                .id(UidUtils.generateUid())
+                .active(Boolean.TRUE)
+                .email(WsConst.Seeders.CUSTOMER_EMAIL2)
+                .firstName(WsConst.Seeders.CUSTOMER_FIRST_NAME2)
+                .lastName(WsConst.Seeders.CUSTOMER_LAST_NAME2)
+                .password(passwordEncoder.encode(WsConst.Seeders.CUSTOMER_PASSWORD2))
+                .role(RoleEnum.ROLE_CUSTOMER)
+                .gender(Boolean.TRUE)
+                .phone(WsConst.Seeders.CUSTOMER_PHONE2)
+                .build();
 
-        userMaps.values().forEach(user -> {
-            var userExistsByEmail = repository.userRepository.findByEmailIgnoreCaseAndActive(user.getEmail(), Boolean.TRUE);
-            if (userExistsByEmail != null) {
-                repository.userRepository.delete(userExistsByEmail);
-            }
-            repository.userRepository.save(user);
-        });
-        log.info("4. User: {}", JsonUtils.toJson(userMaps));
-        return userMaps;
+        var users = List.of(admin, staff, customer1, customer2);
+
+        log.info("9. save User list: {}", JsonUtils.toJson(users));
+        repository.userRepository.saveAll(users);
+
+        var add1 = AddressEntity.builder()
+                .id(UidUtils.generateUid())
+                .provinceCode(WsConst.Seeders.CUSTOMER_ADDRESS_PROVINCE_CODE1)
+                .provinceName(WsConst.Seeders.CUSTOMER_ADDRESS_PROVINCE_NAME1)
+                .districtCode(WsConst.Seeders.CUSTOMER_ADDRESS_DISTRICT_CODE1)
+                .districtName(WsConst.Seeders.CUSTOMER_ADDRESS_DISTRICT_NAME1)
+                .wardCode(WsConst.Seeders.CUSTOMER_ADDRESS_WARD_CODE1)
+                .wardName(WsConst.Seeders.CUSTOMER_ADDRESS_WARD_NAME1)
+                .exact(WsConst.Seeders.CUSTOMER_ADDRESS_EXACT1)
+                .combination(WsConst.Seeders.CUSTOMER_ADDRESS_COMBINATION1)
+                .userId(customer1.getId())
+                .active(Boolean.TRUE)
+                .isDefault(Boolean.FALSE)
+                .build();
+        var add2 = AddressEntity.builder()
+                .id(UidUtils.generateUid())
+                .provinceCode(WsConst.Seeders.CUSTOMER_ADDRESS_PROVINCE_CODE2)
+                .provinceName(WsConst.Seeders.CUSTOMER_ADDRESS_PROVINCE_NAME2)
+                .districtCode(WsConst.Seeders.CUSTOMER_ADDRESS_DISTRICT_CODE2)
+                .districtName(WsConst.Seeders.CUSTOMER_ADDRESS_DISTRICT_NAME2)
+                .wardCode(WsConst.Seeders.CUSTOMER_ADDRESS_WARD_CODE2)
+                .wardName(WsConst.Seeders.CUSTOMER_ADDRESS_WARD_NAME2)
+                .exact(WsConst.Seeders.CUSTOMER_ADDRESS_EXACT2)
+                .combination(WsConst.Seeders.CUSTOMER_ADDRESS_COMBINATION2)
+                .userId(customer2.getId())
+                .active(Boolean.TRUE)
+                .isDefault(Boolean.FALSE)
+                .build();
+        var address = List.of(add1, add2);
+        log.info("10. save address listL {}", JsonUtils.toJson(address));
+        repository.addressRepository.saveAll(address);
+
+        var order1 = OrderEntity.builder()
+                .id(UUID.randomUUID().toString())
+                .userId(customer1.getId())
+                .addressId(add1.getId())
+                .note("Giao hàng giờ hành chính")
+                .payed(false)
+                .type(OrderTypeEnum.CASH.name())
+                .shipPrice(20000L)
+                .code("DH260822KH01")
+                .build();
+        var order2 = OrderEntity.builder()
+                .id(UUID.randomUUID().toString())
+                .userId(customer2.getId())
+                .addressId(add2.getId())
+                .note("Giao cuối tuần")
+                .payed(false)
+                .type(OrderTypeEnum.CASH.name())
+                .shipPrice(20000L)
+                .code("DH260822KH02")
+                .build();
+
+        var orders = List.of(order1, order2);
+        log.info("11. save Order list: {}", JsonUtils.toJson(orders));
+        repository.orderRepository.saveAll(orders);
+
+        return orders;
     }
 
     private int getRandomIndex(int size) {

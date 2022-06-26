@@ -1,10 +1,12 @@
 import axios from 'axios'
-import React, { useEffect, useState } from 'react'
+import React, {useEffect, useState} from 'react'
 import AxiosApi from '../../api/AxiosApi'
 import WsUrl from "../../utils/constants/WsUrl";
-import { useForm } from "react-hook-form";
-import OrderDetail from './OrderDetail';
-// import OrderDetail from './OrderDetail';
+import {useForm} from "react-hook-form";
+import ToastUtils from '../../utils/ToastUtils';
+import WsToastType from '../../utils/constants/WsToastType';
+import WsMessage from '../../utils/constants/WsMessage';
+import {NavLink} from 'react-router-dom'
 
 let location = {
     provinceCode: null,
@@ -37,7 +39,6 @@ let initPageInfo = {
 };
 
 
-
 const OrderPage = () => {
     const [provinces, setProvinces] = useState([])
     const [districts, setDistricts] = useState([])
@@ -45,9 +46,8 @@ const OrderPage = () => {
     const [req, setReq] = useState(initReq)
     const [orders, setOrders] = useState([])
     const [pageInfo, setPageInfo] = useState(initPageInfo)
-    const [detail, setDetail] = useState(null)
 
-    const { register, handleSubmit, formState: { errors } } = useForm()
+    const {register, handleSubmit} = useForm()
 
     useEffect(() => {
         const getProvincesFromOpenApi = async () => {
@@ -55,125 +55,137 @@ const OrderPage = () => {
             const res = await axios.get(url)
             setProvinces(res.data)
         }
-        const getOrderList = async () => {
-            const axiosRes = await AxiosApi.postAuth(`${WsUrl.ORDER_BASE}${WsUrl.ADMIN_ORDER_SEARCH}`, req)
-            const { data } = axiosRes
-            setOrders(data.data)
-            setPageInfo({
-                ...pageInfo,
-                page: data.page,
-                pageSize: data.pageSize,
-                totalElements: data.totalElements,
-                totalPages: data.totalPages
-            })
-        }
         getProvincesFromOpenApi()
         getOrderList()
     }, [req])
-
-
-    const handleChangeProvinceFilter = e => {
-        location = {
-            ...location,
-            provinceCode: e.target.value,
-        }
-        setReq({
-            ...req,
-            provinceCode: e.target.value
-        })
-    }
-
-    const handleChangeDistrictFilter = e => {
-        location = {
-            ...location,
-            districtCode: e.target.value
-        }
-        setReq({
-            ...req,
-            districtCode: e.target.value
-        })
-    }
-
-    const handleChangeWardFilter = e => {
-        setReq({
-            ...req,
-            wardCode: e.target.value
-        })
-    }
-
-    const handleClickDistrictFilter = async () => {
-        if (location.provinceCode !== null) {
-            const res = await axios.get(`https://provinces.open-api.vn/api/p/${location.provinceCode}?depth=2`)
-            setDistricts(res.data.districts)
-        }
-    }
-
-    const handleClickWardFilter = async () => {
-        if (location.districtCode !== null) {
-            const res = await axios.get(`https://provinces.open-api.vn/api/d/${location.districtCode}?depth=2`)
-            setWards(res.data.wards)
-        }
-    }
-
-    const handleRemoveLocationFilter = () => {
-        document.getElementById('provinceFilter').value = ''
-        document.getElementById('districtFilter').value = ''
-        document.getElementById('wardFilter').value = ''
-        setReq({
-            ...req,
-            provinceCode: null,
-            districtCode: null,
-            wardCode: null,
-        })
-    }
-
-    const handleChangeStatusFilter = e => {
-        setReq({
-            ...req,
-            status: e.target.value || null
-        })
-    }
-
-    const handleChangeTimeFilter = e => {
-        setReq({
-            ...req,
-            time: e.target.value,
-        })
-    }
-
-    const handleChangeTextSearchFilter = values => {
-        const textSearch = values.textSearch.trim() == '' ? null : values.textSearch.trim()
-        setReq({
-            ...req,
-            textSearch: textSearch
-        })
-    }
-
-    const handleChangePageSizeFilter = e => {
-        setReq({
-            ...req,
-            pageReq: {
-                ...req.pageReq,
-                pageSize: Number(e.target.value)
+    const getOrderList = async () => {
+            try {
+                const axiosRes = await AxiosApi.postAuth(`${WsUrl.ORDER_BASE}${WsUrl.ADMIN_ORDER_SEARCH}`, req)
+                const {data} = axiosRes
+                setOrders(data.data)
+                setPageInfo({
+                    ...pageInfo,
+                    page: data.page,
+                    pageSize: data.pageSize,
+                    totalElements: data.totalElements,
+                    totalPages: data.totalPages
+                })
+            } catch (e) {
+                console.log(e)
+                ToastUtils.createToast(WsToastType.ERROR, e.response.data.message || WsMessage.INTERNAL_SERVER_ERROR)
             }
-        })
-    }
-
-    const handleChangePageFilter = newPage => {
-        setReq({
-            ...req,
-            pageReq: {
-                ...req.pageReq,
-                page: Number(newPage)
+        }, handleChangeProvinceFilter = e => {
+            location = {
+                ...location,
+                provinceCode: e.target.value,
             }
-        })
-    }
+            setReq({
+                ...req,
+                provinceCode: e.target.value
+            })
+        }, handleChangeDistrictFilter = e => {
+            location = {
+                ...location,
+                districtCode: e.target.value
+            }
+            setReq({
+                ...req,
+                districtCode: e.target.value
+            })
+        }, handleChangeWardFilter = e => {
+            setReq({
+                ...req,
+                wardCode: e.target.value
+            })
+        }, handleClickDistrictFilter = async () => {
+            if (location.provinceCode !== null) {
+                const res = await axios.get(`https://provinces.open-api.vn/api/p/${location.provinceCode}?depth=2`)
+                setDistricts(res.data.districts)
+            }
+        }, handleClickWardFilter = async () => {
+            if (location.districtCode !== null) {
+                const res = await axios.get(`https://provinces.open-api.vn/api/d/${location.districtCode}?depth=2`)
+                setWards(res.data.wards)
+            }
+        }, handleRemoveLocationFilter = () => {
+            document.getElementById('provinceFilter').value = ''
+            document.getElementById('districtFilter').value = ''
+            document.getElementById('wardFilter').value = ''
+            setReq({
+                ...req,
+                provinceCode: null,
+                districtCode: null,
+                wardCode: null,
+            })
+        }, handleChangeStatusFilter = e => {
+            setReq({
+                ...req,
+                status: e.target.value || null
+            })
+        }, handleChangeTimeFilter = e => {
+            setReq({
+                ...req,
+                time: e.target.value,
+            })
+        }, handleChangeTextSearchFilter = values => {
+            const textSearch = values.textSearch.trim() == '' ? null : values.textSearch.trim()
+            setReq({
+                ...req,
+                textSearch: textSearch
+            })
+        }, handleChangePageSizeFilter = e => {
+            setReq({
+                ...req,
+                pageReq: {
+                    ...req.pageReq,
+                    pageSize: Number(e.target.value)
+                }
+            })
+        }, handleChangePageFilter = newPage => {
+            setReq({
+                ...req,
+                pageReq: {
+                    ...req.pageReq,
+                    page: Number(newPage)
+                }
+            })
+        }, handleChangeStatus = async (id, status) => {
+            try {
+                const obj = {
+                    id: id,
+                    status: status,
+                    note: document.getElementById('reason').value
+                }
+                const axiosRes = await AxiosApi.postAuth('/order/admin/change-status', obj)
+                getOrderList()
+                console.log(axiosRes)
+                ToastUtils.createToast(WsToastType.SUCCESS, WsMessage.CHANGE_ORDER_STATUS_SUCCESS)
+            } catch (e) {
+                ToastUtils.createToast(WsToastType.ERROR, e.response.data.message)
+            }
+        }, handleChangeOrderFilter = async e => {
+            const input = e.target.value
+            let sortField = ""
+            let sortDirection = ""
+            console.log("input: ", input, " - sortField: ", sortField, " - sortDirection: ", sortDirection)
+            console.log("length: ", input.length)
+            if (input.length > 0) {
+                sortField = input.substring(0, input.indexOf('-'))
+                console.log(sortField)
+                sortDirection = input.substring(sortField.length + 1)
+                console.log(sortDirection)
+            }
+            setReq({
+                ...req,
+                pageReq: {
+                    ...req.pageReq,
+                    sortField: sortField,
+                    sortDirection: sortDirection
+                }
+            })
+        }
+    ;
 
-    const handleGetDetail = async orderId => {
-        const axiosRes = await AxiosApi.getAuth(`${WsUrl.ORDER_BASE}${WsUrl.ADMIN_ORDER_DETAIL}/${orderId}`)
-        console.log(axiosRes)
-        setDetail(axiosRes.data.data)
-    }
 
     return (
         <div className="container-fluid">
@@ -184,27 +196,28 @@ const OrderPage = () => {
                 <div className="card-body">
                     <div className='row d-flex align-items-center py-1'>
                         <div className='col d-flex align-items-center'>
-                            <span className='' style={{ minWidth: '64px' }}>Trạng thái:</span>
+                            <span className='' style={{minWidth: '64px'}}>Trạng thái:</span>
                             <select className='border-1 form-control col-2 mx-2' onChange={handleChangeStatusFilter}>
                                 <option value="">Tất cả</option>
                                 <option value="PENDING">Đang chờ xử lý</option>
-                                <option value="ACCEPTED">Đã xác nhận</option>
-                                <option value="CANCEL_OR_REJECT">Đã hủy</option>
+                                <option value="ACCEPT">Đã xác nhận</option>
+                                <option value="REJECT">Đã từ chối</option>
+                                <option value="CANCEL">Đã hủy</option>
                                 <option value="SHIPPING">Đang giao</option>
                                 <option value="FINISH">Đã nhận hàng</option>
                             </select>
                         </div>
 
                         <form className="d-none d-sm-inline-block form-inline navbar-search col-4"
-                            onSubmit={handleSubmit(handleChangeTextSearchFilter)}>
+                              onSubmit={handleSubmit(handleChangeTextSearchFilter)}>
                             <div className="input-group">
                                 <input type="text" className="form-control bg-light border-0 small"
-                                    placeholder="Tìm kiếm..." aria-label="Search" aria-describedby="basic-addon2"
-                                    defaultValue=""
-                                    {...register("textSearch")} />
+                                       placeholder="Tìm kiếm..." aria-label="Search" aria-describedby="basic-addon2"
+                                       defaultValue=""
+                                       {...register("textSearch")} />
                                 <div className="input-group-append">
                                     <button className="btn btn-primary" type="submit">
-                                        <i className="fas fa-search fa-sm" />
+                                        <i className="fas fa-search fa-sm"/>
                                     </button>
                                 </div>
                             </div>
@@ -212,24 +225,24 @@ const OrderPage = () => {
                     </div>
 
                     <div className='row d-flex align-items-center px-3 py-1'>
-                        <span className='' style={{ minWidth: '64px' }}>Địa chỉ:</span>
+                        <span className='' style={{minWidth: '64px'}}>Địa chỉ:</span>
                         <div className='col d-flex align-items-center'>
                             <select id='provinceFilter' className='border-1 form-control mx-1 col-2'
-                                onChange={handleChangeProvinceFilter}>
+                                    onChange={handleChangeProvinceFilter}>
                                 <option value="" disabled selected text-muted>---Tỉnh/T.Phố---</option>
                                 {provinces && provinces.map(p => (
                                     <option key={p.code} value={p.code}>{p.name}</option>
                                 ))}
                             </select>
                             <select id='districtFilter' className='border-1 form-control mx-1 col-2'
-                                onChange={handleChangeDistrictFilter} onClick={handleClickDistrictFilter}>
+                                    onChange={handleChangeDistrictFilter} onClick={handleClickDistrictFilter}>
                                 <option value="" disabled selected text-muted>---Quận/Huyện---</option>
                                 {districts && districts.map(d => (
                                     <option key={d.code} value={d.code}>{d.name}</option>
                                 ))}
                             </select>
                             <select id='wardFilter' className='border-1 form-control mx-1 col-2'
-                                onClick={handleClickWardFilter} onChange={handleChangeWardFilter}>
+                                    onClick={handleClickWardFilter} onChange={handleChangeWardFilter}>
                                 <option value="" disabled selected>---Phường/Xã---</option>
                                 {wards && wards.map(w => (
                                     <option value={w.code}>{w.name}</option>
@@ -245,113 +258,126 @@ const OrderPage = () => {
                                 <option value="week">Tuần này</option>
                                 <option value="month">Tháng này</option>
                             </select>
-                            <select className='form-control col mx-1'>
-                                <option value="" disabled selected>---Thanh toán---</option>
-                                <option value="">Tất cả</option>
-                                <option value="none-pay">Chưa thanh toán</option>
-                                <option value="pay">Đã thanh toán</option>
+                            <select className='form-control col mx-1' onChange={handleChangeOrderFilter}>
+                                <option value="" disabled selected>---Sắp xếp---</option>
+                                <option value="">Mặc định</option>
+                                <option value="customer-asc">Tên Khách hàng(a-z)</option>
+                                <option value="customer-desc">Tên Khách hàng(z-a)</option>
+                                <option value="total-asc">Tổng tiền(Thấp-cao)</option>
+                                <option value="total-desc">Tổng tiền(Cao-thấp)</option>
+                                <option value="date-asc">Thời gian đặt(Cũ-mới)</option>
+                                <option value="date-desc">Thời gian đặt(Mới-cũ)</option>
                             </select>
                         </div>
                     </div>
 
-                    <hr className='pb-2' />
-                    <h6>Tìm thấy {pageInfo.totalElements} dữ liệu phù hợp.</h6>
+                    <hr className='pb-2'/>
+                    <h6>Tìm thấy <b>{pageInfo.totalElements}</b> dữ liệu phù hợp.</h6>
                     <table className="table table-bordered mt-4" id="dataTable" width="100%" cellSpacing={0}>
                         <thead>
-                            <tr className='text-bold text-dark'>
-                                <th>No</th>
-                                <th>Khách hàng</th>
-                                <th>SDT</th>
-                                <th>Thời gian đặt</th>
-                                <th>Địa chỉ giao</th>
-                                <th>Tổng(VND)</th>
-                                <th>Phương thức</th>
-                                <th>Ghi chú</th>
-                                <th>Trạng thái</th>
-                                <th>More</th>
-                            </tr>
+                        <tr className='text-bold text-dark'>
+                            <th>No</th>
+                            <th>Code</th>
+                            <th>Khách hàng</th>
+                            <th>SDT</th>
+                            <th>Thời gian đặt</th>
+                            <th>Địa chỉ giao</th>
+                            <th>Tổng(VND)</th>
+                            <th>Phương thức</th>
+                            <th>Ghi chú</th>
+                            <th>Trạng thái</th>
+                            <th>More</th>
+                        </tr>
                         </thead>
                         <tbody>
-                            {orders && orders.map((order, index) => (
-                                <tr key={order.id}>
-                                    <td className="text-center">{index + 1}</td>
-                                    <td className='col-1'>{order.customer}</td>
-                                    <td className="col-1">{order.phone}</td>
-                                    <td>{order.orderDate}</td>
-                                    <td className="col-2">{order.address}</td>
-                                    <td className="col-1">{order.totalFmt}</td>
-                                    <td>{order.type}({order.payed})</td>
-                                    <td>{order.note}</td>
-                                    <td className="col-2">{order.status}</td>
-                                    <td>
-                                        <div className="btn-group dropleft">
-                                            <a className="btn text-dark" type="button" id="dropdownMenuButton"
-                                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <i className="fa fa-ellipsis-h" aria-hidden="true" />
-                                            </a>
-                                            <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                <a className="dropdown-item" href="#" data-toggle="modal"
-                                                    data-target={`#detailModal${order.id}`}
-                                                    onClick={() => handleGetDetail(order.id)}>Chi tiết</a>
-                                                <a className="dropdown-item" href="#" data-toggle="modal"
-                                                    data-target={`#statusModal${order.id}`}>Chỉnh sửa trạng thái</a>
-                                            </div>
+                        {orders && orders.map((order, index) => (
+                            <tr key={order.id}>
+                                <td className="text-center">{index + 1}</td>
+                                <td>{order.code}</td>
+                                <td className='col-1'>{order.customer}</td>
+                                <td className="col-1">{order.phone}</td>
+                                <td>{order.orderDate}</td>
+                                <td className="col-2">{order.address}</td>
+                                <td className='col-1'>{order.total}</td>
+                                <td>{order.type}</td>
+                                <td>{order.note}</td>
+                                <td className="col-2">{order.status}</td>
+                                <td>
+                                    <div className="btn-group dropleft">
+                                        <a className="btn text-dark" type="button" id="dropdownMenuButton"
+                                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i className="fa fa-ellipsis-h" aria-hidden="true"/>
+                                        </a>
+                                        <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                            <NavLink to={`${order.id}`} className="dropdown-item">Chi tiết</NavLink>
+                                            <a className="dropdown-item" href="#" data-toggle="modal"
+                                               data-target={`#statusModal${order.id}`}>Chỉnh sửa trạng thái</a>
                                         </div>
-                                        {detail && <OrderDetail detail={detail} />}
-
-                                        <div className="modal fade" id={`statusModal${order.id}`} tabIndex={-1}
-                                            role="dialog"
-                                            aria-labelledby="statusModalLabel" aria-hidden="true">
-                                            <div className="modal-dialog modal-lg" role="document">
-                                                <div className="modal-content">
-                                                    <div className="modal-header">
-                                                        <h5 className="modal-title" id="exampleModalLabel">Chỉnh sửa trạng thái</h5>
-                                                        <button type="button" className="close" data-dismiss="modal"
+                                    </div>
+                                    <div className="modal fade" id={`statusModal${order.id}`} tabIndex={-1}
+                                         role="dialog"
+                                         aria-labelledby="statusModalLabel" aria-hidden="true">
+                                        <div className="modal-dialog modal-lg" role="document">
+                                            <div className="modal-content">
+                                                <div className="modal-header">
+                                                    <h5 className="modal-title" id="exampleModalLabel">Chỉnh sửa trạng
+                                                        thái</h5>
+                                                    <button type="button" className="close" data-dismiss="modal"
                                                             aria-label="Close">
-                                                            <span aria-hidden="true">×</span>
-                                                        </button>
-                                                    </div>
-                                                    {order.options && <div className="modal-body p-4">
-                                                        <h6 className='text-dark'><b>Chọn trạng thái mới cho đơn hàng</b></h6>
+                                                        <span aria-hidden="true">×</span>
+                                                    </button>
+                                                </div>
+                                                {order.options &&
+                                                    <div className="modal-body p-4">
+                                                        <div className="form-group mt-2">
+                                                            <h6 className='text-dark'><b>1. Lý do chỉnh sửa</b> (không bắt buộc)</h6>
+                                                            <textarea id='reason' className='form-control'
+                                                                      rows={4}></textarea>
+                                                        </div>
+                                                        <h6 className='text-dark'><b>2. Chọn trạng thái mới cho đơn
+                                                            hàng</b></h6>
                                                         <div className='row d-flex justify-content-left p-2'>
-                                                            {order.options.map((obj, index) => (
-                                                                <button key={index} className={`btn mr-2 btn-${obj.clazz}`}>{obj.name}</button>
+                                                            {order.options.map((obj, index1) => (
+                                                                <button key={index1}
+                                                                        className={`btn mr-2 btn-${obj.clazz}`}
+                                                                        onClick={() => handleChangeStatus(order.id, obj.status)}
+                                                                        data-dismiss="modal"
+                                                                >{obj.name}</button>
                                                             ))}
                                                         </div>
-
                                                     </div>}
-                                                </div>
                                             </div>
                                         </div>
-                                    </td>
-                                </tr>))}
+                                    </div>
+                                </td>
+                            </tr>))}
                         </tbody>
                     </table>
                     <div className='p-2 row align-items-center justify-content-between'>
                         <div className='col d-flex align-items-center'>
                             Hiển thị: <select className='border-1 form-control col-1 mx-2'
-                                onChange={handleChangePageSizeFilter}>
-                                <option value={10}>10</option>
-                                <option value={20}>20</option>
-                                <option value={50}>50</option>
-                                <option value={100}>100</option>
-                            </select>
+                                              onChange={handleChangePageSizeFilter}>
+                            <option value={10}>10</option>
+                            <option value={20}>20</option>
+                            <option value={50}>50</option>
+                            <option value={100}>100</option>
+                        </select>
                         </div>
                         <div className=''>
                             <button className='btn btn-outline-dark btn-sm mx-1 px-2'
-                                onClick={() => handleChangePageFilter(pageInfo.page - 1)}
-                                disabled={pageInfo.page == 0}>Trước
+                                    onClick={() => handleChangePageFilter(pageInfo.page - 1)}
+                                    disabled={pageInfo.page == 0}>Trước
                             </button>
                             <button className='btn btn-outline-dark btn-sm mx-1 px-2'
-                                onClick={() => handleChangePageFilter(pageInfo.page + 1)}
-                                disabled={pageInfo.page == pageInfo.totalPages - 1}>Sau
+                                    onClick={() => handleChangePageFilter(pageInfo.page + 1)}
+                                    disabled={pageInfo.page == pageInfo.totalPages - 1}>Sau
                             </button>
                             <span>Trang {pageInfo.page + 1}/{pageInfo.totalPages}</span>
                         </div>
                     </div>
                 </div>
             </div>
-        </div >
+        </div>
     )
 }
 

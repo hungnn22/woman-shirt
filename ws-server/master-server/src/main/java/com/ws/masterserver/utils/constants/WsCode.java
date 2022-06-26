@@ -13,7 +13,10 @@ public enum WsCode {
     CATEGORY_NOT_FOUND("400", "Không tìm thấy loại sản phẩm!"),
     CATEGORY_EXISTS_NAME("400", "Tên loại sản phẩm đã tồn tại!"),
 
-    INTERNAL_SERVER("500", "Hệ thống bị gián đoạn! Xin vui lòng thử lại trong giây lát!"),
+    COLOR_NOT_FOUND("400", "Không tìm thấy màu sản phẩm!"),
+    MATERIAL_NOT_FOUND("400", "Không tìm thấy chất liệu sản phẩm!"),
+    PRODUCT_NOT_FOUND("400", "Không tìm thấy chất liệu sản phẩm!"),
+    INTERNAL_SERVER("500", "Hệ thống đang bị gián đoạn! Xin vui lòng thử lại sau"),
     BAD_REQUEST("400", "Dữ liệu không hợp lệ!");
 
 
