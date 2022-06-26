@@ -27,6 +27,7 @@ public class MaterialServiceImpl implements MaterialService {
     @Override
     @Transactional
     public ResData<String> create(CurrentUser currentUser, MaterialDto dto) {
+        //dasdas
         AuthValidator.checkAdmin(currentUser);
         var products = repository.productRepository.findById(dto.getId());
         if (Boolean.FALSE.equals(products.isEmpty())){

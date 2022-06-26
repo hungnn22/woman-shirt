@@ -3,6 +3,7 @@ package com.ws.masterserver.utils.common;
 import com.ws.masterserver.dto.admin.order.detail.PriceDto;
 import com.ws.masterserver.dto.admin.order.detail.PromotionDto;
 import com.ws.masterserver.dto.admin.order.detail.ResultDto;
+import com.ws.masterserver.dto.admin.order.detail.StatusDto;
 import com.ws.masterserver.dto.admin.order.search.OptionDto;
 import com.ws.masterserver.utils.base.WsException;
 import com.ws.masterserver.utils.constants.WsCode;
@@ -27,7 +28,7 @@ public class OrderUtils {
      * @param roleStr         role người tạo ra trạng thái
      * @return vd: Đơn hàng đã được chấp nhận bởi Admin lúc 10:22:23 12/02/2022
      */
-    public static String getStatusCombination(String statusStr, Date createdDate, String combinationName, String roleStr) {
+    public static String getStatusCombination(String statusStr, Date createdDate, String roleStr, String combinationName) {
         var result = "";
         try {
             var status = StatusEnum.valueOf(statusStr);
@@ -64,7 +65,7 @@ public class OrderUtils {
      * @return giá phải trả
      * @apiNote Dựa vào loại khuyến mãi và % giảm giá sẽ trừ đi vào giá
      */
-    public static Long getTotal(Long shipPrice, Long shopPrice, List<PromotionDto> promotions) {
+    public static Long getTotal(Long shopPrice, Long shipPrice, List<PromotionDto> promotions) {
         try {
             /**
              * Nếu không có khuyến mãi thì = defaultTotal + shipPrice
@@ -172,6 +173,32 @@ public class OrderUtils {
         } catch (Exception e) {
             log.error("getOptions: {}", e.getMessage());
         }
+        return result;
+    }
+
+    public static List<String> getHistory(List<StatusDto> orderStatusList) {
+        List<String> result = new ArrayList<>();
+        orderStatusList.forEach(obj -> {
+            var item = DateUtils.toStr(obj.getCreatedDate(), DateUtils.F_DDMMYYYYHHMMSS) + ": ";
+            var combination = obj.getRole().getName() + " " + obj.getFullName();
+            switch (obj.getStatus()) {
+                case PENDING:
+                    item += "Đặt hàng thành công. Đang chờ xác nhận";
+                    break;
+                case ACCEPT:
+                    item += "Được chấp nhận bỏi " + combination;
+                    break;
+                case REJECT:
+                    item += "Bị từ chối bỏi " + combination;
+                    break;
+                case CANCEL:
+                    item += "Khách hàng hủy đơn hàng";
+                    break;
+                default:
+                    throw new WsException(WsCode.INTERNAL_SERVER);
+            }
+            result.add(item);
+        });
         return result;
     }
 }
