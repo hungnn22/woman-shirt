@@ -29,18 +29,5 @@ export class HeaderComponent implements OnInit {
   }
 
   ///////////////////////
-  openSize() {
-    this.modalService.open(
-      SizeComponent,
-      {
-        backdrop: true,
-        centered: true,
-        size:'xl'
-      }
-    )
-      .result
-      .then((result) => {
-        // write your code here
-      });
-  }
+  //
 }

@@ -29,6 +29,8 @@ import { NgxSliderModule } from '@angular-slider/ngx-slider';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatPaginatorIntl, MatPaginatorModule } from '@angular/material/paginator';
 import { CustomMaterialPaginatorService } from './service/custom-material-paginator.service';
+import { DropDownListComponent, DropDownListModule } from '@progress/kendo-angular-dropdowns';
+import {MatSliderModule} from '@angular/material/slider';
 
 
 @NgModule({
@@ -45,13 +47,16 @@ import { CustomMaterialPaginatorService } from './service/custom-material-pagina
   ],
   imports: [
     BrowserModule,
+    FormsModule,
     AppRoutingModule,
     NgbModule,
+    MatSelectModule,
     InputsModule,
     BrowserAnimationsModule,
     MatIconModule,
     MatButtonModule,
     NgxPaginationModule,
+    MatSliderModule,
     MatGridListModule,
     MatCardModule,
     MatAutocompleteModule,
@@ -62,6 +67,7 @@ import { CustomMaterialPaginatorService } from './service/custom-material-pagina
     ReactiveFormsModule,
     HttpClientModule,
     MatInputModule,
+    DropDownListModule,
     NgxSliderModule,
     MatProgressSpinnerModule,
     MatPaginatorModule
