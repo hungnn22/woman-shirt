@@ -27,11 +27,6 @@ export class ProductDetailComponent implements OnInit {
   colorSelected: string = '';
   productOptionId :string = '';
   images:any;
-  selectedIndex = 0;
-  @Input() indicators = true;
-  @Input() controls = true;
-  @Input() autoSlide = false;
-  @Input() slideInterval = 3000;//Default to 3 second
 
   constructor(
     private product: ProductService,
@@ -143,34 +138,6 @@ export class ProductDetailComponent implements OnInit {
   changeColor(e: any){
     this.colorSelected = e.target.value;
     console.log('colorSelected: ', this.colorSelected);
-  }
-
-  //Change slide every 3 seconds
-  autoSlideImages(): void {
-    setInterval(() => {
-      this.onNextClick();
-    }, this.slideInterval);
-  }
-
-  //set index of image on dot/indicator click
-  selectImage(index: number): void {
-    this.selectedIndex = index;
-  }
-
-  onPrevClick(): void {
-    if (this.selectedIndex === 0) {
-      this.selectedIndex = this.images.length - 1;
-    }else{
-      this.selectedIndex --;
-    }
-  }
-
-  onNextClick(): void {
-    if (this.selectedIndex === this.images.length - 1) {
-      this.selectedIndex = 0;
-    } else {
-      this.selectedIndex ++;
-    }
   }
 
 }

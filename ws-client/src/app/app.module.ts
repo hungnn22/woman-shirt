@@ -20,6 +20,8 @@ import { ShopComponent } from './components/shop/shop.component';
 import { SizeComponent } from './components/shop/size/size.component';
 import { NgxSliderModule } from '@angular-slider/ngx-slider';
 import { PriceComponent } from './components/shop/price/price.component';
+import { CarouselModule } from 'ngx-owl-carousel-o';
+import { WishListComponent } from './components/wish-list/wish-list.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +36,7 @@ import { PriceComponent } from './components/shop/price/price.component';
     ShopComponent,
     SizeComponent,
     PriceComponent,
+    WishListComponent
   ],
   imports: [
     BrowserModule,
@@ -47,6 +50,7 @@ import { PriceComponent } from './components/shop/price/price.component';
     ReactiveFormsModule,
     ToastrModule.forRoot(),
     NgbModule,
+    CarouselModule,
   ],
   providers: [],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
