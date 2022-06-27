@@ -61,7 +61,7 @@ public class CartServiceImpl implements CartService {
                 newCart.setQuantity(cartRequest.getQuantity());
                 repository.cartRepository.save(newCart);
 
-                return new ResData<>("Thêm vào giỏ hàng thành công !!!", WsCode.OK);
+                return new ResData<>("Thêm vào giỏ hàng thành công !!", WsCode.OK);
             }
 
         }
