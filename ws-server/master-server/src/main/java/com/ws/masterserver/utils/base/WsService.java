@@ -23,5 +23,6 @@ public class WsService {
     public final ReviewService reviewService;
     public final UserService userService;
     public final CartService cartService;
+    public final SuggestService suggestService;
 //    public final SimpMessagingTemplate ws;
 }

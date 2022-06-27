@@ -38,6 +38,8 @@ public class CategoryEntity {
 
     private Boolean active;
 
+    private String image;
+
     @CreatedDate
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_date")
