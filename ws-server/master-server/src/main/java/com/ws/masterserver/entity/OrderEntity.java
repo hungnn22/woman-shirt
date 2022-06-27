@@ -51,6 +51,11 @@ public class OrderEntity {
      */
     private String code;
 
+    /**
+     * tổng tiền
+     */
+    private Long total;
+
     @CreatedDate
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_date")

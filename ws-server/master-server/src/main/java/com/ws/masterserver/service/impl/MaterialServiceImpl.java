@@ -14,7 +14,7 @@ import com.ws.masterserver.utils.validate.AuthValidator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-
+import javax.transaction.Transactional;
 import java.util.Date;
 
 @Service
@@ -25,7 +25,9 @@ public class MaterialServiceImpl implements MaterialService {
     private final WsRepository repository;
 
     @Override
+    @Transactional
     public ResData<String> create(CurrentUser currentUser, MaterialDto dto) {
+        //dasdas
         AuthValidator.checkAdmin(currentUser);
         var products = repository.productRepository.findById(dto.getId());
         if (Boolean.FALSE.equals(products.isEmpty())){

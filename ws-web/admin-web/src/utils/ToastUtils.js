@@ -3,8 +3,8 @@ import 'react-toastify/dist/ReactToastify.css'
 import WsToastType from "./constants/WsToastType";
 
 const options = {
-    autoClose: 1000,
-    theme: 'colored'
+    autoClose: 2500,
+    theme: 'colored',
 }
 
 // toast.configure()

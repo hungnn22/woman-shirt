@@ -14,4 +14,5 @@ public class DetailRes {
     private List<ItemDto> items;
     private List<PromotionDto> promotions;
     private ResultDto result;
+    private List<String> history;
 }
