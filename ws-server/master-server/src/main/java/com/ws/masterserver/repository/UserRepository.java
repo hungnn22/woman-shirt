@@ -49,5 +49,7 @@ public interface UserRepository extends JpaRepository<UserEntity, String> {
 
     UserEntity findByEmailIgnoreCaseAndActive(String email, Boolean aTrue);
 
-//    List<UserRes> search4Admin(UserReq );
+    @Query("select count(u) from UserEntity u\n" +
+            "where cast(u.createdDate as date) = cast(current_date as date)")
+    Long countNewUserToday();
 }
