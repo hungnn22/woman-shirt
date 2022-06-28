@@ -14,6 +14,14 @@ import { ContactComponent } from './components/contact/contact.component';
 import { NgxSpinnerModule } from "ngx-spinner";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { ToastrModule } from 'ngx-toastr';
+import { MaterialModule } from './material/material.module';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ShopComponent } from './components/shop/shop.component';
+import { SizeComponent } from './components/shop/size/size.component';
+import { NgxSliderModule } from '@angular-slider/ngx-slider';
+import { PriceComponent } from './components/shop/price/price.component';
+import { CarouselModule } from 'ngx-owl-carousel-o';
+import { WishListComponent } from './components/wish-list/wish-list.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +33,10 @@ import { ToastrModule } from 'ngx-toastr';
     RelatedProductsComponent,
     CartComponent,
     ContactComponent,
+    ShopComponent,
+    SizeComponent,
+    PriceComponent,
+    WishListComponent
   ],
   imports: [
     BrowserModule,
@@ -33,8 +45,12 @@ import { ToastrModule } from 'ngx-toastr';
     NgxSpinnerModule,
     HttpClientModule,
     FormsModule,
+    //NgxSliderModule,
+    MaterialModule,
     ReactiveFormsModule,
     ToastrModule.forRoot(),
+    NgbModule,
+    CarouselModule,
   ],
   providers: [],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

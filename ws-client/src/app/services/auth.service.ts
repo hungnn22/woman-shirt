@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { JwtHelperService } from '@auth0/angular-jwt';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 
@@ -8,7 +9,7 @@ const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
 
- const AUTH_API = environment.baseUrl;
+const AUTH_API = environment.baseUrl;
 
 
 @Injectable({
@@ -16,7 +17,10 @@ const httpOptions = {
 })
 export class AuthService {
 
-  constructor(private http: HttpClient) { }
+
+  helper = new JwtHelperService();
+
+  constructor(private http: HttpClient){ }
 
   login(formData: any): Observable<any> {
     return this.http.post(AUTH_API + 'login',formData, httpOptions);
@@ -35,6 +39,11 @@ export class AuthService {
     return this.http.post(AUTH_API + 'refreshtoken', {
       refreshToken: token
     }, httpOptions);
+  }
+
+  public isAuthenticated(): boolean {
+    const token = localStorage.getItem('auth-token') as string;
+    return !this.helper.isTokenExpired(token);
   }
 
 }

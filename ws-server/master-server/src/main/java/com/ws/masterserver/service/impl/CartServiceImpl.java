@@ -37,8 +37,6 @@ public class CartServiceImpl implements CartService {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format(WsConst.Messages.INVALID, WsConst.Nouns.QTY_VI));
             }
 
-            Long totalPrice = 0L;
-
             Optional<CartEntity> cartOptional = repository.cartRepository.findByUserIdAndAndProductOptionId(currentUser.getId(), cartRequest.getProductOptionId());
             if(cartOptional.isPresent()){
 
@@ -50,8 +48,7 @@ public class CartServiceImpl implements CartService {
                 }
 
                 cart.setQuantity(updateQuantity);
-                totalPrice = cart.getTotalPrice() + productOptionEntity.getPrice() * cartRequest.getQuantity();
-                cart.setTotalPrice(totalPrice);
+
                 repository.cartRepository.save(cart);
 
                 return new ResData<>("Thêm vào giỏ hàng thành công !!!", WsCode.OK);
@@ -62,12 +59,9 @@ public class CartServiceImpl implements CartService {
                 newCart.setUserId(currentUser.getId());
                 newCart.setProductOptionId(productOptionEntity.getId());
                 newCart.setQuantity(cartRequest.getQuantity());
-                totalPrice = productOptionEntity.getPrice() * cartRequest.getQuantity();
-                newCart.setTotalPrice(totalPrice);
-
                 repository.cartRepository.save(newCart);
 
-                return new ResData<>("Thêm vào giỏ hàng thành công !!!", WsCode.OK);
+                return new ResData<>("Thêm vào giỏ hàng thành công !!", WsCode.OK);
             }
 
         }

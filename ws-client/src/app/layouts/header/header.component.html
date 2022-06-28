@@ -1,123 +1,140 @@
-<!-- Nav-->
-<div class="menu bg-dark text-white">
-  <div class="container d-flex justify-content-between">
-    <p class="m-0">Free shipping, 30-day return or refund guarantee.</p>
-    <ul class="menu__list d-flex m-0 pr-0">
-      <!-- <li *ngIf="!authService.isLoggedIn(); else avatar"> -->
-      <li>
-        <a routerLink="/sign-in" class="mr-3">Sign In</a>
-        <a routerLink="/sign-up">Sign up</a>
-      </li>
-
-      <ng-template #avatar>
-        <li>
-          <div class="dropdown user-dropdown">
-            <span class="dropdown-toggle cursor-pointer d-inline-block" (click)="show = !show">
-              Hi, Bro
-              <!-- {{ authService.user.name }} -->
-              <!-- <img [src]="authService.user.avatar" alt="User avatar" class="user-avatar" /> -->
-            </span>
-
-            <div class="dropdown-menu" [class.show]="show">
-              <span class="dropdown-item cursor-pointer" (click)="goToMyProfile()"><i class="fas fa-user mr-1"></i>My
-                profile
-              </span>
-
-              <span class="dropdown-item cursor-pointer" (click)="logout()"><i class="fas fa-sign-out-alt mr-1"></i>Log
-                out
-              </span>
-            </div>
+<header class="header-area header-padding-1 sticky-bar header-res-padding clearfix">
+  <div class="container-fluid">
+      <div class="row">
+          <div class="col-xl-2 col-lg-2 col-md-6 col-4">
+              <div class="logo">
+                  <a href="index.html">
+                      <img alt="" src="assets/img/logo/logo.png">
+                  </a>
+              </div>
           </div>
-        </li>
-      </ng-template>
-    </ul>
-  </div>
-</div>
+          <div class="col-xl-8 col-lg-8 d-none d-lg-block">
+              <div class="main-menu">
+                  <nav>
+                      <ul>
+                          <li><a routerLink="/home">TRANG CHỦ</a></li>
+                          <li><a routerLink="/shop">SẢN PHẨM</a></li>
+                          <!-- <li><a href="shop.html">Collection</a></li> -->
+                          <li><a href="#">TRANG<i class="fa fa-angle-down"></i></a>
+                              <ul class="submenu">
+                                  <li><a href="about.html">about us</a></li>
+                                  <li><a href="cart-page.html">cart page</a></li>
+                                  <li><a href="checkout.html">checkout </a></li>
+                                  <li><a href="wishlist.html">wishlist </a></li>
+                                  <li><a href="my-account.html">my account</a></li>
+                                  <li><a href="login-register.html">login / register </a></li>
+                                  <li><a href="contact.html">contact us </a></li>
+                                  <li><a href="404.html">404 page </a></li>
+                              </ul>
+                          </li>
+                          <li><a href="#">TIN TỨC</a>
 
-<!-- Header -->
-<header class="header #header border-bottom">
-  <div class="container p-2">
-    <div class="header__menu-list row">
-      <div class="col-lg-3 col-md-3 col-sm-3 header__logo__container">
-        <img
-          src="https://minimog.thememove.com/wp-content/themes/minimog/assets/images/logo/dark-logo.png?fbclid=IwAR2HmBI5dzFc7fEG7xPtyQv_eddBVqCMDTA3ev-SKhp7AXENAPhYIFw0yew"
-          alt="" routerLink="/home" class="header__menu-img" style="cursor: pointer" />
-      </div>
-
-      <!-- Menu -->
-      <div class="header__bar col-sm-9" (click)="onShowMenu()" style="cursor: pointer">
-        <i class="fas fa-bars"></i>
-      </div>
-
-      <div class="menu__overlay" *ngIf="showDropDown" (click)="showDropDown = !showDropDown"></div>
-      <div class="header__menu-items p-5" *ngIf="showDropDown" #headerMenu>
-        <div class="header__options">
-          <a routerLink="/sign-in" (click)="onShowDropDown()">SIGN IN</a>
-          <a routerLink="/sign-up" class="ml-3" (click)="onShowDropDown()">SIGN UP</a>
-        </div>
-        <div class="header__nav-options">
-          <a routerLink="/product-wish-list" (click)="onShowDropDown()">
-            <i class="fas fa-heart" data-toggle="tooltip" title="Wish List" data-placement="top"></i>
-            <span class="cart-quantity text-danger font-weight-bold">
-              2
-            </span>
-          </a>
-          <a routerLink="/product-cart" (click)="onShowDropDown()">
-            <i class="fas fa-shopping-bag shopping__icon" data-toggle="tooltip" title="Cart"></i>
-            <span class="cart-quantity text-warning font-weight-bold">0</span>
-          </a>
-        </div>
-        <div class="mobile__menu-wrap">
-          <div class="clearfix">
-            <a class="float-right" style="cursor: pointer" (click)="showMenu = !showMenu">Menu <i
-                class="fas fa-bars"></i></a>
+                          </li>
+                          <li><a href="about.html">VỀ CHÚNG TÔI</a></li>
+                          <li><a href="contact.html">LIÊN HỆ</a></li>
+                      </ul>
+                  </nav>
+              </div>
           </div>
-          <ul *ngIf="showMenu" class="mobile__dropdown">
-            <li routerLink="/home" (click)="onShowDropDown()">Home</li>
-            <li routerLink="/shop" (click)="onShowDropDown()">Shop</li>
-            <li routerLink="/blog" (click)="onShowDropDown()">Blogs</li>
-            <li routerLink="/contact" (click)="onShowDropDown()">Contact</li>
-            <li routerLink="/about" (click)="onShowDropDown()">About</li>
-          </ul>
-        </div>
-        <div class="mobile__menu-text text-left mt-3">
-          <p>Free shipping, 30-day return or refund guarantee.</p>
-        </div>
+          <div class="col-xl-2 col-lg-2 col-md-6 col-8">
+                 <div class="header-right-wrap">
+                  <div class="same-style header-search">
+                      <a class="search-active" href="#"><i class="pe-7s-search"></i></a>
+                      <div class="search-content">
+                          <form action="#">
+                              <input type="text" placeholder="Search" />
+                              <button class="button-search"><i class="pe-7s-search"></i></button>
+                          </form>
+                      </div>
+                  </div>
+                  <div class="same-style account-satting">
+                      <a class="account-satting-active" href="#"><i class="pe-7s-user-female"></i></a>
+                      <div class="account-dropdown">
+                          <ul>
+                              <li><a href="login-register.html">Login</a></li>
+                              <li><a href="login-register.html">Register</a></li>
+                              <li><a routerLink="/wishlist">Wishlist  </a></li>
+                              <li><a href="my-account.html">my account</a></li>
+                          </ul>
+                      </div>
+                  </div>
+                  <div class="same-style header-wishlist">
+                      <a routerLink="/wishlist"><i class="pe-7s-like"></i></a>
+                  </div>
+                  <div class="same-style cart-wrap">
+                      <button class="icon-cart">
+                          <i class="pe-7s-shopbag"></i>
+                          <span class="count-style">02</span>
+                      </button>
+                      <div class="shopping-cart-content">
+                          <ul>
+                              <li class="single-shopping-cart">
+                                  <div class="shopping-cart-img">
+                                      <a href="#"><img alt="" src="assets/img/cart/cart-1.png"></a>
+                                  </div>
+                                  <div class="shopping-cart-title">
+                                      <h4><a href="#">T- Shart & Jeans </a></h4>
+                                      <h6>Qty: 02</h6>
+                                      <span>$260.00</span>
+                                  </div>
+                                  <div class="shopping-cart-delete">
+                                      <a href="#"><i class="fa fa-times-circle"></i></a>
+                                  </div>
+                              </li>
+                              <li class="single-shopping-cart">
+                                  <div class="shopping-cart-img">
+                                      <a href="#"><img alt="" src="assets/img/cart/cart-2.png"></a>
+                                  </div>
+                                  <div class="shopping-cart-title">
+                                      <h4><a href="#">T- Shart & Jeans </a></h4>
+                                      <h6>Qty: 02</h6>
+                                      <span>$260.00</span>
+                                  </div>
+                                  <div class="shopping-cart-delete">
+                                      <a href="#"><i class="fa fa-times-circle"></i></a>
+                                  </div>
+                              </li>
+                          </ul>
+                          <div class="shopping-cart-total">
+                              <h4>Shipping : <span>$20.00</span></h4>
+                              <h4>Total : <span class="shop-total">$260.00</span></h4>
+                          </div>
+                          <div class="shopping-cart-btn btn-hover text-center">
+                              <a class="default-btn" href="cart-page.html">view cart</a>
+                              <a class="default-btn" href="checkout.html">checkout</a>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
       </div>
-
-      <!-- End menu -->
-
-      <div class="header__nav col-lg-6 col-md-6">
-        <nav class="header__menu">
-          <ul class="m-0 d-flex align-items-center">
-            <li routerLinkActive="active">
-              <a routerLink="/home">Home</a>
-            </li>
-            <li routerLinkActive="active"><a routerLink="/shop">Shop</a></li>
-            <li routerLinkActive="active"><a routerLink="/blog">Blog</a></li>
-            <li routerLinkActive="active">
-              <a routerLink="/contact">Contact</a>
-            </li>
-            <li routerLinkActive="active">
-              <a routerLink="/about">About</a>
-            </li>
-          </ul>
-        </nav>
+      <div class="mobile-menu-area">
+          <div class="mobile-menu">
+              <nav id="mobile-menu-active">
+                  <ul class="menu-overflow">
+                      <li><a href="index.html">HOME</a>
+                      </li>
+                      <li><a href="shop.html">Shop</a>
+                      </li>
+                      <li><a href="shop.html">Collection</a></li>
+                      <li><a href="#">Pages</a>
+                          <ul>
+                              <li><a href="about.html">about us</a></li>
+                              <li><a href="cart-page.html">cart page</a></li>
+                              <li><a href="checkout.html">checkout </a></li>
+                              <li><a href="wishlist.html">wishlist </a></li>
+                              <li><a href="my-account.html">my account</a></li>
+                              <li><a href="login-register.html">login / register </a></li>
+                              <li><a href="contact.html">contact us </a></li>
+                              <li><a href="404.html">404 page </a></li>
+                          </ul>
+                      </li>
+                      <li><a href="blog.html">Blog</a></li>
+                      <li><a href="about.html">About us</a></li>
+                      <li><a href="contact.html">Contact</a></li>
+                  </ul>
+              </nav>
+          </div>
       </div>
-      <div class="header__cart col-lg-3 col-md-3">
-        <div class="header__nav__option d-flex align-items-center justify-content-end">
-          <a routerLink="product-wish-list">
-            <i class="fas fa-heart" data-toggle="tooltip" title="Wish List" data-placement="top"></i>
-            <span class="cart-quantity text-danger font-weight-bold">
-              2
-            </span>
-          </a>
-          <a routerLink="/product-cart">
-            <i class="fas fa-shopping-bag shopping__icon" data-toggle="tooltip" title="Cart"></i>
-            <span class="cart-quantity text-warning font-weight-bold">0</span>
-          </a>
-        </div>
-      </div>
-    </div>
   </div>
 </header>
