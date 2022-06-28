@@ -1,18 +1,22 @@
 import { useEffect } from "react";
 import AuthService from "../../service/AuthService";
 import { useNavigate } from 'react-router-dom'
+import Footer from "../../component/footer/Footer";
+import Project from "./components/Project";
+import Overview from "./components/Overview";
+import Revenue from "./components/Revenue";
 
 const Dashboard = () => {
-    const navigate = useNavigate()
+    // const navigate = useNavigate()
 
-    useEffect(() => {
-        const checkUser = () => {
-            if (!AuthService.isAccessAdminLayout()) {
-                navigate("/login")
-            }
-        }
-        checkUser()
-    })
+    // useEffect(() => {
+    //     const checkUser = () => {
+    //         if (!AuthService.isAccessAdminLayout()) {
+    //             navigate("/login")
+    //         }
+    //     }
+    //     checkUser()
+    // })
 
     return (
         <div id="content-wrapper" className="d-flex flex-column">
@@ -99,108 +103,21 @@ const Dashboard = () => {
                     </div>
                     <div className="row">
                         <div className="col-xl-8 col-lg-7">
-                            <div className="card shadow mb-4">
-                                <div className="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 className="m-0 font-weight-bold text-primary">Earnings Overview</h6>
-                                    <div className="dropdown no-arrow">
-                                        <a className="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <i className="fas fa-ellipsis-v fa-sm fa-fw text-gray-400" />
-                                        </a>
-                                        <div className="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
-                                            <div className="dropdown-header">Dropdown Header:</div>
-                                            <a className="dropdown-item" href="#">Action</a>
-                                            <a className="dropdown-item" href="#">Another action</a>
-                                            <div className="dropdown-divider" />
-                                            <a className="dropdown-item" href="#">Something else here</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                {/* Card Body */}
-                                <div className="card-body">
-                                    <div className="chart-area">
-                                        <canvas id="myAreaChart" />
-                                    </div>
-                                </div>
-                            </div>
+                            <Overview />
                         </div>
                         <div className="col-xl-4 col-lg-5">
-                            <div className="card shadow mb-4">
-                                <div className="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 className="m-0 font-weight-bold text-primary">Revenue Sources</h6>
-                                    <div className="dropdown no-arrow">
-                                        <a className="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <i className="fas fa-ellipsis-v fa-sm fa-fw text-gray-400" />
-                                        </a>
-                                        <div className="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
-                                            <div className="dropdown-header">Dropdown Header:</div>
-                                            <a className="dropdown-item" href="#">Action</a>
-                                            <a className="dropdown-item" href="#">Another action</a>
-                                            <div className="dropdown-divider" />
-                                            <a className="dropdown-item" href="#">Something else here</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="card-body">
-                                    <div className="chart-pie pt-4 pb-2">
-                                        <canvas id="myPieChart" />
-                                    </div>
-                                    <div className="mt-4 text-center small">
-                                        <span className="mr-2">
-                                            <i className="fas fa-circle text-primary" /> Direct
-                                        </span>
-                                        <span className="mr-2">
-                                            <i className="fas fa-circle text-success" /> Social
-                                        </span>
-                                        <span className="mr-2">
-                                            <i className="fas fa-circle text-info" /> Referral
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
+                            <Revenue />
                         </div>
                     </div>
                     <div className="row">
                         <div className="col-lg-6 mb-4">
-                            <div className="card shadow mb-4">
-                                <div className="card-header py-3">
-                                    <h6 className="m-0 font-weight-bold text-primary">Projects</h6>
-                                </div>
-                                <div className="card-body">
-                                    <h4 className="small font-weight-bold">Server Migration <span className="float-right">20%</span></h4>
-                                    <div className="progress mb-4">
-                                        <div className="progress-bar bg-danger" role="progressbar" style={{ width: '20%' }} aria-valuenow={20} aria-valuemin={0} aria-valuemax={100} />
-                                    </div>
-                                    <h4 className="small font-weight-bold">Sales Tracking <span className="float-right">40%</span></h4>
-                                    <div className="progress mb-4">
-                                        <div className="progress-bar bg-warning" role="progressbar" style={{ width: '40%' }} aria-valuenow={40} aria-valuemin={0} aria-valuemax={100} />
-                                    </div>
-                                    <h4 className="small font-weight-bold">Customer Database <span className="float-right">60%</span></h4>
-                                    <div className="progress mb-4">
-                                        <div className="progress-bar" role="progressbar" style={{ width: '60%' }} aria-valuenow={60} aria-valuemin={0} aria-valuemax={100} />
-                                    </div>
-                                    <h4 className="small font-weight-bold">Payout Details <span className="float-right">80%</span></h4>
-                                    <div className="progress mb-4">
-                                        <div className="progress-bar bg-info" role="progressbar" style={{ width: '80%' }} aria-valuenow={80} aria-valuemin={0} aria-valuemax={100} />
-                                    </div>
-                                    <h4 className="small font-weight-bold">Account Setup <span className="float-right">Complete!</span></h4>
-                                    <div className="progress">
-                                        <div className="progress-bar bg-success" role="progressbar" style={{ width: '100%' }} aria-valuenow={100} aria-valuemin={0} aria-valuemax={100} />
-                                    </div>
-                                </div>
-                            </div>
-
+                        <Project />
                         </div>
 
                     </div>
                 </div>
             </div>
-            <footer className="sticky-footer bg-white">
-                <div className="container my-auto">
-                    <div className="copyright text-center my-auto">
-                        <span>Copyright © Your Website 2021</span>
-                    </div>
-                </div>
-            </footer>
+            <Footer />
         </div>
     )
 
