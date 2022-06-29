@@ -11,7 +11,7 @@ import javax.persistence.*;
 import java.util.Date;
 
 /**
- * @author hungnn22
+ *
  */
 
 @Entity

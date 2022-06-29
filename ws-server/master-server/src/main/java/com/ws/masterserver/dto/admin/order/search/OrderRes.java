@@ -29,4 +29,8 @@ public class OrderRes {
     private String type;
 
     private String status;
+
+    private String customerId;
+
+    private List<OptionDto> options;
 }

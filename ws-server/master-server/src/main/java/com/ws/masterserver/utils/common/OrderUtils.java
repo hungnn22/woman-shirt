@@ -3,6 +3,7 @@ package com.ws.masterserver.utils.common;
 import com.ws.masterserver.dto.admin.order.detail.PriceDto;
 import com.ws.masterserver.dto.admin.order.detail.PromotionDto;
 import com.ws.masterserver.dto.admin.order.detail.ResultDto;
+import com.ws.masterserver.dto.admin.order.detail.StatusDto;
 import com.ws.masterserver.dto.admin.order.search.OptionDto;
 import com.ws.masterserver.utils.base.WsException;
 import com.ws.masterserver.utils.constants.WsCode;
@@ -26,13 +27,12 @@ public class OrderUtils {
      * @param combinationName tên người tạo ra trạng thái = firstName + lastName
      * @param roleStr         role người tạo ra trạng thái
      * @return vd: Đơn hàng đã được chấp nhận bởi Admin lúc 10:22:23 12/02/2022
-     * @author hungnn22
      */
-    public static String getStatusCombination(String statusStr, Date createdDate, String combinationName, String roleStr) {
+    public static String getStatusCombination(String statusStr, Date createdDate, String roleStr, String combinationName) {
         var result = "";
         try {
             var status = StatusEnum.valueOf(statusStr);
-            var dateFmt = DateUtils.toStr(createdDate, DateUtils.F_VI);
+            var dateFmt = DateUtils.toStr(createdDate, DateUtils.F_DDMMYYYYHHMMSS);
             var role = RoleEnum.valueOf(roleStr);
 
             switch (status) {
@@ -43,7 +43,7 @@ public class OrderUtils {
                     result = "Đã bị hủy bới khách hàng vào lúc " + dateFmt;
                     break;
                 case REJECT:
-                    result = "Đã bị từ chối bởi " + role.getName() + " " + combinationName + " vào lúc " + dateFmt;
+                    result = "Đã bị từ chối bởi " + role.getName() + " " + combinationName + " vào lúc: " + dateFmt;
                     break;
                 case ACCEPT:
                     result = "Được chấp nhận bởi " + role.getName() + " " + combinationName + " vào lúc: " + dateFmt;
@@ -173,6 +173,32 @@ public class OrderUtils {
         } catch (Exception e) {
             log.error("getOptions: {}", e.getMessage());
         }
+        return result;
+    }
+
+    public static List<String> getHistory(List<StatusDto> orderStatusList) {
+        List<String> result = new ArrayList<>();
+        orderStatusList.forEach(obj -> {
+            var item = DateUtils.toStr(obj.getCreatedDate(), DateUtils.F_DDMMYYYYHHMMSS) + ": ";
+            var combination = obj.getRole().getName() + " " + obj.getFullName();
+            switch (obj.getStatus()) {
+                case PENDING:
+                    item += "Đặt hàng thành công. Đang chờ xác nhận";
+                    break;
+                case ACCEPT:
+                    item += "Được chấp nhận bỏi " + combination;
+                    break;
+                case REJECT:
+                    item += "Bị từ chối bỏi " + combination;
+                    break;
+                case CANCEL:
+                    item += "Khách hàng hủy đơn hàng";
+                    break;
+                default:
+                    throw new WsException(WsCode.INTERNAL_SERVER);
+            }
+            result.add(item);
+        });
         return result;
     }
 }

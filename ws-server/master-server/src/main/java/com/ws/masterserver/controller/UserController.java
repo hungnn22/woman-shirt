@@ -1,5 +1,6 @@
 package com.ws.masterserver.controller;
 
+import com.ws.masterserver.dto.admin.user.UserReq;
 import com.ws.masterserver.dto.customer.user.ChangeProfileDto;
 import com.ws.masterserver.dto.customer.user.RegisterDto;
 import com.ws.masterserver.utils.base.WsController;
@@ -28,5 +29,10 @@ public class UserController extends WsController {
     @PutMapping("/customer/change-profile")
     public ResponseEntity<Object> changeProfile(@RequestBody ChangeProfileDto body) {
         return ResponseEntity.status(HttpStatus.OK).body(service.userService.changeCustomerProfile(getCurrentUser(), body));
+    }
+
+    @PostMapping("/admin/search")
+    public ResponseEntity<Object> search4Admin(@RequestBody UserReq req) {
+        return ResponseEntity.ok(service.userService.search4Admin(getCurrentUser(), req));
     }
 }

@@ -4,7 +4,6 @@ import com.ws.masterserver.utils.base.enum_dto.TypeDto;
 import com.ws.masterserver.utils.constants.enums.TypeEnum;
 
 /**
- * @author hungnn22
  */
 public class TypeUtils {
 
