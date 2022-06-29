@@ -23,7 +23,9 @@ export default {
     /**order*/
     ORDER_BASE: '/order',
     ADMIN_ORDER_SEARCH: "/admin/search",
-    ADMIN_ORDER_DETAIL: "/admin/detail"
+    ADMIN_ORDER_DETAIL: "/admin/detail",
+
+    ADMIN_DASHBOARD: '/dashboard'
 
 
 }

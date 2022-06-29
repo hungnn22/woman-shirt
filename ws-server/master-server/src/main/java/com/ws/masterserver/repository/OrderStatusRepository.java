@@ -2,6 +2,7 @@ package com.ws.masterserver.repository;
 
 import com.ws.masterserver.dto.admin.order.detail.StatusDto;
 import com.ws.masterserver.entity.OrderStatusEntity;
+import com.ws.masterserver.utils.constants.enums.StatusEnum;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -22,4 +23,12 @@ public interface OrderStatusRepository extends JpaRepository<OrderStatusEntity, 
             "where os.orderId = :orderId\n" +
             "order by os.createdDate")
     List<StatusDto> findHistory(@Param("orderId") String orderId);
+
+    @Query("select count(os)\n" +
+            "from OrderStatusEntity os\n" +
+            "group by os.orderId\n" +
+            "having count(os) = 1")
+    List<OrderStatusEntity> getPendingNumber();
+
+    Long countByStatusIn(List<StatusEnum> statusEnums);
 }

@@ -3,7 +3,7 @@ import jwtDecode from "jwt-decode";
 import WsField from "../utils/constants/WsField";
 
 const login = (accessToken, refreshToken) => {
-    if (isAdmin(accessToken)) {
+    if (isAdminOrStaff(accessToken)) {
         if (localStorage.getItem(WsField.ACCESS_TOKEN_ADMIN) && localStorage.getItem(WsField.REFRESH_TOKEN_ADMIN)) {
             removeTokenValues()
         }
@@ -27,14 +27,15 @@ const setTokenValues = (accessToken, refreshToken) => {
     localStorage.setItem(WsField.REFRESH_TOKEN_ADMIN, refreshToken)
 }
 
-const isAdmin = accessToken => {
+
+const isAdminOrStaff = accessToken => {
     const user = jwtDecode(accessToken)
-    return user.role == WsValue.ROLE_ADMIN
+    return user.role == WsValue.ROLE_ADMIN || user.role == WsValue.ROLE_STAFF
 }
 
 const isAccessAdminLayout = () => {
     if (localStorage.getItem(WsField.ACCESS_TOKEN_ADMIN)) {
-        return isAdmin(localStorage.getItem(WsField.ACCESS_TOKEN_ADMIN))
+        return isAdminOrStaff(localStorage.getItem(WsField.ACCESS_TOKEN_ADMIN))
     }
     return false
 }
@@ -46,10 +47,14 @@ const getNameOfCurrentUser = () => {
     }
 }
 
+const isValidExpired = expTime => {
+    return new Date() <= new Date(expTime)
+}
+
 export default {
     login,
     logout,
-    isAdmin,
+    isAdmin: isAdminOrStaff,
     isAccessAdminLayout,
     getNameOfCurrentUser
 }

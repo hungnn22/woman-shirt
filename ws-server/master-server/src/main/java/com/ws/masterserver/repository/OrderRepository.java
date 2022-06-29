@@ -9,4 +9,8 @@ import org.springframework.stereotype.Repository;
 public interface OrderRepository extends JpaRepository<OrderEntity, String> {
     @Query("select o.shipPrice from OrderEntity o where o.id = ?1")
     Long findPriceShipById(String id);
+
+    @Query("select count(o.id) from OrderEntity o\n" +
+            "where cast(o.createdDate as date) = cast(current_date as date)")
+    Long getNumberToday();
 }
