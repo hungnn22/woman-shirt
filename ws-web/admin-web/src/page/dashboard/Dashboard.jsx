@@ -1,18 +1,29 @@
-import { useEffect } from "react";
+import {useEffect, useState} from "react";
 import AuthService from "../../service/AuthService";
 import { useNavigate } from 'react-router-dom'
+import AxiosApi from "../../api/AxiosApi";
+import WsUrl from "../../utils/constants/WsUrl";
 
 const Dashboard = () => {
     const navigate = useNavigate()
 
+    const [dashboard, setDashboard] = useState({})
+
     useEffect(() => {
         const checkUser = () => {
-            if (!AuthService.isAccessAdminLayout()) {
+            const isAccess = AuthService.isAccessAdminLayout()
+            if (!isAccess) {
                 navigate("/login")
             }
         }
+        const getDashboard = async () => {
+            const res = await AxiosApi.getAuth(WsUrl.ADMIN_DASHBOARD)
+            console.log('res', res)
+            setDashboard(res.data.data)
+        }
         checkUser()
-    })
+        getDashboard()
+    }, [])
 
     return (
         <div id="content-wrapper" className="d-flex flex-column">
@@ -29,8 +40,8 @@ const Dashboard = () => {
                                     <div className="row no-gutters align-items-center">
                                         <div className="col mr-2">
                                             <div className="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                                Earnings (Monthly)</div>
-                                            <div className="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
+                                                Đơn hàng đang chờ xử lý</div>
+                                            <div className="h5 mb-0 font-weight-bold text-gray-800">{dashboard && dashboard.pending ? dashboard.pending : 0}</div>
                                         </div>
                                         <div className="col-auto">
                                             <i className="fas fa-calendar fa-2x text-gray-300" />
@@ -45,8 +56,8 @@ const Dashboard = () => {
                                     <div className="row no-gutters align-items-center">
                                         <div className="col mr-2">
                                             <div className="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                                Earnings (Annual)</div>
-                                            <div className="h5 mb-0 font-weight-bold text-gray-800">$215,000</div>
+                                                Doanh thu trong ngày</div>
+                                            <div className="h5 mb-0 font-weight-bold text-gray-800">{dashboard && dashboard.earning ? dashboard.earning : 0} VND</div>
                                         </div>
                                         <div className="col-auto">
                                             <i className="fas fa-dollar-sign fa-2x text-gray-300" />
@@ -60,17 +71,17 @@ const Dashboard = () => {
                                 <div className="card-body">
                                     <div className="row no-gutters align-items-center">
                                         <div className="col mr-2">
-                                            <div className="text-xs font-weight-bold text-info text-uppercase mb-1">Tasks
+                                            <div className="text-xs font-weight-bold text-info text-uppercase mb-1">Người dùng mới
                                             </div>
                                             <div className="row no-gutters align-items-center">
                                                 <div className="col-auto">
-                                                    <div className="h5 mb-0 mr-3 font-weight-bold text-gray-800">50%</div>
+                                                    <div className="h5 mb-0 mr-3 font-weight-bold text-gray-800">{dashboard && dashboard.user ? dashboard.user : 0}</div>
                                                 </div>
-                                                <div className="col">
-                                                    <div className="progress progress-sm mr-2">
-                                                        <div className="progress-bar bg-info" role="progressbar" style={{ width: '50%' }} aria-valuenow={50} aria-valuemin={0} aria-valuemax={100} />
-                                                    </div>
-                                                </div>
+                                                {/*<div className="col">*/}
+                                                {/*    <div className="progress progress-sm mr-2">*/}
+                                                        {/*<div className="progress-bar bg-info" role="progressbar" style={{ width: '50%' }} aria-valuenow={50} aria-valuemin={0} aria-valuemax={100} />*/}
+                                                    {/*</div>*/}
+                                                {/*</div>*/}
                                             </div>
                                         </div>
                                         <div className="col-auto">
@@ -86,8 +97,8 @@ const Dashboard = () => {
                                     <div className="row no-gutters align-items-center">
                                         <div className="col mr-2">
                                             <div className="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                                Pending Requests</div>
-                                            <div className="h5 mb-0 font-weight-bold text-gray-800">18</div>
+                                                Số đơn hàng bị hủy/từ chối trong ngày</div>
+                                            <div className="h5 mb-0 font-weight-bold text-gray-800">{dashboard && dashboard.cancel ? dashboard.cancel : 0}</div>
                                         </div>
                                         <div className="col-auto">
                                             <i className="fas fa-comments fa-2x text-gray-300" />
