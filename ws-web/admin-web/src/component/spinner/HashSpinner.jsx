@@ -6,14 +6,14 @@ const HashSpinner = () => {
       <HashLoader
         color={`#7b92db`}
         loading={true}
-        size={64}
+        size={40}
       style={{
         textAlign: 'center',
         display: 'block',
         justifyContent: 'center',
         alignItems: 'center',
-        width: '80%',
-        height: '80vh'
+        width: '100%',
+        height: '100vh'
       }}
       ></HashLoader>
   )

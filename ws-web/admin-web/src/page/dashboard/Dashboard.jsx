@@ -26,11 +26,14 @@ const Dashboard = () => {
             setLoading(true)
             const res = await AxiosApi.getAuth(WsUrl.ADMIN_DASHBOARD)
             if (res) {
-                setLoading(false)
-                setDashboard(res.data.data)
-                setReport(res.data.data.report)
-                setThisWeek(res.data.data.thisWeek)
-                setLastWeek(res.data.data.lastWeek)
+                const data = res.data.data
+                if (data) {
+                    setDashboard(data)
+                    setReport(data.report)
+                    setThisWeek(data.thisWeek)
+                    setLastWeek(data.lastWeek)
+                    setLoading(false)
+                }
             }
         }
 
@@ -157,7 +160,7 @@ const Dashboard = () => {
                                         </div>
                                     </div>
                                     <div className="card-body">
-                                        <WsChart thisWeek={thisWeek} lastWeek={lastWeek} />
+                                        {thisWeek && lastWeek ? <WsChart thisWeek={thisWeek} lastWeek={lastWeek} /> : <></>}
                                     </div>
                                 </div>
                             </div>

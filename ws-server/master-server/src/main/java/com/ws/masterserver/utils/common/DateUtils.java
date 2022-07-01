@@ -16,6 +16,8 @@ import java.util.List;
 
 @Slf4j
 public class DateUtils {
+
+
     private DateUtils() {}
 
     public static final String F_DDMMYYYYHHMMSS = "dd/MM/yyyy HH:mm:ss";
@@ -37,6 +39,9 @@ public class DateUtils {
     public static final String HHMMSS = "HHmmss";
     public static final String F_DDMMYYYYHHMM = "dd/MM/yyyy HH:mm";
     public static final String F_VI = "HH:mm:ss dd/MM/yyyy";
+    public static final String DD_MM = "dd/MM";
+    public static final String HHMM = "HH:mm";
+
     public static final List<String> patterns;
 
     static {

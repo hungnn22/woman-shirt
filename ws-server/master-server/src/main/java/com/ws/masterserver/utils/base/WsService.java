@@ -25,5 +25,5 @@ public class WsService {
     public final CartService cartService;
     public final SuggestService suggestService;
     public final DashboardService dashboardService;
-//    public final SimpMessagingTemplate ws;
+    public final NotificationService notificationService;
 }

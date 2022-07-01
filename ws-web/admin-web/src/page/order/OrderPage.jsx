@@ -75,6 +75,7 @@ const OrderPage = () => {
                     setLoading(false)
                 }
             } catch (e) {
+                console.log("Error: ", e)
                 ToastUtils.createToast(WsToastType.ERROR, e.response.data.message || WsMessage.INTERNAL_SERVER_ERROR)
             }
         }, getProvincesFromOpenApi = async () => {

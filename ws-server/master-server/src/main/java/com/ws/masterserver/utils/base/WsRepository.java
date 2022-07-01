@@ -28,6 +28,8 @@ public class WsRepository {
     public final TypeRepository typeRepository;
     public final UserRepository userRepository;
     public final CartRepository cartRepository;
+    public final NotificationRepository notificationRepository;
+    public final UserNotificationRepository userNotificationRepository;
     /** custom */
     public final CategoryCustomRepository categoryCustomRepository;
     public final OrderCustomRepository orderCustomRepository;

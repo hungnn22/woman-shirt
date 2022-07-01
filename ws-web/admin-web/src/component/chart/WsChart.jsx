@@ -43,13 +43,13 @@ const WsChart = ({thisWeek, lastWeek}) => {
         datasets: [
             {
                 label: 'Tuần trước',
-                data: lastWeek.map(obj => obj.total),
+                data: lastWeek && lastWeek.map(obj => obj.total),
                 borderColor: '#36b9cc',
                 // backgroundColor: 'rgba(255, 99, 132, 0.5)',
             },
             {
                 label: 'Tuần này',
-                data: thisWeek.map(obj => obj.total),
+                data: thisWeek && thisWeek.map(obj => obj.total),
                 borderColor: '#4e73df',
                 // backgroundColor: 'rgba(53, 162, 235, 0.5)',
             },

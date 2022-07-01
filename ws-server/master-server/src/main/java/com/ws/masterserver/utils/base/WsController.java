@@ -20,7 +20,7 @@ public abstract class WsController {
         }
         var currentUser = repository.userRepository.findCurrentUserByIdAndActive(id);
         if (currentUser == null) {
-            throw new WsException(WsCode.USER_NOT_FOUND);
+            throw new WsException(WsCode.MUST_LOGIN);
         }
         return currentUser;
     }
