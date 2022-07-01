@@ -16,7 +16,8 @@ function App() {
           <Route path="" element={<AdminLayout />} >
             <Route path="/" element={<Dashboard />} />
             <Route path='order' element={<OrderPage />} />
-            <Route path='order/:id' element={<OrderDetailPage />} />
+            <Route path='order/:status' element={<OrderPage />} />
+            <Route path='order/detail/:id' element={<OrderDetailPage />} />
           </Route>
         </Routes>
         <ToastContainer />

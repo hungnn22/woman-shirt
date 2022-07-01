@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import AuthService from "../../service/AuthService";
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import AxiosApi from "../../api/AxiosApi";
 import WsUrl from "../../utils/constants/WsUrl";
 import HashSpinner from "../../component/spinner/HashSpinner";
@@ -61,8 +61,8 @@ const Dashboard = () => {
                                     <div className="card-body">
                                         <div className="row no-gutters align-items-center">
                                             <div className="col mr-2">
-                                                <div className="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                                    Đơn hàng đang chờ xử lý</div>
+                                                <Link to='order/pending' className="text-xs font-weight-bold text-primary text-uppercase mb-1" >
+                                                    Đơn hàng đang chờ xử lý</Link>
                                                 <div className="h5 mb-0 font-weight-bold text-gray-800">{report.pending || 0}</div>
                                             </div>
                                             <div className="col-auto">
