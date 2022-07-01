@@ -1,9 +1,12 @@
 package com.ws.masterserver.repository;
 
+import com.ws.masterserver.dto.admin.dashboard.EarningDayDto;
 import com.ws.masterserver.entity.OrderEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public interface OrderRepository extends JpaRepository<OrderEntity, String> {
@@ -31,4 +34,18 @@ public interface OrderRepository extends JpaRepository<OrderEntity, String> {
             "where o.payed = true\n" +
             "and cast(o.createdDate as date) = cast(current_date as date)")
     Long getEarningToday();
+
+    /**
+     * @return doanh thu theo thứ trong tuần hiện tại
+     * @param i
+     */
+    @Query("select new com.ws.masterserver.dto.admin.dashboard.EarningDayDto(\n" +
+            "extract('dow' from o.createdDate) - 1 as dayOfWeek,\n" +
+            "sum(o.total))\n" +
+            "from OrderEntity o\n" +
+            "where extract('week' from o.createdDate) = extract('week' from current_date) - ?1\n" +
+            "and o.payed = true\n" +
+            "group by dayOfWeek\n" +
+            "order by dayOfWeek")
+    List<EarningDayDto> getEarningWeekWithDay(int minusWeek);
 }

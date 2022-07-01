@@ -25,7 +25,7 @@ export default {
     ADMIN_ORDER_SEARCH: "/admin/search",
     ADMIN_ORDER_DETAIL: "/admin/detail",
 
-    ADMIN_DASHBOARD: '/dashboard'
+    ADMIN_DASHBOARD: '/admin/dashboard'
 
 
 }

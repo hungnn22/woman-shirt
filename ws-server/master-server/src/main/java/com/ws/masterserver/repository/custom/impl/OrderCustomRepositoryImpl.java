@@ -169,52 +169,18 @@ public class OrderCustomRepositoryImpl implements OrderCustomRepository {
             return new ResData<>(true);
         }
         var shipPrice = repository.orderRepository.findPriceShipById(id);
-        var shopPrice = 0L;
         var res = DetailRes.builder().id(id);
-        var itemSql = "select distinct po1.id    as poId,\n" +
-                "                p1.id     as pId,\n" +
-                "                p1.name   as pName,\n" +
-                "                c1.name   as cName,\n" +
-                "                od1.price as odPrice,\n" +
-                "                od1.qty   as odQty,\n" +
-                "                po1.size  as poSize,\n" +
-                "                cl1.name  as clName,\n" +
-                "                m1.name   as mName,\n" +
-                "                po1.image as poIng\n" +
-                "from order_detail od1\n" +
-                "         left join product_option po1 on od1.product_option_id = po1.id\n" +
-                "         left join color cl1 on po1.color_id = cl1.id\n" +
-                "         left join product p1 on po1.product_id = p1.id\n" +
-                "         left join category c1 on p1.category_id = c1.id\n" +
-                "         left join material m1 on p1.material_id = m1.id\n" +
-                "where od1.order_id = :orderId";
-        log.info("Item SQL: {}", itemSql);
-        var itemQuery = entityManager.createNativeQuery(itemSql);
-        itemQuery.setParameter("orderId", id);
-        List<Object[]> objects = itemQuery.getResultList();
-        List<ItemDto> items = new ArrayList<>();
-        if (!objects.isEmpty()) {
-            for (var obj : objects) {
-                var total = JpaUtils.getLong(obj[4]) * JpaUtils.getLong(obj[5]);
-                shopPrice += total;
-                items.add(ItemDto.builder()
-                        .id(JpaUtils.getString(obj[0]))
-                        .productId(JpaUtils.getString(obj[1]))
-                        .name(JpaUtils.getString(obj[2]))
-                        .category(JpaUtils.getString(obj[3]))
-                        .price(JpaUtils.getLong(obj[4]))
-                        .priceFmt(MoneyUtils.format(JpaUtils.getLong(obj[4])))
-                        .qty(JpaUtils.getLong(obj[5]))
-                        .size(JpaUtils.getString(obj[6]))
-                        .color(JpaUtils.getString(obj[7]))
-                        .material(JpaUtils.getString(obj[8]))
-                        .img(JpaUtils.getString(obj[9]))
-                        .total(total)
-                        .totalFmt(MoneyUtils.format(total))
-                        .build());
+        var shopPrice = 0L;
+
+        List<ItemDto> items = repository.orderDetailRepository.getItemList(id);
+        if (!items.isEmpty()) {
+            for (var obj : items) {
+                obj.setPriceFmt(MoneyUtils.format(obj.getPrice()));
+                obj.setTotalFmt(MoneyUtils.format(obj.getTotal()));
+                shopPrice += obj.getTotal();
             }
-            res.items(items);
         }
+        res.items(items);
 
         var promotions = repository.orderPromotionRepository.findByOrderId(id);
         promotions = promotions.stream().peek(p -> p.setTypeName(PromotionTypeUtils.getName(p.getTypeCode()))).collect(Collectors.toList());

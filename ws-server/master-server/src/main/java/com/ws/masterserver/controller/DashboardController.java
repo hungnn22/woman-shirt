@@ -15,7 +15,7 @@ public class DashboardController extends WsController {
 
     private final WsService service;
 
-    @GetMapping("/dashboard")
+    @GetMapping("/admin/dashboard")
     public ResponseEntity<Object> dashboard() {
         return ResponseEntity.ok(service.dashboardService.dashboard(getCurrentUser()));
     }
