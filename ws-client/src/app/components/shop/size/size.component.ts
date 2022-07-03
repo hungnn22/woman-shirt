@@ -1,6 +1,5 @@
-import { Options } from '@angular-slider/ngx-slider';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Component, OnInit } from '@angular/core';
+import { map, Observable, startWith } from 'rxjs';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 
 interface Category {
@@ -13,11 +12,9 @@ interface Category {
   templateUrl: './size.component.html',
   styleUrls: ['./size.component.css']
 })
-export class SizeComponent {
-  image: string = '';
-  nameProduct="Vui lòng chọn loại sản phẩm..."
-  check = new FormControl();
-  categories: Category[] = [
+export class SizeComponent implements OnInit {
+  nameControl = new FormControl('');
+  category: Category[] = [
     { image: "https://mcdn.coolmate.me/uploads/November2020/31.jpg", value: "2", viewValue: 'Áo dài tay' },
     { image: "https://mcdn.coolmate.me/image/May2022/mceclip0_5.png", value: "ao-oversize", viewValue: 'Áo oversize' },
     { image: "https://mcdn.coolmate.me/uploads/March2022/TEE_EXCOOL_(2)_(1).png", value: "excool-tee", viewValue: 'Excool Tee' },
@@ -54,9 +51,27 @@ export class SizeComponent {
     { image: "https://mcdn.coolmate.me/image/June2022/mceclip0_92.png", value: "quan-short-5-recycle", viewValue: ' Quần short 5 & quot; recycle ' },
   ];
 
-  uploadImage(item:any){
+  image = [];
+  filteredOptions: Observable<string[]> | undefined;
+  ngOnInit(): void {
+
+  }
+  formatLabel(value: number) {
+    if (value >= 1000) {
+      return Math.round(value / 1000) + 'k';
+    }
+    console.log(value);
+    return value;
+  }
+
+  nameProduct = "Vui lòng chọn loại sản phẩm..."
+  check = new FormControl();
+
+
+  uploadImage(item: any) {
     console.log(item);
     this.image = item.image;
-    this.nameProduct=item.viewValue;
+    this.nameProduct = item.viewValue;
   }
+
 }

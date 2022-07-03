@@ -687,29 +687,38 @@
               <div class="grid">
                 <div class="grid__column four-twelfths mobile--one-whole">
                   <div class="size-chart__selected">
+                    <!-- <img src="https://mcdn.coolmate.me/uploads/November2020/31.jpg"> -->
 
                     <h3 class="size-chart__title">Loại sản phẩm</h3>
-                    <div id="size-select-table" style="width: 100%;background-color: ư;">
+                    <div id="size-select-table" style="width: 100%;">
 
                       <mat-form-field style="width:100%">
                         <mat-label>{{nameProduct}}</mat-label>
-                        <mat-select>
-
-                          <mat-option *ngFor="let item of categories"
-                          style="height:20% ;background-color: white;">
-                            <img style="float: left;width:70%"
-                             src="{{item.image}}" width="100%"
-                              value="long-shirt"
-                              (click)="uploadImage(item)"
-                              >
-                            <p style="margin-top:30%">{{item.viewValue}}</p>
-                          </mat-option>
+                        <mat-select style="max-height:220px">
+                          <mat-form-field style="width:100%;" class="example-full-width" appearance="fill">
+                            <input matInput placeholder="Mời bạn nhập loại sản phẩm..." [formControl]="nameControl">
+                          </mat-form-field>
+                          <div *ngFor="let item of category">
+                            <!-- <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete"> -->
+                            <mat-option class="option" style="width:100%;height: 120% ;background-color: white;"
+                              (click)="uploadImage(item)" [value]="item.image">
+                              <img style="float:left;width:25%" src="{{item.image}}" value="long-shirt">
+                              <p style="width:60%;float: left;margin-top: 2rem;margin-left:2rem">{{item.viewValue}}
+                              </p>
+                            </mat-option>
+                            <!-- </mat-autocomplete> -->
+                            <hr>
+                          </div>
                         </mat-select>
                       </mat-form-field>
 
+                      <!-- ///// -->
+
+
+                      <!-- ///// -->
 
                     </div>
-                    <a href="" class="size-chart__all" rel-script="view-all-size-chart">Xem tất cả bảng size</a>
+                    <a  class="size-chart__all" rel-script="view-all-size-chart">Xem tất cả bảng size</a>
                     <div class="size-chart__image" rel-script="size-chart-image">
                       <img src="{{image}}">
                     </div>
@@ -724,41 +733,20 @@
                           <div class="grid">
                             <div class="grid__column six-twelfths mobile--one-whole">
                               <h3 class="size-chart__title">Thông số cơ thể</h3>
-                              <div class="size-suggestion__body">
-                                <label class="size-suggestion__body-size thin">
-                                  <input type="radio" name="body" value=thin>
-                                  <span>Gầy</span>
-                                </label>
-                                <label class="size-suggestion__body-size normal">
-                                  <input type="radio" name="body" value=normal>
-                                  <span>Bình thường</span>
-                                </label>
-                                <label class="size-suggestion__body-size fat">
-                                  <input type="radio" name="body" value=fat checked>
-                                  <span>Hơi mập tẹo</span>
-                                </label>
-                              </div>
-                              <div class="size-suggestion__field" rel-script="size-suggestion-field">
-                                <div class="size-suggestion__label">
-                                  <span>Chiều cao</span>
-                                  <span class="size-suggestion__size" rel-script="size-suggestion-label"
-                                    data-label="cm">155cm</span>
+
+                              <!-- <mat-card class="example-result-card"> -->
+                                <div>
+                                  <mat-slider style="width:100%;margin-left: 2rem;margin-top:2px" thumbLabel [displayWith]="formatLabel" tickInterval="1" step="1" min="145"
+                                  max="195" aria-label="units"></mat-slider>
                                 </div>
-                                <input type="range" class="size-suggestion__control" name="c-height" id="c-height"
-                                  min="155" max="183" value="155">
-                              </div>
-                              <div class="size-suggestion__field" rel-script="size-suggestion-field">
-                                <div class="size-suggestion__label">
-                                  <span>Cân Nặng</span>
-                                  <span class="size-suggestion__size" rel-script="size-suggestion-label"
-                                    data-label="kg">84kg</span>
-                                </div>
-                                <input type="range" class="size-suggestion__control" name="c-weight" id="c-weight"
-                                  min="48" max="84" value="84">
-                              </div>
+                                <br>
+                                  <mat-slider style="width:100%;margin-left: 2rem" thumbLabel [displayWith]="formatLabel" tickInterval="1" step="1" min="41"
+                                  max="105" aria-label="units"></mat-slider>
+                              <!-- </mat-card> -->
+
                             </div>
                             <div class="grid__column six-twelfths mobile--one-whole">
-                              <h3 class="size-chart__title">Coolmate gợi ý</h3>
+                              <h3 class="size-chart__title">Gợi ý</h3>
                               <div class="size-suggestion__active" rel-script="size-suggestion-values">
                                 <div class="size-suggestion__size-width">
                                   <span style="text-transform: uppercase;"></span>
@@ -772,7 +760,7 @@
                     <div class="size-chart__description">
                       <h3>Size chart</h3>
                       <p>
-                        * Thông số cơ bản của các sản phẩm coolmate: Lấy chiếc áo mà các bạn đang<br>
+                        * Thông số cơ bản của các sản phẩm Flone: Lấy chiếc áo mà các bạn đang<br>
                         mặc và cảm thấy vừa nhất sau đó đo các kích thước của áo,và đối chiếu với bảng<br> thông số của
                         chúng tôi theo các kích thước sau:
                       </p>
@@ -783,60 +771,47 @@
                           <table class="table-sizechart one-whole">
                             <thead>
                               <tr>
-                                <td><span>Ký hiệu/<br>Thông số(cm)</span></td>
+                                <td><span>Kích thước<br>(size)</span></td>
                                 <td>
-                                  <span>M</span>
-                                  <span class="sub-text">
-                                    1m60 - 1m67<br>
-                                    55kg - 64kg
-                                  </span>
+                                  <span>Chiều cao<br>(cm)</span>
+
                                 </td>
                                 <td>
-                                  <span>L</span>
-                                  <span class="sub-text">
-                                    1m68 - 1m74<br>
-                                    65kg - 72kg
-                                  </span>
-                                </td>
-                                <td>
-                                  <span>XL</span>
-                                  <span class="sub-text">
-                                    1m75 - 1m85<br>
-                                    73kg - 84kg
-                                  </span>
+                                  <span>Cân nặng<br>(kg)</span>
+
                                 </td>
                               </tr>
                             </thead>
                             <tbody>
                               <tr>
-                                <td><span class="text--bold">DÀI ÁO</span></td>
+                                <td><span class="text--bold">S</span></td>
                                 <td>71</td>
-                                <td>74</td>
                                 <td>76</td>
                               </tr>
                               <tr>
-                                <td><span class="text--bold">RỘNG GẤU</span></td>
-                                <td>57</td>
+                                <td><span class="text--bold">M</span></td>
                                 <td>60</td>
                                 <td>62</td>
                               </tr>
                               <tr>
-                                <td><span class="text--bold">DÀI TAY</span></td>
+                                <td><span class="text--bold">L</span></td>
                                 <td>23.2</td>
                                 <td>25</td>
-                                <td>26.8</td>
                               </tr>
                               <tr>
-                                <td><span class="text--bold">RỘNG BẮP TAY</span></td>
-                                <td>21.5</td>
+                                <td><span class="text--bold">XL</span></td>
                                 <td>22.5</td>
                                 <td>23</td>
                               </tr>
                               <tr>
-                                <td><span class="text--bold">RỘNG VAI</span></td>
+                                <td><span class="text--bold">XXL</span></td>
                                 <td>53</td>
                                 <td>55</td>
-                                <td>57</td>
+                              </tr>
+                              <tr>
+                                <td><span class="text--bold">XXXL</span></td>
+                                <td>53</td>
+                                <td>55</td>
                               </tr>
                             </tbody>
                           </table>
@@ -849,17 +824,17 @@
             </div>
           </div>
         </div>
-        <!-- <a href="#size-table" class="size-suggestion__footer size-suggestion__active is-loading scroll-to-step"
+        <a href="#size-table" class="size-suggestion__footer size-suggestion__active is-loading scroll-to-step"
           rel-script="size-suggestion-values">
           <div class="size-suggestion__size-width">
             <span style="text-transform: uppercase;"></span>
           </div>
-        </a> -->
+        </a>
       </main>
 
     </div>
   </div>
-  <!-- <div class="notify">
+  <div class="notify">
     <a class="notify__close">x</a>
     <div class="notify__wrapper">
       <div class="notify__content">
@@ -869,7 +844,7 @@
       </div>
     </div>
   </div>
- -->
+
 
 
 

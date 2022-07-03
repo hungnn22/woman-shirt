@@ -316,3 +316,10 @@
       .collection-thumbnail img{
           object-position: top;
       }
+      .size-suggestion__size-width span{
+        background-color: #FF4081
+        ;
+      }
+      .table-sizechart thead td {
+        background-color: #FF4081;
+      }
