@@ -11,4 +11,6 @@ public interface ProductCustomRepository {
     PageData<ProductResponse> search(ProductReq req);
 
     PageData<ProductRes> search4Admin(ProductReq req);
+
+    Object searchV2(com.ws.masterserver.dto.customer.product.search.ProductReq req);
 }

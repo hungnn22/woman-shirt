@@ -1,4 +1,4 @@
-package com.ws.masterserver.controller;
+package com.ws.masterserver.controller.admin;
 
 import com.ws.masterserver.utils.base.WsController;
 import com.ws.masterserver.utils.base.enum_dto.MaterialDto;
@@ -15,10 +15,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/v1/material")
+@RequestMapping("/api/v1/admin/material")
 @RequiredArgsConstructor
 @Slf4j
-public class MaterialController extends WsController {
+public class AdminMaterialController extends WsController {
 
     @PostMapping("/create")
     @Operation(summary = "API thêm mới chất liệu sp")

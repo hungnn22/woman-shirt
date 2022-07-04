@@ -1,4 +1,4 @@
-package com.ws.masterserver.controller;
+package com.ws.masterserver.controller.admin;
 
 import com.ws.masterserver.utils.base.WsController;
 import com.ws.masterserver.utils.base.enum_dto.ColorDto;
@@ -12,10 +12,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/v1/color")
+@RequestMapping("/api/v1/admin/color")
 @RequiredArgsConstructor
 @Slf4j
-public class ColorController extends WsController {
+public class AdminColorController extends WsController {
 
     @PostMapping("/create")
     @Operation(summary = "API thêm mới màu sp")
@@ -23,8 +23,6 @@ public class ColorController extends WsController {
         log.info("start api create with dto: {}", JsonUtils.toJson(dto));
         return ResponseEntity.status(HttpStatus.OK).body(service.colorService.create(getCurrentUser(), dto));
     }
-
-    //123213
 
     @PostMapping("/update")
     @Operation(summary = "API cập nhật màu sp")

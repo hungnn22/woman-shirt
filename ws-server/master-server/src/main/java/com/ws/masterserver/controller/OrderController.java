@@ -49,24 +49,4 @@ public class OrderController extends WsController {
         return ResponseEntity.status(HttpStatus.OK).body(service.orderService.addToCart(getCurrentUser(), body));
     }
 
-    @PostMapping("/admin/search")
-    @Operation(summary = "API danh sách hóa đơn")
-    public ResponseEntity<PageData<OrderRes>> search4Admin(@RequestBody OrderReq req) {
-        return ResponseEntity.ok(service.orderService.search4Admin(getCurrentUser(), req));
-    }
-
-    @GetMapping("/admin/detail/{id}")
-    @Operation(summary = "API chi tiet hoa don")
-    public ResponseEntity<ResData<DetailRes>> detail4Admin(@PathVariable String id) {
-        return ResponseEntity.ok(service.orderService.detail4Admin(getCurrentUser(), id));
-    }
-
-    @PostMapping("/admin/change-status")
-    @Operation(summary = "API thay đổi trạng thái đơn hàng")
-    public ResponseEntity<ResData<String>> changeStatus4Admin(@RequestBody ChangeStatusDto dto) {
-        log.info("START API /api/v1/order//admin/change-status with dto: {}", JsonUtils.toJson(dto));
-        return ResponseEntity.ok(service.orderService.changeStatus4Admin(getCurrentUser(), dto));
-    }
-
-
 }

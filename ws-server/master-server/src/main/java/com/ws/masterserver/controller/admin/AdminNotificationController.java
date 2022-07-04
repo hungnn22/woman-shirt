@@ -1,7 +1,6 @@
-package com.ws.masterserver.controller;
+package com.ws.masterserver.controller.admin;
 
 import com.ws.masterserver.utils.base.WsController;
-import com.ws.masterserver.utils.base.WsService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -10,29 +9,27 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v1/admin/notification")
 @RequiredArgsConstructor
 @Slf4j
-public class NotificationController extends WsController {
+public class AdminNotificationController extends WsController {
 
-    private final WsService service;
-
-    @GetMapping("/admin/notification")
+    @GetMapping("top3")
     public ResponseEntity<Object> getNotification4Admin()  {
         return ResponseEntity.ok(service.notificationService.get4Admin(getCurrentUser()));
     }
 
-    @PostMapping("/admin/notification/read")
-    public ResponseEntity<Object> readNotification4Admin(@RequestBody List<String> dto) {
+    @PostMapping("read-top3")
+    public ResponseEntity<Object> readTop3Notification4Admin(@RequestBody List<String> dto) {
         return ResponseEntity.ok(service.notificationService.read4admin(getCurrentUser(), dto));
     }
 
-    @GetMapping("/admin/notification/search")
+    @GetMapping("/search")
     public ResponseEntity<Object> search(@RequestParam(required = false, defaultValue = "1") Integer pageSize) {
         return ResponseEntity.ok(service.notificationService.search4Admin(getCurrentUser(), pageSize));
     }
 
-    @GetMapping("/admin/notification/read-all")
+    @GetMapping("/read-all")
     public ResponseEntity<Object> readAll() {
         return ResponseEntity.ok(service.notificationService.readAll4Admin(getCurrentUser()));
     }
