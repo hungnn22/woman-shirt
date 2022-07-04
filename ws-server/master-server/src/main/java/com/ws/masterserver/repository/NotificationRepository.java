@@ -16,4 +16,7 @@ public interface NotificationRepository extends JpaRepository<NotificationEntity
             "from NotificationEntity no\n" +
             "where no.userId is null")
     List<NotificationEntity> find4Elements4Admin(Pageable pageable);
+
+    @Query("select n.id from NotificationEntity n where n.userId is null")
+    List<String> find4Admin();
 }

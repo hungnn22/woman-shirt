@@ -26,7 +26,8 @@ export default {
     ADMIN_ORDER_DETAIL: "/admin/detail",
 
     ADMIN_DASHBOARD: '/admin/dashboard',
-    ADMIN_NOTIFICATION: '/notification/admin',
-
-
+    ADMIN_NOTIFICATION: '/admin/notification',
+    ADMIN_NOTIFICATION_TOP3: '/admin/notification/top3',
+    ADMIN_NOTIFICATION_SEARCH: '/admin/notification/search',
+    ADMIN_NOTIFICATION_READ_ALL: '/admin/notification/read-all',
 }
