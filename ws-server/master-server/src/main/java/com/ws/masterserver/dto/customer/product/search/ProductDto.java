@@ -3,6 +3,7 @@ package com.ws.masterserver.dto.customer.product.search;
 import lombok.Builder;
 import lombok.Data;
 
+import java.util.Date;
 import java.util.List;
 
 @Data
@@ -30,12 +31,12 @@ public class ProductDto {
     /**
      * Size
      */
-    private List<String> size;
+    private List<String> sizes;
 
     /**
      * màu sắc
      */
-    private List<ColorDto> colors;
+    private List<String> colors;
 
     /**
      * Ảnh hiển thị
@@ -61,4 +62,6 @@ public class ProductDto {
      * giới tính
      */
     private String typeName;
+
+    private Date createdDate;
 }

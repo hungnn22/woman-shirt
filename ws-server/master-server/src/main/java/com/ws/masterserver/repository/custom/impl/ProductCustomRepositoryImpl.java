@@ -3,19 +3,26 @@ package com.ws.masterserver.repository.custom.impl;
 import com.ws.masterserver.dto.admin.product.search.ProductRes;
 import com.ws.masterserver.dto.customer.product.ProductReq;
 import com.ws.masterserver.dto.customer.product.ProductResponse;
+import com.ws.masterserver.dto.customer.product.search.ProductDto;
 import com.ws.masterserver.dto.customer.product.search.ProductSubDto;
 import com.ws.masterserver.repository.custom.ProductCustomRepository;
+import com.ws.masterserver.utils.base.WsRepository;
 import com.ws.masterserver.utils.base.rest.PageData;
 import com.ws.masterserver.utils.base.rest.PageReq;
+import com.ws.masterserver.utils.common.BeanUtils;
+import com.ws.masterserver.utils.common.JpaUtils;
 import com.ws.masterserver.utils.common.MoneyUtils;
 import com.ws.masterserver.utils.common.StringUtils;
 import com.ws.masterserver.utils.constants.WsCode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.access.prepost.PrePostAdviceReactiveMethodInterceptor;
 import org.springframework.stereotype.Component;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
@@ -120,65 +127,118 @@ public class ProductCustomRepositoryImpl implements ProductCustomRepository {
 
     @Override
     public Object searchV2(com.ws.masterserver.dto.customer.product.search.ProductReq req) {
-        var sql = "select new com.ws.masterserver.dto.customer.product.search.ProductSubDto(\n" +
-                "p1.id,\n" +
-                "p1.name,\n" +
-                "po1.poSub1MinPrice,\n" +
-                "po2.poSub2MaxPrice,\n" +
-                "m1.name,\n" +
-                "ct1.name,\n" +
-                "p1.des,\n" +
-                "t1.name)\n" +
-                "from ProductEntity p1\n" +
-                "left join (\n" +
-                "select poSub1.productId as poSub1ProductId,\n" +
-                "min(poSub1.price) as poSub1MinPrice\n" +
-                "from ProductOptionEntity poSub1\n" +
-                "group by poSub1.productId) po1 on po1.poSub1ProductId = p1.id\n" +
-                "left join (\n" +
-                "select poSub2.productId as poSub2ProductId,\n" +
-                "max(poSub2.price) as poSub2MaxPrice\n" +
-                "from ProductOptionEntity poSub2\n" +
-                "group by poSub2.productId) po2 on po2.poSub1ProductId = p1.id\n" +
-                "left join MaterialEntity m1 on m1.id = p1.materialId\n" +
-                "left join CategoryEntity ct1 on ct1.id = p1.categoryId\n" +
-                "left join TypeEntity t1 on t1.id = ct1.TypeId\n" +
-                "left join ProductOptionEntity po3 on po3.productId = p1.id\n" +
-                "left join SizeEntity s1 on s1.id = po3.sizeId\n" +
-                "left join ColorEntity c1 on c1.id = po3.colorId\n" +
-                "where (p1.name is not null \n" +
-                "or upper(unaccent(p1.name)) like :textSearch\n" +
-                "or ct1.name is not null\n" +
-                "or upper(unaccent(ct1.name)) like :textSearch)\n" +
-                "and (po1.poSub1MinPrice is null or po1.poSub1MinPrice >= :minPrice)\n" +
-                "and (po2.poSub2MaxPrice is null or po2.poSub2MaxPrice <= :maxPrice)\n" +
-                "and (po3.colorId is not null or po3.colorId in :colorIds)\n" +
-                "and (po3.sizeId is not null or po3.sizeId in :sizeIds)\n";
-        sql += getOrderFilter(req.getPageReq());
-        var query = entityManager.createQuery(sql);
+        var repository = BeanUtils.getBean(WsRepository.class);
+        var sql = "select distinct p1.id,\n" +
+                "                p1.name as p1_name,\n" +
+                "                po1.po_sub1_min_price,\n" +
+                "                po1.po_sub1_max_price,\n" +
+                "                p1.des,\n" +
+                "                m1.name as m1_name,\n" +
+                "                ct1.name as ct1_name,\n" +
+                "                t1.name as t1_name\n," +
+                "                p1.created_date\n" +
+                "from product p1\n" +
+                "         left join (\n" +
+                "    select po_sub1.product_id as po_sub1_product_id,\n" +
+                "           min(po_sub1.price) as po_sub1_min_price,\n" +
+                "           max(po_sub1.price) as po_sub1_max_price\n" +
+                "    from product_option po_sub1\n" +
+                "    group by po_sub1.product_id) po1 on\n" +
+                "        po1.po_sub1_product_id = p1.id\n" +
+                "         left join material m1 on\n" +
+                "        m1.id = p1.material_id\n" +
+                "         left join category ct1 on\n" +
+                "        ct1.id = p1.category_id\n" +
+                "         left join \"type\" t1 on\n" +
+                "        t1.id = ct1.type_id\n" +
+                "         left join product_option po2 on\n" +
+                "        po2.product_id = p1.id\n" +
+                "where 1 = 1\n";
+
+//        sql += getOrderFilter(req.getPageReq());
         if (!StringUtils.isNullOrEmpty(req.getTextSearch())) {
-            query.setParameter("textSearch", "%" + req.getTextSearch().trim().toUpperCase(Locale.ROOT) + "%");
+            var textSearch = req.getTextSearch().trim().toUpperCase(Locale.ROOT);
+            var like = "concat('%', unaccent('" + textSearch +"'), '%')";
+            sql += "and (unaccent(upper(p1.name)) like " + like + "\n" +
+                    "or unaccent(upper(ct1.name)) like " + like + ")\n";
         }
         if (!StringUtils.isNullOrEmpty(req.getMinPrice())) {
-            query.setParameter("minPrice", Long.valueOf(req.getMinPrice()));
+            sql += "and po1.po_sub1_min_price >= " + Long.valueOf(req.getMinPrice()) + "\n";
         }
         if (!StringUtils.isNullOrEmpty(req.getMaxPrice())) {
-            query.setParameter("maxPrice", Long.valueOf(req.getMaxPrice()));
+            sql += "and po1.po_sub1_max_price <= " + Long.valueOf(req.getMaxPrice()) + "\n";
         }
         if (!req.getColorIds().isEmpty()) {
-            query.setParameter("colorIds", req.getColorIds());
+            sql += "and po2.color_id in " + req.getColorIds().stream().map(o -> "'" + o + "'").collect(Collectors.joining(", ", "(", ")"));
         }
         if (!req.getSizeIds().isEmpty()) {
-            query.setParameter("sizeIds", req.getSizeIds());
+            sql += "and po2.size_id in " + req.getSizeIds().stream().map(o -> "'" + o + "'").collect(Collectors.joining(", ", "(", ")"));
         }
+        log.info("ProductCustomRepositoryImpl searchV2 sql: ", sql);
+
+        var query = entityManager.createNativeQuery(sql);
+
         var totalElements = Long.valueOf(query.getResultList().size());
 
-        query.setFirstResult(req.getPageReq().getPage() * req.getPageReq().getPageSize());
-        query.setMaxResults(req.getPageReq().getPageSize());
+        List<Object[]> objects = query.getResultList();
+        List<ProductDto> productDtos;
+        List<ProductDto> res = new ArrayList<>();
 
-        List<ProductSubDto> productSubDtos = query.getResultList();
+        if (!objects.isEmpty()) {
+            productDtos = objects.stream().map(obj -> {
+                var productId = JpaUtils.getString(obj[0]);
+                return ProductDto.builder()
+                        .id(productId)
+                        .name(JpaUtils.getString(obj[1]))
+                        .minPrice(JpaUtils.getLong(obj[2]))
+                        .maxPrice(JpaUtils.getLong(obj[3]))
+                        .des(JpaUtils.getString(obj[4]))
+                        .materialName(JpaUtils.getString(obj[5]))
+                        .categoryName(JpaUtils.getString(obj[6]))
+                        .typeName(JpaUtils.getString(obj[7]))
+                        .colors(repository.colorRepository.findByProductId(productId))
+                        .sizes(repository.sizeRepository.findByProductId(productId))
+                        .images(repository.productOptionRepository.findImageByProductId(productId))
+                        .createdDate(JpaUtils.getDate(obj[8]))
+                        .build();
+            }).collect(Collectors.toList());
 
-        return productSubDtos;
+            Comparator compare;
+            switch (req.getPageReq().getSortField()) {
+                case "name":
+                    compare = Comparator.comparing(ProductDto::getName);
+                    break;
+                case "price":
+                    compare = Comparator.comparing(ProductDto::getMinPrice);
+                    break;
+                default:
+                    compare = Comparator.comparing(ProductDto::getCreatedDate);
+            }
+            if (req.getPageReq().getSortDirection() == null) {
+                compare.reversed();
+            }
+            productDtos.sort(compare);
+            var page = req.getPageReq().getPage();
+            if (page == null || page < 0){
+                page = 0;
+            }
+
+            var pageSize = req.getPageReq().getPageSize();
+            if (pageSize == null || pageSize < 1) {
+                pageSize = 10;
+            }
+
+            var start = page * pageSize;
+            var end = start + pageSize;
+            if (end >= totalElements - 1) {
+                end = totalElements.intValue();
+            }
+
+            res = productDtos.subList(start, end);
+
+        }
+
+        return PageData.setResult(res, req.getPageReq().getPage(), req.getPageReq().getPageSize(), totalElements);
     }
 
     private String getOrderFilter(PageReq pageReq) {
@@ -187,13 +247,13 @@ public class ProductCustomRepositoryImpl implements ProductCustomRepository {
         var result = "order by ";
         switch (pageReq.getSortField()) {
             case "name":
-                sortField = "ct1.name";
+                sortField = "p1.name";
                 break;
             case "price":
-                sortField = "po1.poSub1MinPrice";
+                sortField = "po1.po_sub1_min_price";
                 break;
             default:
-                sortField = "p1.createdDate";
+                sortField = "p1.created_date";
         }
         return result + sortField + sortDirection;
     }
