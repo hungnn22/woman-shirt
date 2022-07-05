@@ -10,4 +10,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface MaterialRepository extends JpaRepository<MaterialEntity, String> {
     MaterialEntity findByIdAndActive(String id, Boolean active);
+
+    Boolean existsByNameIgnoreCaseAndActive(String nameMaterial, Boolean active);
 }

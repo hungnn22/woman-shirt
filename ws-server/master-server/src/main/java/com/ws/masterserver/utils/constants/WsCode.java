@@ -15,6 +15,7 @@ public enum WsCode {
 
     COLOR_NOT_FOUND("400", "Không tìm thấy màu sản phẩm!"),
     MATERIAL_NOT_FOUND("400", "Không tìm thấy chất liệu sản phẩm!"),
+    MATERIAL_EXISTS_NAME("400", "Chất liệu sản phẩm đã tồn tại!"),
     PRODUCT_NOT_FOUND("400", "Không tìm thấy chất liệu sản phẩm!"),
     INTERNAL_SERVER("500", "Hệ thống bị gián đoạn! Xin vui lòng thử lại trong giây lát!"),
     BAD_REQUEST("400", "Dữ liệu không hợp lệ!");

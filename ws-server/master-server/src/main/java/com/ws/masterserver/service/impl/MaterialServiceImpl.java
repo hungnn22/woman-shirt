@@ -15,7 +15,6 @@ import com.ws.masterserver.utils.validate.MaterialValidator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-
 import javax.transaction.Transactional;
 import java.util.Date;
 
@@ -31,6 +30,9 @@ public class MaterialServiceImpl implements MaterialService {
     public ResData<String> create(CurrentUser currentUser, MaterialDto dto) {
         AuthValidator.checkAdmin(currentUser);
         MaterialValidator.validCreate(dto);
+        if (Boolean.TRUE.equals(repository.materialRepository.existsByNameIgnoreCaseAndActive(dto.getName().trim(), Boolean.TRUE))){
+            throw new WsException(WsCode.MATERIAL_EXISTS_NAME);
+        }
 
         var material = MaterialEntity.builder()
                 .id(UidUtils.generateUid())
