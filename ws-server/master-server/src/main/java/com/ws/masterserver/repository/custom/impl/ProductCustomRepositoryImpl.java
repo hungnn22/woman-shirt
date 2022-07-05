@@ -214,10 +214,11 @@ public class ProductCustomRepositoryImpl implements ProductCustomRepository {
                 default:
                     compare = Comparator.comparing(ProductDto::getCreatedDate);
             }
-            if (req.getPageReq().getSortDirection() == null) {
-                compare.reversed();
-            }
+
             productDtos.sort(compare);
+            if (StringUtils.isNullOrEmpty(req.getPageReq().getSortDirection()) || "desc".equals(req.getPageReq().getSortDirection())) {
+                Collections.reverse(productDtos);
+            }
             var page = req.getPageReq().getPage();
             if (page == null || page < 0){
                 page = 0;
