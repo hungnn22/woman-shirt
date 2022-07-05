@@ -113,6 +113,21 @@ public class WsConst {
         public static final String DES_VAL = "miêu tả loại sản phẩm";
     }
 
+    public static class ColorFields {
+        private ColorFields() {}
+
+        public static final String NAME_VAL = "màu sản phẩm";
+        public static final String HEX_VAL = "mã của màu sản phẩm";
+    }
+
+    public static class MaterialFields {
+        private MaterialFields() {}
+
+        public static final String NAME_VAL = "chất liệu sản phẩm";
+
+        public static final String DES_VAL = "miêu tả chất liệu sản phẩm";
+    }
+
     public static class UserFields {
 
         private UserFields() {}

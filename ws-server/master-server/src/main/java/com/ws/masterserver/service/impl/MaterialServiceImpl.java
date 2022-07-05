@@ -11,10 +11,12 @@ import com.ws.masterserver.utils.common.JsonUtils;
 import com.ws.masterserver.utils.common.UidUtils;
 import com.ws.masterserver.utils.constants.WsCode;
 import com.ws.masterserver.utils.validate.AuthValidator;
+import com.ws.masterserver.utils.validate.MaterialValidator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.Date;
 
 @Service
@@ -25,15 +27,15 @@ public class MaterialServiceImpl implements MaterialService {
     private final WsRepository repository;
 
     @Override
+    @Transactional
     public ResData<String> create(CurrentUser currentUser, MaterialDto dto) {
         AuthValidator.checkAdmin(currentUser);
-        var products = repository.productRepository.findById(dto.getId());
-        if (Boolean.FALSE.equals(products.isEmpty())){
-            throw new WsException(WsCode.PRODUCT_NOT_FOUND);
-        }
+        MaterialValidator.validCreate(dto);
+
         var material = MaterialEntity.builder()
                 .id(UidUtils.generateUid())
                 .name(dto.getName().trim())
+                .des(dto.getDes().trim())
                 .active(Boolean.TRUE)
                 .build();
         repository.materialRepository.save(material);
@@ -42,11 +44,13 @@ public class MaterialServiceImpl implements MaterialService {
     }
 
     @Override
+    @Transactional
     public ResData<String> delete(CurrentUser currentUser, MaterialDto dto) {
         AuthValidator.checkAdmin(currentUser);
-        if (dto.getId() == null || Boolean.FALSE.equals(repository.colorRepository.findByIdAndActive(dto.getId(), Boolean.TRUE))) {
+        if (dto.getId() == null){
             throw new WsException(WsCode.MATERIAL_NOT_FOUND);
         }
+
         var material = repository.materialRepository.findByIdAndActive(dto.getId(),Boolean.TRUE);
         material.setActive(Boolean.FALSE);
         repository.materialRepository.save(material);
@@ -55,13 +59,17 @@ public class MaterialServiceImpl implements MaterialService {
     }
 
     @Override
+    @Transactional
     public ResData<String> update(CurrentUser currentUser, MaterialDto dto) {
         AuthValidator.checkAdmin(currentUser);
-        if (dto.getId() == null || Boolean.FALSE.equals(repository.materialRepository.existsByIdAndActive(dto.getId(), Boolean.TRUE))) {
+        MaterialValidator.validCreate(dto);
+        if (dto.getId() == null) {
             throw new WsException(WsCode.MATERIAL_NOT_FOUND);
         }
+
         var material = repository.materialRepository.findByIdAndActive(dto.getId(), Boolean.TRUE);
         material.setName(dto.getName().trim());
+        material.setDes(dto.getDes().trim());
         repository.materialRepository.save(material);
         log.info("update finish at {} with response: {}" ,new Date(), JsonUtils.toJson(material));
         return new ResData<>(material.getId(), WsCode.OK);

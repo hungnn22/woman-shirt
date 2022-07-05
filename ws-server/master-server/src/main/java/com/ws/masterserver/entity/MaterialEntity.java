@@ -33,6 +33,9 @@ public class MaterialEntity {
 
     private Boolean active;
 
+    @Column(name = "descreption")
+    private String des;
+
     @CreatedDate
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_date")
