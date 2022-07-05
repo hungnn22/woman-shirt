@@ -1,9 +1,12 @@
 package com.ws.masterserver.utils.base;
 
+import com.ws.masterserver.dto.customer.product.search.ColorDto;
 import com.ws.masterserver.repository.*;
 import com.ws.masterserver.repository.custom.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 @Component
 @RequiredArgsConstructor
@@ -28,9 +31,13 @@ public class WsRepository {
     public final TypeRepository typeRepository;
     public final UserRepository userRepository;
     public final CartRepository cartRepository;
+    public final NotificationRepository notificationRepository;
+    public final UserNotificationRepository userNotificationRepository;
+    public final SizeRepository sizeRepository;
     /** custom */
     public final CategoryCustomRepository categoryCustomRepository;
     public final OrderCustomRepository orderCustomRepository;
     public final OrderDetailCustomRepository orderDetailCustomRepository;
     public final ProductCustomRepository productCustomRepository;
+
 }

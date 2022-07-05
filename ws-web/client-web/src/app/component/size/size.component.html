@@ -1,83 +1,1514 @@
-<div class="border2">
-  <p class="title" style="text-align:center">My Fit Size</p>
-  <div class="border1">
+<!doctype html>
+<html lang="vi">
 
-    <article>
-      <table class="table">
-        <thead>
-          <tr class="table-active">
-            <th  scope="col">Kích thước</th>
-            <th scope="col">Chiều cao(cm)</th>
-            <th scope="col">Cân nặng(kg)</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <th class="table-secondary" >S</th>
-            <td>150-160</td>
-            <td>40-50</td>
-          </tr>
-          <tr>
-            <th class="table-secondary" >M</th>
-            <td>160-165</td>
-            <td>50-57</td>
-          </tr>
-          <tr>
-            <th class="table-secondary" >L</th>
-            <td>165-170</td>
-            <td>57-65</td>
-          </tr>
-          <tr>
-            <th class="table-secondary" >XL</th>
-            <td>170-175</td>
-            <td>65-72</td>
-          </tr>
-          <tr>
-            <th class="table-secondary" >XXL</th>
-            <td>176-182</td>
-            <td>73-80</td>
-          </tr>
-        </tbody>
-      </table>
-    </article>
+<head>
 
-
-    <!-- ///////////////////////////// -->
-
-    <aside>
-
-    <p><b>Giúp bạn tìm size phù hợp</b></p>
-
-      <div class="height">
-        <label for="exampleInputEmail1" class="form-label" style="font-weight: 200px;">Chiều cao(cm)</label>
-        <input type="text" placeholder="..." class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-        [formControl]="height">
-      </div>
-
-      <div class="weight">
-        <label for="exampleInputPassword1" class="form-label" style="font-weight: 200px;">Cân nặng(kg)</label>
-        <input type="text" placeholder="..." class="form-control" id="exampleInputPassword1"  [formControl]="weight">
-      </div>
-
-      <p style="padding-left:10px;color: red;"><b>{{message}}</b></p>
-
-      <div class="">
-        <button class="findSize" (click)="findSize()"  mat-stroked-button>Tìm size</button>
-      </div>
-
-      <div class="">
-        <button class="applySize" mat-stroked-button>Áp dụng size</button>
-      </div>
-    <!-- <p style="padding-left:10px">Size phù hợp với bạn là XL</p>
-
-  <div class="option">
-    <button class="findSize"  mat-raised-button>Tìm size</button>
-    <button class="applySize" mat-raised-button>Áp dụng size</button>
-  </div> -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="google-site-verification" content="OKTck9wDNpRbrEIn_nA3VTYsznd8NcVJlivXJdKGx40" />
+  <link rel="shortcut icon" href="/images/favicon.png" />
+  <title>Hướng dẫn chọn size chuẩn - Cool Mate</title>
+  <meta name="description" content="Bảng size áo, size quần hướng dẫn chọn size chuẩn dành cho nam" />
+  <!-- <link rel="canonical" href="https://www.coolmate.me/size-chart"> -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Hướng dẫn chọn size chuẩn">
+  <meta property="og:description" content="Bảng size áo, size quần hướng dẫn chọn size chuẩn dành cho nam">
+  <meta property="og:url" content="https://www.coolmate.me/size-chart">
+  <meta property="og:site_name" content="Coolmate">
+  <meta property="og:image" content="https://www.coolmate.me/images/cool_og_image.jpg">
+  <meta property="og:image:width" content="600">
+  <meta property="og:image:height" content="800">
+  <meta name="_token" content="CiYBTDrBzJAPZcIqdKROFNbJPBqMkarp1jpy3LJ0" />
+  <script>
+    var cool_mate_settings = {
+      DEVICE_TOKEN: "9d7787a28f2c3900cb868b03091dadb6",
+      BOX_TOKEN: "fc81194476e035159a722bcf295ced2a",
+      API_URL: 'https://apiv2.coolmate.me/api/v1',
+      APP_URL: 'https://www.coolmate.me',
+      MEDIA_URL: 'https://media.coolmate.me',
+      MEDIA_CDN_URL: 'https://media.coolmate.me',
+      APP_ENV: 'production',
+      _TOKEN: 'CiYBTDrBzJAPZcIqdKROFNbJPBqMkarp1jpy3LJ0',
+      _LOGGED: '0',
+      RELOAD_AFTER_AJAX_CALLED: '',
+      TET_CAMPAIGN: '',
+      DISCOUNT_MOMO: '',
+      BG_ONE_CAMPAIGN: '',
+      CHAI_PAY_KEY: 'TMprrEfUPhkxzcId',
+      COOLGIFT: '',
+      COOLGIFT_BOX_ID: '61bc12b25fe96039637e592d',
+      AIRPODS_SOCK_ID: '61b2bb94c98f6a32fa171869',
+      AIRPODS_SOCK_ALIAS: 'tat-boc-airpods',
+      AIRPODS_SOCK_ENABLED: '0',
+      CART_PROMOTION_TEXT: '',
+      TIKI_DISCOUNT_VALUE: '0',
+      GRAB_30K_VOUCHER: '',
+      AIRPODS_FIRST_1000_ORDERS: '',
+      MEDIA_CLOUDFLARE: '1',
+      KIDS_DAY: '',
+      FATHERS_DAY: '',
+      SALE_EXTRA: '1'
+    }
+    window.cool_mate_settings = cool_mate_settings;
 
 
-    </aside>
+    function delayLoad(f, timeout) {
+      if (typeof (timeout) == undefined) {
+        timeout = 4000;
+      }
+
+      setTimeout(function () {
+        f();
+      }, 4000);
+    }
+
+  </script>
+  <script src="https://www.coolmate.me/js/_pre.js?v=aniGMsrcl90C3a2sZF"></script>
+  <script defer src="https://www.coolmate.me/js/vendors/jquery.min.js?v=aniGMsrcl90C3a2sZF"></script>
+  <script defer src="https://www.coolmate.me/js/vendors/jquery.lazyload.min.js?v=aniGMsrcl90C3a2sZF"></script>
+  <link href="https://www.coolmate.me/css/fonts.css?v=aniGMsrcl90C3a2sZF" rel="stylesheet" type="text/css">
+  <link href="https://www.coolmate.me/css/sizechart.css?v=aniGMsrcl90C3a2sZF" rel="stylesheet" type="text/css">
+  <script src="https://www.coolmate.me/js/vendor.js"></script>
+  <script defer src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+  <script>
+    delayLoad(function () {
+      (adsbygoogle = window.adsbygoogle || []).push({
+        google_ad_client: "ca-pub-5039034143125999",
+        enable_page_level_ads: true
+      });
+    })
+
+  </script>
+
+  <script>
+    ! function (f, b, e, v, n, t, s) {
+      if (f.fbq) return;
+      n = f.fbq = function () {
+        n.callMethod ?
+          n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+      };
+      if (!f._fbq) f._fbq = n;
+      n.push = n;
+      n.loaded = !0;
+      n.version = '2.0';
+      n.queue = [];
+      t = b.createElement(e);
+      t.defer = !0;
+      t.src = v;
+      s = b.getElementsByTagName(e)[0];
+      delayLoad(function () {
+        s.parentNode.insertBefore(t, s)
+      })
+    }(window, document, 'script',
+      'https://connect.facebook.net/en_US/fbevents.js');
+    delayLoad(function () {
+      fbq('init', '779490229316202');
+      fbq('track', 'PageView');
+    })
+
+  </script>
+  <noscript><img height="1" width="1" style="display:none"
+      src="//www.facebook.com/tr?id=1029117977480178&ev=PageView&noscript=1" /></noscript>
+
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    if (window.navigator.userAgent.includes('TikiMiniApp')) {
+      dataLayer.push({
+        'frontendversion': 'tiki_mini_app'
+      });
+    } else {
+      dataLayer.push({
+        'frontendversion': 'v3'
+      });
+    }
+    delayLoad(function () {
+      (function (w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({
+          'gtm.start': new Date().getTime(),
+          event: 'gtm.js'
+        });
+        var f = d.getElementsByTagName(s)[0],
+          j = d.createElement(s),
+          dl = l != 'dataLayer' ? '&l=' + l : '';
+        j.defer = true;
+        j.src =
+          'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+        f.parentNode.insertBefore(j, f);
+      })(window, document, 'script', 'dataLayer', 'GTM-WVDNC2B');
+    }, 4000)
+
+  </script>
 
 
+
+  <SCRipt>
+    //test for getting url value from attr
+    // var img1 = $('.test').attr("data-thumbnail");
+    // console.log(img1);
+
+    //test for iterating over child elements
+    var langArray = [];
+    $('.vodiapicker option').each(function () {
+      var img = $(this).attr("data-thumbnail");
+      var text = this.innerText;
+      var value = $(this).val();
+      var item = '<li><img src="' + img + '" alt="" value="' + value + '"/><span>' + text + '</span></li>';
+      langArray.push(item);
+    })
+
+    $('#a').html(langArray);
+
+    //Set the button value to the first el of the array
+    $('.btn-select').html(langArray[0]);
+    $('.btn-select').attr('value', 'en');
+
+    //change button stuff on click
+    $('#a li').click(function () {
+      var img = $(this).find('img').attr("src");
+      var value = $(this).find('img').attr('value');
+      var text = this.innerText;
+      var item = '<li><img src="' + img + '" alt="" /><span>' + text + '</span></li>';
+      $('.btn-select').html(item);
+      $('.btn-select').attr('value', value);
+      $(".b").toggle();
+      //console.log(value);
+    });
+
+    $(".btn-select").click(function () {
+      $(".b").toggle();
+    });
+
+    //check local storage for the lang
+    var sessionLang = localStorage.getItem('lang');
+    if (sessionLang) {
+      //find an item with value of sessionLang
+      var langIndex = langArray.indexOf(sessionLang);
+      $('.btn-select').html(langArray[langIndex]);
+      $('.btn-select').attr('value', sessionLang);
+    } else {
+      var langIndex = langArray.indexOf('ch');
+      console.log(langIndex);
+      $('.btn-select').html(langArray[langIndex]);
+      //$('.btn-select').attr('value', 'en');
+    }
+
+  </SCRipt>
+  <script>
+    delayLoad(function () {
+      var s = document.createElement('script');
+      s.type = 'text/javascript';
+      s.src = "//coolmatevn.api.useinsider.com/ins.js?id=10003475";
+      document.head.appendChild(s);
+    }, 3000)
+
+  </script>
+  <script defer type="text/javascript">
+    window.insider_object = {
+      "user": {
+        "email": localStorage.getItem('cart_email'),
+        "name": localStorage.getItem('cart_full_name'),
+        "gdpr_optin": true,
+        "email_optin": true
+      },
+      "product": {},
+      "basket": {},
+      "transaction": {}
+    };
+
+  </script>
+  <script type="application/ld+json">
+    {
+      "@context": "http://schema.org",
+      "@type": "Organization",
+      "name": "Fastech Asia",
+      "url": "https://coolmate.me/",
+      "id": "https://coolmate.me#Organization",
+      "logo": "https://www.coolmate.me/images/logo.png",
+      "contactPoint": [{
+          "@type": "ContactPoint",
+          "telephone": "1900272737",
+          "contactType": "sales",
+          "areaServed": "VN"
+        },
+        {
+          "@type": "ContactPoint",
+          "telephone": "1900272737",
+          "contactType": "technical support",
+          "areaServed": "VN",
+          "availableLanguage": ["EN", "VN"]
+        },
+        {
+          "@type": "ContactPoint",
+          "telephone": "1900272737",
+          "contactType": "customer support",
+          "areaServed": "VN",
+          "availableLanguage": ["EN", "VN"]
+        }
+      ],
+      "sameAs": [
+        "https://www.facebook.com/coolmate.me/",
+        "https://www.instagram.com/coolmate.me/",
+        "https://www.youtube.com/channel/UCWw8wLlodKBtEvVt1tTAsMA"
+      ]
+    }
+
+  </script>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [{
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Trang chủ",
+        "item": "https://www.coolmate.me"
+      }, {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Bảng size chuẩn",
+        "item": "https://www.coolmate.me/size-chart"
+      }]
+    }
+
+  </script>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <style>
+    .site-header img.hover {
+      display: none;
+    }
+
+  </style>
+  <style>
+    .product-grid__image {
+      position: relative;
+    }
+
+    .product-grid__image:after {
+      content: "";
+      position: absolute;
+      bottom: 2%;
+      left: 3%;
+      width: 38%;
+      height: 35%;
+      background-image: url("https://mcdn.coolmate.me/image/June2022/mceclip1_82.png");
+      background-repeat: no-repeat;
+      background-position: left bottom;
+      background-size: contain;
+      pointer-events: none;
+    }
+
+    .cart-viewing-users {
+      display: none;
+    }
+
+    .page-do-tre-em .product-grid__image:after,
+    main.site-cleanVn .product-grid__image:after,
+    .not-sale-tag .product-grid__image:after {
+      display: none;
+    }
+
+    .not-sale-tag .product-grid__note-sale {
+      display: none;
+    }
+
+    .topbar {
+      background-color: #FF2459;
+      color: #fff;
+    }
+
+    .product-grid {
+      display: flex;
+      flex-flow: column;
+      height: 100%;
+    }
+
+    .product-grid__content {
+      flex: 1;
+    }
+
+    .product-grid__note-sale {
+      background-color: #FF2459;
+      border-radius: 18px;
+      text-align: center;
+      border: 1px dashed #000;
+      color: #fff;
+      display: block;
+      width: 100%;
+      padding-top: 0.5em;
+      padding-bottom: 0.5em;
+      font-size: 0.8rem;
+      margin-top: 5px;
+    }
+
+  </style>
+  <style>
+    .collection-page.page-ao-thun-nam-gioi .filter-select__item:nth-of-type(2) .custom-select {
+      min-width: 190px;
+    }
+
+    div#app .grid__column.five-twelfths.mobile--one-whole>.cart-section>.discount-block+.cart-promotion-text {
+      /*display: none !important;*/
+    }
+
+    .popup-hotdeal-policy {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: #0008;
+      z-index: 10;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .popup-hotdeal-policy__content {
+      position: relative;
+      max-width: 90%;
+    }
+
+    .popup-hotdeal-policy__content img {
+      border-radius: 16px;
+    }
+
+    .popup-hotdeal-policy__close {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      width: 25px;
+      height: 25px;
+      border-radius: 100px;
+      background-color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      z-index: 1;
+    }
+
+    .popup-hotdeal-policy__close:hover {
+      background-color: #d9d9dd;
+    }
+
+    div#chat-widget-container {
+      z-index: 2147483639 !important;
+    }
+
+    @media screen and (min-width: 769px) {
+      .collections-filter__wrapper {
+        justify-content: flex-start;
+      }
+
+      .collections-filter__selects {
+        margin-left: 15px;
+      }
+
+      .filter-search {
+        margin-right: 0;
+      }
+    }
+
+    @media (min-width: 769px) and (max-width: 1024px) {
+      .collections-filter__wrapper {
+        flex-wrap: wrap;
+      }
+
+      .filter-select {
+        flex-wrap: wrap;
+      }
+
+      .collections-filter__selects {
+        margin-top: 15px;
+      }
+    }
+
+    [rel-script="size-guide-popup"] .popup-body {
+      max-width: 650px;
+    }
+
+    .banner-slide__item:before {
+      background-repeat: no-repeat;
+      background-size: contain;
+      background-position: center;
+      background-image: url('https://www.coolmate.me/images/placeholder-image.png');
+    }
+
+    span.product-grid__tags.product-grid__tags--cleandye {
+      background-color: #fff0;
+      font-size: 0;
+      background-image: url('https://mcdn.coolmate.me/uploads/April2022/SUSTAINABLE.png');
+      height: 85px;
+      background-repeat: no-repeat;
+      top: auto;
+      bottom: 1%;
+      width: 10px;
+      right: 5px;
+    }
+
+    .product-header__options .option-select__item .checkmark--color,
+    .product-single__options .option-select__item .checkmark--color {
+      background-size: cover;
+    }
+
+    .pswp__sub-text {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      color: #fff;
+      font-size: 12px;
+      font-weight: normal;
+      font-style: italic;
+      letter-spacing: 0.03em;
+      text-align: center;
+      padding-bottom: 1vh;
+    }
+
+    .on-mobile .collections-filter__wrapper {
+      justify-content: space-between;
+    }
+
+    .article-related {
+      max-width: 1440px;
+      margin: 0 auto;
+    }
+
+    .product-single__button .bx {
+      display: none !important;
+    }
+
+    @media screen and (max-width: 768px) {
+      .select-date {
+        margin-bottom: 10px;
+      }
+
+      .product-single__button .btn {
+        height: 40px;
+      }
+
+      .nav__item {
+        flex-flow: column;
+        justify-content: center;
+        align-items: flex-start;
+        padding: 10px 5px;
+        height: auto;
+      }
+
+      .nav__item--has-child>a {
+        position: relative;
+      }
+
+      .nav__item--has-child>a:before {
+        content: "";
+        position: absolute;
+        top: 50%;
+        right: 0;
+        width: 6px;
+        height: 6px;
+        border-bottom: 2px solid #000;
+        border-right: 2px solid #000;
+        transform: rotate(45deg);
+        margin-top: -4px;
+        transition: all .3s;
+      }
+
+      .nav__item--has-child>a.toggle-menu:before {
+        transform: rotate(-135deg);
+      }
+
+      .nav-child-menu {
+        padding-left: 10px;
+        padding-top: 5px;
+        list-style: none;
+        width: 100%;
+      }
+
+      .nav-child-menu li {}
+
+      .nav-child-menu li a {
+        display: flex;
+        align-items: center;
+        padding: 4px 0;
+        color: #0008;
+        width: 100%;
+      }
+
+      .nav-tab__menu li>a {
+        display: block;
+        width: 100%;
+      }
+    }
+
+    .seagame-campaign {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 50px;
+      height: 50px;
+    }
+
+    @media (max-width: 991px) {
+      .popup .popup-body {
+        left: 50%;
+        transform: translateX(-50%);
+      }
+
+      .popup--slide .popup-body {
+        left: auto;
+        transform: none;
+      }
+    }
+
+    @media (max-width: 990px) and (max-height: 600px) {
+      .header__menu {
+        min-height: inherit;
+        height: calc(100vh - 100px);
+      }
+    }
+
+    .reviews-author__shopee span {
+      background-color: #0000;
+      color: #a1a1a1;
+      padding: 0;
+      margin-top: 0;
+      display: block;
+    }
+
+  </style>
+  <style>
+    .collection-loadmore__wrapper {
+      border: 0 !important;
+    }
+
+    .collection-loadmore:hover .collection-loadmore__wrapper {
+      background-color: #fff0;
+    }
+
+    .collection-loadmore__icon {
+      display: none;
+    }
+
+    .collection-loadmore__text {
+      margin-top: 0;
+      font-size: 20px;
+      background-color: #000;
+      padding: 12px 30px;
+      border-radius: 100px;
+      color: #fff;
+      line-height: 1em;
+    }
+
+    .collection-loadmore:hover .collection-loadmore__wrapper .collection-loadmore__text {
+      background-color: #D9D9D9;
+    }
+
+    .select-selected.select-arrow-active {
+      z-index: 4;
+    }
+
+    .select-selected.select-arrow-active+.select-items {
+      z-index: 3;
+    }
+
+    .collection-thumbnail {
+      height: 100%;
+    }
+
+    @media (max-width: 767px) {
+      .popup .popup-body {
+        padding-bottom: 120px;
+        max-height: 100%;
+        overflow-x: hidden;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .home-tab__content .grid.slick-slider {
+        display: flex;
+      }
+
+      .mega-menu__item ul li a,
+      .sub-menu__item ul li a {
+        flex-wrap: wrap;
+      }
+    }
+
+    .collection-thumbnail img {
+      object-position: top;
+    }
+
+  </style>
+</head>
+
+<body class="size-chart-page  ">
+
+  <noscript>
+    <iframe src="//www.googletagmanager.com/ns.html?id=GTM-WVDNC2B" height="0" width="0"
+      style="display:none;visibility:hidden"></iframe>
+  </noscript>
+
+  <script>
+    delayLoad(function () {
+      fbq('track', 'ViewContent');
+    });
+
+
+    // window.addEventListener('grsfReady', function() {
+    //     growsurf.open();
+    // });
+
+  </script>
+  <div id="g_id_onload" data-client_id="902943331882-9ovkeogfjqv7k0sm6us39cd566nc77bo.apps.googleusercontent.com"
+    data-login_uri="https://www.coolmate.me/google/one-tap-callback"
+    data-_token="CiYBTDrBzJAPZcIqdKROFNbJPBqMkarp1jpy3LJ0">
   </div>
-</div>
+  <div id="app">
+    <!-- <popup :active.sync="$root.authPopupActive">
+<auth :view="view"></auth>
+</popup> -->
+    <div class="site-wrapper has-topbar" id="site-wrapper">
+
+      <main class="site-size-chart">
+        <div class="container container--medium">
+          <div class="size-chart">
+            <h1 class="size-chart__heading">
+              Hướng dẫn chọn size chuẩn
+            </h1>
+            <div class="size-chart__head">
+              <span>1</span>
+              <span>2</span>
+              <span>3</span>
+            </div>
+            <div class="size-chart__inner">
+              <div class="grid">
+                <div class="grid__column four-twelfths mobile--one-whole">
+                  <div class="size-chart__selected">
+                    <!-- <img src="https://mcdn.coolmate.me/uploads/November2020/31.jpg"> -->
+
+                    <h3 class="size-chart__title">Loại sản phẩm</h3>
+                    <div id="size-select-table" style="width: 100%;background-color: ư;">
+
+                      <mat-form-field style="width:100%">
+                        <mat-label>{{nameProduct}}</mat-label>
+                        <mat-select>
+
+                          <mat-option *ngFor="let item of categories"
+                          style="height:20% ;background-color: white;">
+                            <img style="float: left;width:70%"
+                             src="{{item.image}}" width="100%"
+                              value="long-shirt"
+                              (click)="uploadImage(item)"
+                              >
+                            <p style="margin-top:30%">{{item.viewValue}}</p>
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+
+
+                    </div>
+                    <a href="" class="size-chart__all" rel-script="view-all-size-chart">Xem tất cả bảng size</a>
+                    <div class="size-chart__image" rel-script="size-chart-image">
+                      <img src="{{image}}">
+                    </div>
+                  </div>
+                </div>
+                <div class="grid__column eight-twelfths mobile--one-whole">
+                  <div class="size-chart__content">
+                    <div id="size-suggestion" class="size-suggestion-content" data-height="155" data-weight="84"
+                      data-body="normal">
+                      <form action="" rel-script="size-suggestion">
+                        <div class="size-suggestion">
+                          <div class="grid">
+                            <div class="grid__column six-twelfths mobile--one-whole">
+                              <h3 class="size-chart__title">Thông số cơ thể</h3>
+                              <div class="size-suggestion__body">
+                                <label class="size-suggestion__body-size thin">
+                                  <input type="radio" name="body" value=thin>
+                                  <span>Gầy</span>
+                                </label>
+                                <label class="size-suggestion__body-size normal">
+                                  <input type="radio" name="body" value=normal>
+                                  <span>Bình thường</span>
+                                </label>
+                                <label class="size-suggestion__body-size fat">
+                                  <input type="radio" name="body" value=fat checked>
+                                  <span>Hơi mập tẹo</span>
+                                </label>
+                              </div>
+                              <div class="size-suggestion__field" rel-script="size-suggestion-field">
+                                <div class="size-suggestion__label">
+                                  <span>Chiều cao</span>
+                                  <span class="size-suggestion__size" rel-script="size-suggestion-label"
+                                    data-label="cm">155cm</span>
+                                </div>
+                                <input type="range" class="size-suggestion__control" name="c-height" id="c-height"
+                                  min="155" max="183" value="155">
+                              </div>
+                              <div class="size-suggestion__field" rel-script="size-suggestion-field">
+                                <div class="size-suggestion__label">
+                                  <span>Cân Nặng</span>
+                                  <span class="size-suggestion__size" rel-script="size-suggestion-label"
+                                    data-label="kg">84kg</span>
+                                </div>
+                                <input type="range" class="size-suggestion__control" name="c-weight" id="c-weight"
+                                  min="48" max="84" value="84">
+                              </div>
+                            </div>
+                            <div class="grid__column six-twelfths mobile--one-whole">
+                              <h3 class="size-chart__title">Coolmate gợi ý</h3>
+                              <div class="size-suggestion__active" rel-script="size-suggestion-values">
+                                <div class="size-suggestion__size-width">
+                                  <span style="text-transform: uppercase;"></span>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+                    <div class="size-chart__description">
+                      <h3>Size chart</h3>
+                      <p>
+                        * Thông số cơ bản của các sản phẩm coolmate: Lấy chiếc áo mà các bạn đang<br>
+                        mặc và cảm thấy vừa nhất sau đó đo các kích thước của áo,và đối chiếu với bảng<br> thông số của
+                        chúng tôi theo các kích thước sau:
+                      </p>
+                    </div>
+                    <div id="size-table" class="size-chart__table">
+                      <div id="ao-oversize" class="size-cart__item mgb--20">
+                        <div class="size-cart__table">
+                          <table class="table-sizechart one-whole">
+                            <thead>
+                              <tr>
+                                <td><span>Ký hiệu/<br>Thông số(cm)</span></td>
+                                <td>
+                                  <span>M</span>
+                                  <span class="sub-text">
+                                    1m60 - 1m67<br>
+                                    55kg - 64kg
+                                  </span>
+                                </td>
+                                <td>
+                                  <span>L</span>
+                                  <span class="sub-text">
+                                    1m68 - 1m74<br>
+                                    65kg - 72kg
+                                  </span>
+                                </td>
+                                <td>
+                                  <span>XL</span>
+                                  <span class="sub-text">
+                                    1m75 - 1m85<br>
+                                    73kg - 84kg
+                                  </span>
+                                </td>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <td><span class="text--bold">DÀI ÁO</span></td>
+                                <td>71</td>
+                                <td>74</td>
+                                <td>76</td>
+                              </tr>
+                              <tr>
+                                <td><span class="text--bold">RỘNG GẤU</span></td>
+                                <td>57</td>
+                                <td>60</td>
+                                <td>62</td>
+                              </tr>
+                              <tr>
+                                <td><span class="text--bold">DÀI TAY</span></td>
+                                <td>23.2</td>
+                                <td>25</td>
+                                <td>26.8</td>
+                              </tr>
+                              <tr>
+                                <td><span class="text--bold">RỘNG BẮP TAY</span></td>
+                                <td>21.5</td>
+                                <td>22.5</td>
+                                <td>23</td>
+                              </tr>
+                              <tr>
+                                <td><span class="text--bold">RỘNG VAI</span></td>
+                                <td>53</td>
+                                <td>55</td>
+                                <td>57</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <a href="#size-table" class="size-suggestion__footer size-suggestion__active is-loading scroll-to-step"
+          rel-script="size-suggestion-values">
+          <div class="size-suggestion__size-width">
+            <span style="text-transform: uppercase;"></span>
+          </div>
+        </a>
+      </main>
+
+    </div>
+  </div>
+  <div class="notify">
+    <a class="notify__close">x</a>
+    <div class="notify__wrapper">
+      <div class="notify__content">
+        <h4 class="notify__message">Đã thêm vào giỏ hàng!</h4>
+        <div class="notify__product"></div>
+        <a href="https://www.coolmate.me/cart" class="btn btn--outline btn--small">Xem giỏ hàng</a>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+  <script defer src="https://www.coolmate.me/js/functions.js?v=aniGMsrcl90C3a2sZF"></script>
+  <script defer src="https://www.coolmate.me/js/add-to-cart.js?v=aniGMsrcl90C3a2sZF"></script>
+  <script defer src="/js/app.js?id=3c5bdae1bd98bc22e1ab&amp;v=aniGMsrcl90C3a2sZF"></script>
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+  <script defer src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      jQuery(document).ready(function ($) {
+
+        let obj = {
+          height: $('#c-height').val(),
+          weight: $('#c-weight').val(),
+          body: $(".size-suggestion__body-size input:checked").val(),
+          sizechart: $("#size-chart-1").val()
+        }
+
+        const _sizeTable = $("#size-table");
+
+        const _loading =
+          '<img src="https://www.coolmate.me/images/loading.svg" alt="Loading image" width="30" height="30" style="margin: 0 auto;display: block;">';
+
+        function checkSize(obj = {}, first = false) {
+          let {
+            height,
+            weight,
+            body,
+            sizechart,
+            table
+          } = obj
+
+          const _susget = $('[rel-script="size-suggestion-values"]');
+          // _sizeTable.removeClass('show-all');
+
+          if (!height || !weight || !body || !sizechart) return;
+
+          _susget.addClass('is-loading');
+          _susget.show();
+          // _sizeTable.html(_loading);
+          $.ajax({
+            url: `https://www.coolmate.me/tools/size_suggest`,
+            dataType: 'json',
+            data: {
+              h: height,
+              w: weight,
+              body: body,
+              sizechart: sizechart
+            },
+            error: function (xhr, status, error) {
+              _susget.hide();
+            },
+            success: function (res) {
+              let {
+                success,
+                size
+              } = res;
+              let _sizeWidth = _susget.find('.size-suggestion__size-width');
+              const _sizeChart = $('.size-chart');
+
+              if (success && size) {
+                _susget.removeClass('is-loading');
+                _sizeWidth.removeClass('is-multi');
+                _sizeChart.removeClass('size-chart--all');
+                _sizeWidth.html('<span>' + size + '</span');
+
+                if (theme.isMobile()) {
+                  const offsetTop = $('#size-select-table').offset().top;
+                  const windowTop = $(window).scrollTop();
+                  if (offsetTop > windowTop && !first) {
+                    $('body,html').animate({
+                      scrollTop: offsetTop - 10
+                    }, 300)
+                  }
+                }
+              } else {
+                _susget.hide();
+              }
+            }
+          });
+        }
+
+
+        function sizeSuggestRange(_this, type) {
+          const value = _this.val();
+          _this.siblings('.size-suggestion__label').find('.size-suggestion__size').html(value + type);
+        }
+
+        function setDefaultSizeChart(_this) {
+          const sizeChart = _this.val();
+          const sizeText = _this.find('[value="' + sizeChart + '"]').text();
+          const sizeChartImage = _this.find('[value="' + sizeChart + '"]').attr('data-image');
+          const tableActive = $('#' + sizeChart);
+
+          getSizeTable(sizeChart);
+
+          $('.choose-size__select').val(sizeChart);
+
+          obj = {
+            height: $('#c-height').val(),
+            weight: $('#c-weight').val(),
+            body: $(".size-suggestion__body-size input:checked").val(),
+            sizechart: sizeChart,
+            table: tableActive
+          }
+          checkSize(obj);
+
+          const _image = $('[rel-script="size-chart-image"]');
+
+
+          _image.show();
+          _image.find('img').attr('src', sizeChartImage);
+
+          const id = _this.attr('id');
+
+          $('.choose-size__select').siblings('.select2').find('.select2-selection__rendered').text(sizeText);
+
+          obj = {
+            height: $('#c-height').val(),
+            weight: $('#c-weight').val(),
+            body: $(".size-suggestion__body-size input:checked").val(),
+            sizechart: sizeChart,
+            table: tableActive
+          }
+          checkSize(obj);
+        }
+
+        function sizeSuggestChange() {
+          let event = theme.isMobile() ? 'touchmove' : 'mousemove';
+          // Lấy size gợi ý và bảng size tương ứng khi đổi lựa chọn size
+          $(document).on('change', '.choose-size__select', function (e) {
+            setDefaultSizeChart($(this));
+          })
+          // Thay đổi số chiều cao tương ứng khi kéo thả
+          $(document).on(event, '#c-height', function (e) {
+            sizeSuggestRange($(this), 'cm');
+          });
+          // Thay đổi số cân nặng tương ứng khi kéo thả
+          $(document).on(event, '#c-weight', function (e) {
+            sizeSuggestRange($(this), 'kg');
+          });
+          // Lấy size gợi ý khi đổi cân nặng
+          $(document).on('change', '#c-height,#c-weight', function (e) {
+            obj = {
+              ...obj,
+              height: $('#c-height').val(),
+              weight: $('#c-weight').val()
+            }
+            checkSize(obj);
+          })
+        }
+
+        function getSizeTable(sizeChart) {
+          _sizeTable.html(_loading);
+          $.ajax({
+            url: `https://www.coolmate.me/tools/size_table?size-table=${sizeChart}`,
+            method: 'GET',
+            success: function (res) {
+              const {
+                success,
+                html
+              } = res;
+              if (success && html) {
+                _sizeTable.html(html);
+              } else {
+                _sizeTable.html('');
+              }
+            }
+          });
+        }
+
+        function sizeSuggetActive() {
+          $(document).on('click', '.size-suggestion__body-size input', function (e) {
+            const _this = $(this);
+            obj = {
+              ...obj,
+              height: $('#c-height').val(),
+              weight: $('#c-weight').val(),
+              body: _this.val(),
+            }
+            checkSize(obj);
+          });
+        }
+
+        function formatState(state) {
+          if (!state.id) {
+            return state.text;
+          }
+          let image = $(state.element).attr('data-image');
+          let $state = $(
+            `<span class="select2-option-item"><img src="${image}" class="img-flag" />${state.text}</span>`);
+
+          if (!image) $state = $(
+            `<span class="select2-option-item select2-option-item--text">${state.text}</span>`);
+
+          return $state;
+        };
+
+        function showAllTableSize() {
+          $(document).on('click', '[rel-script="view-all-size-chart"]', function (e) {
+            e.preventDefault();
+            const _sizeChart = $('.size-chart');
+            $('.size-cart__item').show();
+            _sizeTable.addClass('show-all');
+            _sizeChart.addClass('size-chart--all');
+
+            let offset = _sizeTable;
+            if (offset.length > 0) {
+              $('body,html').animate({
+                scrollTop: offset.offset().top - 20
+              }, 300);
+            }
+            getSizeTable('all');
+          })
+        }
+
+        $(".choose-size__select").select2({
+          templateResult: formatState,
+          selectOnClose: true
+        });
+
+
+        sizeSuggetActive();
+        sizeSuggestChange();
+        showAllTableSize();
+
+        // checkSize(obj,true);
+        theme.scrollToStep('.scroll-to-step');
+      });
+    });
+
+  </script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      jQuery(document).ready(function ($) {
+        $(document).on('click', '[rel-script="nav-tab"]', function (e) {
+          e.preventDefault();
+          let _this = $(this);
+          let id = _this.attr('href');
+          let tab = $('[data-nav-tab="' + id + '"]');
+          _this.addClass('is-current');
+          _this.siblings().removeClass('is-current');
+          tab.slideDown();
+          tab.siblings('[data-nav-tab]').slideUp();
+        });
+        $(document).on('click', '[rel-script="mobile-menu-toggle"]>a', function (e) {
+          e.preventDefault();
+          const _this = $(this);
+          _this.siblings('.nav-child-menu').slideToggle();
+          _this.toggleClass('toggle-menu');
+        })
+
+        let x = 0,
+          x_end = 0;
+        let y = 0,
+          y_end = 0;
+        let time = 300;
+        let active = false;
+
+        $(document).on('touchstart', '.nav-tab__content', function (e) {
+          x = e.originalEvent.touches[0].pageX;
+          y = e.originalEvent.touches[0].pageY;
+        });
+        $(document).on('touchend', '.nav-tab__content', function (e) {
+          if (active) return;
+          x_end = e.changedTouches[0].pageX;
+          y_end = e.changedTouches[0].pageY;
+
+          if (y - y_end > 100) return;
+          if (x - x_end < 50 && x - x_end > -50) return;
+
+          const tab = $('.is-current[rel-script="nav-tab"]');
+          const tab_header = tab.parent();
+          if (x > x_end) {
+            tab.addClass('left-animation');
+            if (tab.next().length) {
+              tab.next().click();
+              tab.next().addClass('left');
+            }
+          }
+          if (x < x_end) {
+            tab.addClass('right-animation');
+            if (tab.prev().length) {
+              tab.prev().click();
+              tab.prev().addClass('right');
+            }
+          }
+          active = true;
+          setTimeout(function (e) {
+            tab.removeClass('right-animation left-animation')
+            tab.prev().removeClass('right');
+            tab.next().removeClass('left');
+            active = false;
+          }, time)
+        });
+
+      });
+    });
+
+  </script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const spotlight_search_control = '[rel-script="spotlight-search-control"]',
+        header_search_content = '[rel-script="header-search-content"]',
+        spotlight_search = '[rel-script="spotlight-search"]',
+        spotlight_search_close = '[rel-script="spotlight-search-close"]';
+
+      const header = $('header'),
+        header_search = $(header_search_content),
+        search_input = $(spotlight_search_control),
+        spotlight_wrapper = $(spotlight_search);
+
+      const loading = spotlight_wrapper.html();
+
+
+      const mega_menu = '[rel-script="mega-menu"]',
+        mega_menu_item = '[rel-script="mega-menu-item"]',
+        mega_menu_toggle = '[rel-script="mega-menu-toggle"]',
+        mega_menu_active = '[rel-script="mega-menu-active"]',
+        mega_menu_close = '[rel-script="mega-menu-close"]',
+        mega_menu_open = '[rel-script="mega-menu-open"]',
+        header_menu = '[rel-script="header-menu"]',
+        menu_toggle = '[rel-script="menu-toggle"]';
+
+      window.dataLayer = window.dataLayer || [];
+
+      spotlight_wrapper.on('click', 'a', function () {
+        const productClickedArray = [{
+          'name': $(this).find('h4').text().trim(),
+          'price': parseInt($(this).find('ins').text().replace(/[.đ]+/g, '')),
+          'category': '',
+          'list': 'Search: ' + search_input.val() + ' - Recommendation',
+          'position': spotlight_wrapper.find('a').index(this) + 1
+        }];
+        const ecommerceObject = {
+          'ecommerce': {
+            'click': {
+              'products': productClickedArray,
+              'actionField': {
+                'list': 'Search: ' + search_input.val() + ' - Recommendation'
+              }
+            }
+          },
+          'event': 'productClick'
+        }
+        dataLayer.push(ecommerceObject)
+      })
+
+      function handleSearch(keyword) {
+        const API_URL =
+          `${window.location.origin}/load-product?home_search=1&limit=5&page=1&sort=created_at&type=spotlight&keyword=${keyword}`;
+        let search_resource = '<div class="text--center"><i>Không tìm thấy sản phẩm!</i></div>'
+
+        spotlight_wrapper.parent().addClass('is-active')
+        spotlight_wrapper.html(loading);
+
+        if ($(spotlight_search_close).length > 0) {
+          $(spotlight_search_close).addClass('is-active');
+        }
+
+        $.ajax({
+          url: API_URL,
+          type: "GET",
+          cache: false,
+        }).done(function (res) {
+          if (res.success) {
+            search_resource = res.html ? res.html : search_resource;
+            spotlight_wrapper.html(search_resource);
+            spotlight_wrapper.addClass('is-active');
+
+            if (res.html.length === 0) {
+              dataLayer.push({
+                'event': 'searchNoResults',
+                'searchTerm': keyword
+              });
+            } else {
+              const productImpressionArray = [];
+
+              spotlight_wrapper.find('a').each((index, item) => {
+                productImpressionArray.push({
+                  'name': $(item).find('h4').text().trim(),
+                  'price': parseInt($(item).find('ins').text().replace(/[.đ]+/g, '')),
+                  'brand': 'Coolmate',
+                  'category': '',
+                  'list': 'Search: ' + keyword + ' - Recommendation',
+                  'position': index + 1
+                })
+              })
+              const ecommerceObject = {
+                'ecommerce': {
+                  'impressions': productImpressionArray
+                },
+                'event': 'productImpressions'
+              }
+              dataLayer.push(ecommerceObject);
+              window.dataLayer.push({
+                'dr_event_type': 'view_search_results',
+                'dr_items': productImpressionArray.map(item => ({
+                  'id': item.id,
+                  'google_business_vertical': 'retail'
+                })),
+                'event': 'dynamic_remarketing'
+              });
+            }
+          }
+        }).fail(() => {
+          spotlight_wrapper.html(search_resource);
+          dataLayer.push({
+            'event': 'searchNoResults',
+            'searchTerm': keyword
+          });
+        });
+      }
+
+      function removeActiveHeader() {
+        search_input.val('');
+        header_search.removeClass('is-active');
+        spotlight_wrapper.parent().removeClass('is-active');
+      }
+
+      function headerSearch() {
+
+        let targetSearch;
+        let last_keyword;
+        let search_time_out;
+
+        $(document).on('click', '[rel-script="header-search"]', function (e) {
+          e.preventDefault();
+          header_search.addClass('is-active');
+          targetSearch = e.target;
+          setTimeout(function (e) {
+            search_input.focus();
+          }, 100)
+        });
+
+        $(document).on('click', function (e) {
+
+        });
+
+        search_input.on('blur', function (e) {
+          header_search.removeClass('is-active');
+        })
+
+        $(document).on('click', spotlight_search_close, function (e) {
+          e.preventDefault();
+          removeActiveHeader();
+          $(this).removeClass('is-active');
+        })
+
+        search_input.on('keyup', function (e) {
+          const _this = $(this);
+          const value = _this.val();
+
+          if (!value) return;
+          if (value === last_keyword) return;
+          if (search_time_out !== undefined) clearTimeout(search_time_out);
+
+          last_keyword = value;
+          search_time_out = setTimeout(function (e) {
+            handleSearch(value);
+          }, 500)
+        })
+      }
+
+      function headerScroll() {
+        let last_scroll_point = $(window).scrollTop();
+
+
+        if (last_scroll_point > 0) {
+          header.addClass('is-scroll-top');
+        }
+
+        $(window).on('scroll', function (e) {
+          const scroll_point = $(this).scrollTop();
+          if (!$(header_menu).hasClass('is-active')) {
+            if (scroll_point > last_scroll_point && scroll_point > 100) {
+              header.addClass('is-scroll-top');
+              header_search.removeClass('is-active');
+              spotlight_wrapper.parent().removeClass('is-active');
+              search_input.val('');
+            } else {
+              if (header.hasClass('is-scroll-top')) {
+                header.removeClass('is-scroll-top');
+              }
+            }
+          }
+          last_scroll_point = scroll_point;
+        });
+      }
+
+      function removeActiveMenuMobile() {
+        $(header_menu).removeClass('is-active');
+        $(menu_toggle).removeClass('is-active');
+        $('body').removeClass('backdrop');
+        removeActiveHeader();
+      }
+
+      function megaMenuToggle() {
+        let width = $(window).width();
+        window.addEventListener('resize', function (event) {
+          width = $(this).width();
+        }, true);
+
+        $(document).on('click', mega_menu_toggle, function (e) {
+          e.preventDefault();
+          const _this = $(this);
+          const menu_item_siblings = _this.closest(mega_menu_item).siblings();
+          if (!_this.hasClass('is-active')) {
+            menu_item_siblings.find(mega_menu_active).slideUp();
+            menu_item_siblings.find(mega_menu_toggle).removeClass('is-active')
+          }
+          _this.siblings(mega_menu_active).slideToggle();
+          _this.toggleClass('is-active');
+        });
+
+        $(document).on('click', mega_menu_open, function (e) {
+          if (width < 991) {
+            e.preventDefault();
+            const _this = $(this);
+            const menu = _this.parents(mega_menu);
+            menu.addClass('is-active');
+            menu.siblings().removeClass('is-active');
+          }
+        });
+
+        $(document).on('click', mega_menu_close, function (e) {
+          e.preventDefault();
+          const _this = $(this);
+          _this.parents(mega_menu).removeClass('is-active');
+        });
+
+        $(document).on('click', menu_toggle, function (e) {
+          e.preventDefault(e);
+          const _this = $(this);
+          const _menu = $(header_menu);
+          const _menuProduct = $('[rel-script="mega-menu-product"]');
+          _menu.toggleClass('is-active');
+          _this.toggleClass('is-active');
+          $('body').toggleClass('backdrop');
+          _menuProduct.find('[rel-script="mega-menu-toggle"]').addClass('is-active');
+          _menuProduct.find('[rel-script="mega-menu-active"]').addClass('is-active');
+          _menuProduct.find('[rel-script="mega-menu-active"]').show();
+          removeActiveHeader();
+        });
+
+        $(document).on('click', function (e) {
+          if ($(e.target).hasClass('backdrop')) {
+            removeActiveMenuMobile();
+          }
+        })
+        if (!theme.isMobile()) {
+          $(window).on('scroll', function (e) {
+            if (!$('body').hasClass('backdrop')) return;
+            removeActiveMenuMobile();
+          })
+        }
+      }
+
+      jQuery(document).ready(function ($) {
+        headerSearch();
+        headerScroll();
+
+        megaMenuToggle();
+
+      });
+    });
+
+  </script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      jQuery(document).ready(function ($) {
+        setTimeout(function () {
+          if (localStorage.getItem('isMiniApp') === 'true') {
+            $('.footer-social').hide();
+          }
+        }, 500);
+      });
+    });
+
+  </script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      jQuery(document).ready(function ($) {
+        setTimeout(function () {
+          if (localStorage.getItem('isMiniApp') === 'true') {
+            $('.footer-social').hide();
+          }
+        }, 500);
+      });
+    });
+
+  </script>
+  <script defer src="https://www.coolmate.me/js/vendors/jquery.lazy.min.js?v=aniGMsrcl90C3a2sZF"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      jQuery(document).ready(function ($) {
+        $(document).on('DOMNodeInserted', function () {
+          $("img[data-src]").lazy({
+            effect: "fadeIn",
+            threshold: 100,
+            afterLoad: function (element) {
+              $(element).removeAttr('data-src');
+              $(element).removeAttr('style');
+            },
+          });
+        });
+
+        let key_event = 'seagame_event';
+
+      })
+    });
+
+  </script>
+  <div rel-script="event-popup"></div>
+  <script defer src="https://images.dmca.com/Badges/DMCABadgeHelper.min.js"></script>
+
+  <script type="text/javascript">
+    var gr_goal_params = {
+      param_0: '',
+      param_1: '',
+      param_2: '',
+      param_3: '',
+      param_4: '',
+      param_5: ''
+    };
+
+  </script>
+
+
+  <script defer src="https://static.cloudflareinsights.com/beacon.min.js/v652eace1692a40cfa3763df669d7439c1639079717194"
+    integrity="sha512-Gi7xpJR8tSkrpF7aordPZQlW2DLtzUlZcumS8dMQjwDHEnw9I7ZLyiOj/6tZStRBGtGgN6ceN6cMH8z7etPGlw=="
+    data-cf-beacon='{"rayId":"720565589b474d33","token":"deae1a9cab264706a4a0593e09b3f846","version":"2022.6.0","si":100}'
+    crossorigin="anonymous"></script>
+</body>
+
+</html>

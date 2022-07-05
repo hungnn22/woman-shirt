@@ -1,134 +1,62 @@
+import { Options } from '@angular-slider/ngx-slider';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 
+interface Category {
+  value: string;
+  viewValue: string;
+  image: string;
+}
 @Component({
   selector: 'app-size',
   templateUrl: './size.component.html',
   styleUrls: ['./size.component.css']
 })
-export class SizeComponent implements OnInit {
-  height = new FormControl();
-  weight = new FormControl();
-  message = "";
-  sizeH = 0;
-  sizeW = 0;
-  constructor(private modalService: NgbModal) {
+export class SizeComponent {
+  image: string = '';
+  nameProduct="Vui lòng chọn loại sản phẩm..."
+  check = new FormControl();
+  categories: Category[] = [
+    { image: "https://mcdn.coolmate.me/uploads/November2020/31.jpg", value: "2", viewValue: 'Áo dài tay' },
+    { image: "https://mcdn.coolmate.me/image/May2022/mceclip0_5.png", value: "ao-oversize", viewValue: 'Áo oversize' },
+    { image: "https://mcdn.coolmate.me/uploads/March2022/TEE_EXCOOL_(2)_(1).png", value: "excool-tee", viewValue: 'Excool Tee' },
+    { image: "https://mcdn.coolmate.me/uploads/December2021/POLO2x.png", value: "polo", viewValue: '  Áo Polo ' },
+    { image: "https://mcdn.coolmate.me/uploads/December2021/ULTRA_LIGHT2x_(1).png", value: "jacket-ultra-light", viewValue: ' Áo Jacket ultra light' },
+    { image: "https://mcdn.coolmate.me/uploads/December2021/AO_TRE_EM2_copy-0_(1)_(1).png", value: "jacket-kids", viewValue: 'Áo New normal jacket kids ' },
+    { image: "https://mcdn.coolmate.me/uploads/December2021/NNJ2x.png", value: "jacket", viewValue: ' Áo New normal jacket' },
+    { image: "https://mcdn.coolmate.me/uploads/December2021/SO_MI_DAI2x.png", value: "shirt-long", viewValue: ' Áo sơ mi dài tay ' },
+    { image: "https://mcdn.coolmate.me/uploads/December2021/SO_MI_NGAN2x.png", value: "shirt-short", viewValue: ' Áo sơ mi ngắn tay ' },
+    { image: "https://mcdn.coolmate.me/uploads/December2021/MAXCOOL_(1).png", value: "maxcool", viewValue: ' Áo thể thao Cool247' },
+    { image: "https://mcdn.coolmate.me/uploads/December2021/AO_THUN2x.png", value: "tshirt-compact", viewValue: ' Áo thun cổ tròn chất liệu Cotton Compact ' },
+    { image: "https://mcdn.coolmate.me/uploads/December2021/POLO_THE_THAO2x.png", value: "polo-sport", viewValue: ' Áo Polo Thể thao ' },
+    { image: "https://mcdn.coolmate.me/uploads/December2021/TANK_TOP2x.png", value: "tank-top", viewValue: ' Áo Tank Top ' },
+    { image: "https://mcdn.coolmate.me/uploads/December2021/JEANS2x.png", value: "jeans", viewValue: ' Quần Jeans ' },
+    { image: "https://mcdn.coolmate.me/uploads/March2022/REGULAR_JEANS_(1).png", value: "jeans-regular", viewValue: ' Jeans Regular ' },
+    { image: "https://mcdn.coolmate.me/uploads/January2022/2411_(1)_(1).png", value: "jeans-v2", viewValue: ' Quần Jeans V2 ' },
+    { image: "https://mcdn.coolmate.me/uploads/December2021/SORONA_DAI2x_(1)_(1).png", value: "jogger-pants", viewValue: ' Quần dài Daily Pants ' },
+    { image: "https://mcdn.coolmate.me/uploads/December2021/JOGGER_THE_THAO2x_(1).png", value: "jogger-graphene", viewValue: ' Jogger Graphene ' },
+    { image: "https://mcdn.coolmate.me/uploads/December2021/JOGGER_THE_THAO2x_(1).png", value: "jogger-co-dan", viewValue: ' Quần dài Jogger Co dãn ' },
+    { image: "https://mcdn.coolmate.me/uploads/December2021/jogger2x.png", value: "jogger-swearpants", viewValue: ' Quần dài Jogger Sweatpants ' },
+    { image: "https://mcdn.coolmate.me/uploads/December2021/ULTRA_SHORT2x.png", value: "ultra-short-sport", viewValue: ' Quần thể thao Ultra Short ' },
+    { image: "https://mcdn.coolmate.me/uploads/December2021/MAX_ULTRA2x.png", value: "ultra-long-sport", viewValue: ' Quần Max Ultra dáng dài' },
+    { image: "https://mcdn.coolmate.me/uploads/December2021/KAKI2x.png", value: "kaki", viewValue: ' Quần Kaki ' },
+    { image: "https://mcdn.coolmate.me/uploads/December2021/EZ_ACTIV2x.png", value: "easy-active", viewValue: ' Quần Short ' },
+    { image: "https://mcdn.coolmate.me/uploads/December2021/EZ_ACTIV2x.png", value: "easy-active-2", viewValue: ' Easy Active 2 ' },
+    { image: "https://mcdn.coolmate.me/uploads/December2021/TRUNK2x.png", value: "trunk", viewValue: ' Underwear trunk ' },
+    { image: "https://mcdn.coolmate.me/uploads/December2021/BOXER2x.png", value: "brief-boxer", viewValue: ' Underwear brief boxer' },
+    { image: "https://mcdn.coolmate.me/uploads/December2021/BRIEF2x.png", value: "brief", viewValue: ' Underwear brief tam giác ' },
+    { image: "https://mcdn.coolmate.me/uploads/December2021/3_LO_BASIC2x_(1).png", value: "ao-ba-lo", viewValue: ' Áo ba lỗ ' },
+    { image: "https://mcdn.coolmate.me/uploads/December2021/3_LO_BASIC2x_(1).png", value: "ao-ba-lo-cotton", viewValue: ' Áo ba lỗ cotton' },
+    { image: "https://mcdn.coolmate.me/uploads/December2021/KAKI_EXCOOL_RS.png", value: "kaki_excool", viewValue: ' Quần dài Kaki Excool co giãn ' },
+    { image: "https://mcdn.coolmate.me/uploads/December2021/SHORT_9in2x.png", value: "short-form-lining", viewValue: ' Short thể thao 9inch ' },
+    { image: "https://mcdn.coolmate.me/uploads/January2022/QUAN_NGU_(2).png", value: "quan-mac-nha", viewValue: ' Quần mặc nhà ' },
+    { image: "https://mcdn.coolmate.me/image/June2022/mceclip0_92.png", value: "quan-short-5-recycle", viewValue: ' Quần short 5 & quot; recycle ' },
+  ];
 
-  }
-
-  ngOnInit(): void {
-
-  }
-
-
-
-  findSize() {
-    const h = this.height.value;
-    const w = this.weight.value;
-    if (h == "" || w == ""||h==null||w==null) {
-      this.message = "Vui lòng điền đầy đủ thông tin";
-      return;
-    }
-    this.findByHeight();
-    this.findByWeight();
-    console.log("Ban đầu: H:" + this.sizeH + ",W:" + this.sizeW);
-
-    if (this.sizeH === this.sizeW) {
-      this.findMatch()
-      console.log("H:" + this.sizeH + ",W:" + this.sizeW);
-      console.log("Hợp");
-    } else if (this.sizeH > this.sizeW) {
-      this.findByHeight()
-      console.log("H:" + this.sizeH + ",W:" + this.sizeW);
-      console.log("Chiều cao");
-    } else if (this.sizeH < this.sizeW) {
-      this.findByWeight()
-      console.log("H:" + this.sizeH + ",W:" + this.sizeW);
-      console.log("Cân nặng");
-    }
-  }
-
-  findMatch() {
-    const h = this.height.value;
-    const w = this.weight.value;
-    if (h == "" || w == "") {
-      this.message = "(*)Vui lòng điền đầy đủ thông tin";
-      return;
-    }
-    if (h >= 140 && h <= 160 && w >= 40 && w <= 50) {
-      this.message = "(*)Size phù hợp với bạn là Size S"
-    } else if (h > 160 && h <= 165 && w > 50 && w <= 57) {
-      this.message = "(*)Size phù hợp với bạn là Size M"
-    } else if (h > 165 && h <= 170 && w > 57 && w <= 65) {
-      this.message = "(*)Size phù hợp với bạn là Size L"
-    } else if (h > 170 && h <= 175 && w > 65 && w <= 72) {
-      this.message = "(*)Size phù hợp với bạn là Size XL"
-    } else if (h < 190 && h > 176 && w <= 190 && w > 73) {
-      this.message = "(*)Size phù hợp với bạn là Size XXL"
-    } else {
-      this.message = ""
-    }
-
-  }
-
-
-  findByHeight() {
-    const h = this.height.value;
-    const w = this.weight.value;
-    if (h == "" || w == "") {
-      this.message = "(*)Vui lòng điền đầy đủ thông tin";
-      return;
-    }
-    if (h >= 140 && h <= 160) {
-      this.sizeH = 1;
-      this.message = "(*)Size phù hợp với bạn là Size S"
-    } else if (h > 160 && h <= 165) {
-      this.sizeH = 2;
-      this.message = "(*)Size phù hợp với bạn là Size M"
-    } else if (h > 165 && h <= 170) {
-      this.sizeH = 3;
-      this.message = "(*)Size phù hợp với bạn là Size L"
-    } else if (h > 170 && h <= 175) {
-      this.sizeH = 4;
-      this.message = "(*)Size phù hợp với bạn là Size XL"
-    } else if (h > 176 && h < 190) {
-      this.sizeH = 5;
-      this.message = "(*)Size phù hợp với bạn là Size XXL"
-    } else {
-      this.message = ""
-    }
-    console.log(this.message + " " + this.sizeH);
-    console.log("Chiều cao: " + h);
-  }
-
-  findByWeight() {
-    const h = this.height.value;
-    const w = this.weight.value;
-    if (h == "" || w == "") {
-      this.message = "(*)Vui lòng điền đầy đủ thông tin";
-      return;
-    }
-    if (w >= 40 && w <= 50) {
-      this.sizeW = 1;
-
-      this.message = "(*)Size phù hợp với bạn là Size S"
-    } else if (w > 50 && w <= 57) {
-      this.sizeW = 2;
-      this.message = "(*)Size phù hợp với bạn là Size M"
-    } else if (w > 57 && w <= 65) {
-      this.sizeW = 3;
-      this.message = "(*)Size phù hợp với bạn là Size L"
-    } else if (w > 65 && w <= 72) {
-      this.sizeW = 4;
-      this.message = "(*)Size phù hợp với bạn là Size XL"
-    } else if (w <= 90 && w > 73) {
-      this.sizeW = 5;
-      this.message = "(*)Size phù hợp với bạn là Size XXL"
-    } else {
-      this.message = ""
-    }
-    console.log(this.message + " " + this.sizeW);
-    console.log("cân nặng: " + w);
+  uploadImage(item:any){
+    console.log(item);
+    this.image = item.image;
+    this.nameProduct=item.viewValue;
   }
 }

@@ -5,6 +5,7 @@ import AdminLayout from "./layout/AdminLayout";
 import Dashboard from "./page/dashboard/Dashboard";
 import OrderPage from "./page/order/OrderPage";
 import OrderDetailPage from "./page/order/OrderDetailPage";
+import NotificationPage from "./page/notification/NotificationPage";
 
 function App() {
 
@@ -16,7 +17,9 @@ function App() {
           <Route path="" element={<AdminLayout />} >
             <Route path="/" element={<Dashboard />} />
             <Route path='order' element={<OrderPage />} />
-            <Route path='order/:id' element={<OrderDetailPage />} />
+            <Route path='order/:status' element={<OrderPage />} />
+            <Route path='order/detail/:id' element={<OrderDetailPage />} />
+            <Route path='notification' element={<NotificationPage />} />
           </Route>
         </Routes>
         <ToastContainer />

@@ -1,10 +1,53 @@
-import React from 'react'
-import { NavLink } from 'react-router-dom'
+import React, { useState } from 'react'
+import { useEffect } from 'react'
+import { Link, NavLink } from 'react-router-dom'
+import AxiosApi from '../../api/AxiosApi'
 import AuthService from '../../service/AuthService'
+import WsUrl from '../../utils/constants/WsUrl'
 
 const Topbar = () => {
 
+    const [unreadNumber, setUnreadNumber] = useState(0)
+    const [notifications, setNotifications] = useState([])
+
     const name = AuthService.getNameOfCurrentUser()
+
+    const handleLogout = () => {
+        AuthService.logout()
+    }
+
+    useEffect(() => {
+        getNotification()
+    }, [unreadNumber])
+
+    const getNotification = async () => {
+        const res = await AxiosApi.getAuth(WsUrl.ADMIN_NOTIFICATION)
+        if (res) {
+            const { data } = res.data
+            console.log(data);
+            setUnreadNumber(data.unreadNumber)
+            setNotifications(data.notifications)
+        }
+    }
+
+    const readNotification = async () => {
+        if (notifications && unreadNumber > 0) {
+            const dto = notifications.filter(obj => !obj.isRead).map(obj => (obj.id))
+            const res = await AxiosApi.postAuth(WsUrl.ADMIN_NOTIFICATION_READ, dto)
+            if (res) {
+                setUnreadNumber(res.data)
+            }
+        }
+    }
+
+    const handleReadAll = async () => {
+        if (unreadNumber > 0) {
+            const res = await AxiosApi.getAuth(WsUrl.ADMIN_NOTIFICATION_READ_ALL)
+            if (res) {
+                setUnreadNumber(res.data)
+            }
+        }
+    }
 
     return (
         <nav className="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
@@ -30,106 +73,38 @@ const Topbar = () => {
                     </div>
                 </li>
                 <li className="nav-item dropdown no-arrow mx-1">
-                    <a className="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <a onClick={readNotification} className="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i className="fas fa-bell fa-fw" />
-                        <span className="badge badge-danger badge-counter">3+</span>
+                        {unreadNumber > 0 && <span className="badge badge-danger badge-counter">{unreadNumber}</span>}
                     </a>
                     <div className="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
                         <h6 className="dropdown-header">
-                            Alerts Center
+                            Thông báo
                         </h6>
-                        <a className="dropdown-item d-flex align-items-center" href="#">
-                            <div className="mr-3">
-                                <div className="icon-circle bg-primary">
-                                    <i className="fas fa-file-alt text-white" />
+                        {notifications && notifications.map(obj => (
+                            <Link to={`order/detail/${obj.objectTypeId}`} className="dropdown-item d-flex align-items-center bg-light" href="#" key={obj.id}>
+                                <div className="mr-3">
+                                    <div className={obj.div}>
+                                        <i className={obj.icon} />
+                                    </div>
                                 </div>
-                            </div>
-                            <div>
-                                <div className="small text-gray-500">December 12, 2019</div>
-                                <span className="font-weight-bold">A new monthly report is ready to download!</span>
-                            </div>
-                        </a>
-                        <a className="dropdown-item d-flex align-items-center" href="#">
-                            <div className="mr-3">
-                                <div className="icon-circle bg-success">
-                                    <i className="fas fa-donate text-white" />
+                                <div>
+                                    <div className="small text-gray-500">{obj.createdDate}</div>
+                                    <span className={obj.isRead || 'font-weight-bold'} style={{
+                                        lineHeight: '0.2em',
+                                        overflow: 'hidden',
+                                        whiteSpace: 'normal',
+                                        textOverflow: 'ellipsis',
+                                        width: '100%',
+                                        height: '1em'
+                                    }}>{obj.content}</span>
                                 </div>
-                            </div>
-                            <div>
-                                <div className="small text-gray-500">December 7, 2019</div>
-                                $290.29 has been deposited into your account!
-                            </div>
-                        </a>
-                        <a className="dropdown-item d-flex align-items-center" href="#">
-                            <div className="mr-3">
-                                <div className="icon-circle bg-warning">
-                                    <i className="fas fa-exclamation-triangle text-white" />
-                                </div>
-                            </div>
-                            <div>
-                                <div className="small text-gray-500">December 2, 2019</div>
-                                Spending Alert: We've noticed unusually high spending for your account.
-                            </div>
-                        </a>
-                        <a className="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
-                    </div>
-                </li>
-                <li className="nav-item dropdown no-arrow mx-1">
-                    <a className="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i className="fas fa-envelope fa-fw" />
-                        {/* Counter - Messages */}
-                        <span className="badge badge-danger badge-counter">7</span>
-                    </a>
-                    {/* Dropdown - Messages */}
-                    <div className="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="messagesDropdown">
-                        <h6 className="dropdown-header">
-                            Message Center
-                        </h6>
-                        <a className="dropdown-item d-flex align-items-center" href="#">
-                            <div className="dropdown-list-image mr-3">
-                                <img className="rounded-circle" src="img/undraw_profile_1.svg" alt="..." />
-                                <div className="status-indicator bg-success" />
-                            </div>
-                            <div className="font-weight-bold">
-                                <div className="text-truncate">Hi there! I am wondering if you can help me with a
-                                    problem I've been having.</div>
-                                <div className="small text-gray-500">Emily Fowler · 58m</div>
-                            </div>
-                        </a>
-                        <a className="dropdown-item d-flex align-items-center" href="#">
-                            <div className="dropdown-list-image mr-3">
-                                <img className="rounded-circle" src="img/undraw_profile_2.svg" alt="..." />
-                                <div className="status-indicator" />
-                            </div>
-                            <div>
-                                <div className="text-truncate">I have the photos that you ordered last month, how
-                                    would you like them sent to you?</div>
-                                <div className="small text-gray-500">Jae Chun · 1d</div>
-                            </div>
-                        </a>
-                        <a className="dropdown-item d-flex align-items-center" href="#">
-                            <div className="dropdown-list-image mr-3">
-                                <img className="rounded-circle" src="img/undraw_profile_3.svg" alt="..." />
-                                <div className="status-indicator bg-warning" />
-                            </div>
-                            <div>
-                                <div className="text-truncate">Last month's report looks great, I am very happy with
-                                    the progress so far, keep up the good work!</div>
-                                <div className="small text-gray-500">Morgan Alvarez · 2d</div>
-                            </div>
-                        </a>
-                        <a className="dropdown-item d-flex align-items-center" href="#">
-                            <div className="dropdown-list-image mr-3">
-                                <img className="rounded-circle" src="https://source.unsplash.com/Mv9hjnEUHR4/60x60" alt="..." />
-                                <div className="status-indicator bg-success" />
-                            </div>
-                            <div>
-                                <div className="text-truncate">Am I a good boy? The reason I ask is because someone
-                                    told me that people say this to all dogs, even if they aren't good...</div>
-                                <div className="small text-gray-500">Chicken the Dog · 2w</div>
-                            </div>
-                        </a>
-                        <a className="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
+                            </Link>
+                        ))}
+                        <div className='p-2 d-flex justify-content-between'>
+                            <a onClick={handleReadAll} className="small text-left" href="#">Đánh dấu đã đọc tất cả</a>
+                            <Link to='/notification' className="small text-right" href="#">Xem thêm...</Link>
+                        </div>
                     </div>
                 </li>
                 <div className="topbar-divider d-none d-sm-block" />
@@ -152,7 +127,7 @@ const Topbar = () => {
                             Activity Log
                         </a>
                         <div className="dropdown-divider" />
-                        <NavLink to='/login' className="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                        <NavLink to='/login' className="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal" onClick={handleLogout}>
                             <i className="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400" />
                             Đăng xuất
                         </NavLink>

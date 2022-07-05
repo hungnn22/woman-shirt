@@ -155,4 +155,9 @@ public class ProductServiceImpl implements ProductService {
         AuthValidator.checkAdmin(currentUser);
         return repository.productCustomRepository.search4Admin(req);
     }
+
+    @Override
+    public Object searchV2(com.ws.masterserver.dto.customer.product.search.ProductReq req) {
+        return repository.productCustomRepository.searchV2(req);
+    }
 }

@@ -1,41 +1,29 @@
 package com.ws.masterserver.dto.admin.order.detail;
 
-import com.ws.masterserver.utils.base.enum_dto.ColorDto;
-import com.ws.masterserver.utils.base.enum_dto.MaterialDto;
-import com.ws.masterserver.utils.base.enum_dto.SizeDto;
-import com.ws.masterserver.utils.base.enum_dto.TypeDto;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-
-import java.util.List;
-
-/**
- *
- */
+import lombok.NoArgsConstructor;
 
 @Data
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class ItemDto {
-    //productOptionId
+    //productId
     private String id;
 
-    //productId
-    private String productId;
-
-    //product name
     private String name;
 
     private String color;
 
     private String size;
 
-    private String img;
+    private String image;
 
     private String material;
 
     private Long price;
-
-    private String priceFmt;
 
     private Long qty;
 
@@ -43,5 +31,20 @@ public class ItemDto {
 
     private Long total;
 
+    private String priceFmt;
+
     private String totalFmt;
+
+    public ItemDto(String id, String name, String color, String size, String image, String material, Long price, Long qty, String category, Long total) {
+        this.id = id;
+        this.name = name;
+        this.color = color;
+        this.size = size;
+        this.image = image;
+        this.material = material;
+        this.price = price;
+        this.qty = qty;
+        this.category = category;
+        this.total = total;
+    }
 }

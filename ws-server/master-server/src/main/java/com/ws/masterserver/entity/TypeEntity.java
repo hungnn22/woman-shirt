@@ -23,6 +23,7 @@ import java.util.Date;
 public class TypeEntity {
     @Id
     private String id;
+    private String code;
     private String name;
     private Boolean active;
 

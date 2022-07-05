@@ -12,6 +12,10 @@ import java.util.List;
 @Repository
 public interface OrderStatusRepository extends JpaRepository<OrderStatusEntity, String> {
 
+    /**
+     * @param orderId(mã đơn hàng)
+     * @return lịch sử đơn hàng
+     */
     @Query("select new com.ws.masterserver.dto.admin.order.detail.StatusDto(\n" +
             "os.status,\n" +
             "os.createdDate,\n" +
@@ -22,4 +26,22 @@ public interface OrderStatusRepository extends JpaRepository<OrderStatusEntity, 
             "where os.orderId = :orderId\n" +
             "order by os.createdDate")
     List<StatusDto> findHistory(@Param("orderId") String orderId);
+
+    /**
+     * @return số đơn hàng đang cần xử lý
+     */
+    @Query("select count(os)\n" +
+            "from OrderStatusEntity os\n" +
+            "group by os.orderId\n" +
+            "having count(os) = 1")
+    List<Long> countPending();
+
+    /**
+     * @return số đơn hàng đã bị hủy/từ chối trong ngày
+     */
+    @Query("select count(os)\n" +
+            "from OrderStatusEntity os\n" +
+            "where os.status in ('REJECT', 'CANCEL')\n" +
+            "and cast(os.createdDate as date) = cast(current_date as date)")
+    Long countRejectAndCancelToday();
 }

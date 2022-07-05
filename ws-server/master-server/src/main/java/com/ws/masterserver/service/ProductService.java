@@ -16,4 +16,6 @@ public interface ProductService {
     PageData<ProductResponse> search( ProductReq productReq);
 
     PageData<ProductRes> search4Admin(CurrentUser currentUser, ProductReq req);
+
+    Object searchV2(com.ws.masterserver.dto.customer.product.search.ProductReq req);
 }

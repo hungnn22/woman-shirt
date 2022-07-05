@@ -3,6 +3,8 @@ package com.ws.masterserver.config.security.filter;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ws.masterserver.utils.base.WsException;
+import com.ws.masterserver.utils.constants.WsCode;
 import com.ws.masterserver.utils.constants.WsConst;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
@@ -12,6 +14,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
+import org.springframework.web.server.ResponseStatusException;
+
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -48,15 +52,15 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
                     SecurityContextHolder.getContext().setAuthentication(authenticationToken);
                     filterChain.doFilter(request, response);
                 } catch (Exception e) {
-                    response.setHeader("error", e.getMessage());
-                    response.setStatus(HttpStatus.FORBIDDEN.value());
-                    response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-                    HashMap<String, Object> errors = new HashMap<>();
-                    errors.put("statusCode", HttpStatus.FORBIDDEN.value());
-                    errors.put("error", e.getMessage());
-                    errors.put("timeStamp", new Date());
-                    errors.put("path", request.getServletPath());
-                    new ObjectMapper().writeValue(response.getOutputStream(), errors);
+//                    response.setHeader("error", e.getMessage());
+//                    response.setStatus(HttpStatus.FORBIDDEN.value());
+//                    response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+//                    HashMap<String, Object> errors = new HashMap<>();
+//                    errors.put("statusCode", HttpStatus.FORBIDDEN.value());
+//                    errors.put("error", e.getMessage());
+//                    errors.put("timeStamp", new Date());
+//                    errors.put("path", request.getServletPath());
+//                    new ObjectMapper().writeValue(response.getOutputStream(), errors);
                 }
             } else {
                 filterChain.doFilter(request, response);

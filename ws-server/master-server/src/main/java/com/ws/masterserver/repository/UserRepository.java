@@ -1,17 +1,12 @@
 package com.ws.masterserver.repository;
 
-import com.ws.masterserver.dto.admin.user.UserReq;
-import com.ws.masterserver.dto.admin.user.search.UserRes;
 import com.ws.masterserver.dto.customer.user.UserDto;
 import com.ws.masterserver.entity.UserEntity;
 import com.ws.masterserver.utils.base.rest.CurrentUser;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-
-import java.util.List;
 
 @Repository
 public interface UserRepository extends JpaRepository<UserEntity, String> {
@@ -49,5 +44,10 @@ public interface UserRepository extends JpaRepository<UserEntity, String> {
 
     UserEntity findByEmailIgnoreCaseAndActive(String email, Boolean aTrue);
 
-//    List<UserRes> search4Admin(UserReq );
+    /**
+     * @return số người dùng mới trong tuần
+     */
+    @Query("select count(u) from UserEntity u\n" +
+            "where extract('week' from u.createdDate) = extract('week' from current_date)")
+    Long countNewUserThisWeek();
 }

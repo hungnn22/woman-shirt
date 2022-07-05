@@ -26,7 +26,4 @@ public class CartEntity {
     private String userId;
 
     private Integer quantity;
-
-    private Long totalPrice;
-
 }
