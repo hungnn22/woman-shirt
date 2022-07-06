@@ -121,8 +121,7 @@ public class ProductCustomRepositoryImpl implements ProductCustomRepository {
 
     @Override
     public PageData<ProductRes> search4Admin(ProductReq req) {
-        var sql = "";
-        return new PageData<ProductRes>(true);
+        return null;
     }
 
     @Override
@@ -160,21 +159,22 @@ public class ProductCustomRepositoryImpl implements ProductCustomRepository {
             var textSearch = req.getTextSearch().trim().toUpperCase(Locale.ROOT);
             var like = "concat('%', unaccent('" + textSearch +"'), '%')";
             sql += "and (unaccent(upper(p1.name)) like " + like + "\n" +
-                    "or unaccent(upper(ct1.name)) like " + like + ")\n";
+                    "or unaccent(upper(ct1.name)) like " + like + "\n" +
+                    "or unaccent(upper(m1.name)) like " + like + ")\n";
         }
         if (!StringUtils.isNullOrEmpty(req.getMinPrice())) {
             sql += "and po1.po_sub1_min_price >= " + Long.valueOf(req.getMinPrice()) + "\n";
         }
         if (!StringUtils.isNullOrEmpty(req.getMaxPrice())) {
-            sql += "and po1.po_sub1_max_price <= " + Long.valueOf(req.getMaxPrice()) + "\n";
+            sql += "and po1.po_sub1_min_price <= " + Long.valueOf(req.getMaxPrice()) + "\n";
         }
         if (!req.getColorIds().isEmpty()) {
-            sql += "and po2.color_id in " + req.getColorIds().stream().map(o -> "'" + o + "'").collect(Collectors.joining(", ", "(", ")"));
+            sql += "and po2.color_id in " + req.getColorIds().stream().map(o -> "'" + o + "'").collect(Collectors.joining(", ", "(", ")")) + "\n";
         }
         if (!req.getSizeIds().isEmpty()) {
-            sql += "and po2.size_id in " + req.getSizeIds().stream().map(o -> "'" + o + "'").collect(Collectors.joining(", ", "(", ")"));
+            sql += "and po2.size_id in " + req.getSizeIds().stream().map(o -> "'" + o + "'").collect(Collectors.joining(", ", "(", ")")) + "\n";
         }
-        log.info("ProductCustomRepositoryImpl searchV2 sql: ", sql);
+        log.info("ProductCustomRepositoryImpl searchV2 sql: {}", sql);
 
         var query = entityManager.createNativeQuery(sql);
 
@@ -214,8 +214,8 @@ public class ProductCustomRepositoryImpl implements ProductCustomRepository {
                 default:
                     compare = Comparator.comparing(ProductDto::getCreatedDate);
             }
-
             productDtos.sort(compare);
+
             if (StringUtils.isNullOrEmpty(req.getPageReq().getSortDirection()) || "desc".equals(req.getPageReq().getSortDirection())) {
                 Collections.reverse(productDtos);
             }
@@ -230,13 +230,15 @@ public class ProductCustomRepositoryImpl implements ProductCustomRepository {
             }
 
             var start = page * pageSize;
+            if (start > totalElements) {
+                start = totalElements.intValue();
+            }
             var end = start + pageSize;
-            if (end >= totalElements - 1) {
+            if (end > totalElements) {
                 end = totalElements.intValue();
             }
 
             res = productDtos.subList(start, end);
-
         }
 
         return PageData.setResult(res, req.getPageReq().getPage(), req.getPageReq().getPageSize(), totalElements);
