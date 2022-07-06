@@ -1,4 +1,4 @@
-package com.ws.masterserver.utils.validate;
+package com.ws.masterserver.utils.validator;
 
 import com.ws.masterserver.utils.base.WsException;
 import com.ws.masterserver.utils.constants.WsCode;

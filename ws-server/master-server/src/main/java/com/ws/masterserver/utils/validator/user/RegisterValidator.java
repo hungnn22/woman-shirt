@@ -1,9 +1,9 @@
-package com.ws.masterserver.utils.validate.user;
+package com.ws.masterserver.utils.validator.user;
 
 import com.ws.masterserver.dto.customer.user.RegisterDto;
 import com.ws.masterserver.utils.common.StringUtils;
 import com.ws.masterserver.utils.constants.WsConst;
-import com.ws.masterserver.utils.validate.ValidateUtils;
+import com.ws.masterserver.utils.validator.ValidateUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 

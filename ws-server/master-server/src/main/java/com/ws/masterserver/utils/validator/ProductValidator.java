@@ -1,4 +1,4 @@
-package com.ws.masterserver.utils.validate;
+package com.ws.masterserver.utils.validator;
 
 import com.ws.masterserver.dto.admin.product.ProductDto;
 
