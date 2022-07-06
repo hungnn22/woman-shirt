@@ -2,7 +2,6 @@ package com.ws.masterserver.service.impl;
 
 import com.ws.masterserver.dto.admin.notification.NotificationDto;
 import com.ws.masterserver.dto.admin.notification.NotificationRes;
-import com.ws.masterserver.entity.NotificationEntity;
 import com.ws.masterserver.entity.UserNotificationEntity;
 import com.ws.masterserver.service.NotificationService;
 import com.ws.masterserver.utils.base.WsRepository;
@@ -11,7 +10,7 @@ import com.ws.masterserver.utils.base.rest.ResData;
 import com.ws.masterserver.utils.common.NotificationUtils;
 import com.ws.masterserver.utils.common.UidUtils;
 import com.ws.masterserver.utils.constants.enums.RoleEnum;
-import com.ws.masterserver.utils.validate.AuthValidator;
+import com.ws.masterserver.utils.validator.AuthValidator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
@@ -22,7 +21,6 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 
 @Service

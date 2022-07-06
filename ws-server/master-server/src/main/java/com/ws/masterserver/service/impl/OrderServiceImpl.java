@@ -22,7 +22,7 @@ import com.ws.masterserver.utils.base.rest.CurrentUser;
 import com.ws.masterserver.utils.base.rest.ResData;
 import com.ws.masterserver.utils.base.rest.PageData;
 import com.ws.masterserver.utils.constants.enums.StatusEnum;
-import com.ws.masterserver.utils.validate.AuthValidator;
+import com.ws.masterserver.utils.validator.AuthValidator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;

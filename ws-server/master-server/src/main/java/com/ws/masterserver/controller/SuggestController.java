@@ -1,8 +1,7 @@
 package com.ws.masterserver.controller;
 
-import com.ws.masterserver.dto.customer.suggest.SizeDto;
+import com.ws.masterserver.dto.customer.suggest.SuggestDto;
 import com.ws.masterserver.utils.base.WsService;
-import com.ws.masterserver.utils.base.rest.PageData;
 import com.ws.masterserver.utils.base.rest.ResData;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -22,8 +21,8 @@ public class SuggestController {
         return ResponseEntity.ok(ResData.ok(service.suggestService.getCategories()));
     }
 
-    @GetMapping("/size")
-    public ResponseEntity<Object> getSizeAvailable(SizeDto dto) {
+    @GetMapping("/search")
+    public ResponseEntity<Object> getSizeAvailable(SuggestDto dto) {
         return ResponseEntity.ok(service.suggestService.getSizeAvailable(dto));
     }
 
