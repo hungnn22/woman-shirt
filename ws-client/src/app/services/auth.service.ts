@@ -17,10 +17,7 @@ const AUTH_API = environment.baseUrl;
 })
 export class AuthService {
 
-
-  helper = new JwtHelperService();
-
-  constructor(private http: HttpClient){ }
+  constructor(private helper: JwtHelperService,private http: HttpClient){ }
 
   login(formData: any): Observable<any> {
     return this.http.post(AUTH_API + 'login',formData, httpOptions);

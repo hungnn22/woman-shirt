@@ -10,5 +10,4 @@ import java.util.List;
 public interface ProductOptionService {
     ResData<String> findProductOptionId(ProductOptionIdReq req);
     ResData<List<ColorResponse>> findColorNameBySize(SizeEnum size);
-   // ResData<List<ColorResponse>> findColorNameBySize(String size);
 }

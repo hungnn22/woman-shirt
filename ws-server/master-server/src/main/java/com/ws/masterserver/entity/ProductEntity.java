@@ -35,9 +35,6 @@ public class ProductEntity {
     @Column(name = "material_id")
     private String materialId;
 
-    @Column(name = "type_id")
-    private String typeId;
-
     private String des;
 
     private Boolean active;

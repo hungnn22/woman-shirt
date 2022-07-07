@@ -1,6 +1,8 @@
 package com.ws.masterserver.service.impl;
 
 import com.ws.masterserver.dto.customer.cart.request.CartRequest;
+import com.ws.masterserver.dto.customer.cart.response.CartResponse;
+import com.ws.masterserver.dto.customer.cart.response.ListCartResponse;
 import com.ws.masterserver.entity.CartEntity;
 import com.ws.masterserver.service.CartService;
 import com.ws.masterserver.utils.base.WsRepository;
@@ -14,8 +16,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
-
+import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 
@@ -43,10 +46,6 @@ public class CartServiceImpl implements CartService {
                 CartEntity cart = cartOptional.get();
                 int updateQuantity = cart.getQuantity() + cartRequest.getQuantity();
 
-                if(productOptionEntity.getQty() < updateQuantity){
-                    throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format(WsConst.Messages.INVALID, WsConst.Nouns.QTY_VI));
-                }
-
                 cart.setQuantity(updateQuantity);
 
                 repository.cartRepository.save(cart);
@@ -68,4 +67,76 @@ public class CartServiceImpl implements CartService {
 
         throw new ResponseStatusException(HttpStatus.FORBIDDEN, WsConst.Messages.FORBIDDEN);
     }
+
+    @Override
+    //public ResData<List<CartResponse>> getListCart(CurrentUser currentUser) {
+    public ResData<ListCartResponse> getListCart(CurrentUser currentUser) {
+        if (currentUser.getRole().equals(RoleEnum.ROLE_CUSTOMER)) {
+            List<CartResponse> cartList = repository.cartRepository.getListCart(currentUser.getId());
+
+            Long totalPrice = cartList.stream().mapToLong(i -> i.getPrice() * i.getQuantity()).sum();
+
+            ListCartResponse cartResponse = ListCartResponse.builder()
+                    .carts(cartList)
+                    .totalPrice(totalPrice)
+                    .build();
+
+            return new ResData<>(cartResponse,WsCode.OK);
+        }
+
+        throw new ResponseStatusException(HttpStatus.FORBIDDEN, WsConst.Messages.FORBIDDEN);
+    }
+
+    @Override
+    public ResData<String> updateCart(CurrentUser currentUser, CartRequest cartRequest) {
+        if (currentUser.getRole().equals(RoleEnum.ROLE_CUSTOMER)) {
+            var productOptionEntity = repository.productOptionRepository.findById(cartRequest.getProductOptionId())
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, String.format(WsConst.Messages.NOT_FOUND, WsConst.Nouns.PRODUCT_OPTION_VI.toLowerCase(Locale.ROOT))));
+
+            if(productOptionEntity.getQty() < cartRequest.getQuantity()){
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format(WsConst.Messages.INVALID, WsConst.Nouns.QTY_VI));
+            }
+
+            Optional<CartEntity> cartOptional = repository.cartRepository.findByUserIdAndAndProductOptionId(currentUser.getId(), cartRequest.getProductOptionId());
+
+            if(cartOptional.isPresent()){
+                CartEntity cart = cartOptional.get();
+                int quantity = cartRequest.getQuantity();
+                cart.setQuantity(quantity);
+                repository.cartRepository.save(cart);
+                return new ResData<>("Update quantity successfully !!!", WsCode.OK);
+            }
+        }
+        throw new ResponseStatusException(HttpStatus.FORBIDDEN, WsConst.Messages.FORBIDDEN);
+    }
+
+    @Override
+    @Transactional
+    public ResData<String> deleteItemInCart(CurrentUser currentUser, String productOptionId) {
+        if (currentUser.getRole().equals(RoleEnum.ROLE_CUSTOMER)) {
+            var productOptionEntity = repository.productOptionRepository.findById(productOptionId)
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, String.format(WsConst.Messages.NOT_FOUND, WsConst.Nouns.PRODUCT_OPTION_VI.toLowerCase(Locale.ROOT))));
+
+            try {
+                Optional<CartEntity> cartOptional = repository.cartRepository.findByUserIdAndAndProductOptionId(currentUser.getId(), productOptionId);
+                if(cartOptional.isPresent()) {
+                    repository.cartRepository.deleteByProductOptionId(productOptionId);
+                    return new ResData<>("Đã xóa thành công !!!", WsCode.OK);
+                }
+            }catch (Exception e){
+                log.info(" ----------------- "+e);
+            }
+        }
+        throw new ResponseStatusException(HttpStatus.FORBIDDEN, WsConst.Messages.FORBIDDEN);
+    }
+
+    @Override
+    public ResData<Integer> countCartItem(CurrentUser currentUser) {
+        if (currentUser.getRole().equals(RoleEnum.ROLE_CUSTOMER)) {
+            Integer item = repository.cartRepository.countItemInCart(currentUser.getId());
+            return new ResData<>(item,WsCode.OK);
+        }
+        throw new ResponseStatusException(HttpStatus.FORBIDDEN, WsConst.Messages.FORBIDDEN);
+    }
+
 }

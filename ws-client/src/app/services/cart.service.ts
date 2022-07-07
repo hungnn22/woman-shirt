@@ -39,4 +39,16 @@ export class CartService {
     return this.http.post(AUTH_API + 'product-option/findId', {colorId,size}, httpOptions);
   }
 
+  getListCart(){
+    return this.http.get(AUTH_API + 'cart/listCart', requestOptions);
+  }
+
+  updateCart(productOptionId: string, quantity: number){
+    return this.http.post(AUTH_API + 'cart/update-cart', {productOptionId,quantity}, requestOptions);
+  }
+
+  deleteCart(productOptionId: string){
+    return this.http.delete(AUTH_API + 'cart/delete/' + productOptionId, requestOptions);
+  }
+
 }

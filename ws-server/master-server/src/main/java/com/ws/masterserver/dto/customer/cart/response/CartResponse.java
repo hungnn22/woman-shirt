@@ -1,4 +1,5 @@
 package com.ws.masterserver.dto.customer.cart.response;
+import com.ws.masterserver.utils.constants.enums.SizeEnum;
 import lombok.*;
 
 import java.util.List;
@@ -10,6 +11,11 @@ import java.util.List;
 public class CartResponse {
     private String cartId;
     private String productOptionId;
-    private List<CartItem> cartItems;
-    private String totalPrice;
+    private String productName;
+    private SizeEnum sizeName;
+    private String colorName;
+    private Integer quantity;
+    private Long price;
+    private String image;
+    private Long subtotal;
 }

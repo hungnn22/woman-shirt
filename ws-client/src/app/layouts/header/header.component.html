@@ -31,7 +31,7 @@
 
                           </li>
                           <li><a href="about.html">VỀ CHÚNG TÔI</a></li>
-                          <li><a href="contact.html">LIÊN HỆ</a></li>
+                          <li><a routerLink="/contact">LIÊN HỆ</a></li>
                       </ul>
                   </nav>
               </div>
@@ -47,64 +47,43 @@
                           </form>
                       </div>
                   </div>
-                  <div class="same-style account-satting">
+                  <div class="same-style account-satting header-tool user">
                       <a class="account-satting-active" href="#"><i class="pe-7s-user-female"></i></a>
-                      <div class="account-dropdown">
-                          <ul>
-                              <li><a href="login-register.html">Login</a></li>
-                              <li><a href="login-register.html">Register</a></li>
-                              <li><a routerLink="/wishlist">Wishlist  </a></li>
-                              <li><a href="my-account.html">my account</a></li>
-                          </ul>
+                      <div *ngIf="!isLoggedIn">
+                        <ul class="account_header">
+                          <li>
+                            <a routerLink="/sign-up">Đăng ký</a>
+                          </li>
+                          <li>
+                            <a routerLink="/sign-in">Đăng nhập</a>
+                          </li>
+                        </ul>
                       </div>
+
+                      <div *ngIf="isLoggedIn">
+                        <ul class="account_header">
+                          <li>
+                            <a routerLink="/">Tài khoản</a>
+                          </li>
+                          <li>
+                            <a routerLink="/">Đổi mật khẩu</a>
+                          </li>
+                          <li>
+                            <a (click)="logout()">Đăng xuất</a>
+                          </li>
+                        </ul>
+                      </div>
+
                   </div>
-                  <div class="same-style header-wishlist">
+                    <div class="same-style header-wishlist" *ngIf="isLoggedIn">
                       <a routerLink="/wishlist"><i class="pe-7s-like"></i></a>
-                  </div>
-                  <div class="same-style cart-wrap">
-                      <button class="icon-cart">
+                    </div>
+                    <div class="same-style cart-wrap" *ngIf="isLoggedIn">
+                      <button class="icon-cart" routerLink="/cart">
                           <i class="pe-7s-shopbag"></i>
-                          <span class="count-style">02</span>
+                          <span class="count-style">2</span>
                       </button>
-                      <div class="shopping-cart-content">
-                          <ul>
-                              <li class="single-shopping-cart">
-                                  <div class="shopping-cart-img">
-                                      <a href="#"><img alt="" src="assets/img/cart/cart-1.png"></a>
-                                  </div>
-                                  <div class="shopping-cart-title">
-                                      <h4><a href="#">T- Shart & Jeans </a></h4>
-                                      <h6>Qty: 02</h6>
-                                      <span>$260.00</span>
-                                  </div>
-                                  <div class="shopping-cart-delete">
-                                      <a href="#"><i class="fa fa-times-circle"></i></a>
-                                  </div>
-                              </li>
-                              <li class="single-shopping-cart">
-                                  <div class="shopping-cart-img">
-                                      <a href="#"><img alt="" src="assets/img/cart/cart-2.png"></a>
-                                  </div>
-                                  <div class="shopping-cart-title">
-                                      <h4><a href="#">T- Shart & Jeans </a></h4>
-                                      <h6>Qty: 02</h6>
-                                      <span>$260.00</span>
-                                  </div>
-                                  <div class="shopping-cart-delete">
-                                      <a href="#"><i class="fa fa-times-circle"></i></a>
-                                  </div>
-                              </li>
-                          </ul>
-                          <div class="shopping-cart-total">
-                              <h4>Shipping : <span>$20.00</span></h4>
-                              <h4>Total : <span class="shop-total">$260.00</span></h4>
-                          </div>
-                          <div class="shopping-cart-btn btn-hover text-center">
-                              <a class="default-btn" href="cart-page.html">view cart</a>
-                              <a class="default-btn" href="checkout.html">checkout</a>
-                          </div>
-                      </div>
-                  </div>
+                    </div>
               </div>
           </div>
       </div>
@@ -112,14 +91,14 @@
           <div class="mobile-menu">
               <nav id="mobile-menu-active">
                   <ul class="menu-overflow">
-                      <li><a href="index.html">HOME</a>
+                      <li><a href="index.html">TRANG CHỦ</a>
                       </li>
-                      <li><a href="shop.html">Shop</a>
+                      <li><a href="shop.html">SẢN PHẨM</a>
                       </li>
-                      <li><a href="shop.html">Collection</a></li>
-                      <li><a href="#">Pages</a>
+                      <li><a href="shop.html">BỘ SƯU TẬP</a></li>
+                      <li><a href="#">TRANG</a>
                           <ul>
-                              <li><a href="about.html">about us</a></li>
+                              <li><a href="about.html">VỀ CHÚNG TÔI</a></li>
                               <li><a href="cart-page.html">cart page</a></li>
                               <li><a href="checkout.html">checkout </a></li>
                               <li><a href="wishlist.html">wishlist </a></li>

@@ -44,8 +44,9 @@ export class ProductDetailComponent implements OnInit {
   }
 
   getProductDetail(){
-    this.product.getProductDetails(this.id).subscribe(
-      (response:any) => {
+    //this.product.getProductDetails(this.id).subscribe({
+    this.product.getProductDetails('3166675c-8def-42a0-b9f6-975a25738ce8').subscribe({
+      next: (response:any) => {
         console.log('data : ',response.data)
         this.productDetail = response.data;
         this.reviews = response.data.review;
@@ -60,14 +61,6 @@ export class ProductDetailComponent implements OnInit {
         this.sizes = [...new Set(sizeName)];
         console.log('size: ', this.sizes);
 
-        // const colorName = this.productOptions.map((item) => {
-        //   return item.colorName;
-        // })
-
-        // this.colors = [...new Set(colorName)];
-
-        // console.log('color: ', this.colors);
-
         const image = this.productOptions.map((item) => {
           return item.image;
         })
@@ -75,10 +68,10 @@ export class ProductDetailComponent implements OnInit {
         this.images = [...new Set(image)];
         console.log('images: ', this.images);
       },
-      err => {
-        console.log('err : ',err)
+      error: (err) => {
+        console.log('err : ',err);
       }
-    );
+    });
   }
 
   addToCart(){
@@ -92,23 +85,24 @@ export class ProductDetailComponent implements OnInit {
       return;
     }
 
-    this.cart.findProductOptionId(this.colorSelected, this.sizeSelected).subscribe(
-      (response:any) => {
-
+    this.cart.findProductOptionId(this.colorSelected, this.sizeSelected).subscribe({
+      next: (response:any) => {
         this.productOptionId = response.data;
-        console.log('response: ', response.data);
         console.log('productOptionId: ', this.productOptionId);
-        this.cart.addToCart(this.productOptionId, this.quantity).subscribe(
-          (response:any) => {
+        this.cart.addToCart(this.productOptionId, this.quantity).subscribe({
+          next: (response) => {
             console.log('response: ', response);
             this.toastr.success('Sản phẩm đã được thêm vào giỏ hàng !!');
             this.router.navigate(['/cart']);
+          },error: (err) => {
+            console.log('err add to cart : ',err);
           }
-        )
+        })
       },
-      err => {
-        console.log('err : ',err)
-      })
+      error: (err) => {
+        console.log('err findProductOption : ',err);
+      }
+    });
   }
 
   increase() {
@@ -125,14 +119,14 @@ export class ProductDetailComponent implements OnInit {
 
   changeSize(e:any){
     this.sizeSelected = e.target.value;
-    this.cart.getListColorBySize(this.sizeSelected).subscribe(
-      (response:any) => {
+    this.cart.getListColorBySize(this.sizeSelected).subscribe({
+      next:(response:any) => {
         this.colors = response.data;
       },
-      err => {
+      error: (err) => {
         console.log('err : ',err)
       }
-    )
+    });
   }
 
   changeColor(e: any){

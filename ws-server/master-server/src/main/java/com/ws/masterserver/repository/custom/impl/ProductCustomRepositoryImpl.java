@@ -88,6 +88,8 @@ public class ProductCustomRepositoryImpl implements ProductCustomRepository {
         var query = entityManager.createQuery(jpql);
         var totalElements = 0L;
         if (Boolean.FALSE.equals(query.getResultList().isEmpty())) totalElements = query.getResultList().size();
+
+
         query.setFirstResult(req.getPageReq().getPage() * req.getPageReq().getPageSize());
         query.setMaxResults(req.getPageReq().getPageSize());
 

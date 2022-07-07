@@ -306,12 +306,12 @@
 
                   <div class="pro-details-quality">
                     <div class="cart-plus-minus">
-                      <div class="dec qtybutton"><button (click)="decrease()">-</button></div>
-                        <input type="number" min="0" [(ngModel)]="quantity" [value]="quantity" class="cart-plus-minus-box">
-                      <div class="inc qtybutton"><button (click)="increase()">+</button></div>
+                      <div (click)="decrease()" class="dec qtybutton">-</div>
+                        <input type="number" min="1" name="quantity" [(ngModel)]="quantity" [value]="quantity" class="cart-plus-minus-box">
+                      <div (click)="increase()" class="inc qtybutton">+</div>
                     </div>
                       <div class="pro-details-cart btn-hover">
-                          <a href="#">Thêm vào giỏ hàng</a>
+                          <a (click)="addToCart()">Thêm vào giỏ hàng</a>
                       </div>
                       <div class="pro-details-wishlist">
                           <a href="#"><i class="fa fa-heart-o"></i></a>
