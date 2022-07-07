@@ -16,5 +16,5 @@ public class NotificationRes {
     /**
      * so thong bao chua doc
      */
-    private Integer unreadNumber;
+    private Long unreadNumber;
 }

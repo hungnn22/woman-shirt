@@ -1,3 +1,4 @@
+import { SizeComponent } from './components/shop/size/size.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './components/home/home.component';
@@ -18,6 +19,8 @@ const routes: Routes = [
   { path:'contact', component: ContactComponent},
   { path:'wishlist', component: WishListComponent,canActivate: [AuthGuard] },
   { path:'shop', component: ShopComponent},
+  { path:'size', component: SizeComponent},
+
   { path: '',
     loadChildren: () => import('./components/authentication/authentication.module').then(m => m.AuthenticationModule)
   }

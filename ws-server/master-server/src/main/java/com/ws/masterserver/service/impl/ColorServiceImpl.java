@@ -10,7 +10,7 @@ import com.ws.masterserver.utils.base.rest.ResData;
 import com.ws.masterserver.utils.common.JsonUtils;
 import com.ws.masterserver.utils.common.UidUtils;
 import com.ws.masterserver.utils.constants.WsCode;
-import com.ws.masterserver.utils.validate.AuthValidator;
+import com.ws.masterserver.utils.validator.AuthValidator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

@@ -18,8 +18,7 @@ public class SizeEntity {
     @Id
     private String id;
 
-    @Enumerated(EnumType.STRING)
-    private SizeEnum name;
+    private String name;
 
     private String code;
 }

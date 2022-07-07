@@ -1,6 +1,5 @@
 package com.ws.masterserver.dto.admin.order.detail;
 
-import com.ws.masterserver.utils.constants.enums.SizeEnum;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,7 +17,7 @@ public class ItemDto {
 
     private String color;
 
-    private SizeEnum size;
+    private String size;
 
     private String image;
 
@@ -36,7 +35,7 @@ public class ItemDto {
 
     private String totalFmt;
 
-    public ItemDto(String id, String name, String color, SizeEnum size, String image, String material, Long price, Long qty, String category, Long total) {
+    public ItemDto(String id, String name, String color, String size, String image, String material, Long price, Long qty, String category, Long total) {
         this.id = id;
         this.name = name;
         this.color = color;

@@ -18,7 +18,9 @@ public enum WsCode {
     PRODUCT_NOT_FOUND("400", "Không tìm thấy chất liệu sản phẩm!"),
     INTERNAL_SERVER("500", "Hệ thống đang bị gián đoạn! Xin vui lòng thử lại sau"),
     BAD_REQUEST("400", "Dữ liệu không hợp lệ!"),
-    MUST_LOGIN("400", "Vui lòng đăng nhập");
+    MUST_LOGIN("400", "Vui lòng đăng nhập"),
+    SIZE_SUGGEST_NOT_FOUND("400", "Không tìm thấy size phù hợp");
+
 
 
     private final String code;

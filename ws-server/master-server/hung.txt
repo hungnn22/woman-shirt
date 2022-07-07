@@ -38,3 +38,39 @@ from orders o1
 where 1 = 1
 
 ------------------------------------------------------------------------------------------------------------------------
+
+select new com.ws.masterserver.dto.customer.product.search.ProductSubDto(
+p1.id,
+p1.name,
+po1.poSub1MinPrice,
+po2.poSub2MaxPrice,
+m1.name,
+ct1.name,
+p1.des,
+t1.name)
+from ProductEntity p1
+left join (
+select poSub1.productId as poSub1ProductId,
+min(poSub1.price) as poSub1MinPrice
+from ProductOptionEntity poSub1
+group by poSub1.productId) po1 on po1.poSub1ProductId = p1.id
+left join (
+select poSub2.productId as poSub2ProductId,
+max(poSub2.price) as poSub2MaxPrice
+from ProductOptionEntity poSub2
+group by poSub2.productId) po2 on po2.poSub1ProductId = p1.id
+left join MaterialEntity m1 on m1.id = p1.materialId
+left join CategoryEntity ct1 on ct1.id = p1.categoryId
+left join TypeEntity t1 on t1.id = ct1.TypeId
+left join ProductOptionEntity po3 on po3.productId = p1.id
+left join SizeEntity s1 on s1.id = po3.sizeId
+left join ColorEntity c1 on c1.id = po3.colorId
+where (p1.name is not null
+or upper(unaccent(p1.name)) like :textSearch
+or ct1.name is not null
+or upper(unaccent(ct1.name)) like :textSearch)
+and (po1.poSub1MinPrice is null or po1.poSub1MinPrice >= :minPrice)
+and (po2.poSub2MaxPrice is null or po2.poSub2MaxPrice <= :maxPrice)
+and (po3.colorId is not null or po3.colorId in :colorIds)
+and (po3.sizeId is not null or po3.sizeId in :sizeIds)
+order by p1.createdDate asc

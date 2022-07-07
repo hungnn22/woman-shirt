@@ -18,8 +18,8 @@ import com.ws.masterserver.utils.constants.WsCode;
 import com.ws.masterserver.utils.constants.WsConst;
 import com.ws.masterserver.utils.base.rest.CurrentUser;
 import com.ws.masterserver.utils.base.rest.ResData;
-import com.ws.masterserver.utils.validate.AuthValidator;
-import com.ws.masterserver.utils.validate.ProductValidator;
+import com.ws.masterserver.utils.validator.AuthValidator;
+import com.ws.masterserver.utils.validator.ProductValidator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -154,5 +154,10 @@ public class ProductServiceImpl implements ProductService {
     public PageData<ProductRes> search4Admin(CurrentUser currentUser, ProductReq req) {
         AuthValidator.checkAdmin(currentUser);
         return repository.productCustomRepository.search4Admin(req);
+    }
+
+    @Override
+    public Object searchV2(com.ws.masterserver.dto.customer.product.search.ProductReq req) {
+        return repository.productCustomRepository.searchV2(req);
     }
 }

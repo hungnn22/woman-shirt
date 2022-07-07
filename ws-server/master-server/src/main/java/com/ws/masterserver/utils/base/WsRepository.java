@@ -30,6 +30,11 @@ public class WsRepository {
     public final CartRepository cartRepository;
     public final NotificationRepository notificationRepository;
     public final UserNotificationRepository userNotificationRepository;
+    public final SizeRepository sizeRepository;
+    public final SuggestRepository suggestRepository;
+    public final BodyHeightRepository bodyHeightRepository;
+    public final BodyWeightRepository bodyWeightRepository;
+
     /** custom */
     public final CategoryCustomRepository categoryCustomRepository;
     public final OrderCustomRepository orderCustomRepository;

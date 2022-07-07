@@ -1,5 +1,6 @@
 package com.ws.masterserver.dto.admin.notification;
 
+import com.ws.masterserver.utils.constants.enums.ObjectTypeEnum;
 import lombok.Builder;
 import lombok.Data;
 
@@ -12,4 +13,6 @@ public class NotificationDto {
     private String createdDate;
     private String div;
     private String icon;
+    private ObjectTypeEnum objectType;
+    private String objectTypeId;
 }

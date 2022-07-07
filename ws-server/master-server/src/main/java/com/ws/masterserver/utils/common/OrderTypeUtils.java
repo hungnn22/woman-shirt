@@ -11,7 +11,7 @@ public class OrderTypeUtils {
             var orderType = OrderTypeEnum.valueOf(input);
             return TypeDto.builder()
                     .code(orderType.name())
-                    .tittle(orderType.getTittle())
+                    .title(orderType.getTitle())
                     .name(orderType.getName())
                     .build();
         } catch (Exception e) {
@@ -25,7 +25,7 @@ public class OrderTypeUtils {
 
             return TypeDto.builder()
                     .code(orderType.name())
-                    .tittle(orderType.getTittle())
+                    .title(orderType.getTitle())
                     .name(orderType.getName())
                     .build().getName()  + (payed ? "(Đã thanh toán)" : "(Chưa thanh toán)");
         } catch (Exception e) {
