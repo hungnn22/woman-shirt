@@ -1,3 +1,4 @@
+import { SizeService } from './../../../services/size.service';
 import { map, Observable, startWith } from 'rxjs';
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
@@ -13,6 +14,11 @@ interface Category {
   styleUrls: ['./size.component.css']
 })
 export class SizeComponent implements OnInit {
+
+  constructor(private size: SizeService,) {
+
+  }
+
   nameControl = new FormControl('');
   category: Category[] = [
     { image: "https://mcdn.coolmate.me/uploads/November2020/31.jpg", value: "2", viewValue: 'Áo dài tay' },
@@ -54,8 +60,9 @@ export class SizeComponent implements OnInit {
   image = [];
   filteredOptions: Observable<string[]> | undefined;
   ngOnInit(): void {
-
+    var a =this.getCategoryProduct();
   }
+
   formatLabel(value: number) {
     if (value >= 1000) {
       return Math.round(value / 1000) + 'k';
@@ -73,5 +80,7 @@ export class SizeComponent implements OnInit {
     this.image = item.image;
     this.nameProduct = item.viewValue;
   }
-
+  getCategoryProduct() {
+    this.size.getCategoryProduct();
+  }
 }
