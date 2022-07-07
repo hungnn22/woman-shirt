@@ -26,5 +26,4 @@ public class WsService {
     public final SuggestService suggestService;
     public final DashboardService dashboardService;
     public final NotificationService notificationService;
-    public final WebSocketService webSocketService;
 }

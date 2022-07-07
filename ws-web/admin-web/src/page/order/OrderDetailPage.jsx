@@ -59,7 +59,7 @@ const OrderDetailPage = () => {
                                 </thead>
                                 <tbody>
                                     {detail.items && detail.items.map((obj, index) => (
-                                        <tr key={obj.id}>
+                                        <tr key={index}>
                                             <td className='text-center'>{index + 1}</td>
                                             <td>{obj.name}</td>
                                             <td>{obj.priceFmt}</td>
@@ -86,7 +86,7 @@ const OrderDetailPage = () => {
                                     </thead>
                                     <tbody>
                                         {detail.promotions.map((obj, index) => (
-                                            <tr key={obj.id}>
+                                            <tr key={index}>
                                                 <td className='text-center'>{index + 1}</td>
                                                 <td>{obj.name}</td>
                                                 <td>{obj.voucher}</td>

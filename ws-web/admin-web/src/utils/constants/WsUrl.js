@@ -29,6 +29,7 @@ export default {
     ADMIN_NOTIFICATION_TOP3: '/admin/notification/top3',
     ADMIN_NOTIFICATION_SEARCH: '/admin/notification/search',
     ADMIN_NOTIFICATION_READ_ALL: '/admin/notification/read-all',
+    ADMIN_NOTIFICATION_READ: '/admin/notification/read',
 
-    ADMIN_WEB_SOCKET: 'http://localhost:8080/ws'
+    ADMIN_WEB_SOCKET: 'http://localhost:8080/ws',
 }
