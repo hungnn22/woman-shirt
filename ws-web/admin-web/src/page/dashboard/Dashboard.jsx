@@ -37,10 +37,6 @@ const Dashboard = () => {
             }
         }
 
-        const getNotification = async () => {
-            const res = await AxiosApi.getAuth(WsUrl.ADMIN_NOTIFICATION)
-        }
-
         checkUser()
         getDashboard()
         

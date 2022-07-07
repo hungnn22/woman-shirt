@@ -4,6 +4,7 @@ import { Link, NavLink } from 'react-router-dom'
 import AxiosApi from '../../api/AxiosApi'
 import AuthService from '../../service/AuthService'
 import WsUrl from '../../utils/constants/WsUrl'
+import SockJsClient from 'react-stomp'
 
 const Topbar = () => {
 
@@ -21,10 +22,9 @@ const Topbar = () => {
     }, [unreadNumber])
 
     const getNotification = async () => {
-        const res = await AxiosApi.getAuth(WsUrl.ADMIN_NOTIFICATION)
+        const res = await AxiosApi.getAuth(WsUrl.ADMIN_NOTIFICATION_TOP3)
         if (res) {
             const { data } = res.data
-            console.log(data);
             setUnreadNumber(data.unreadNumber)
             setNotifications(data.notifications)
         }
@@ -49,8 +49,27 @@ const Topbar = () => {
         }
     }
 
+    const onConnected = () => {
+        console.log("Connected!!")
+    }
+
+    const onMessageReceived = payload => {
+        console.log("payload: ", payload)
+        if (payload) {
+            getNotification()
+        }
+    }
+
     return (
         <nav className="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+            <SockJsClient
+                url={WsUrl.ADMIN_WEB_SOCKET}
+                topics={['/topic/admin']}
+                onConnect={onConnected}
+                onDisconnect={console.log("Disconnected!")}
+                onMessage={onMessageReceived}
+
+            />
             <button id="sidebarToggleTop" className="btn btn-link d-md-none rounded-circle mr-3">
                 <i className="fa fa-bars" />
             </button>
@@ -90,14 +109,13 @@ const Topbar = () => {
                                 </div>
                                 <div>
                                     <div className="small text-gray-500">{obj.createdDate}</div>
-                                    <span className={obj.isRead || 'font-weight-bold'} style={{
-                                        lineHeight: '0.2em',
+                                    <span style={{
                                         overflow: 'hidden',
-                                        whiteSpace: 'normal',
                                         textOverflow: 'ellipsis',
-                                        width: '100%',
-                                        height: '1em'
-                                    }}>{obj.content}</span>
+                                        display: '-webkit-box',
+                                        WebkitLineClamp: 2,
+                                        WebkitBoxOrient: 'vertical'
+                                    }} className={obj.isRead || 'font-weight-bold'}>{obj.content}</span>
                                 </div>
                             </Link>
                         ))}

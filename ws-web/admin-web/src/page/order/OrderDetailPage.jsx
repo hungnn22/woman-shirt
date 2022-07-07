@@ -18,7 +18,7 @@ const OrderDetailPage = () => {
     useEffect(() => {
         const fetchDetail = async () => {
             setLoading(true)
-            const axiosRes = await AxiosApi.getAuth(`${WsUrl.ORDER_BASE}${WsUrl.ADMIN_ORDER_DETAIL}/${id}`)
+            const axiosRes = await AxiosApi.getAuth(`${WsUrl.ADMIN_ORDER_DETAIL}/${id}`)
             if (axiosRes) {
                 setDetail(axiosRes.data.data)
                 setLoading(false)

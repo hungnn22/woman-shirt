@@ -37,7 +37,7 @@ public class NotificationServiceImpl implements NotificationService {
     @Override
     public Object get4Admin(CurrentUser currentUser) {
         AuthValidator.checkRole(currentUser, RoleEnum.ROLE_ADMIN, RoleEnum.ROLE_STAFF);
-        var notifications = getNotificationDtos(currentUser, 1);
+        var notifications = getNotificationDtos(currentUser, 3);
         return ResData.ok(NotificationRes.builder()
                 .notifications(notifications)
                 .unreadNumber(repository.userNotificationRepository.countUnreadNumber(currentUser.getId()))
