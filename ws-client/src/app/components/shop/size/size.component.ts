@@ -8,11 +8,6 @@ interface Product {
   name: string;
   image: string;
 }
-interface Size {
-  cateId: string;
-  weight: string;
-  height: string;
-}
 @Component({
   selector: 'app-size',
   templateUrl: './size.component.html',
@@ -23,7 +18,8 @@ export class SizeComponent implements OnInit {
   constructor(private size: SizeService,) {
 
   }
-
+  // getSizeCate: Size[] = [];
+  getSizeCate = "S";
   nameControl = new FormControl('');
   products: Product[] = [];
   image = [];
@@ -32,46 +28,45 @@ export class SizeComponent implements OnInit {
     this.getCategoryProduct();
   }
 
-
   nameProduct = "Vui lòng chọn loại sản phẩm..."
   check = new FormControl();
 
 
-  height: number = 0;
-  updateHeight($event:any) {
+  height: string = "149";
+  updateHeight($event: any) {
     this.height = $event.value;
     console.log(this.height);
   }
 
-  weight: number = 30;
-  updateWeight($event:any) {
+  weight: string = "41";
+  updateWeight($event: any) {
     this.weight = $event.value;
     console.log(this.weight);
 
   }
 
-id="";
+  id = "";
   uploadImage(item: any) {
     console.log(item);
     this.image = item.image;
     this.nameProduct = item.name;
-    this.id=item.id;
-    console.log(this.id);
+    this.id = item.id;
+    // console.log(this.id);
   }
   getCategoryProduct() {
     this.size.getCategoryProduct().subscribe((data: any) => {
       this.products = data.data;
-      console.log(data);
+      // console.log(this.products);
 
     });
   }
 
-  // getSize() {
-  //   this.size.getSize2().subscribe((data: any) => {
-  //     this.products = data.data;
-  //     console.log(data);
 
-  //   });
-  // }
+  getSize() {
+    this.size.getSize(this.id, this.height, this.weight).subscribe((data: any) => {
+      this.getSizeCate = data.data.name;
+      console.log("Get Size: "+data);
 
+    });
+  }
 }
