@@ -5,8 +5,8 @@ public enum SizeEnum {
     M("M"),
     L("L"),
     XL1("XL"),
-    XL2("2XL"),
-    XL3("3XL");
+    XL2("XXL"),
+    XL3("XXXL");
 
     private final String name;
 

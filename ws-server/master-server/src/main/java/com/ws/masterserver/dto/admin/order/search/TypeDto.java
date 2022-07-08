@@ -15,6 +15,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class TypeDto {
     private String code;
-    private String tittle;
+    private String title;
     private String name;
 }

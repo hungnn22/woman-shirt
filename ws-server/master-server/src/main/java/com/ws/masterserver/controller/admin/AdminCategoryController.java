@@ -1,10 +1,9 @@
-package com.ws.masterserver.controller;
+package com.ws.masterserver.controller.admin;
 
 import com.ws.masterserver.dto.admin.category.CategoryDto;
 import com.ws.masterserver.dto.admin.category.CategoryReq;
 import com.ws.masterserver.dto.admin.category.CategoryRes;
 import com.ws.masterserver.utils.base.WsController;
-import com.ws.masterserver.utils.base.WsService;
 import com.ws.masterserver.utils.base.rest.PageData;
 import com.ws.masterserver.utils.base.rest.ResData;
 import com.ws.masterserver.utils.common.JsonUtils;
@@ -19,10 +18,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/v1/category")
+@RequestMapping("/api/v1/admin/category")
 @RequiredArgsConstructor
 @Slf4j
-public class CategoryController extends WsController {
+public class AdminCategoryController extends WsController {
 
     @PostMapping("/search")
     @Operation(summary = "API tìm kiếm danh sách loại sp")

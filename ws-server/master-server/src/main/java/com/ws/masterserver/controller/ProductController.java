@@ -20,10 +20,6 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 public class ProductController extends WsController {
 
-//    @PostMapping("/search")
-//    public ResponseEntity<?> search(@RequestBody ProductReq req){
-//        return ResponseEntity.status(HttpStatus.OK).body(service.productService.search(getCurrentUser(), req));
-//    }
     @PostMapping("/search")
     public ResponseEntity<?> search(@RequestBody ProductReq req){
         return ResponseEntity.status(HttpStatus.OK).body(service.productService.search( req));
@@ -41,12 +37,9 @@ public class ProductController extends WsController {
         return ResponseEntity.status(HttpStatus.OK).body(service.productService.getProductDetail(id));
     }
 
-    @Operation(summary = "API GET Product Detail")
-    @PostMapping("/admin/search")
-    public ResponseEntity<Object> search4Admin(@RequestBody ProductReq req) {
-        log.info("start api /api/v1/product/admin/search with req: {}", JsonUtils.toJson(req));
-        return ResponseEntity.status(HttpStatus.OK).body(service.productService.search4Admin(getCurrentUser(), req));
+    @PostMapping("/search/v2")
+    public ResponseEntity<?> searchV2(@RequestBody com.ws.masterserver.dto.customer.product.search.ProductReq req){
+        return ResponseEntity.ok(service.productService.searchV2(req));
     }
-
 
 }

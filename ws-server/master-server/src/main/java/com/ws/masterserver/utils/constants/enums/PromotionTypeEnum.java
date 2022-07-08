@@ -20,16 +20,16 @@ public enum PromotionTypeEnum {
     TYPE2("SHOP", "Mua sắm")
         ;
 
-    private final String tittle;
+    private final String title;
     private final String name;
 
     PromotionTypeEnum(String id, String name) {
-        this.tittle = id;
+        this.title = id;
         this.name = name;
     }
 
-    public String getTittle() {
-        return tittle;
+    public String getTitle() {
+        return title;
     }
 
     public String getName() {

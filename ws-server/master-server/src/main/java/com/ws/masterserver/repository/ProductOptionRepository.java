@@ -35,4 +35,9 @@ public interface ProductOptionRepository extends JpaRepository<ProductOptionEnti
         "JOIN ColorEntity c on po.colorId = c.id\n" +
         "where po.size = :size")
     List<ColorResponse> getListColorNameBySize(@Param("size") SizeEnum size);
+
+    @Query("select distinct po.image\n" +
+            "from ProductOptionEntity po\n" +
+            "where po.productId = ?1")
+    List<String> findImageByProductId(String productId);
 }

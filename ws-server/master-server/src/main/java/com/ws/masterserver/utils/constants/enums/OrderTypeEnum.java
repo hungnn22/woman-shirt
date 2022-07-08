@@ -9,12 +9,12 @@ public enum OrderTypeEnum {
     ;
 
     private final String code;
-    private final String tittle;
+    private final String title;
     private final String name;
 
-    OrderTypeEnum(String code, String tittle, String name) {
+    OrderTypeEnum(String code, String title, String name) {
         this.code = code;
-        this.tittle = tittle;
+        this.title = title;
         this.name = name;
     }
 
@@ -22,8 +22,8 @@ public enum OrderTypeEnum {
         return code;
     }
 
-    public String getTittle() {
-        return tittle;
+    public String getTitle() {
+        return title;
     }
 
     public String getName() {

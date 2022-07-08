@@ -1,6 +1,7 @@
 package com.ws.masterserver.entity;
 
 import com.ws.masterserver.utils.constants.enums.NotificationTypeEnum;
+import com.ws.masterserver.utils.constants.enums.ObjectTypeEnum;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -31,9 +32,6 @@ public class NotificationEntity {
 
     private String template;
 
-    @Column(name = "user_type")
-    private String userType;
-
     @Enumerated(EnumType.STRING)
     private NotificationTypeEnum type;
 
@@ -41,4 +39,11 @@ public class NotificationEntity {
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_date")
     private Date createdDate;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "object_type")
+    private ObjectTypeEnum objectType;
+
+    @Column(name = "object_type_id")
+    private String objectTypeId;
 }
