@@ -8,9 +8,10 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.util.Date;
 
 @Entity
-@Table(name = "blogs")
+@Table(name = "blog")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -21,7 +22,11 @@ public class BlogEntity {
 
     private String title;
 
-    @Column(length = 10485761)
+    @Column(length = 1000)
     private String content;
+
+    private Date createdDate;
+
+    private String topicId;
 
 }
