@@ -38,6 +38,9 @@
           height: 100%;
       }
 
+      body{}
+
+
       .product-grid__content{
           flex: 1;
       }
@@ -60,9 +63,6 @@
       min-width: 190px;
   }
 
-  div#app .grid__column.five-twelfths.mobile--one-whole >.cart-section > .discount-block + .cart-promotion-text {
-      /*display: none !important;*/
-  }
 
   .popup-hotdeal-policy {
       position: fixed;
@@ -298,21 +298,7 @@
       .collection-thumbnail{
           height: 100%;
       }
-      @media (max-width: 767px){
-          .popup .popup-body {
-              padding-bottom: 120px;
-              max-height: 100%;
-              overflow-x: hidden;
-              overflow-y: auto;
-              -webkit-overflow-scrolling: touch;
-          }
-          .home-tab__content .grid.slick-slider{
-              display: flex;
-          }
-          .mega-menu__item ul li a, .sub-menu__item ul li a{
-              flex-wrap: wrap;
-          }
-      }
+
       .collection-thumbnail img{
           object-position: top;
       }
