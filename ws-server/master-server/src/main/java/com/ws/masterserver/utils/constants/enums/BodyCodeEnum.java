@@ -7,9 +7,7 @@ public enum BodyCodeEnum {
     TYPE2(2),
     TYPE3(3),
     TYPE4(4),
-    TYPE5(5),
-    TYPE6(6);
-
+    TYPE5(5);
 
     private int value;
 

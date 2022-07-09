@@ -1,366 +1,325 @@
-.product-grid__image {
-  position: relative;
-}
 
-.product-grid__image:after {
-  content: "";
-  position: absolute;
-  bottom: 2%;
-  left: 3%;
-  width: 38%;
-  height: 35%;
-  background-image: url("https://mcdn.coolmate.me/image/June2022/mceclip1_82.png");
-  background-repeat: no-repeat;
-  background-position: left bottom;
-  background-size: contain;
-  pointer-events: none;
-}
+        .product-grid__image {
+          position: relative;
+      }
 
-.cart-viewing-users {
-  display: none;
-}
+      .product-grid__image:after {
+          content: "";
+          position: absolute;
+          bottom: 2%;
+          left: 3%;
+          width: 38%;
+          height: 35%;
+          background-image: url("https://mcdn.coolmate.me/image/June2022/mceclip1_82.png");
+          background-repeat: no-repeat;
+          background-position: left bottom;
+          background-size: contain;
+          pointer-events: none;
+      }
+      .cart-viewing-users{
+          display: none;
+      }
+      .page-do-tre-em .product-grid__image:after,
+      main.site-cleanVn .product-grid__image:after,
+      .not-sale-tag .product-grid__image:after {
+          display: none;
+      }
+      .not-sale-tag .product-grid__note-sale{
+          display: none;
+      }
+      .topbar{
+          background-color: #FF2459;
+          color: #fff;
+      }
 
-.page-do-tre-em .product-grid__image:after,
-main.site-cleanVn .product-grid__image:after,
-.not-sale-tag .product-grid__image:after {
-  display: none;
-}
+      .product-grid{
+          display: flex;
+          flex-flow: column;
+          height: 100%;
+      }
 
-.not-sale-tag .product-grid__note-sale {
-  display: none;
-}
-
-.topbar {
-  background-color: #FF2459;
-  color: #fff;
-}
-
-.product-grid {
-  display: flex;
-  flex-flow: column;
-  height: 100%;
-}
-
-body {}
-
-
-.product-grid__content {
-  flex: 1;
-}
-
-.product-grid__note-sale {
-  background-color: #FF2459;
-  border-radius: 18px;
-  text-align: center;
-  border: 1px dashed #000;
-  color: #fff;
-  display: block;
-  width: 100%;
-  padding-top: 0.5em;
-  padding-bottom: 0.5em;
-  font-size: 0.8rem;
-  margin-top: 5px;
-}
+      .product-grid__content{
+          flex: 1;
+      }
+      .product-grid__note-sale {
+          background-color: #FF2459;
+          border-radius: 18px;
+          text-align: center;
+          border: 1px dashed #000;
+          color: #fff;
+          display: block;
+          width: 100%;
+          padding-top: 0.5em;
+          padding-bottom: 0.5em;
+          font-size: 0.8rem;
+          margin-top: 5px;
+      }
 
 
-.collection-page.page-ao-thun-nam-gioi .filter-select__item:nth-of-type(2) .custom-select {
-  min-width: 190px;
-}
-
-
-.popup-hotdeal-policy {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: #0008;
-  z-index: 10;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.popup-hotdeal-policy__content {
-  position: relative;
-  max-width: 90%;
-}
-
-.popup-hotdeal-policy__content img {
-  border-radius: 16px;
-}
-
-.popup-hotdeal-policy__close {
-  position: absolute;
-  top: 5px;
-  right: 5px;
-  width: 25px;
-  height: 25px;
-  border-radius: 100px;
-  background-color: #fff;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  z-index: 1;
-}
-
-.popup-hotdeal-policy__close:hover {
-  background-color: #d9d9dd;
-}
-
-div#chat-widget-container {
-  z-index: 2147483639 !important;
-}
-
-@media screen and (min-width: 769px) {
-  .collections-filter__wrapper {
-    justify-content: flex-start;
+  .collection-page.page-ao-thun-nam-gioi .filter-select__item:nth-of-type(2) .custom-select {
+      min-width: 190px;
   }
 
-  .collections-filter__selects {
-    margin-left: 15px;
+  div#app .grid__column.five-twelfths.mobile--one-whole >.cart-section > .discount-block + .cart-promotion-text {
+      /*display: none !important;*/
   }
 
-  .filter-search {
-    margin-right: 0;
-  }
-}
-
-@media (min-width: 769px) and (max-width: 1024px) {
-  .collections-filter__wrapper {
-    flex-wrap: wrap;
-  }
-
-  .filter-select {
-    flex-wrap: wrap;
-  }
-
-  .collections-filter__selects {
-    margin-top: 15px;
-  }
-}
-
-[rel-script="size-guide-popup"] .popup-body {
-  max-width: 650px;
-}
-
-.banner-slide__item:before {
-  background-repeat: no-repeat;
-  background-size: contain;
-  background-position: center;
-  background-image: url('https://www.coolmate.me/images/placeholder-image.png');
-}
-
-span.product-grid__tags.product-grid__tags--cleandye {
-  background-color: #fff0;
-  font-size: 0;
-  background-image: url('https://mcdn.coolmate.me/uploads/April2022/SUSTAINABLE.png');
-  height: 85px;
-  background-repeat: no-repeat;
-  top: auto;
-  bottom: 1%;
-  width: 10px;
-  right: 5px;
-}
-
-.product-header__options .option-select__item .checkmark--color,
-.product-single__options .option-select__item .checkmark--color {
-  background-size: cover;
-}
-
-.pswp__sub-text {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  color: #fff;
-  font-size: 12px;
-  font-weight: normal;
-  font-style: italic;
-  letter-spacing: 0.03em;
-  text-align: center;
-  padding-bottom: 1vh;
-}
-
-.on-mobile .collections-filter__wrapper {
-  justify-content: space-between;
-}
-
-.article-related {
-  max-width: 1440px;
-  margin: 0 auto;
-}
-
-.product-single__button .bx {
-  display: none !important;
-}
-
-@media screen and (max-width: 768px) {
-  .select-date {
-    margin-bottom: 10px;
+  .popup-hotdeal-policy {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: #0008;
+      z-index: 10;
+      display: flex;
+      justify-content: center;
+      align-items: center;
   }
 
-  .product-single__button .btn {
-    height: 40px;
+  .popup-hotdeal-policy__content {
+      position: relative;
+      max-width: 90%;
   }
 
-  .nav__item {
-    flex-flow: column;
-    justify-content: center;
-    align-items: flex-start;
-    padding: 10px 5px;
-    height: auto;
+  .popup-hotdeal-policy__content img {
+      border-radius: 16px;
   }
 
-  .nav__item--has-child>a {
-    position: relative;
+  .popup-hotdeal-policy__close {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      width: 25px;
+      height: 25px;
+      border-radius: 100px;
+      background-color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      z-index: 1;
   }
 
-  .nav__item--has-child>a:before {
-    content: "";
-    position: absolute;
-    top: 50%;
-    right: 0;
-    width: 6px;
-    height: 6px;
-    border-bottom: 2px solid #000;
-    border-right: 2px solid #000;
-    transform: rotate(45deg);
-    margin-top: -4px;
-    transition: all .3s;
+  .popup-hotdeal-policy__close:hover {
+      background-color: #d9d9dd;
   }
 
-  .nav__item--has-child>a.toggle-menu:before {
-    transform: rotate(-135deg);
+  div#chat-widget-container {
+      z-index: 2147483639 !important;
+  }
+  @media  screen and (min-width: 769px){
+      .collections-filter__wrapper{
+          justify-content: flex-start;
+      }
+      .collections-filter__selects{
+          margin-left: 15px;
+      }
+      .filter-search{
+          margin-right: 0;
+      }
+  }
+  @media (min-width: 769px) and (max-width: 1024px) {
+      .collections-filter__wrapper{
+          flex-wrap: wrap;
+      }
+      .filter-select{
+          flex-wrap: wrap;
+      }
+      .collections-filter__selects{
+          margin-top: 15px;
+      }
   }
 
-  .nav-child-menu {
-    padding-left: 10px;
-    padding-top: 5px;
-    list-style: none;
-    width: 100%;
+  [rel-script="size-guide-popup"] .popup-body{
+      max-width: 650px;
+  }
+  .banner-slide__item:before{
+      background-repeat: no-repeat;
+      background-size: contain;
+      background-position: center;
+      background-image: url('https://www.coolmate.me/images/placeholder-image.png');
+  }
+  span.product-grid__tags.product-grid__tags--cleandye {
+      background-color: #fff0;
+      font-size: 0;
+      background-image: url('https://mcdn.coolmate.me/uploads/April2022/SUSTAINABLE.png');
+      height: 85px;
+      background-repeat: no-repeat;
+      top: auto;
+      bottom: 1%;
+      width: 10px;
+      right: 5px;
+  }
+  .product-header__options .option-select__item .checkmark--color, .product-single__options .option-select__item .checkmark--color{
+      background-size: cover;
+  }
+  .pswp__sub-text {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      color: #fff;
+      font-size: 12px;
+      font-weight: normal;
+      font-style: italic;
+      letter-spacing: 0.03em;
+      text-align: center;
+      padding-bottom: 1vh;
+  }
+  .on-mobile .collections-filter__wrapper{
+      justify-content:  space-between;
   }
 
-  .nav-child-menu li {}
-
-  .nav-child-menu li a {
-    display: flex;
-    align-items: center;
-    padding: 4px 0;
-    color: #0008;
-    width: 100%;
+  .article-related{
+      max-width: 1440px;
+      margin: 0 auto;
+  }
+  .product-single__button .bx{
+      display: none !important;
   }
 
-  .nav-tab__menu li>a {
-    display: block;
-    width: 100%;
+  @media  screen and (max-width: 768px) {
+      .select-date{
+          margin-bottom: 10px;
+      }
+      .product-single__button .btn{
+          height: 40px;
+      }
+      .nav__item{
+          flex-flow: column;
+          justify-content: center;
+          align-items: flex-start;
+          padding:10px 5px;
+          height: auto;
+      }
+      .nav__item--has-child>a{
+          position: relative;
+      }
+      .nav__item--has-child>a:before {
+          content: "";
+          position: absolute;
+          top: 50%;
+          right: 0;
+          width: 6px;
+          height: 6px;
+          border-bottom: 2px solid #000;
+          border-right: 2px solid #000;
+          transform: rotate(45deg);
+          margin-top: -4px;
+          transition: all .3s;
+      }
+      .nav__item--has-child>a.toggle-menu:before{
+          transform: rotate(-135deg);
+      }
+      .nav-child-menu{
+          padding-left: 10px;
+          padding-top: 5px;
+          list-style: none;
+          width: 100%;
+      }
+      .nav-child-menu li{
+      }
+      .nav-child-menu li a{
+          display: flex;
+          align-items: center;
+          padding: 4px 0;
+          color: #0008;
+          width: 100%;
+      }
+      .nav-tab__menu li>a {
+          display: block;
+          width: 100%;
+      }
   }
-}
-
-.seagame-campaign {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 50px;
-  height: 50px;
-}
-
-@media (max-width: 991px) {
-  .popup .popup-body {
-    left: 50%;
-    transform: translateX(-50%);
+  .seagame-campaign{
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 50px;
+      height: 50px;
   }
 
-  .popup--slide .popup-body {
-    left: auto;
-    transform: none;
+  @media (max-width: 991px){
+      .popup .popup-body{
+          left: 50%;
+          transform: translateX(-50%);
+      }
+      .popup--slide .popup-body{
+          left: auto;
+          transform: none;
+      }
   }
-}
-
-@media (max-width: 990px) and (max-height: 600px) {
-  .header__menu {
-    min-height: inherit;
-    height: calc(100vh - 100px);
+  @media (max-width: 990px) and (max-height: 600px){
+      .header__menu {
+          min-height: inherit;
+          height: calc(100vh - 100px);
+      }
   }
-}
+  .reviews-author__shopee span{
+      background-color: #0000;
+      color: #a1a1a1;
+      padding: 0;
+      margin-top: 0;
+      display: block;
+  }
 
-.reviews-author__shopee span {
-  background-color: #0000;
-  color: #a1a1a1;
-  padding: 0;
-  margin-top: 0;
-  display: block;
-}
-
-.collection-loadmore__wrapper {
-  border: 0 !important;
-}
-
-.collection-loadmore:hover .collection-loadmore__wrapper {
-  background-color: #fff0;
-}
-
-.collection-loadmore__icon {
-  display: none;
-}
-
-.collection-loadmore__text {
-  margin-top: 0;
-  font-size: 20px;
-  background-color: #000;
-  padding: 12px 30px;
-  border-radius: 100px;
-  color: #fff;
-  line-height: 1em;
-}
-
-.collection-loadmore:hover .collection-loadmore__wrapper .collection-loadmore__text {
-  background-color: #D9D9D9;
-}
-
-.select-selected.select-arrow-active {
-  z-index: 4;
-}
-
-.select-selected.select-arrow-active+.select-items {
-  z-index: 3;
-}
-
-/* img{
+      .collection-loadmore__wrapper{border: 0 !important;}
+      .collection-loadmore:hover .collection-loadmore__wrapper{
+          background-color: #fff0;
+      }
+      .collection-loadmore__icon{
+          display: none;
+      }
+      .collection-loadmore__text{
+          margin-top: 0;
+          font-size: 20px;
+          background-color: #000;
+          padding: 12px 30px;
+          border-radius: 100px;
+          color: #fff;
+          line-height: 1em;
+      }
+      .collection-loadmore:hover .collection-loadmore__wrapper .collection-loadmore__text{
+          background-color: #D9D9D9;
+      }
+      .select-selected.select-arrow-active{
+          z-index: 4;
+      }
+      .select-selected.select-arrow-active + .select-items{
+          z-index: 3;
+      }
+      /* img{
         height: 0;
       } */
-.size-chart {
-  padding-top: 0px;
-}
-
-.collection-thumbnail {
-  height: 100%;
-}
-
-.collection-thumbnail img {
-  object-position: top;
-}
-
-.size-suggestion__size-width span {
-  background-color: #313131;
-  color: white;
-}
-
-select {
-  margin: 40px;
-  background: #FF4081;
-  color: rgb(101, 0, 0);
-  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.4);
-}
-
-.table-sizechart thead td {
-  background-color: #313131;
-  color: white
-}
-
-.mat-slider.mat-accent .mat-slider-track-fill,
-.mat-slider.mat-accent .mat-slider-thumb,
-.mat-slider.mat-accent .mat-slider-thumb-label {
-  background-color: #313131;
-}
+      .size-chart {
+        padding-top: 0px;
+    }
+      .collection-thumbnail{
+          height: 100%;
+      }
+      @media (max-width: 767px){
+          .popup .popup-body {
+              padding-bottom: 120px;
+              max-height: 100%;
+              overflow-x: hidden;
+              overflow-y: auto;
+              -webkit-overflow-scrolling: touch;
+          }
+          .home-tab__content .grid.slick-slider{
+              display: flex;
+          }
+          .mega-menu__item ul li a, .sub-menu__item ul li a{
+              flex-wrap: wrap;
+          }
+      }
+      .collection-thumbnail img{
+          object-position: top;
+      }
+      .size-suggestion__size-width span{
+        background-color: #FF4081
+        ;
+      }
+      .table-sizechart thead td {
+        background-color: #FF4081;
+      }
