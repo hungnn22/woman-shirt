@@ -28,6 +28,6 @@ export class SizeService {
   // }
 
   getSize(cateId: string, height: string, weight: string):Observable<object> {
-    return this.http.get("http://localhost:8080/api/v1/suggest/search?categoryId=" + cateId + "&height=" + height + "&weight=" + 50);
+    return this.http.get("http://localhost:8080/api/v1/suggest/search?categoryId=" + cateId + "&height=" + height + "&weight=" +weight);
   }
 }

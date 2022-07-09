@@ -18,12 +18,12 @@ export class SizeComponent implements OnInit {
   constructor(private size: SizeService,) {
 
   }
-  // getSizeCate: Size[] = [];
   getSizeCate = "S";
   nameControl = new FormControl('');
   products: Product[] = [];
   image = [];
   filteredOptions: Observable<string[]> | undefined;
+
   ngOnInit(): void {
     this.getCategoryProduct();
   }
@@ -36,12 +36,14 @@ export class SizeComponent implements OnInit {
   updateHeight($event: any) {
     this.height = $event.value;
     console.log(this.height);
+    this.getSize();
   }
 
   weight: string = "41";
   updateWeight($event: any) {
     this.weight = $event.value;
     console.log(this.weight);
+    this.getSize();
 
   }
 
@@ -56,8 +58,7 @@ export class SizeComponent implements OnInit {
   getCategoryProduct() {
     this.size.getCategoryProduct().subscribe((data: any) => {
       this.products = data.data;
-      // console.log(this.products);
-
+      // console.log(a);
     });
   }
 
@@ -65,8 +66,8 @@ export class SizeComponent implements OnInit {
   getSize() {
     this.size.getSize(this.id, this.height, this.weight).subscribe((data: any) => {
       this.getSizeCate = data.data.name;
-      console.log("Get Size: "+data);
-
+      console.log("Get Size: " + data.data);
+      console.log("Hello");
     });
   }
 }

@@ -60,7 +60,7 @@
                   <div *ngFor="let item of products">
                     <!-- <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete"> -->
                     <mat-option class="option" style="width:100%;height: 120% ;background-color: white;"
-                      (click)="uploadImage(item)">
+                      (click)="uploadImage(item)" (click)="getSize()">
                       <img style="float:left;width:25%" src="{{item.image}}" value="long-shirt">
                       <p style="width:60%;float: left;margin-top: 2rem;margin-left:2rem">{{item.name}}
                       </p>
@@ -97,15 +97,15 @@
                         <div style="padding:2px;padding-top:5px"><span>Chiều cao: </span> <b style="float: right ;"
                             class="gridSizeValue">{{height.value}} cm</b></div>
 
-                        <mat-slider style="width:100% ;" #height (change)="getSize()" (change)="updateHeight($event)" step="1" min="149"
-                          max="195">
+                        <mat-slider style="width:100% ;" #height (click)="getSize()" (change)="updateHeight($event)"
+                          step="1" min="149" max="195">
                         </mat-slider>
-                        <div style="padding:2px;padding-top:5px"><span>Cân nặng: </span> <b style="float: right ;"
-                          class="gridSizeValue">{{weight.value}} kg</b></div>
 
-                      <mat-slider style="width:100% ;" #weight  (change)="getSize()" (change)="updateWeight($event)" step="1" min="41"
-                        max="105">
-                      </mat-slider>
+                        <div style="padding:2px;padding-top:5px"><span>Cân nặng: </span> <b style="float: right ;"
+                            class="gridSizeValue">{{weight.value}} kg</b></div>
+                        <mat-slider style="width:100% ;" #weight (click)="getSize()" (change)="updateWeight($event)"
+                          step="1" min="41" max="105">
+                        </mat-slider>
                       </div>
 
 
