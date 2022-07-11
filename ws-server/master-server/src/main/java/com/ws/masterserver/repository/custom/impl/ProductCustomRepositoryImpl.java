@@ -92,6 +92,8 @@ public class ProductCustomRepositoryImpl implements ProductCustomRepository {
         var query = entityManager.createQuery(jpql);
         var totalElements = 0L;
         if (Boolean.FALSE.equals(query.getResultList().isEmpty())) totalElements = query.getResultList().size();
+
+
         query.setFirstResult(req.getPageReq().getPage() * req.getPageReq().getPageSize());
         query.setMaxResults(req.getPageReq().getPageSize());
 
@@ -146,13 +148,13 @@ public class ProductCustomRepositoryImpl implements ProductCustomRepository {
                 "        m1.id = p1.material_id\n" +
                 "         left join category ct1 on\n" +
                 "        ct1.id = p1.category_id\n" +
-                "         left join \"type\" t1 on\n" +
+                "         left join type t1 on\n" +
                 "        t1.id = ct1.type_id\n" +
                 "         left join product_option po2 on\n" +
                 "        po2.product_id = p1.id\n" +
                 "where 1 = 1\n";
 
-//        sql += getOrderFilter(req.getPageReq());
+        sql += getOrderFilter(req.getPageReq());
         if (!StringUtils.isNullOrEmpty(req.getTextSearch())) {
             var textSearch = req.getTextSearch().trim().toUpperCase(Locale.ROOT);
             var like = "concat('%', unaccent('" + textSearch +"'), '%')";
@@ -181,6 +183,7 @@ public class ProductCustomRepositoryImpl implements ProductCustomRepository {
         List<Object[]> objects = query.getResultList();
         List<ProductDto> productDtos;
         List<ProductDto> res = new ArrayList<>();
+        //List<Object> res = new ArrayList<>();
 
         if (!objects.isEmpty()) {
             productDtos = objects.stream().map(obj -> {

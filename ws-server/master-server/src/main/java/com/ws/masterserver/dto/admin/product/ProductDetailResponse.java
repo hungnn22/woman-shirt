@@ -17,7 +17,6 @@ public class ProductDetailResponse {
     private String productName;
     private String categoryName;
     private String material;
-    private String type;
     private Integer countRating;//số lượt đánh giá
     private Float avgRating;
     private String description;

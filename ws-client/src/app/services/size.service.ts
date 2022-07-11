@@ -5,7 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 
-const API = environment.baseUrl;
+const AUTH_API = environment.baseUrl;
 
 @Injectable({
   providedIn: 'root'
@@ -29,5 +29,9 @@ export class SizeService {
 
   getSize(cateId: string, height: string, weight: string):Observable<object> {
     return this.http.get("http://localhost:8080/api/v1/suggest/search?categoryId=" + cateId + "&height=" + height + "&weight=" +weight);
+  }
+
+  getListSize(){
+    return this.http.get(AUTH_API + 'size');
   }
 }

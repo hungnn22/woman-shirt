@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ProductOptionResponse {
     private String id;
+    private String sizeId;
     private String sizeName;
     private String colorName;
     private Long qty;

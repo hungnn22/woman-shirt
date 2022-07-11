@@ -1,9 +1,7 @@
 a {
   color: black;
-  /* font-weight: 1500; */
   font-family: inherit;
   font-size: 15px;
-  /* text-align: center; */
   font-weight: 500;
 }
 
@@ -106,7 +104,6 @@ a {
 
 .container {
   margin: auto;
-  /* background-color: rgb(16, 76, 128); */
   width: 100%;
 
 }
@@ -115,7 +112,6 @@ a {
   margin: 10px;
 }
 
-/* /////// */
 
 #titleProduct {
   width: 20%;
@@ -130,7 +126,6 @@ a {
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-gap: 16px;
-  /* Adds gap of 16px for both rows and columns */
 }
 
 .content-body {
@@ -161,3 +156,8 @@ a {
   width: 50%;
   height: auto;
 }
+
+
+
+
+/*  */

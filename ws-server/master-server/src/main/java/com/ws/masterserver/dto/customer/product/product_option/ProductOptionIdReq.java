@@ -6,7 +6,9 @@ import org.jetbrains.annotations.NotNull;
 @Data
 public class ProductOptionIdReq {
     @NotNull
-    private String size;
+    private String sizeId;
     @NotNull
     private String colorId;
+    @NotNull
+    private String productId;
 }
