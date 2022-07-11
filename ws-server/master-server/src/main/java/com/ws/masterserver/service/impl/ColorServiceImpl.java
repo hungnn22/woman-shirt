@@ -1,5 +1,6 @@
 package com.ws.masterserver.service.impl;
 
+import com.ws.masterserver.dto.customer.product.ColorResponse;
 import com.ws.masterserver.entity.ColorEntity;
 import com.ws.masterserver.service.ColorService;
 import com.ws.masterserver.utils.base.WsException;
@@ -16,7 +17,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -72,4 +76,11 @@ public class ColorServiceImpl implements ColorService {
         log.info("update finished at {} with response: {}", new Date(), JsonUtils.toJson(color));
         return new ResData<>(color.getId(), WsCode.OK);
     }
+
+    @Override
+    public ResData<List<ColorResponse>> getListColor() {
+        List<ColorResponse> color = repository.colorRepository.findAllColor();
+        return new ResData<>(color, WsCode.OK);
+    }
+
 }

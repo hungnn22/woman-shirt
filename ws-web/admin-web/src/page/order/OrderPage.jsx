@@ -74,7 +74,7 @@ const OrderPage = () => {
                 }
                 console.log("OBJ: ", obj);
             }
-            const axiosRes = await AxiosApi.postAuth(`${WsUrl.ORDER_BASE}${WsUrl.ADMIN_ORDER_SEARCH}`, obj)
+            const axiosRes = await AxiosApi.postAuth(`${WsUrl.ADMIN_ORDER_SEARCH}`, obj)
             if (axiosRes) {
                 const { data } = axiosRes
                 setOrders(data.data)

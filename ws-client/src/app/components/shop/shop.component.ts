@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Product } from 'src/app/models/product';
 import { AuthService } from 'src/app/services/auth.service';
@@ -10,6 +10,10 @@ import { ProductService } from 'src/app/services/product.service';
 import { DialogComponent } from './dialog/dialog.component';
 import { PriceComponent } from './price/price.component';
 import { SizeComponent } from './size/size.component';
+import { ColorService } from '../../services/color.service';
+import { SizeService } from 'src/app/services/size.service';
+import { Size } from 'src/app/models/size';
+import { Color } from 'src/app/models/color';
 
 @Component({
   selector: 'app-shop',
@@ -18,184 +22,132 @@ import { SizeComponent } from './size/size.component';
 })
 export class ShopComponent implements OnInit {
 
-  isFilter : boolean = false;
-  typeOption?: String;
-  sortOption: number = 0;
-  loading = true;
-  resultSearch: string = '';
-  listProduct: Product[] = [];
+  public listProduct: Product[] = [];
+  public colors: Color[] = [];
+  public sizes: Size[] = [];
+  public colorIds : string [] = [];
+  public sizeIds : string [] = [];
 
   //page
-  length = 0;
-  pageSize = 8;
-  pageIndex = 0;
-  pageSizeOptions = [4, 8, 16, 32, 64];
-  showFirstLastButtons = true;
-
-
-  //search
-  priceMin: number = 0;
-  priceMax: number = 10000000;
-  textSearch?: String;
+  page !: number ;
+  pageSize !: number ;
+  totalPages!: number ;
+  totalElements!: number;
 
   //request
   req: any = {
-    "id": "",
-    "active": null,
     "textSearch": "",
-    "priceMin": "",
-    "priceMax": "",
+    "minPrice": "",
+    "maxPrice": "",
+    "sizeIds":[],
+    "colorIds": [],
     "pageReq": {
       "page": 0,
-      "pageSize": 8,
+      "pageSize": 9,
       "sortField": "",
       "sortDirection": ""
     }
   }
 
   constructor(
-    private http: HttpClient,
-    private modalService: NgbModal,
     private productService: ProductService,
-    private customMaterialPaginator: CustomMaterialPaginatorService,
     private auth: AuthService,
-    private router: Router
+    private router: Router,
+    private activeRoute: ActivatedRoute,
+    private sizeService: SizeService,
+    private colorService: ColorService
   ) {}
 
   ngOnInit(): void {
+    this.getListSize();
+    this.getListColor();
     this.getListProduct(this.req);
+
+  }
+
+  getListSize() {
+    this.sizeService.getListSize().subscribe({
+      next: (response: any) => {
+        console.log('size', response);
+        this.sizes = response.data;
+      }
+    })
+  }
+
+  getListColor() {
+    this.colorService.getListColor().subscribe({
+      next: (response: any) => {
+        console.log('color', response);
+        this.colors = response.data;
+      }
+    })
   }
 
   getListProduct(req: any) {
-    this.productService.listProduct(req).subscribe(datas => {
-      this.loading = true;
-      this.listProduct = datas.data;
-      this.length = datas.totalElements;
-      this.loading = false;
+    this.productService.getListProduct(req).subscribe({
+      next: (response: any) => {
+        console.log('response', response);
+        this.listProduct = response.data;
+
+        this.page = response.page;
+        this.pageSize = response.pageSize;
+        this.totalPages = response.totalPages;
+        this.totalElements = response.totalElements;
+
+        console.log('listProduct', this.listProduct);
+      },error: (err) => {
+        console.log(err);
+      }
     })
   }
 
-  // options: string[] = ['One', 'Two', 'Three'];
-  // options1: string[] = ["S", "M", "L", "XL"];
-
-
-  /////////////////////////////////
-  openDialog() {
-    this.modalService.open(
-      DialogComponent,
-      {
-        backdrop: true,
-        centered: true,
-      }
-    )
-      .result
-      .then((result) => {
-        // write your code here
-
-      });
-  }
-
-  sortOptionChange() {
-    console.log(this.sortOption);
-    this.req.pageReq.sortField = this.sortOption;
-    switch (this.sortOption) {
-      case 1:
-        this.req.pageReq.sortField = 'createdDate';
-        this.req.pageReq.sortDirection = 'DESC';
-        break;
-      case 2:
-        this.req.pageReq.sortField = 'latest';
-        break;
-      case 3:
-        this.req.pageReq.sortField = 'price';
-        this.req.pageReq.sortDirection = 'DESC';
-        break;
-      case 4:
-        this.req.pageReq.sortField = 'price';
-        this.req.pageReq.sortDirection = 'ASC';
-        break;
-      default:
-        this.req.pageReq.sortField = 'createdDate';
-        this.req.pageReq.sortDirection = 'DESC';
-        break;
+  colorsCheckBox(e:any,colorId: string){
+    console.log(e,colorId);
+    if(e.target.checked && !this.colorIds.includes(colorId)){
+      this.colorIds.push(colorId);
     }
-    this.getListProduct(this.req);
-    this.isFilter = true;
-  }
-
-  openPrice() {
-    const modalRef = this.modalService.open(PriceComponent,
-      {
-        scrollable: true,
-        backdrop: true,
-        centered: true,
-        size: 'lg'
-      });
-
-    let data = {
-      min: this.priceMin,
-      max: this.priceMax
+    else{
+      this.colorIds.splice(this.colorIds.indexOf(colorId),1);
     }
-
-    modalRef.componentInstance.fromParent = data;
-    modalRef.result.then((result) => {
-      this.priceMin = result.min;
-      this.priceMax = result.max;
-      this.req.priceMin = result.min;
-      this.req.priceMax = result.max;
-      this.getListProduct(this.req);
-      this.isFilter = true;
-    }, (reason) => {
-    });
-  }
-
-  onKeyUp(event: any) {
-    // setTimeout(() => {
-
-    // }, 3000);
-
-    console.log(event.target.value);
-    this.req.textSearch = event.target.value;
-    console.log(this.req);
+    this.req.colorIds = this.colorIds;
     this.getListProduct(this.req);
   }
 
-  keyUp(event: any) {
-    this.req.textSearch = event.target.value;
-    if (this.req.textSearch.trim().length == 0) {
-      this.getListProduct(this.req);
+  sizesCheckBox(e:any,sizeId: string){
+    console.log(e,sizeId);
+    if(e.target.checked && !this.sizeIds.includes(sizeId)){
+      this.sizeIds.push(sizeId);
     }
+    else{
+      this.sizeIds.splice(this.sizeIds.indexOf(sizeId),1);
+    }
+    this.req.sizeIds = this.sizeIds;
+    this.getListProduct(this.req);
   }
 
-  handlePageEvent(event: PageEvent) {
-    this.length = event.length;
-    this.pageSize = event.pageSize;
-    this.pageIndex = event.pageIndex;
-    this.req.pageReq.page = this.pageIndex;
-    this.req.pageReq.pageSize = this.pageSize;
-    this.pageProduct(this.req);
-    this.isFilter = true;
+  sortSelect(e:any){
+    console.log('e : ',e.target.value);
+    const value = e.target.value;
+    const arr = value.split(',');
+    this.req.pageReq.sortField = arr[0];
+    this.req.pageReq.sortDirection = arr[1];
+    console.log('req : ',this.req);
+    this.getListProduct(this.req);
   }
 
-  pageProduct(req: any) {
-    this.productService.listProduct(req).subscribe(datas => {
-      this.listProduct = datas.data;
-    })
+  pageChange(event: any){
+    this.req.page = event - 1;
+    console.log('req pagechange : ',this.req);
+    this.getListProduct(this.req);
   }
 
-  openSize() {
-    this.modalService.open(
-      SizeComponent,
-      {
-        backdrop: true,
-        centered: true,
-        size:'xl'
-      }
-    )
-      .result
-      .then((result:any) => {
-        // write your code here
-      });
+  //search text input change
+  searchTextChange(e:any){
+    this.req.textSearch = e.target.value;
+    console.log('search change : ',this.req);
+    this.getListProduct(this.req);
   }
+
+
 
 }

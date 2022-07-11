@@ -9,6 +9,6 @@ public class ProductReq {
     private String textSearch;
     private String status;
     private String type;
-    private String category;
+    private String categoryId;
     private PageReq pageReq;
 }

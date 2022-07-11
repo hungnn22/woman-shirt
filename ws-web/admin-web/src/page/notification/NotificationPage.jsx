@@ -8,7 +8,7 @@ import WsUrl from '../../utils/constants/WsUrl'
 
 const NotificationPage = () => {
 
-    const [pageSize, setPageSize] = useState(1)
+    const [pageSize, setPageSize] = useState(10)
     const [notifications, setNotifications] = useState([])
     const [loading, setLoading] = useState(true)
 
@@ -28,6 +28,10 @@ const NotificationPage = () => {
         setPageSize(pageSize + 1)
     }
 
+    const handleReadById = async id => {
+        const res = await AxiosApi.getAuth(`${WsUrl.ADMIN_NOTIFICATION_READ}?id=${id}`)
+    }
+
     return (
         <div className="container-fluid">
             <div className="card shadow mb-4">
@@ -36,7 +40,7 @@ const NotificationPage = () => {
                 </div>
                 {loading ? <HashSpinner /> : <div className="card-body">
                     {notifications && notifications.map(obj => (
-                        <Link to={`/order/detail/${obj.objectTypeId}`} className="dropdown-item d-flex align-items-center py-4" href="#" key={obj.id}>
+                        <Link to={`/order/detail/${obj.objectTypeId}`} className="dropdown-item d-flex align-items-center py-4" href="#" key={obj.id} onClick={() => handleReadById(obj.id)}>
                             <div className="mr-3">
                                 <div className={obj.div}>
                                     <i className={obj.icon} />
@@ -56,8 +60,8 @@ const NotificationPage = () => {
                         </Link>
                     ))}
 
-                    <a href='#' onClick={handleChangePageSize} className='nav-link p-2 row align-items-center justify-content-center text-center'>Xem thêm...
-                    </a>
+                    {notifications && notifications.length >= pageSize ?<a href='#' onClick={handleChangePageSize} className='nav-link p-2 row align-items-center justify-content-center text-center'>Xem thêm...
+                    </a> : <></>}
                 </div>}
             </div>
         </div>)

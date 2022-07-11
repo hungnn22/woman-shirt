@@ -9,6 +9,7 @@ import com.ws.masterserver.dto.customer.product.ProductResponse;
 import com.ws.masterserver.dto.customer.review.response.ReviewResponse;
 import com.ws.masterserver.entity.*;
 import com.ws.masterserver.service.ProductService;
+import com.ws.masterserver.utils.base.WsException;
 import com.ws.masterserver.utils.base.WsRepository;
 import com.ws.masterserver.utils.base.rest.PageData;
 import com.ws.masterserver.utils.common.DateUtils;
@@ -56,7 +57,7 @@ public class ProductServiceImpl implements ProductService {
                 ProductOptionEntity.builder()
                         .id(UidUtils.generateUid())
                         .productId(product.getId())
-                        .size(item.getSize())
+//                        .size(item.getSize())
 //                        .color(item.getColor())
                         .price(Long.valueOf(item.getPrice()))
                         .image("")
@@ -81,8 +82,6 @@ public class ProductServiceImpl implements ProductService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, String.format(WsConst.Messages.NOT_FOUND, WsConst.Nouns.MATERIAL_VI)));
 
         response.setMaterial(material.getName());
-        response.setType("");
-
 
         CategoryEntity category = repository.categoryRepository.findById(product.getCategoryId())
                 .orElseThrow(() -> new RuntimeException("Not found category with id = " + id));
@@ -104,7 +103,12 @@ public class ProductServiceImpl implements ProductService {
                     productOptionResponse.setColorName(color.getName());
                     productOptionResponse.setId(option.getId());
                     productOptionResponse.setQty(option.getQty());
-                    productOptionResponse.setSizeName(option.getSize().getName());
+                    productOptionResponse.setSizeId(option.getSizeId());
+
+                    SizeEntity size = repository.sizeRepository.findById(option.getSizeId())
+                            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, String.format(WsConst.Messages.NOT_FOUND, WsConst.Nouns.SIZE_VI)));
+
+                    productOptionResponse.setSizeName(size.getName());
                     productOptionResponse.setImage(option.getImage());
                     productOptionResponse.setPrice(MoneyUtils.format(option.getPrice()));
 
@@ -113,10 +117,10 @@ public class ProductServiceImpl implements ProductService {
                 }).collect(Collectors.toList())
         );
 
-        Integer countRating = repository.reviewRepository.countRatingActive();
+        Integer countRating = repository.reviewRepository.countRatingActive(product.getId());
         response.setCountRating(countRating);
 
-        Float avgRating = repository.reviewRepository.avgRating();
+        Float avgRating = repository.reviewRepository.avgRating(product.getId());
         response.setAvgRating(avgRating);
 
         List<ReviewEntity> listReview = repository.reviewRepository.findByProductIdAndActive(id,Boolean.TRUE);
@@ -124,7 +128,6 @@ public class ProductServiceImpl implements ProductService {
         response.setReview(
                 listReview.stream().map(review -> {
                     ReviewResponse reviewResponse = new ReviewResponse();
-
                     String userName = repository.reviewRepository.getUserNameReview(review.getUserId());
 
                     reviewResponse.setReviewId(review.getId());

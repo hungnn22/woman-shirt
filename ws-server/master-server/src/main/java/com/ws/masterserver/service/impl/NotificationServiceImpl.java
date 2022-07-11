@@ -4,11 +4,15 @@ import com.ws.masterserver.dto.admin.notification.NotificationDto;
 import com.ws.masterserver.dto.admin.notification.NotificationRes;
 import com.ws.masterserver.entity.UserNotificationEntity;
 import com.ws.masterserver.service.NotificationService;
+import com.ws.masterserver.service.WebSocketService;
+import com.ws.masterserver.utils.base.WsException;
 import com.ws.masterserver.utils.base.WsRepository;
 import com.ws.masterserver.utils.base.rest.CurrentUser;
 import com.ws.masterserver.utils.base.rest.ResData;
-import com.ws.masterserver.utils.common.NotificationUtils;
+import com.ws.masterserver.utils.common.DateUtils;
+import com.ws.masterserver.utils.common.JsonUtils;
 import com.ws.masterserver.utils.common.UidUtils;
+import com.ws.masterserver.utils.constants.WsCode;
 import com.ws.masterserver.utils.constants.enums.RoleEnum;
 import com.ws.masterserver.utils.validator.AuthValidator;
 import lombok.RequiredArgsConstructor;
@@ -29,6 +33,7 @@ import java.util.stream.Collectors;
 public class NotificationServiceImpl implements NotificationService {
 
     private final WsRepository repository;
+    private final WebSocketService wsService;
 
     /**
      * @param currentUser
@@ -37,7 +42,7 @@ public class NotificationServiceImpl implements NotificationService {
     @Override
     public Object get4Admin(CurrentUser currentUser) {
         AuthValidator.checkRole(currentUser, RoleEnum.ROLE_ADMIN, RoleEnum.ROLE_STAFF);
-        var notifications = getNotificationDtos(currentUser, 1);
+        var notifications = getNotificationDtos(currentUser, 3);
         return ResData.ok(NotificationRes.builder()
                 .notifications(notifications)
                 .unreadNumber(repository.userNotificationRepository.countUnreadNumber(currentUser.getId()))
@@ -52,7 +57,7 @@ public class NotificationServiceImpl implements NotificationService {
             notifications = notificationEntities.stream().map(obj -> NotificationDto.builder()
                     .id(obj.getId())
                     .content(obj.getContent())
-                    .createdDate(NotificationUtils.getCreatedDate(obj.getCreatedDate()))
+                    .createdDate(DateUtils.toStr(obj.getCreatedDate(), DateUtils.DATE_TIME_FORMAT_VI))
                     .div(obj.getType().getDiv())
                     .icon(obj.getType().getIcon())
                     .isRead(repository.userNotificationRepository.existsByUserIdAndNotificationId(currentUser.getId(), obj.getId()))
@@ -65,7 +70,7 @@ public class NotificationServiceImpl implements NotificationService {
 
     @Override
     @Transactional
-    public Long read4admin(CurrentUser currentUser, List<String> dto) {
+    public Long readTop3Notification4Admin(CurrentUser currentUser, List<String> dto) {
         log.info("NotificationServiceImpl read4admin start");
         if (!dto.isEmpty()) {
             saveUserNotifications(currentUser, dto);
@@ -101,5 +106,26 @@ public class NotificationServiceImpl implements NotificationService {
             saveUserNotifications(currentUser, notification4Admin);
         }
         return -1L;
+    }
+
+    @Override
+    @Transactional
+    public void readById4Admin(CurrentUser currentUser, String id) {
+        log.info("NotificationServiceImpl readById4Admin start with payload: {}", id);
+        AuthValidator.checkRole(currentUser, RoleEnum.ROLE_ADMIN, RoleEnum.ROLE_STAFF);
+        if (!repository.notificationRepository.existsById(id)) {
+            throw new WsException(WsCode.INTERNAL_SERVER);
+        }
+        if (!repository.userNotificationRepository.existsByUserIdAndNotificationId(currentUser.getId(), id)) {
+            var userNotification = UserNotificationEntity.builder()
+                    .id(UidUtils.generateUid())
+                    .userId(currentUser.getId())
+                    .notificationId(id)
+                    .build();
+            repository.userNotificationRepository.save(userNotification);
+            log.info("NotificationServiceImpl readById4Admin save userNotificationEntity: {}", JsonUtils.toJson(userNotification));
+
+            wsService.changeUnreadNumberNotification4Admin();
+        }
     }
 }

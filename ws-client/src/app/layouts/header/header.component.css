@@ -1,3 +1,53 @@
+ul.account_header {
+  display: none;
+}
+
+ul.account_header li{
+  background: #fff;
+  display: block;
+}
+
+ul.account_header li a {
+  display:block !important;
+}
+
+.header-tool:hover {
+  background: #fff;
+}
+
+.header-tool:hover ul {
+  /* display: block;
+  position: absolute;
+  top: 40px;
+  right: 0;
+  background: #fff;
+  padding: 0;
+  min-width: 170px;
+  margin: 0;
+  -webkit-box-shadow: 0 3px 25px 0 rgb(31 38 67 / 10%); */
+  display: block;
+  position: absolute;
+  top: 30px;
+  right: 0;
+  background: #fff;
+  z-index: 90;
+  min-width: 200px;
+  box-shadow: 0 10px 20px rgb(0 0 0 / 15%);
+  padding: 10px 0;
+    /* visibility: hidden; */
+}
+
+
+.header-tool:hover ul li a {
+  margin-left: 30px;
+}
+
+
+
+
+
+/*  */
+
 .menu {
   height: 50px;
   line-height: 50px;
@@ -500,3 +550,4 @@ div>ul>li {
     cursor: pointer;
   }
 }
+

@@ -4,6 +4,10 @@ import { Link, NavLink } from 'react-router-dom'
 import AxiosApi from '../../api/AxiosApi'
 import AuthService from '../../service/AuthService'
 import WsUrl from '../../utils/constants/WsUrl'
+import SockJsClient from 'react-stomp'
+import ToastUtils from '../../utils/ToastUtils'
+import WsToastType from '../../utils/constants/WsToastType'
+import WsMessage from '../../utils/constants/WsMessage'
 
 const Topbar = () => {
 
@@ -21,10 +25,9 @@ const Topbar = () => {
     }, [unreadNumber])
 
     const getNotification = async () => {
-        const res = await AxiosApi.getAuth(WsUrl.ADMIN_NOTIFICATION)
+        const res = await AxiosApi.getAuth(WsUrl.ADMIN_NOTIFICATION_TOP3)
         if (res) {
             const { data } = res.data
-            console.log(data);
             setUnreadNumber(data.unreadNumber)
             setNotifications(data.notifications)
         }
@@ -49,8 +52,36 @@ const Topbar = () => {
         }
     }
 
+    const onConnected = () => {
+        console.log("Connected!!")
+    }
+
+    const onMessageReceived = payload => {
+        console.log("payload: ", payload)
+        if (payload) {
+            console.log("NHAN MESSAGE FROM WS");
+            getNotification()
+        }
+    }
+
+    const handleReadById = async id => {
+        try {
+            const res = await AxiosApi.getAuth(`${WsUrl.ADMIN_NOTIFICATION_READ}?id=${id}`)
+        } catch(e) {
+            ToastUtils.createToast(WsToastType.ERROR, e.response.data.message || WsMessage.INTERNAL_SERVER_ERROR)
+        }
+    }
+
     return (
         <nav className="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+            <SockJsClient
+                url={WsUrl.ADMIN_WEB_SOCKET}
+                topics={['/topic/admin/notification']}
+                onConnect={onConnected}
+                onDisconnect={console.log("Disconnected!")}
+                onMessage={onMessageReceived}
+
+            />
             <button id="sidebarToggleTop" className="btn btn-link d-md-none rounded-circle mr-3">
                 <i className="fa fa-bars" />
             </button>
@@ -82,7 +113,7 @@ const Topbar = () => {
                             Thông báo
                         </h6>
                         {notifications && notifications.map(obj => (
-                            <Link to={`order/detail/${obj.objectTypeId}`} className="dropdown-item d-flex align-items-center bg-light" href="#" key={obj.id}>
+                            <Link to={`order/detail/${obj.objectTypeId}`} className="dropdown-item d-flex align-items-center bg-light" href="#" key={obj.id} onClick={() => handleReadById(obj.id)}>
                                 <div className="mr-3">
                                     <div className={obj.div}>
                                         <i className={obj.icon} />
@@ -90,14 +121,13 @@ const Topbar = () => {
                                 </div>
                                 <div>
                                     <div className="small text-gray-500">{obj.createdDate}</div>
-                                    <span className={obj.isRead || 'font-weight-bold'} style={{
-                                        lineHeight: '0.2em',
+                                    <span style={{
                                         overflow: 'hidden',
-                                        whiteSpace: 'normal',
                                         textOverflow: 'ellipsis',
-                                        width: '100%',
-                                        height: '1em'
-                                    }}>{obj.content}</span>
+                                        display: '-webkit-box',
+                                        WebkitLineClamp: 2,
+                                        WebkitBoxOrient: 'vertical'
+                                    }} className={obj.isRead || 'font-weight-bold'}>{obj.content}</span>
                                 </div>
                             </Link>
                         ))}

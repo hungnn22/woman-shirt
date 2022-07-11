@@ -10,8 +10,8 @@ import java.util.List;
 public interface ReviewRepository extends JpaRepository<ReviewEntity, String> {
     List<ReviewEntity> findByProductIdAndActive(String productId,Boolean active);
 
-    @Query(value = "select count(id) from review where active = true",nativeQuery = true)
-    Integer countRatingActive();
+    @Query(value = "select count(id) from review where active = true and product_id = ?1",nativeQuery = true)
+    Integer countRatingActive(String productId);
 
     @Query(value = "select trim(concat(coalesce(u.first_name, ''), ' ', coalesce(u.last_name, ''))) " +
             "from review r\n" +
@@ -19,6 +19,6 @@ public interface ReviewRepository extends JpaRepository<ReviewEntity, String> {
             "where r.user_id= ?1",nativeQuery = true)
     String getUserNameReview(String userId);
 
-    @Query(value = "select avg(rating) from review where active = true",nativeQuery = true)
-    Float avgRating();
+    @Query(value = "select avg(rating) from review where active = true and product_id = ?1",nativeQuery = true)
+    Float avgRating(String productId);
 }

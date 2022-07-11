@@ -21,4 +21,8 @@ export class ProductService {
     return this.http.post<any>(API + 'product/search', { ...req });
   }
 
+  getListProduct(req: any): Observable<any> {
+    return this.http.post<any>(API + 'product/search/v2', { ...req });
+  }
+
 }

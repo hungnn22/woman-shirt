@@ -4,7 +4,6 @@ import com.ws.masterserver.dto.admin.product.search.ProductRes;
 import com.ws.masterserver.dto.customer.product.ProductReq;
 import com.ws.masterserver.dto.customer.product.ProductResponse;
 import com.ws.masterserver.dto.customer.product.search.ProductDto;
-import com.ws.masterserver.dto.customer.product.search.ProductSubDto;
 import com.ws.masterserver.repository.custom.ProductCustomRepository;
 import com.ws.masterserver.utils.base.WsRepository;
 import com.ws.masterserver.utils.base.rest.PageData;
@@ -16,7 +15,6 @@ import com.ws.masterserver.utils.common.StringUtils;
 import com.ws.masterserver.utils.constants.WsCode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.access.prepost.PrePostAdviceReactiveMethodInterceptor;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityManager;
@@ -65,9 +63,9 @@ public class ProductCustomRepositoryImpl implements ProductCustomRepository {
                     "or lower(c.name) like concat('%', '" + req.getTextSearch().trim().toLowerCase(Locale.ROOT) + "', '%'))\n";
         }
 
-        if (Boolean.FALSE.equals(StringUtils.isNullOrEmpty(req.getPriceMin()))
-                && Boolean.FALSE.equals(StringUtils.isNullOrEmpty(req.getPriceMax()))) {
-            where += "and po.price BETWEEN " + req.getPriceMin().trim() + " AND " + req.getPriceMax().trim() + "\n";
+        if (Boolean.FALSE.equals(StringUtils.isNullOrEmpty(req.getMinPrice()))
+                && Boolean.FALSE.equals(StringUtils.isNullOrEmpty(req.getMaxPrice()))) {
+            where += "and po.price BETWEEN " + req.getMinPrice().trim() + " AND " + req.getMaxPrice().trim() + "\n";
         }
 
         var order = "order by ";
@@ -94,6 +92,8 @@ public class ProductCustomRepositoryImpl implements ProductCustomRepository {
         var query = entityManager.createQuery(jpql);
         var totalElements = 0L;
         if (Boolean.FALSE.equals(query.getResultList().isEmpty())) totalElements = query.getResultList().size();
+
+
         query.setFirstResult(req.getPageReq().getPage() * req.getPageReq().getPageSize());
         query.setMaxResults(req.getPageReq().getPageSize());
 
@@ -148,13 +148,13 @@ public class ProductCustomRepositoryImpl implements ProductCustomRepository {
                 "        m1.id = p1.material_id\n" +
                 "         left join category ct1 on\n" +
                 "        ct1.id = p1.category_id\n" +
-                "         left join \"type\" t1 on\n" +
+                "         left join type t1 on\n" +
                 "        t1.id = ct1.type_id\n" +
                 "         left join product_option po2 on\n" +
                 "        po2.product_id = p1.id\n" +
                 "where 1 = 1\n";
 
-//        sql += getOrderFilter(req.getPageReq());
+        sql += getOrderFilter(req.getPageReq());
         if (!StringUtils.isNullOrEmpty(req.getTextSearch())) {
             var textSearch = req.getTextSearch().trim().toUpperCase(Locale.ROOT);
             var like = "concat('%', unaccent('" + textSearch +"'), '%')";
@@ -183,6 +183,7 @@ public class ProductCustomRepositoryImpl implements ProductCustomRepository {
         List<Object[]> objects = query.getResultList();
         List<ProductDto> productDtos;
         List<ProductDto> res = new ArrayList<>();
+        //List<Object> res = new ArrayList<>();
 
         if (!objects.isEmpty()) {
             productDtos = objects.stream().map(obj -> {
@@ -196,8 +197,8 @@ public class ProductCustomRepositoryImpl implements ProductCustomRepository {
                         .materialName(JpaUtils.getString(obj[5]))
                         .categoryName(JpaUtils.getString(obj[6]))
                         .typeName(JpaUtils.getString(obj[7]))
-                        .colors(repository.colorRepository.findByProductId(productId))
-                        .sizes(repository.sizeRepository.findByProductId(productId))
+                        .colors(repository.colorRepository.findDistinctByProductId(productId))
+                        .sizes(repository.sizeRepository.findDistinctByProductId(productId))
                         .images(repository.productOptionRepository.findImageByProductId(productId))
                         .createdDate(JpaUtils.getDate(obj[8]))
                         .build();

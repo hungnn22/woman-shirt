@@ -1,0 +1,737 @@
+{
+	"info": {
+		"_postman_id": "746f4b80-d257-4bbc-b7fd-f280d745e5fd",
+		"name": "ws",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "17748282"
+	},
+	"item": [
+		{
+			"name": "category",
+			"item": [
+				{
+					"name": "create",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"\",\r\n    \"name\": \"test\",\r\n    \"des\": \"res\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{domain}}/category/create",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"category",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBnbWFpbC5jb20iLCJyb2xlIjoiUk9MRV9BRE1JTiIsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6ODA4MC9hcGkvdjEvbG9naW4iLCJuYW1lIjoiSGVsbG8gV29ybGQiLCJpZCI6ImZiNmUwMzdhLTlmNmItNDllMC04MjZlLWQxZDE1Mzk0MTNmNiIsImV4cCI6MTY1MzcxODY3MiwiZW1haWwiOiJhZG1pbkBnbWFpbC5jb20ifQ.gaSI10q0CVpkuGojcx8cYHJLXgyGd9TbIBGycDlkCck",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"7e5dd135-00ec-473d-89c2-7161e8a55fe9\",\r\n    \"name\": \"test1\",\r\n    \"des\": \"res\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{domain}}/category/delete",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"category",
+								"delete"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"0ff4a1bb-ae49-42be-a312-74300656e110\",\r\n    \"name\": \"test\",\r\n    \"des\": \"res\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{domain}}/category/delete",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"category",
+								"delete"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "search",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "accept",
+								"value": "*/*"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"id\": \"\",\n  \"active\": null,\n  \"textSearch\": \"\",\n  \"pageReq\": {\n    \"page\": 0,\n    \"pageSize\": 10,\n    \"sortField\": \"\",\n    \"sortDirection\": \"\"\n  }\n}"
+						},
+						"url": {
+							"raw": "{{domain}}/category/search",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"category",
+								"search"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "open-api",
+			"item": [
+				{
+					"name": "New Request",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://provinces.open-api.vn/api/?depth=1",
+							"protocol": "https",
+							"host": [
+								"provinces",
+								"open-api",
+								"vn"
+							],
+							"path": [
+								"api",
+								""
+							],
+							"query": [
+								{
+									"key": "depth",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "order",
+			"item": [
+				{
+					"name": "admin-search",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": null,\r\n    \"status\": null,\r\n    \"cusId\": null,\r\n    \"provinceCode\": null,\r\n    \"districtCode\": null,\r\n    \"wardCode\": null,\r\n    \"time\": null,\r\n    \"textSearch\": \"le\",\r\n    \"pageReq\": {\r\n        \"page\": 0,\r\n        \"pageSize\": 10,\r\n        \"sortField\": \"\",\r\n        \"sortDirection\": \"\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{domain}}/order/admin/search",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"order",
+								"admin",
+								"search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "chage-status",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"fbf75c30-6393-4654-bfde-042e060702d5\",\r\n    \"status\": \"ACCEPT\",\r\n    \"note\": \"BY EM\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{domain}}/order/admin/change-status",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"order",
+								"admin",
+								"change-status"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "detail",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"00ed4911-0f13-42b0-8259-2532b542416d\",\r\n    \"pageReq\": {\r\n        \"page\": 0,\r\n        \"pageSize\": 10,\r\n        \"sortField\": \"\",\r\n        \"sortDirection\": \"\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{domain}}/order/admin/detail/673fae17-0690-4a6c-bf86-4f81e3ebf768",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"order",
+								"admin",
+								"detail",
+								"673fae17-0690-4a6c-bf86-4f81e3ebf768"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "suggest",
+			"item": [
+				{
+					"name": "danh sach loai sanr pham",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "chọn size",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{domain}}/suggest/search?categoryId=cbe717d2-73ae-481b-978b-9dbc2d9bf1cb&height=165&weight=80&type",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"suggest",
+								"search"
+							],
+							"query": [
+								{
+									"key": "categoryId",
+									"value": "cbe717d2-73ae-481b-978b-9dbc2d9bf1cb"
+								},
+								{
+									"key": "height",
+									"value": "165"
+								},
+								{
+									"key": "weight",
+									"value": "80"
+								},
+								{
+									"key": "type",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "dashboard",
+			"item": [
+				{
+					"name": "dashboard",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{domain}}/admin/dashboard",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"admin",
+								"dashboard"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "notification",
+			"item": [
+				{
+					"name": "admin",
+					"item": [
+						{
+							"name": "top3",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{domain}}/admin/notification/top3",
+									"host": [
+										"{{domain}}"
+									],
+									"path": [
+										"admin",
+										"notification",
+										"top3"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "read4Admin",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "[]",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{domain}}/admin/notification/read",
+									"host": [
+										"{{domain}}"
+									],
+									"path": [
+										"admin",
+										"notification",
+										"read"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "search",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{domain}}/admin/notification/search?pageSize",
+									"host": [
+										"{{domain}}"
+									],
+									"path": [
+										"admin",
+										"notification",
+										"search"
+									],
+									"query": [
+										{
+											"key": "pageSize",
+											"value": null
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "read-all",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{domain}}/admin/notification/read-all",
+									"host": [
+										"{{domain}}"
+									],
+									"path": [
+										"admin",
+										"notification",
+										"read-all"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "read-by-id",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{domain}}/admin/notification/read?id=7e5b535b-925b-4b87-9a70-93f222d661c0",
+									"host": [
+										"{{domain}}"
+									],
+									"path": [
+										"admin",
+										"notification",
+										"read"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "7e5b535b-925b-4b87-9a70-93f222d661c0"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "product",
+			"item": [
+				{
+					"name": "search-home",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"textSearch\": \"\",\r\n    \"minPrice\": \"140000\",\r\n    \"maxPrice\": \"300000\",\r\n    \"sizeIds\": [\r\n        ],\r\n    \"colorIds\": [\r\n\r\n    ],\r\n    \"pageReq\": {\r\n        \"page\": 0,\r\n        \"pageSize\": 10,\r\n        \"sortField\": \"\",\r\n        \"sortDirection\": \"\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{domain}}/product/search/v2",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"product",
+								"search",
+								"v2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "web-socket",
+			"item": [
+				{
+					"name": "ad-noti",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{domain}}/ws/test/notification?type=NORMAL&content=Gi day&objectType=ORDER&objectTypeId=3383bbed-643c-4563-a628-5478bb3a1196",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"ws",
+								"test",
+								"notification"
+							],
+							"query": [
+								{
+									"key": "type",
+									"value": "NORMAL"
+								},
+								{
+									"key": "content",
+									"value": "Gi day"
+								},
+								{
+									"key": "objectType",
+									"value": "ORDER"
+								},
+								{
+									"key": "objectTypeId",
+									"value": "3383bbed-643c-4563-a628-5478bb3a1196"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody)\r",
+							"pm.environment.set(\"accessToken\", jsonData.accessToken);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "email",
+							"value": "admin@gmail.com",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "admin123",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{domain}}/login",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "accessToken",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "adminAccessToken",
+			"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBnbWFpbC5jb20iLCJyb2xlIjoiUk9MRV9BRE1JTiIsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6ODA4MC9hcGkvdjEvbG9naW4iLCJuYW1lIjoiU3lzdGVtIEFkbWluIiwiaWQiOiJmYjZlMDM3YS05ZjZiLTQ5ZTAtODI2ZS1kMWQxNTM5NDEzZjYiLCJleHAiOjE2NTQxNDEyMDUsImVtYWlsIjoiYWRtaW5AZ21haWwuY29tIn0.ug-YP8lolviJiAEn5fhu9Fh1XNyar75vchdrZ0CJVec"
+		},
+		{
+			"key": "domain",
+			"value": "http://localhost:8080/api/v1"
+		}
+	]
+}
