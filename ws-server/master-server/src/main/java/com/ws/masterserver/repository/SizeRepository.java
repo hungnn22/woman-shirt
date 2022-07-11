@@ -25,6 +25,7 @@ public interface SizeRepository extends JpaRepository<SizeEntity, String> {
             "where po.productId = ?1")
     List<String> findDistinctByProductId(String productId);
 
+
     @Query("select DISTINCT new com.ws.masterserver.dto.customer.size.response.SizeResponse(" +
             "s.id,\n" +
             "s.code)\n" +

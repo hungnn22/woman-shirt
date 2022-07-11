@@ -50,7 +50,6 @@ import { NgxPaginationModule } from 'ngx-pagination';
     AppRoutingModule,
     NgxSpinnerModule,
     NgxPaginationModule,
-    //jwtmodule config spring boot
     JwtModule.forRoot({
       config: {
         tokenGetter: () => {
