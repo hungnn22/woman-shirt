@@ -15,12 +15,18 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 public class AdminProductController extends WsController {
 
-    @Operation(summary = "API GET Product Detail")
+    @Operation(summary = "API search product cho admin")
     @PostMapping("/search")
     public ResponseEntity<Object> search4Admin(@RequestBody ProductReq req) {
         log.info("start api /api/v1/product/admin/search with req: {}", JsonUtils.toJson(req));
         return ResponseEntity.ok(service.adminProductSearchService.search(getCurrentUser(), req));
     }
 
+    @Operation(summary = "API detail product cho admin")
+    @GetMapping("/detail/{id}")
+    public ResponseEntity<Object> detail4Admin(@PathVariable String id) {
+        log.info("start api /api/v1/product/admin/detail with id: {}", id);
+        return ResponseEntity.ok(service.adminProductSearchService.detail(getCurrentUser(), id));
+    }
 
 }

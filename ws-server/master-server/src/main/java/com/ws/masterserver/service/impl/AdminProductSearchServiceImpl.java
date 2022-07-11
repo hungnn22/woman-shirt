@@ -127,4 +127,9 @@ public class AdminProductSearchServiceImpl implements AdminProductSearchService 
                 req.getPageReq().getPageSize(),
                 totalElements);
     }
+
+    @Override
+    public Object detail(CurrentUser currentUser, String id) {
+        return null;
+    }
 }

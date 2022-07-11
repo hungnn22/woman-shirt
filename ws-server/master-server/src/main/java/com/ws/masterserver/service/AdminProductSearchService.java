@@ -8,4 +8,6 @@ import com.ws.masterserver.utils.base.rest.CurrentUser;
  */
 public interface AdminProductSearchService {
     Object search(CurrentUser currentUser, ProductReq req);
+
+    Object detail(CurrentUser currentUser, String id);
 }
