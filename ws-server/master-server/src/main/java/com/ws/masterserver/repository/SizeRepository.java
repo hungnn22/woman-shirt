@@ -19,10 +19,15 @@ public interface SizeRepository extends JpaRepository<SizeEntity, String> {
 
     String findNameById(String sizeId);
 
+    @Query("select distinct s.name\n" +
+            "from SizeEntity s\n" +
+            "left join ProductOptionEntity po on po.sizeId = s.id\n" +
+            "where po.productId = ?1")
+    List<String> findDistinctByProductId(String productId);
+
     @Query("select DISTINCT new com.ws.masterserver.dto.customer.size.response.SizeResponse(" +
             "s.id,\n" +
             "s.code)\n" +
             "from SizeEntity s")
     List<SizeResponse> getAllSize();
-
 }

@@ -23,4 +23,10 @@ public class StringUtils {
 
     }
 
+    public static boolean isNumber(String value) {
+        if (StringUtils.isNullOrEmpty(value)) {
+            return false;
+        }
+        return value.chars().allMatch(Character::isDigit);
+    }
 }

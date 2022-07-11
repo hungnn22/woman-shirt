@@ -21,7 +21,7 @@ public class SuggestValidator {
         }
         try {
             var weight = Long.valueOf(dto.getWeight());
-            if (weight < 48 || weight > 84) {
+            if (weight < 41 || weight > 105) {
                 throw new WsException(WsCode.BAD_REQUEST, "Cân nặng không hợp lệ");
             }
         } catch (Exception e) {
@@ -29,7 +29,7 @@ public class SuggestValidator {
         }
         try {
             var height = Long.valueOf(dto.getHeight());
-            if (height < 155 || height > 183) {
+            if (height < 149 || height > 195) {
                 throw new WsException(WsCode.BAD_REQUEST, "Chiều cao không hợp lệ");
             }
         } catch (Exception e) {

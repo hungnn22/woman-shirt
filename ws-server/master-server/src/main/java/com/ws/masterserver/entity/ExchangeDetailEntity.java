@@ -3,29 +3,27 @@ package com.ws.masterserver.entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
 import javax.persistence.*;
-import java.util.Date;
 
 @Entity
-@Table(name = "edit_history")
+@Table(name = "exchange_detail")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
-public class EditHistoryEntity {
+public class ExchangeDetailEntity {
     @Id
     private String id;
 
-    private String content;
+    @Column(name = "order_detail_id")
+    private String orderDetailId;
 
-    @Column(name = "review_id")
-    private String reviewId;
+    @Column(name = "product_option_id")
+    private String productOptionId;
 
-    @CreatedDate
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "created_date")
-    private Date createdDate;
+    private Long qty;
 
+    private Long price;
 }

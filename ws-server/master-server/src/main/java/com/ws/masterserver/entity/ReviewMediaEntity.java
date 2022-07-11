@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-
 import javax.persistence.*;
 import java.util.Date;
 
@@ -28,13 +27,4 @@ public class ReviewMediaEntity {
 
     @Column(name = "review_id")
     private String reviewId;
-
-    @CreatedDate
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "created_date")
-    private Date createdDate;
-
-    @CreatedBy
-    @Column(name = "created_by")
-    private String createdBy;
 }

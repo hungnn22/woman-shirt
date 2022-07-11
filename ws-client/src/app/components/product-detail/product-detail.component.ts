@@ -75,6 +75,7 @@ export class ProductDetailComponent implements OnInit {
     this.getListSize();
   }
 
+
   getProductDetail(){
     this.product.getProductDetails(this.id).subscribe({
       next: (response:any) => {
