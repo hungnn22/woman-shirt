@@ -1,8 +1,9 @@
 package com.ws.masterserver.repository;
 
 import com.ws.masterserver.dto.customer.product.ColorResponse;
+import com.ws.masterserver.dto.customer.product.product_option.ProductOptionIdRes;
+import com.ws.masterserver.dto.customer.size.response.SizeResponse;
 import com.ws.masterserver.entity.ProductOptionEntity;
-import com.ws.masterserver.utils.constants.enums.SizeEnum;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -18,8 +19,8 @@ public interface ProductOptionRepository extends JpaRepository<ProductOptionEnti
 
     List<ProductOptionEntity> findByProductIdAndActive(String productId, Boolean active);
 
-    @Query(value = "SELECT po.id FROM product_option po WHERE po.size = ?1 and po.color_id = ?2",nativeQuery = true)
-    String findBySizeAndColorId(String size,String color);
+    @Query(value = "SELECT * FROM product_option po WHERE po.size_id = ?1 AND po.color_id = ?2 AND po.product_id = ?3",nativeQuery = true)
+    ProductOptionEntity findBySizeAndColorId(String sizeId, String color,String productId);
 
 //    @Query(value = "SELECT DISTINCT c.id AS colorId, c.name AS colorName\n" +
 //            "FROM product_option po\n" +
@@ -28,16 +29,34 @@ public interface ProductOptionRepository extends JpaRepository<ProductOptionEnti
 
      //List<ColorResponse> getListColorNameBySize(@Param("size") String size);
 
+//    @Query("select DISTINCT new com.ws.masterserver.dto.customer.product.ColorResponse(" +
+//            "c.id,\n" +
+//            "c.name)\n" +
+//            "from ProductOptionEntity po\n" +
+//            "JOIN ColorEntity c on po.colorId = c.id\n" +
+//            "where po.size = :size")
+//    List<ColorResponse> getListColorNameBySize(@Param("size") SizeEnum size);
+
     @Query("select DISTINCT new com.ws.masterserver.dto.customer.product.ColorResponse(" +
         "c.id,\n" +
         "c.name)\n" +
         "from ProductOptionEntity po\n" +
         "JOIN ColorEntity c on po.colorId = c.id\n" +
-        "where po.size = :size")
-    List<ColorResponse> getListColorNameBySize(@Param("size") SizeEnum size);
+        "where po.sizeId = :sizeId and po.productId = :productId")
+    List<ColorResponse> getListColorNameBySize(@Param("sizeId") String sizeId, @Param("productId") String productId);
 
-    @Query("select distinct po.image\n" +
+    @Query("SELECT distinct po.image\n" +
             "from ProductOptionEntity po\n" +
             "where po.productId = ?1")
     List<String> findImageByProductId(String productId);
+
+    @Query("select DISTINCT new com.ws.masterserver.dto.customer.size.response.SizeResponse(" +
+            "s.id,\n" +
+            "s.name)\n" +
+            "from ProductOptionEntity po\n" +
+            "JOIN SizeEntity s on po.sizeId = s.id\n" +
+            "where po.productId = :productId")
+    List<SizeResponse> findListSizeByProductId(@Param("productId") String productId);
+
+
 }

@@ -41,7 +41,7 @@
                                     <p>{{c.colorName}} - {{c.sizeName}}</p>
                                     <!-- <p>{{c.sizeName}}</p> -->
                                   </td>
-                                  <td class="product-price-cart"><span class="amount">{{c.price | currency: "VND":"symbol"}}</span></td>
+                                  <td class="product-price-cart"><span class="amount">{{c.price | vnd}}</span></td>
                                   <td class="product-quantity">
                                       <div class="cart-plus-minus">
                                         <div class="dec qtybutton" (click)="decrement(c)">-</div>
@@ -49,7 +49,7 @@
                                         <div class="inc qtybutton" (click)="increment(c)">+</div>
                                       </div>
                                   </td>
-                                  <td class="product-subtotal">{{c.subtotal | currency: "VND":"symbol"}}</td>
+                                  <td class="product-subtotal">{{c.subtotal | vnd }}</td>
                                   <td class="product-remove">
                                     <a (click)="deleteItem(c.productOptionId)"><i class="fa fa-times"></i></a>
                                   </td>
@@ -64,7 +64,7 @@
                                   <a routerLink="/shop">TIẾP TỤC MUA SẮM</a>
                               </div>
                               <div class="cart-clear">
-                                <h4 class="grand-totall-title">Tổng tiền : <span>{{totalPrice | currency: "VND":"symbol" }}</span></h4>
+                                <h4 class="grand-totall-title">Tổng tiền : <span>{{totalPrice | vnd }}</span></h4>
                                   <br/>
                                 <!--  -->
                                   <a href="#">THANH TOÁN</a>

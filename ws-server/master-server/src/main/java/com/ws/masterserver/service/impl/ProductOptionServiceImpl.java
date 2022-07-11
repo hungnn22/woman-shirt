@@ -2,8 +2,12 @@ package com.ws.masterserver.service.impl;
 
 import com.ws.masterserver.dto.customer.product.ColorResponse;
 import com.ws.masterserver.dto.customer.product.product_option.ProductOptionIdReq;
+import com.ws.masterserver.dto.customer.product.product_option.ProductOptionIdRes;
+import com.ws.masterserver.dto.customer.size.response.SizeResponse;
 import com.ws.masterserver.entity.ColorEntity;
+import com.ws.masterserver.entity.ProductOptionEntity;
 import com.ws.masterserver.service.ProductOptionService;
+import com.ws.masterserver.utils.base.WsException;
 import com.ws.masterserver.utils.base.WsRepository;
 import com.ws.masterserver.utils.base.rest.ResData;
 import com.ws.masterserver.utils.constants.WsCode;
@@ -24,15 +28,30 @@ public class ProductOptionServiceImpl implements ProductOptionService {
     private final WsRepository repository;
 
     @Override
-    public ResData<String> findProductOptionId(ProductOptionIdReq req) {
-        String productOptionId = repository.productOptionRepository.findBySizeAndColorId(req.getSize(), req.getColorId());
-        return new ResData<>(productOptionId, WsCode.OK);
+    public ResData<ProductOptionIdRes> findProductOptionId(ProductOptionIdReq req) {
+        ProductOptionEntity productOption = repository.productOptionRepository.findBySizeAndColorId(req.getSizeId(),req.getColorId(),req.getProductId());
+        if(productOption == null) {
+            throw new WsException(WsCode.INTERNAL_SERVER);
+        }
+        ProductOptionIdRes res = ProductOptionIdRes.builder()
+                .productOptionId(productOption.getId())
+                .quantity(productOption.getQty())
+                .price(productOption.getPrice())
+                .build();
+        return new ResData<>(res, WsCode.OK);
+    }
+
+
+    @Override
+    public ResData<List<ColorResponse>> findColorNameBySize(String sizeId,String productId) {
+        List<ColorResponse> color = repository.productOptionRepository.getListColorNameBySize(sizeId,productId);
+        log.info("----------------" + color);
+        return new ResData<>(color, WsCode.OK);
     }
 
     @Override
-    public ResData<List<ColorResponse>> findColorNameBySize(SizeEnum size) {
-        List<ColorResponse> color = repository.productOptionRepository.getListColorNameBySize(size);
-
-        return new ResData<>(color, WsCode.OK);
+    public ResData<List<SizeResponse>> findSizeByProductId(String productId) {
+        List<SizeResponse> size = repository.productOptionRepository.findListSizeByProductId(productId);
+        return new ResData<>(size, WsCode.OK);
     }
 }

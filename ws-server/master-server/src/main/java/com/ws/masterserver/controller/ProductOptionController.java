@@ -20,9 +20,15 @@ public class ProductOptionController extends WsController {
         return ResponseEntity.status(HttpStatus.OK).body(service.productOptionService.findProductOptionId(req));
     }
 
+
     @GetMapping("/findColor")
-    public ResponseEntity<?> findProductOptionId(@RequestParam SizeEnum size){
-        return ResponseEntity.status(HttpStatus.OK).body(service.productOptionService.findColorNameBySize(size));
+    public ResponseEntity<?> findColor(@RequestParam String sizeId,@RequestParam String productId){
+        return ResponseEntity.status(HttpStatus.OK).body(service.productOptionService.findColorNameBySize(sizeId,productId));
+    }
+
+    @GetMapping("/findSize")
+    public ResponseEntity<?> findSize(@RequestParam String productId){
+        return ResponseEntity.status(HttpStatus.OK).body(service.productOptionService.findSizeByProductId(productId));
     }
 
 }

@@ -1,14 +1,15 @@
 export class Product {
   id? : string;
   name? : string;
-  active? : boolean;
+  minPrice? : string;
+  maxPrice? : string;
+  sizes? : [];
+  colors?: [];
+  images?: [];
   categoryName? : string;
-  thumbnail? : string;
-  price? : string;
-  des? : string;
   materialName? : string;
-  // typeName? : string;
+  des? : string;
+  typeName?: string;
   createdDate? : Date;
-  createdBy? : string;
-  createdName? : string;
+
 }

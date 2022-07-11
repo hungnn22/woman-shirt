@@ -85,6 +85,7 @@ public class WsConst {
         public static final String CATEGORY_VI = "Loại sản phẩm";
         public static final String MATERIAL_VI = "Chất liệu";
         public static final String COLOR_VI = "Màu sắc";
+        public static final String SIZE_VI = "Kích thước";
         /** Object */
         public static final String USER_VI = "Người dùng";
         public static final String CUSTOMER_VI = "Khách hàng";

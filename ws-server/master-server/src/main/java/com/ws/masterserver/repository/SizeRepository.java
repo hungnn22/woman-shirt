@@ -1,5 +1,6 @@
 package com.ws.masterserver.repository;
 
+import com.ws.masterserver.dto.customer.size.response.SizeResponse;
 import com.ws.masterserver.entity.SizeEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -17,4 +18,11 @@ public interface SizeRepository extends JpaRepository<SizeEntity, String> {
     List<String> findByProductId(String productId);
 
     String findNameById(String sizeId);
+
+    @Query("select DISTINCT new com.ws.masterserver.dto.customer.size.response.SizeResponse(" +
+            "s.id,\n" +
+            "s.code)\n" +
+            "from SizeEntity s")
+    List<SizeResponse> getAllSize();
+
 }

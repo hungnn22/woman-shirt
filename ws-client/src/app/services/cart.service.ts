@@ -1,6 +1,8 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
+import { Observable } from 'rxjs';
+import { CartItem } from '../models/CartItem';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -28,15 +30,21 @@ export class CartService {
     return this.http.post(AUTH_API + 'cart/add-to-cart', {productOptionId,quantity}, requestOptions);
   }
 
-  getListColorBySize(size:string){
+  getListColorBySize(sizeId:string,productId:string){
     let queryParams = new HttpParams();
-    queryParams = queryParams.append("size",size);
-
+    queryParams = queryParams.append("sizeId",sizeId);
+    queryParams = queryParams.append("productId",productId);
     return this.http.get(AUTH_API + 'product-option/findColor', {params: queryParams});
   }
 
-  findProductOptionId(colorId: string,size:string){
-    return this.http.post(AUTH_API + 'product-option/findId', {colorId,size}, httpOptions);
+  getListSizeByProductId(productId:string){
+    let queryParams = new HttpParams();
+    queryParams = queryParams.append("productId",productId);
+    return this.http.get(AUTH_API + 'product-option/findSize', {params: queryParams});
+  }
+
+  findProductOptionId(colorId: string,sizeId:string,productId:string){
+    return this.http.post(AUTH_API + 'product-option/findId', {colorId,sizeId,productId}, httpOptions);
   }
 
   getListCart(){
@@ -50,5 +58,11 @@ export class CartService {
   deleteCart(productOptionId: string){
     return this.http.delete(AUTH_API + 'cart/delete/' + productOptionId, requestOptions);
   }
+
+  countItemInCart() {
+    return this.http.get(AUTH_API + 'cart/countCartItem', requestOptions);
+  }
+
+
 
 }

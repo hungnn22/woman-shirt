@@ -27,9 +27,6 @@ public class ProductOptionEntity {
     @Column(name = "product_id")
     private String productId;
 
-    @Enumerated(EnumType.STRING)
-    private SizeEnum size;
-
     @Column(name = "color_id")
     private String colorId;
 

@@ -13,8 +13,8 @@ import { AuthGuard } from './guards/auth.guard';
 const routes: Routes = [
   { path: '', redirectTo: '/home',pathMatch: 'full'},
   { path:'home', component: HomeComponent },
-  // { path:'product-detail/:id', component: ProductDetailComponent},
-  { path:'product-detail', component: ProductDetailComponent},
+   { path:'product-detail/:id', component: ProductDetailComponent},
+  //{ path:'product-detail', component: ProductDetailComponent},
   { path:'cart', component: CartComponent, canActivate: [AuthGuard] },
   { path:'contact', component: ContactComponent},
   { path:'wishlist', component: WishListComponent,canActivate: [AuthGuard] },

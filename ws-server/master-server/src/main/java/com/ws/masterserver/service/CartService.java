@@ -2,6 +2,7 @@ package com.ws.masterserver.service;
 
 import com.ws.masterserver.dto.customer.cart.request.CartRequest;
 import com.ws.masterserver.dto.customer.cart.response.CartResponse;
+import com.ws.masterserver.dto.customer.cart.response.CountCartItem;
 import com.ws.masterserver.dto.customer.cart.response.ListCartResponse;
 import com.ws.masterserver.utils.base.rest.CurrentUser;
 import com.ws.masterserver.utils.base.rest.ResData;
@@ -18,5 +19,5 @@ public interface CartService {
 
     ResData<String> deleteItemInCart(CurrentUser currentUser,String productOptionId);
 
-    ResData<Integer> countCartItem(CurrentUser currentUser);
+    ResData<CountCartItem> countCartItem(CurrentUser currentUser);
 }

@@ -23,7 +23,8 @@ import { PriceComponent } from './components/shop/price/price.component';
 import { CarouselModule } from 'ngx-owl-carousel-o';
 import { WishListComponent } from './components/wish-list/wish-list.component';
 import { JwtModule } from '@auth0/angular-jwt';
-
+import { CurrencyPipe } from './pipes/currency.pipe';
+import { NgxPaginationModule } from 'ngx-pagination';
 @NgModule({
   declarations: [
     AppComponent,
@@ -37,7 +38,8 @@ import { JwtModule } from '@auth0/angular-jwt';
     ShopComponent,
     SizeComponent,
     PriceComponent,
-    WishListComponent
+    WishListComponent,
+    CurrencyPipe
   ],
   imports: [
     BrowserModule,
@@ -47,6 +49,7 @@ import { JwtModule } from '@auth0/angular-jwt';
     BrowserAnimationsModule,
     AppRoutingModule,
     NgxSpinnerModule,
+    NgxPaginationModule,
     //jwtmodule config spring boot
     JwtModule.forRoot({
       config: {

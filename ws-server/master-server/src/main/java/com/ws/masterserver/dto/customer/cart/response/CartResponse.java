@@ -12,7 +12,7 @@ public class CartResponse {
     private String cartId;
     private String productOptionId;
     private String productName;
-    private SizeEnum sizeName;
+    private String sizeName;
     private String colorName;
     private Integer quantity;
     private Long price;

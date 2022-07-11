@@ -12,7 +12,8 @@ import { CartService } from '../../services/cart.service';
 export class CartComponent implements OnInit {
 
   public cart!: Cart[];
-  totalPrice!: number;
+  //totalPrice!: number;
+  totalPrice!: string;
 
   constructor(
     private spinner: NgxSpinnerService,

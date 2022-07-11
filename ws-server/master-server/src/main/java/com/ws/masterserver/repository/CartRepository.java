@@ -17,9 +17,10 @@ public interface CartRepository extends JpaRepository<CartEntity, String> {
     Optional<CartEntity> findByUserIdAndAndProductOptionId(String userId, String productOptionId);
 
     @Query("SELECT new com.ws.masterserver.dto.customer.cart.response.CartResponse(" +
-            "c.id,po.id,p.name,po.size,cl.name,c.quantity,po.price,po.image,(po.price * c.quantity))\n"+
+            "c.id,po.id,p.name,s.name,cl.name,c.quantity,po.price,po.image,(po.price * c.quantity))\n"+
             "from CartEntity c\n"+
             "JOIN ProductOptionEntity po ON c.productOptionId = po.id\n" +
+            "JOIN SizeEntity s ON po.sizeId = s.id\n" +
             "JOIN ColorEntity cl ON po.colorId = cl.id\n" +
             "JOIN ProductEntity p ON po.productId = p.id\n" +
             "WHERE c.userId = :userId")

@@ -2,6 +2,7 @@ package com.ws.masterserver.service.impl;
 
 import com.ws.masterserver.dto.customer.cart.request.CartRequest;
 import com.ws.masterserver.dto.customer.cart.response.CartResponse;
+import com.ws.masterserver.dto.customer.cart.response.CountCartItem;
 import com.ws.masterserver.dto.customer.cart.response.ListCartResponse;
 import com.ws.masterserver.entity.CartEntity;
 import com.ws.masterserver.service.CartService;
@@ -131,9 +132,14 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public ResData<Integer> countCartItem(CurrentUser currentUser) {
+    public ResData<CountCartItem> countCartItem(CurrentUser currentUser) {
         if (currentUser.getRole().equals(RoleEnum.ROLE_CUSTOMER)) {
-            Integer item = repository.cartRepository.countItemInCart(currentUser.getId());
+            Integer itemCart = repository.cartRepository.countItemInCart(currentUser.getId());
+
+            CountCartItem item = CountCartItem.builder()
+                    .countItem(itemCart)
+                    .build();
+
             return new ResData<>(item,WsCode.OK);
         }
         throw new ResponseStatusException(HttpStatus.FORBIDDEN, WsConst.Messages.FORBIDDEN);
