@@ -1,6 +1,5 @@
 package com.ws.masterserver.repository;
 
-import com.ws.masterserver.dto.customer.product.search.ColorDto;
 import com.ws.masterserver.entity.ColorEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -21,5 +20,5 @@ public interface ColorRepository extends JpaRepository<ColorEntity, String> {
             "from ColorEntity c\n" +
             "left join ProductOptionEntity po on po.colorId = c.id\n" +
             "where po.productId = ?1")
-    List<String> findByProductId(String productId);
+    List<String> findDistinctByProductId(String productId);
 }

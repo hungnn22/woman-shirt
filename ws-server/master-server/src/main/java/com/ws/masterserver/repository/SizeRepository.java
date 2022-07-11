@@ -14,7 +14,5 @@ public interface SizeRepository extends JpaRepository<SizeEntity, String> {
             "from SizeEntity s\n" +
             "left join ProductOptionEntity po on po.sizeId = s.id\n" +
             "where po.productId = ?1")
-    List<String> findByProductId(String productId);
-
-    String findNameById(String sizeId);
+    List<String> findDistinctByProductId(String productId);
 }

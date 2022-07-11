@@ -6,6 +6,6 @@ import com.ws.masterserver.utils.base.rest.CurrentUser;
 /**
  * @author myname
  */
-public interface AdminProductService {
+public interface AdminProductSearchService {
     Object search(CurrentUser currentUser, ProductReq req);
 }

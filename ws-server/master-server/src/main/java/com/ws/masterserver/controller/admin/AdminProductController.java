@@ -19,7 +19,7 @@ public class AdminProductController extends WsController {
     @PostMapping("/search")
     public ResponseEntity<Object> search4Admin(@RequestBody ProductReq req) {
         log.info("start api /api/v1/product/admin/search with req: {}", JsonUtils.toJson(req));
-        return ResponseEntity.ok(service.adminProductService.search(getCurrentUser(), req));
+        return ResponseEntity.ok(service.adminProductSearchService.search(getCurrentUser(), req));
     }
 
 
