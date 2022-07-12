@@ -1,5 +1,6 @@
 package com.ws.masterserver.repository;
 
+import com.ws.masterserver.dto.admin.dashboard.CategoryRevenueDto;
 import com.ws.masterserver.dto.admin.dashboard.EarningDayDto;
 import com.ws.masterserver.entity.OrderEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -36,8 +37,8 @@ public interface OrderRepository extends JpaRepository<OrderEntity, String> {
     Long getEarningToday();
 
     /**
-     * @return doanh thu theo thứ trong tuần hiện tại
      * @param i
+     * @return doanh thu theo thứ trong tuần hiện tại
      */
     @Query("select new com.ws.masterserver.dto.admin.dashboard.EarningDayDto(\n" +
             "extract('dow' from o.createdDate) - 1 as dayOfWeek,\n" +
@@ -48,4 +49,20 @@ public interface OrderRepository extends JpaRepository<OrderEntity, String> {
             "group by dayOfWeek\n" +
             "order by dayOfWeek")
     List<EarningDayDto> getEarningWeekWithDay(int minusWeek);
+
+    /**
+     * @return doanhh thu theo từng loại sản phẩm
+     */
+    @Query("select new com.ws.masterserver.dto.admin.dashboard.CategoryRevenueDto(\n" +
+            "c.id as cId,\n" +
+            "c.name as cName,\n" +
+            "coalesce(sum(o.total), 0) as total)\n" +
+            "from CategoryEntity c\n" +
+            "left join ProductEntity p on p.categoryId = c.id\n" +
+            "left join ProductOptionEntity po on po.productId = p.id\n" +
+            "left join OrderDetailEntity od on od.productOptionId = po.id\n" +
+            "left join OrderEntity o on o.id = od.orderId\n" +
+            "where c.active = true\n" +
+            "group by c.id, c.name")
+    List<CategoryRevenueDto> getCategoryRevenue();
 }

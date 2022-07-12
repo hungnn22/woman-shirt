@@ -1,45 +1,65 @@
 import { useEffect, useState } from "react";
-import AuthService from "../../service/AuthService";
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import AxiosApi from "../../api/AxiosApi";
 import WsUrl from "../../utils/constants/WsUrl";
 import HashSpinner from "../../component/spinner/HashSpinner";
-import WsChart from "../../component/chart/WsChart";
+import WeekChart from "../../component/dashboard/WeekChart";
 
 const Dashboard = () => {
-    const navigate = useNavigate()
-
-    const [dashboard, setDashboard] = useState({})
-    const [report, setReport] = useState({})
-    const [thisWeek, setThisWeek] = useState({})
-    const [lastWeek, setLastWeek] = useState({})
+    const [report, setReport] = useState()
+    const [thisWeek, setThisWeek] = useState()
+    const [lastWeek, setLastWeek] = useState()
     const [loading, setLoading] = useState(true)
+    const [category, setCategory] = useState()
 
     useEffect(() => {
-        const checkUser = () => {
-            const isAccess = AuthService.isAccessAdminLayout()
-            if (!isAccess) {
-                navigate("/login")
-            }
-        }
-        const getDashboard = async () => {
+        const getReport = async () => {
             setLoading(true)
-            const res = await AxiosApi.getAuth(WsUrl.ADMIN_DASHBOARD)
-            if (res) {
-                const data = res.data.data
-                if (data) {
-                    setDashboard(data)
-                    setReport(data.report)
-                    setThisWeek(data.thisWeek)
-                    setLastWeek(data.lastWeek)
+            const reportRes = await AxiosApi.getAuth(WsUrl.ADMIN_DASHBOARD_REPORT)
+            if (reportRes) {
+                const reportData = reportRes.data.data
+                if (reportData) {
+                    setReport(reportData)
                     setLoading(false)
                 }
             }
         }
 
-        checkUser()
-        getDashboard()
-        
+        getReport()
+    }, [])
+
+    useEffect(() => {
+        const getWeek = async () => {
+            setLoading(true)
+            const weekRes = await AxiosApi.getAuth(WsUrl.ADMIN_DASHBOARD_WEEK_REVENUE)
+            if (weekRes) {
+                const weekData = weekRes.data.data
+                if (weekData) {
+                    setThisWeek(weekData.thisWeek)
+                    setLastWeek(weekData.lastWeek)
+                    setLoading(false)
+                }
+            }
+        }
+
+        getWeek()
+    }, [])
+
+    useEffect(() => {
+        const getCategory = async () => {
+            setLoading(true)
+
+            const categoryRes = await AxiosApi.getAuth(WsUrl.ADMIN_DASHBOARD_CATEGORY_REVENUE)
+            if (categoryRes) {
+                const categoryData = categoryRes.data.data
+                if (categoryData) {
+                    setCategory(categoryData)
+                    setLoading(false)
+                }
+            }
+        }
+
+        getCategory()
     }, [])
 
     return (
@@ -109,7 +129,7 @@ const Dashboard = () => {
                                                 </div>
                                                 <div className="row no-gutters align-items-center">
                                                     <div className="col-auto">
-                                                        <div className="h5 mb-0 mr-3 font-weight-bold text-gray-800">{report.user || 0}</div>
+                                                        <div className="h5 mb-0 mr-3 font-weight-bold text-gray-800">{report.week || 0} VND</div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -127,7 +147,7 @@ const Dashboard = () => {
                                             <div className="col mr-2">
                                                 <div className="text-xs font-weight-bold text-warning text-uppercase mb-1">
                                                     Người dùng mới trong tuần</div>
-                                                <div className="h5 mb-0 font-weight-bold text-gray-800">{dashboard && dashboard.cancel ? dashboard.cancel : 0}</div>
+                                                <div className="h5 mb-0 font-weight-bold text-gray-800">{report.user || 0}</div>
                                             </div>
                                             <div className="col-auto">
                                                 <i className="fas fa-comments fa-2x text-gray-300" />
@@ -156,7 +176,7 @@ const Dashboard = () => {
                                         </div>
                                     </div>
                                     <div className="card-body">
-                                        {thisWeek && lastWeek ? <WsChart thisWeek={thisWeek} lastWeek={lastWeek} /> : <></>}
+                                        {thisWeek && lastWeek ? <WeekChart thisWeek={thisWeek} lastWeek={lastWeek} /> : <></>}
                                     </div>
                                 </div>
                             </div>

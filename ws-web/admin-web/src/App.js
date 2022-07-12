@@ -1,4 +1,4 @@
-import { Routes, Route, Outlet } from "react-router-dom";
+import { Routes, Route, Outlet, useNavigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import LoginPage from "./page/login/LoginPage";
 import AdminLayout from "./layout/AdminLayout";
@@ -6,8 +6,22 @@ import Dashboard from "./page/dashboard/Dashboard";
 import OrderPage from "./page/order/OrderPage";
 import OrderDetailPage from "./page/order/OrderDetailPage";
 import NotificationPage from "./page/notification/NotificationPage";
+import { useEffect } from "react";
+import AuthService from "./service/AuthService";
 
 function App() {
+  const navigate = useNavigate()
+
+
+  useEffect(() => {
+    const checkUser = () => {
+      const isAccess = AuthService.isAccessAdminLayout()
+      if (!isAccess) {
+        navigate("/login")
+      }
+    }
+    checkUser()
+  })
 
   return (
     <div className="page-top">

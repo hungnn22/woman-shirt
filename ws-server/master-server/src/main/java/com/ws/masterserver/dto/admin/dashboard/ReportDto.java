@@ -7,12 +7,12 @@ public class ReportDto {
     /**
      * đơn hàng đang chờ xử lý
      */
-    private String pending;
+    private Long pending;
 
     /**
      * người dùng mới
      */
-    private String user;
+    private Long user;
 
     /**
      * Doanh thu hôm nay
@@ -27,5 +27,5 @@ public class ReportDto {
     /**
      * đơn hàng bị hủy
      */
-    private String cancel;
+    private Long cancel;
 }

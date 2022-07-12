@@ -27,4 +27,10 @@ public class AdminWsController {
         return ResponseEntity.ok(true);
     }
 
+    @GetMapping("/v2")
+    public ResponseEntity<Object> v2(String message) {
+        wsService.testV2(message);
+        return ResponseEntity.ok(true);
+    }
+
 }

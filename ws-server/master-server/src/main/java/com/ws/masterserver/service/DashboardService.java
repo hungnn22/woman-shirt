@@ -6,5 +6,9 @@ import com.ws.masterserver.utils.base.rest.CurrentUser;
  * @author myname
  */
 public interface DashboardService {
-    Object dashboard(CurrentUser currentUser);
+    Object getReport(CurrentUser currentUser);
+
+    Object getCategoryRevenue(CurrentUser currentUser);
+
+    Object getWeekRevenue(CurrentUser currentUser);
 }

@@ -56,10 +56,9 @@ const Topbar = () => {
         console.log("Connected!!")
     }
 
-    const onMessageReceived = payload => {
-        console.log("payload: ", payload)
+    const onMessage = payload => {
+        console.log(`payload: ${payload}`)
         if (payload) {
-            console.log("NHAN MESSAGE FROM WS");
             getNotification()
         }
     }
@@ -79,12 +78,13 @@ const Topbar = () => {
                 topics={['/topic/admin/notification']}
                 onConnect={onConnected}
                 onDisconnect={console.log("Disconnected!")}
-                onMessage={onMessageReceived}
-
+                onMessage={onMessage}
             />
+
             <button id="sidebarToggleTop" className="btn btn-link d-md-none rounded-circle mr-3">
                 <i className="fa fa-bars" />
             </button>
+            
             <ul className="navbar-nav ml-auto">
                 <li className="nav-item dropdown no-arrow d-sm-none">
                     <a className="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
