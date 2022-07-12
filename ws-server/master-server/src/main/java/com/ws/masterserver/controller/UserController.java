@@ -33,6 +33,7 @@ public class UserController extends WsController {
 
     @PostMapping("/admin/search")
     public ResponseEntity<Object> search4Admin(@RequestBody UserReq req) {
+        Object o = new Object();
         return ResponseEntity.ok(service.userService.search4Admin(getCurrentUser(), req));
     }
 }
