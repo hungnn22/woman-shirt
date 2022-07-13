@@ -61,15 +61,4 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         return null;
     }
 
-    @Override
-    public Object search4Admin(CurrentUser currentUser, UserReq req) {
-        AuthValidator.checkAdmin(currentUser);
-        Pageable pageable = PageableUtils.getPageable(req.getPageReq());
-//        return repository.userRepository.search4Admin(req, pageable);
-        return null;
-    }
-
-
-
-
 }

@@ -31,8 +31,4 @@ public class UserController extends WsController {
         return ResponseEntity.status(HttpStatus.OK).body(service.userService.changeCustomerProfile(getCurrentUser(), body));
     }
 
-    @PostMapping("/admin/search")
-    public ResponseEntity<Object> search4Admin(@RequestBody UserReq req) {
-        return ResponseEntity.ok(service.userService.search4Admin(getCurrentUser(), req));
-    }
 }

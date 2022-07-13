@@ -28,4 +28,5 @@ public class WsService {
     public final DashboardService dashboardService;
     public final NotificationService notificationService;
     public final AdminProductSearchService adminProductSearchService;
+    public final MailService mailService;
 }

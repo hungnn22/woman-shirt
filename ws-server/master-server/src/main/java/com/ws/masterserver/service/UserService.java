@@ -10,6 +10,4 @@ public interface UserService {
     Object registerCustomer(RegisterDto body);
 
     Object changeCustomerProfile(CurrentUser currentUser, ChangeProfileDto body);
-
-    Object search4Admin(CurrentUser currentUser, UserReq req);
 }
