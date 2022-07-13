@@ -1,10 +1,8 @@
 package com.ws.masterserver.controller;
 
-import com.ws.masterserver.dto.admin.user.UserReq;
 import com.ws.masterserver.dto.customer.user.ChangeProfileDto;
 import com.ws.masterserver.dto.customer.user.RegisterDto;
 import com.ws.masterserver.utils.base.WsController;
-import com.ws.masterserver.utils.base.WsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

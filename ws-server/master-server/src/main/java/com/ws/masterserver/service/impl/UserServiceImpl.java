@@ -1,18 +1,14 @@
 package com.ws.masterserver.service.impl;
 
-import com.ws.masterserver.dto.admin.user.UserReq;
 import com.ws.masterserver.dto.customer.user.ChangeProfileDto;
 import com.ws.masterserver.dto.customer.user.RegisterDto;
 import com.ws.masterserver.utils.base.WsRepository;
 import com.ws.masterserver.service.UserService;
-import com.ws.masterserver.utils.common.PageableUtils;
-import com.ws.masterserver.utils.validator.AuthValidator;
 import com.ws.masterserver.utils.constants.WsConst;
 import com.ws.masterserver.utils.base.rest.CurrentUser;
 import com.ws.masterserver.utils.validator.user.RegisterValidator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
