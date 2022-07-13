@@ -28,4 +28,6 @@ public class ExchangeEntity {
     private Date createdDate;
 
     private String createdBy;
+
+    private Boolean accept;
 }
