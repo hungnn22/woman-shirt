@@ -1,5 +1,6 @@
 package com.ws.masterserver.controller.admin;
 
+import com.ws.masterserver.dto.admin.product.create_update.ProductDto;
 import com.ws.masterserver.dto.customer.product.ProductReq;
 import com.ws.masterserver.utils.base.WsController;
 import com.ws.masterserver.utils.common.JsonUtils;
@@ -19,14 +20,18 @@ public class AdminProductController extends WsController {
     @PostMapping("/search")
     public ResponseEntity<Object> search4Admin(@RequestBody ProductReq req) {
         log.info("start api /api/v1/product/admin/search with req: {}", JsonUtils.toJson(req));
-        return ResponseEntity.ok(service.adminProductSearchService.search(getCurrentUser(), req));
+        return ResponseEntity.ok(service.adminProductService.search(getCurrentUser(), req));
     }
 
     @Operation(summary = "API detail product cho admin")
     @GetMapping("/detail/{id}")
     public ResponseEntity<Object> detail4Admin(@PathVariable String id) {
         log.info("start api /api/v1/product/admin/detail with id: {}", id);
-        return ResponseEntity.ok(service.adminProductSearchService.detail(getCurrentUser(), id));
+        return ResponseEntity.ok(service.adminProductService.detail(getCurrentUser(), id));
     }
 
+    @PostMapping("/create")
+    public ResponseEntity<Object> create(@RequestBody ProductDto dto) {
+        return ResponseEntity.ok(service.adminProductService.create(getCurrentUser(), dto));
+    }
 }

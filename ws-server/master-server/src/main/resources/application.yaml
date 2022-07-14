@@ -35,3 +35,8 @@ logging:
 server:
   error:
     include-message: always
+cloud:
+  name: ${CLOUD_NAME:hungnn22cloudinary}
+  api:
+    key: ${CLOUD_API_KEY:384426152519968}
+    secret: ${CLOUD_API_SECRET:WjFBrrrKlAs1vU42mePi4FJLPW0}

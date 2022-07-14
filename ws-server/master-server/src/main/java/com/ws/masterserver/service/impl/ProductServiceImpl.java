@@ -1,26 +1,19 @@
 package com.ws.masterserver.service.impl;
 
-import com.ws.masterserver.dto.admin.product.search.ProductRes;
 import com.ws.masterserver.dto.customer.product.ProductReq;
 import com.ws.masterserver.dto.admin.product.ProductDetailResponse;
-import com.ws.masterserver.dto.admin.product.ProductDto;
 import com.ws.masterserver.dto.admin.product_option.ProductOptionResponse;
 import com.ws.masterserver.dto.customer.product.ProductResponse;
 import com.ws.masterserver.dto.customer.review.response.ReviewResponse;
 import com.ws.masterserver.entity.*;
 import com.ws.masterserver.service.ProductService;
-import com.ws.masterserver.utils.base.WsException;
 import com.ws.masterserver.utils.base.WsRepository;
 import com.ws.masterserver.utils.base.rest.PageData;
 import com.ws.masterserver.utils.common.DateUtils;
 import com.ws.masterserver.utils.common.MoneyUtils;
-import com.ws.masterserver.utils.common.UidUtils;
 import com.ws.masterserver.utils.constants.WsCode;
 import com.ws.masterserver.utils.constants.WsConst;
-import com.ws.masterserver.utils.base.rest.CurrentUser;
 import com.ws.masterserver.utils.base.rest.ResData;
-import com.ws.masterserver.utils.validator.AuthValidator;
-import com.ws.masterserver.utils.validator.ProductValidator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -36,35 +29,6 @@ public class ProductServiceImpl implements ProductService {
 
     private final WsRepository repository;
 
-    @Override
-    public ResData<String> create(CurrentUser currentUser, ProductDto dto) {
-        AuthValidator.checkAdmin(currentUser);
-
-        //todo: validate dto
-        ProductValidator.validCreate(dto);
-        var product = ProductEntity.builder()
-                .id(UidUtils.generateUid())
-                .name(dto.getName().trim())
-                .categoryId(dto.getCategoryId())
-//                .material(dto.getMaterial())
-                .des(dto.getDes().trim())
- //               .type(dto.getType())
-                .build();
-        repository.productRepository.save(product);
-
-        //todo: dùng cloudiary api để update ảnh -> trả về đường dẫn
-        repository.productOptionRepository.saveAll(dto.getProductOptions().stream().map(item ->
-                ProductOptionEntity.builder()
-                        .id(UidUtils.generateUid())
-                        .productId(product.getId())
-//                        .size(item.getSize())
-//                        .color(item.getColor())
-                        .price(Long.valueOf(item.getPrice()))
-                        .image("")
-                        .build()).collect(Collectors.toList()));
-
-        return new ResData<>(product.getId(), WsCode.OK);
-    }
 
     @Override
     public ResData<ProductDetailResponse> getProductDetail(String id) {
@@ -151,12 +115,6 @@ public class ProductServiceImpl implements ProductService {
 //            return new PageData<>(true);
 //        }
         return repository.productCustomRepository.search( req);
-    }
-
-    @Override
-    public PageData<ProductRes> search4Admin(CurrentUser currentUser, ProductReq req) {
-        AuthValidator.checkAdmin(currentUser);
-        return repository.productCustomRepository.search4Admin(req);
     }
 
     @Override

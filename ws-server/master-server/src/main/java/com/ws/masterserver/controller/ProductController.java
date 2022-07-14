@@ -2,11 +2,8 @@ package com.ws.masterserver.controller;
 
 import com.ws.masterserver.dto.customer.product.ProductReq;
 import com.ws.masterserver.dto.admin.product.ProductDetailResponse;
-import com.ws.masterserver.dto.admin.product.ProductDto;
 import com.ws.masterserver.utils.base.WsController;
-import com.ws.masterserver.utils.base.WsService;
 import com.ws.masterserver.utils.base.rest.ResData;
-import com.ws.masterserver.utils.common.JsonUtils;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,12 +20,6 @@ public class ProductController extends WsController {
     @PostMapping("/search")
     public ResponseEntity<?> search(@RequestBody ProductReq req){
         return ResponseEntity.status(HttpStatus.OK).body(service.productService.search( req));
-    }
-
-    @Operation(summary = "ADMIN: API thêm sản phầm")
-    @RequestMapping("/create")
-    public ResponseEntity<ResData<String>> create(@RequestBody ProductDto dto) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(service.productService.create(getCurrentUser(), dto));
     }
 
     @Operation(summary = "API GET Product Detail")
