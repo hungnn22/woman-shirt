@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import java.util.List;
 
 @Data
@@ -13,9 +12,4 @@ import java.util.List;
 @NoArgsConstructor
 public class DashboardDto {
     private ReportDto report;
-
-    private List<DayDto> thisWeek;
-
-    private List<DayDto> lastWeek;
-
 }

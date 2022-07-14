@@ -120,11 +120,6 @@ public class ProductCustomRepositoryImpl implements ProductCustomRepository {
     }
 
     @Override
-    public PageData<ProductRes> search4Admin(ProductReq req) {
-        return null;
-    }
-
-    @Override
     public Object searchV2(com.ws.masterserver.dto.customer.product.search.ProductReq req) {
         var repository = BeanUtils.getBean(WsRepository.class);
         var sql = "select distinct p1.id,\n" +

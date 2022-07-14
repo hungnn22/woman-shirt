@@ -1,8 +1,11 @@
 package com.ws.masterserver.utils.base;
 
+import com.ws.masterserver.entity.UserEntity;
 import com.ws.masterserver.repository.*;
 import com.ws.masterserver.repository.custom.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -21,6 +24,8 @@ public class WsRepository {
     public final ProductRepository productRepository;
     public final PromotionRepository promotionRepository;
     public final ProductOptionRepository productOptionRepository;
+
+    public final LocationRepository locationRepository;
     public final PromotionTypeRepository promotionTypeRepository;
     public final ResetTokenRepository resetTokenRepository;
     public final ReviewMediaRepository reviewMediaRepository;
@@ -40,4 +45,5 @@ public class WsRepository {
     public final OrderCustomRepository orderCustomRepository;
     public final OrderDetailCustomRepository orderDetailCustomRepository;
     public final ProductCustomRepository productCustomRepository;
+
 }

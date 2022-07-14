@@ -1,5 +1,5 @@
 import React from 'react'
-import { Line } from 'react-chartjs-2'
+import { Doughnut } from 'react-chartjs-2'
 import {
     Chart as ChartJS,
     CategoryScale,
@@ -36,7 +36,7 @@ export const options = {
 
 const labels = ['Thứ hai', 'Thứ ba', 'Thứ tư', 'Thứ năm', 'Thứ sáu', 'Thứ bảy', 'Chủ nhật'];
 
-const WsChart = ({thisWeek, lastWeek}) => {
+const CategoryChart = ({thisWeek, lastWeek}) => {
 
     const data = {
         labels,
@@ -56,8 +56,8 @@ const WsChart = ({thisWeek, lastWeek}) => {
         ],
     };
     return (
-        <Line data={data} options={options} />
+        <Doughnut data={data} options={options} />
     )
 }
 
-export default WsChart
+export default CategoryChart

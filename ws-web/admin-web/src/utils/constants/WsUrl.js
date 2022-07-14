@@ -24,7 +24,9 @@ export default {
     ADMIN_ORDER_SEARCH: "/admin/order/search",
     ADMIN_ORDER_DETAIL: "/admin/order/detail",
 
-    ADMIN_DASHBOARD: '/admin/dashboard',
+    ADMIN_DASHBOARD_REPORT: '/admin/dashboard/report',
+    ADMIN_DASHBOARD_CATEGORY_REVENUE: '/admin/dashboard/category-revenue',
+    ADMIN_DASHBOARD_WEEK_REVENUE: '/admin/dashboard/week-revenue',
     ADMIN_NOTIFICATION: '/admin/notification',
     ADMIN_NOTIFICATION_TOP3: '/admin/notification/top3',
     ADMIN_NOTIFICATION_SEARCH: '/admin/notification/search',

@@ -31,4 +31,5 @@ public interface SizeRepository extends JpaRepository<SizeEntity, String> {
             "s.code)\n" +
             "from SizeEntity s")
     List<SizeResponse> getAllSize();
+
 }

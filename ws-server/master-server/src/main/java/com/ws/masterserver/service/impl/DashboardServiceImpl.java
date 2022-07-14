@@ -1,20 +1,20 @@
 package com.ws.masterserver.service.impl;
 
-import com.ws.masterserver.dto.admin.dashboard.DashboardDto;
-import com.ws.masterserver.dto.admin.dashboard.DayDto;
-import com.ws.masterserver.dto.admin.dashboard.EarningDayDto;
-import com.ws.masterserver.dto.admin.dashboard.ReportDto;
+import com.ws.masterserver.dto.admin.dashboard.*;
 import com.ws.masterserver.service.DashboardService;
 import com.ws.masterserver.utils.base.WsRepository;
 import com.ws.masterserver.utils.base.rest.CurrentUser;
 import com.ws.masterserver.utils.base.rest.ResData;
 import com.ws.masterserver.utils.common.MoneyUtils;
+import com.ws.masterserver.utils.constants.enums.RoleEnum;
+import com.ws.masterserver.utils.validator.AuthValidator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 import java.util.stream.IntStream;
 
 @Service
@@ -25,22 +25,20 @@ public class DashboardServiceImpl implements DashboardService {
     private final WsRepository repository;
 
     @Override
-    public Object dashboard(CurrentUser currentUser) {
-        DashboardDto dashboard = new DashboardDto();
-        ReportDto report = new ReportDto();
-        List<DayDto> thisWeek = new ArrayList<>();
-        List<DayDto> lastWeek = new ArrayList<>();
+    public Object getReport(CurrentUser currentUser) {
+        AuthValidator.checkRole(currentUser, RoleEnum.ROLE_ADMIN, RoleEnum.ROLE_STAFF);
+        var report = new ReportDto();
         var pending = CompletableFuture.runAsync(() -> {
             var pendingList = repository.orderStatusRepository.countPending();
-            report.setPending(String.valueOf(pendingList.size()));
+            report.setPending((long) pendingList.size());
         });
         var cancel = CompletableFuture.runAsync(() -> {
             var rejectAndCancelNumberToday = repository.orderStatusRepository.countRejectAndCancelToday();
-            report.setCancel(String.valueOf(rejectAndCancelNumberToday));
+            report.setCancel(rejectAndCancelNumberToday);
         });
         var user = CompletableFuture.runAsync(() -> {
             var newUserThisWeek = repository.userRepository.countNewUserThisWeek();
-            report.setUser(String.valueOf(newUserThisWeek));
+            report.setUser(newUserThisWeek);
         });
         var today = CompletableFuture.runAsync(() -> {
             var earningToday = repository.orderRepository.getEarningToday();
@@ -51,6 +49,26 @@ public class DashboardServiceImpl implements DashboardService {
             report.setWeek(MoneyUtils.format(earningThisWeek));
         });
 
+        try {
+            CompletableFuture.allOf(pending, cancel, user, today, week).get();
+        } catch (Exception e) {
+            log.error("dashboard error: {}", e.getMessage());
+        }
+        return ResData.ok(report);
+    }
+
+    @Override
+    public Object getCategoryRevenue(CurrentUser currentUser) {
+        AuthValidator.checkRole(currentUser, RoleEnum.ROLE_ADMIN, RoleEnum.ROLE_STAFF);
+        return ResData.ok(repository.orderRepository.getCategoryRevenue());
+    }
+
+    @Override
+    public Object getWeekRevenue(CurrentUser currentUser) {
+        AuthValidator.checkRole(currentUser, RoleEnum.ROLE_ADMIN, RoleEnum.ROLE_STAFF);
+        var res = new WeekRevenueDto();
+        List<DayDto> thisWeek = new ArrayList<>();
+        List<DayDto> lastWeek = new ArrayList<>();
         var thisWeekFuture = CompletableFuture.runAsync(() -> {
             var earningDayRes = repository.orderRepository.getEarningWeekWithDay(0);
             thisWeek.addAll(this.getEarningThisWeekWithDay(earningDayRes));
@@ -60,14 +78,13 @@ public class DashboardServiceImpl implements DashboardService {
             lastWeek.addAll(this.getEarningThisWeekWithDay(earningDayRes));
         });
         try {
-            CompletableFuture.allOf(pending, cancel, user, today, week, thisWeekFuture, lastWeekFuture).get();
-            dashboard.setReport(report);
-            dashboard.setThisWeek(thisWeek);
-            dashboard.setLastWeek(lastWeek);
+            CompletableFuture.allOf(thisWeekFuture, lastWeekFuture).get();
+            res.setThisWeek(thisWeek);
+            res.setLastWeek(lastWeek);
         } catch (Exception e) {
-            log.error("dashboard error: {}", e.getMessage());
+            log.error("getWeekRevenue error: {}", e.getMessage());
         }
-        return ResData.ok(dashboard);
+        return ResData.ok(res);
     }
 
     private List<DayDto> getEarningThisWeekWithDay(List<EarningDayDto> list) {

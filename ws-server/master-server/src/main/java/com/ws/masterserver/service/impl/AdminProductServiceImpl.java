@@ -1,8 +1,12 @@
 package com.ws.masterserver.service.impl;
 
+import com.ws.masterserver.dto.admin.product.create_update.ProductDto;
 import com.ws.masterserver.dto.admin.product.search.ProductRes;
 import com.ws.masterserver.dto.customer.product.ProductReq;
-import com.ws.masterserver.service.AdminProductSearchService;
+import com.ws.masterserver.entity.ProductEntity;
+import com.ws.masterserver.entity.ProductOptionEntity;
+import com.ws.masterserver.proxy.CloudProxy;
+import com.ws.masterserver.service.AdminProductService;
 import com.ws.masterserver.utils.base.WsException;
 import com.ws.masterserver.utils.base.WsRepository;
 import com.ws.masterserver.utils.base.rest.CurrentUser;
@@ -11,10 +15,12 @@ import com.ws.masterserver.utils.common.*;
 import com.ws.masterserver.utils.constants.WsCode;
 import com.ws.masterserver.utils.constants.enums.RoleEnum;
 import com.ws.masterserver.utils.validator.AuthValidator;
+import com.ws.masterserver.utils.validator.product.AdminProductValidator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import javax.persistence.EntityManager;
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
@@ -22,10 +28,11 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class AdminProductSearchServiceImpl implements AdminProductSearchService {
+public class AdminProductServiceImpl implements AdminProductService {
 
     private final WsRepository repository;
     private final EntityManager entityManager;
+    private final CloudProxy cloudProxy;
 
     @Override
     public Object search(CurrentUser currentUser, ProductReq req) {
@@ -130,6 +137,42 @@ public class AdminProductSearchServiceImpl implements AdminProductSearchService 
 
     @Override
     public Object detail(CurrentUser currentUser, String id) {
+        return null;
+    }
+
+    @Override
+    @Transactional
+    public Object create(CurrentUser currentUser, ProductDto dto) {
+        log.info("AdminProductServiceImpl create start with dto: {}", JsonUtils.toJson(dto));
+        AuthValidator.checkAdmin(currentUser);
+        AdminProductValidator.validCreate(dto);
+        var product = ProductEntity.builder()
+                .id(UidUtils.generateUid())
+                .name(dto.getName().trim())
+                .des(dto.getDes().stream().map(obj -> obj.trim()).collect(Collectors.joining("|")))
+                .materialId(dto.getMaterialId())
+                .active(true)
+                .categoryId(dto.getCategoryId())
+                .build();
+        log.info("product before save: {}", JsonUtils.toJson(product));
+        repository.productRepository.save(product);
+        log.info("product after save: {}", JsonUtils.toJson(product));
+
+        for (var option : dto.getOptions()) {
+            var po = ProductOptionEntity.builder()
+                    .id(UidUtils.generateUid())
+                    .productId(product.getId())
+                    .active(true)
+                    .colorId(option.getColorId())
+                    .sizeId(option.getSizeId())
+                    .qty(Long.valueOf(option.getQty()))
+                    .price(Long.valueOf(option.getPrice()))
+                    .image(cloudProxy.uploadImage(option.getImage()))
+                    .build();
+            log.info("po before save: {}", JsonUtils.toJson(po));
+            repository.productOptionRepository.save(po);
+            log.info("po afre save: {}", JsonUtils.toJson(po));
+        }
         return null;
     }
 }

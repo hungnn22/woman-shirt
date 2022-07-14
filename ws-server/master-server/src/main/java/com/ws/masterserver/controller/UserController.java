@@ -1,10 +1,8 @@
 package com.ws.masterserver.controller;
 
-import com.ws.masterserver.dto.admin.user.UserReq;
 import com.ws.masterserver.dto.customer.user.ChangeProfileDto;
 import com.ws.masterserver.dto.customer.user.RegisterDto;
 import com.ws.masterserver.utils.base.WsController;
-import com.ws.masterserver.utils.base.WsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,8 +29,4 @@ public class UserController extends WsController {
         return ResponseEntity.status(HttpStatus.OK).body(service.userService.changeCustomerProfile(getCurrentUser(), body));
     }
 
-    @PostMapping("/admin/search")
-    public ResponseEntity<Object> search4Admin(@RequestBody UserReq req) {
-        return ResponseEntity.ok(service.userService.search4Admin(getCurrentUser(), req));
-    }
 }

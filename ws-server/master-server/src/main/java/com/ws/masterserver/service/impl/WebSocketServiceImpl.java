@@ -13,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.Date;
 
 @Service
@@ -27,11 +28,12 @@ public class WebSocketServiceImpl implements WebSocketService {
     @Override
     public void changeUnreadNumberNotification4Admin() {
         log.info("WebSocketServiceImpl changeUnreadNumberNotification4Admin start...");
-        this.send("/admin/notification", true);
+        this.send("/topic/admin/notification", true);
         log.info("WebSocketServiceImpl changeUnreadNumberNotification4Admin done...");
     }
 
     @Override
+    @Transactional
     public void testNotification4Admin(NotificationTypeEnum type, String content, ObjectTypeEnum objectType, String objectTypeId) {
         repository.notificationRepository.save(NotificationEntity.builder()
                         .id(UidUtils.generateUid())
@@ -56,6 +58,11 @@ public class WebSocketServiceImpl implements WebSocketService {
                 break;
         }
         ws.convertAndSend("/admin/dashboard", true);
+    }
+
+    @Override
+    public void testV2(String message) {
+        ws.convertAndSend("/topic/messages", message);
     }
 
     private void createdPendingOrder() {

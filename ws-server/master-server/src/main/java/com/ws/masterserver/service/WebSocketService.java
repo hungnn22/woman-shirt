@@ -12,4 +12,6 @@ public interface WebSocketService {
     void testNotification4Admin(NotificationTypeEnum type, String content, ObjectTypeEnum objectType, String objectTypeId);
 
     void testDashboard4Admin(int type);
+
+    void testV2(String message);
 }

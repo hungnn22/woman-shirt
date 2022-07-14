@@ -3,6 +3,9 @@ package com.ws.masterserver.repository;
 import com.ws.masterserver.dto.customer.user.UserDto;
 import com.ws.masterserver.entity.UserEntity;
 import com.ws.masterserver.utils.base.rest.CurrentUser;
+import com.ws.masterserver.utils.constants.enums.RoleEnum;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -50,4 +53,25 @@ public interface UserRepository extends JpaRepository<UserEntity, String> {
     @Query("select count(u) from UserEntity u\n" +
             "where extract('week' from u.createdDate) = extract('week' from current_date)")
     Long countNewUserThisWeek();
+
+    @Query("select u\n" +
+            "from UserEntity u\n" +
+            "where (:textSearch is null\n" +
+            "or unaccent(upper(u.firstName)) like concat('%', unaccent(upper(trim(:textSearch))), '%')\n" +
+            "or unaccent(upper(u.lastName)) like concat('%', unaccent(upper(trim(:textSearch))), '%')\n" +
+            "or unaccent(upper(u.email)) like concat('%', unaccent(upper(trim(:textSearch))), '%')\n" +
+            "or unaccent(upper(u.phone)) like concat('%', unaccent(upper(trim(:textSearch))), '%'))\n" +
+            "and (:active is null or u.active = :active)\n" +
+            "and (:role is null or u.role = :role)\n" +
+            "and (:diffRole is null or u.role <> :diffRole)")
+    Page<UserEntity> search(@Param("textSearch") String textSearch,
+                            @Param("active") Boolean active,
+                            @Param("role") RoleEnum role,
+                            @Param("diffRole") RoleEnum diffRole,
+                            Pageable pageable);
+
+    @Query("select trim(concat(coalesce(u.firstName, ''), ' ', coalesce(u.lastName, ''))) as name\n" +
+            "from UserEntity u\n" +
+            "where u.id = ?1")
+    String findNameById(String createdBy);
 }
