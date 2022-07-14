@@ -1,4 +1,4 @@
-package com.ws.masterserver.dto.customer.suggest;
+package com.ws.masterserver.dto.customer.location;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,8 +9,10 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class CategoryDto {
+public class LocationDto {
     private String id;
-    private String name;
-    private String image;
+    private String addressName;
+    private String hotline;
+    private String addressLink;
+
 }

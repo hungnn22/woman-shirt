@@ -22,6 +22,7 @@ import { NgxSliderModule } from '@angular-slider/ngx-slider';
 import { PriceComponent } from './components/shop/price/price.component';
 import { CarouselModule } from 'ngx-owl-carousel-o';
 import { WishListComponent } from './components/wish-list/wish-list.component';
+import { LocationComponent } from './components/shop/location/location.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { WishListComponent } from './components/wish-list/wish-list.component';
     ShopComponent,
     SizeComponent,
     PriceComponent,
-    WishListComponent
+    WishListComponent,
+    LocationComponent
   ],
   imports: [
     BrowserModule,

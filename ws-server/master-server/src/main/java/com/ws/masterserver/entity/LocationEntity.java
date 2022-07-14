@@ -14,47 +14,28 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.*;
 import java.util.Date;
 
-@Entity
-@Table(name = "category")
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @Accessors(chain = true)
 @EntityListeners(AuditingEntityListener.class)
-public class CategoryEntity {
-    /**
-     * type: uuid
-     * */
+@Entity
+@Table(name = "location")
+public class LocationEntity {
+
+
     @Id
     private String id;
 
-    private String name;
+    @Column(name = "address_name")
+    private String addressName;
 
-    private String des;
+    @Column(name = "hotline")
+    private String hotline;
 
-    @Column(name = "type_id")
-    private String typeId;
+    @Column(name = "address_link")
+    private String addressLink;
 
-    private Boolean active;
-
-    private String image;
-
-    @CreatedDate
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "created_date")
-    private Date createdDate;
-
-    @CreatedBy
-    @Column(name = "created_by")
-    private String createdBy;
-
-    @LastModifiedDate
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "updated_date")
-    private Date updatedDate;
-
-    @LastModifiedBy
-    @Column(name = "updated_by")
-    private String updatedBy;
 }

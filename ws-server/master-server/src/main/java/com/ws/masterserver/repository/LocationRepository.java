@@ -1,29 +1,28 @@
 package com.ws.masterserver.repository;
 
+import com.ws.masterserver.dto.customer.location.LocationDto;
 import com.ws.masterserver.dto.customer.suggest.CategoryDto;
 import com.ws.masterserver.entity.CategoryEntity;
+import com.ws.masterserver.entity.LocationEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+
+import javax.persistence.Column;
 import java.util.List;
 
 @Repository
-public interface CategoryRepository extends JpaRepository<CategoryEntity, String> {
-    CategoryEntity findByIdAndActive(String id, Boolean active);
+public interface LocationRepository extends JpaRepository<LocationEntity,String> {
+//    @Query(value = "select * from location",nativeQuery = true)
+//@Query("SELECT t FROM LocationEntity t")
 
-    Boolean existsByIdAndActive(String id, Boolean active);
-
-    Boolean existsByNameIgnoreCaseAndActiveAndIdNot(String trim, Boolean aTrue, String id);
-
-    Boolean existsByNameIgnoreCaseAndActive(String toLowerCase, Boolean aTrue);
-
-    CategoryEntity findByNameIgnoreCaseAndActive(String categoryName, Boolean aTrue);
-
-    @Query("select new com.ws.masterserver.dto.customer.suggest.CategoryDto(\n" +
+    @Query("select new com.ws.masterserver.dto.customer.location.LocationDto(\n" +
             "c.id,\n" +
-            "c.name,\n" +
-            "c.image) from CategoryEntity c\n" +
-            "where c.active = true\n" +
-            "order by c.name")
-    List<CategoryDto> findSuggestCategories();
+            "c.addressName,\n" +
+            "c.hotline,\n" +
+            "c.addressLink) from LocationEntity c\n")
+    List<LocationDto> findAllLocations();
+
+
+
 }

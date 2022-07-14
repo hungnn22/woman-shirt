@@ -1,3 +1,4 @@
+import { LocationComponent } from './components/shop/location/location.component';
 import { SizeComponent } from './components/shop/size/size.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
@@ -19,6 +20,8 @@ const routes: Routes = [
   { path:'wishlist', component: WishListComponent },
   { path:'shop', component: ShopComponent},
   { path:'size', component: SizeComponent},
+  { path:'location', component: LocationComponent},
+
 
   { path: '',
     loadChildren: () => import('./components/authentication/authentication.module').then(m => m.AuthenticationModule)
