@@ -19,7 +19,7 @@ const AdminLayout = () => {
                 navigate("/login")
             }
         }
-        checkUser()
+        // checkUser()
     }, [])
 
     return (
