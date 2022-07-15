@@ -23,9 +23,6 @@ export class SizeService {
     return this.http.get<Product[]>("http://localhost:8080/api/v1/suggest/category-list");
   }
 
-  // getSize(): Observable<Product[]> {
-  //   return this.http.get<Product[]>("http://localhost:8080/api/v1/suggest/category-list");
-  // }
 
   getSize(cateId: string, height: string, weight: string):Observable<object> {
     return this.http.get("http://localhost:8080/api/v1/suggest/search?categoryId=" + cateId + "&height=" + height + "&weight=" +weight);
