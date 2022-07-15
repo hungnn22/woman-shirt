@@ -15,6 +15,6 @@ public class UserDto {
     private String phone;
     private RoleEnum role;
     private Boolean gender;
-    private MultipartFile avatar;
+    private byte[] avatar;
     private Date dob;
 }

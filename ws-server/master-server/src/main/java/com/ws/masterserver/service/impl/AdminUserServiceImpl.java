@@ -15,6 +15,7 @@ import com.ws.masterserver.utils.common.PageableUtils;
 import com.ws.masterserver.utils.constants.WsCode;
 import com.ws.masterserver.utils.constants.enums.RoleEnum;
 import com.ws.masterserver.utils.validator.AuthValidator;
+import com.ws.masterserver.utils.validator.user.AdminUserValidator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -75,7 +76,7 @@ public class AdminUserServiceImpl implements AdminUserService {
     @Override
     public Object create(CurrentUser currentUser, UserDto dto) {
         AuthValidator.checkAdmin(currentUser);
-
+        AdminUserValidator.validDto(dto);
         return null;
     }
 }
