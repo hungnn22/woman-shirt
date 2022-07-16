@@ -1,3 +1,4 @@
+import { LocationComponent } from './components/shop/location/location.component';
 import { SizeComponent } from './components/shop/size/size.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
@@ -20,6 +21,8 @@ const routes: Routes = [
   { path:'checkout', component: CheckoutComponent },
   { path:'wishlist', component: WishListComponent,canActivate: [AuthGuard] },
   { path:'shop', component: ShopComponent},
+  { path:'location', component: LocationComponent},
+
   { path:'size', component: SizeComponent},
 
   { path: '',

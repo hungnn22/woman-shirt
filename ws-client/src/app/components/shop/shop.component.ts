@@ -1,3 +1,4 @@
+import { LocationService } from './../../services/location.service';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
@@ -69,7 +70,9 @@ export class ShopComponent implements OnInit {
     private router: Router,
     private activeRoute: ActivatedRoute,
     private sizeService: SizeService,
-    private colorService: ColorService
+    private colorService: ColorService,
+    private locationService: LocationService,
+
   ) {}
 
   ngOnInit(): void {
@@ -87,6 +90,16 @@ export class ShopComponent implements OnInit {
       }
     })
   }
+
+  getListLocation() {
+    this.locationService.getListLocation().subscribe({
+      next: (response: any) => {
+        console.log('size', response);
+        this.sizes = response.data;
+      }
+    })
+  }
+
 
   getListColor() {
     this.colorService.getListColor().subscribe({

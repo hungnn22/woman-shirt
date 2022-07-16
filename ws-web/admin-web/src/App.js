@@ -8,38 +8,40 @@ import OrderDetailPage from "./page/order/OrderDetailPage";
 import NotificationPage from "./page/notification/NotificationPage";
 import { useEffect } from "react";
 import AuthService from "./service/AuthService";
+import Account from "./page/acccount/Account";
+import AccountDetails from "./page/acccount/AccountDetails";
 
 function App() {
-  const navigate = useNavigate()
-
+  const navigate = useNavigate();
 
   useEffect(() => {
     const checkUser = () => {
-      const isAccess = AuthService.isAccessAdminLayout()
+      const isAccess = AuthService.isAccessAdminLayout();
       if (!isAccess) {
-        navigate("/login")
+        navigate("/login");
       }
-    }
-    checkUser()
-  })
+    };
+    // checkUser()
+  });
 
   return (
     <div className="page-top">
       <div className="wrapper">
         <Routes>
           <Route path="/login" element={<LoginPage />} />
-          <Route path="" element={<AdminLayout />} >
+          <Route path="" element={<AdminLayout />}>
             <Route path="/" element={<Dashboard />} />
-            <Route path='order' element={<OrderPage />} />
-            <Route path='order/:status' element={<OrderPage />} />
-            <Route path='order/detail/:id' element={<OrderDetailPage />} />
-            <Route path='notification' element={<NotificationPage />} />
+            <Route path="order" element={<OrderPage />} />
+            <Route path="order/:status" element={<OrderPage />} />
+            <Route path="order/detail/:id" element={<OrderDetailPage />} />
+            <Route path="account" element={<Account />} />
+            <Route path="account/:id" element={<AccountDetails />} />
+            <Route path="notification" element={<NotificationPage />} />
           </Route>
         </Routes>
         <ToastContainer />
       </div>
     </div>
-
   );
 }
 

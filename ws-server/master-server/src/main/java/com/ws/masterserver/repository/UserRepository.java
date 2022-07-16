@@ -74,4 +74,12 @@ public interface UserRepository extends JpaRepository<UserEntity, String> {
             "from UserEntity u\n" +
             "where u.id = ?1")
     String findNameById(String createdBy);
+
+    boolean existsByEmailIgnoreCase(String email);
+
+    boolean existsByPhone(String phone);
+
+    boolean existsByIdAndActive(String id, boolean active);
+
+    boolean existsByPhoneAndIdNot(String phone, String id);
 }

@@ -2,7 +2,6 @@ import axios from "axios";
 import WsField from "../utils/constants/WsField";
 import WsUrl from "../utils/constants/WsUrl";
 import WsValue from "../utils/constants/WsValue";
-import {logDOM} from "@testing-library/react";
 
 const axiosIns = axios.create({
     baseURL: WsUrl.BASE

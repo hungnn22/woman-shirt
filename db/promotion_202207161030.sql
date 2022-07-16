@@ -1,0 +1,3 @@
+INSERT INTO public.promotion (id,active,created_by,created_date,expired_date,"name",percent_discount,promotion_type_id,updated_by,updated_date,use_limit,voucher) VALUES
+	 ('e9fe8ab3-91bf-444b-b6bd-dce3e0f59435',true,NULL,'2022-06-26 10:26:38.255','2022-06-26 10:26:38.036','Free ship nội thành',100.0,'bd2658cf-dc1a-4e1e-8a7e-b8770b4c1b1a',NULL,'2022-06-26 10:26:38.255',1,'93FCDBD6'),
+	 ('aa610149-171c-4ac2-809c-54c33ef51d0b',true,NULL,'2022-06-26 10:26:38.474','2022-06-26 10:26:38.036','Giảm 5% giá trị đơn hàng',5.0,'28a41c2b-97a9-4164-98cc-ccd49f958ddc',NULL,'2022-06-26 10:26:38.474',1,'2C090B6B');

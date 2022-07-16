@@ -167,7 +167,7 @@ public class AdminProductServiceImpl implements AdminProductService {
                     .sizeId(option.getSizeId())
                     .qty(Long.valueOf(option.getQty()))
                     .price(Long.valueOf(option.getPrice()))
-                    .image(cloudProxy.uploadImage(option.getImage()))
+//                    .image(cloudProxy.uploadImage(option.getImage()))
                     .build();
             log.info("po before save: {}", JsonUtils.toJson(po));
             repository.productOptionRepository.save(po);
