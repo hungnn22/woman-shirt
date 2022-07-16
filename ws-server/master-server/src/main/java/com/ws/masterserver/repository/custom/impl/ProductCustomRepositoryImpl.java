@@ -149,7 +149,7 @@ public class ProductCustomRepositoryImpl implements ProductCustomRepository {
                 "        po2.product_id = p1.id\n" +
                 "where 1 = 1\n";
 
-        sql += getOrderFilter(req.getPageReq());
+
         if (!StringUtils.isNullOrEmpty(req.getTextSearch())) {
             var textSearch = req.getTextSearch().trim().toUpperCase(Locale.ROOT);
             var like = "concat('%', unaccent('" + textSearch +"'), '%')";
@@ -169,6 +169,9 @@ public class ProductCustomRepositoryImpl implements ProductCustomRepository {
         if (!req.getSizeIds().isEmpty()) {
             sql += "and po2.size_id in " + req.getSizeIds().stream().map(o -> "'" + o + "'").collect(Collectors.joining(", ", "(", ")")) + "\n";
         }
+
+        sql += getOrderFilter(req.getPageReq());
+
         log.info("ProductCustomRepositoryImpl searchV2 sql: {}", sql);
 
         var query = entityManager.createNativeQuery(sql);

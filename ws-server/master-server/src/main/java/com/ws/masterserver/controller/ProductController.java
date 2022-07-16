@@ -1,5 +1,6 @@
 package com.ws.masterserver.controller;
 
+import com.ws.masterserver.dto.customer.product.ProductRelatedReq;
 import com.ws.masterserver.dto.customer.product.ProductReq;
 import com.ws.masterserver.dto.admin.product.ProductDetailResponse;
 import com.ws.masterserver.utils.base.WsController;
@@ -32,5 +33,12 @@ public class ProductController extends WsController {
     public ResponseEntity<?> searchV2(@RequestBody com.ws.masterserver.dto.customer.product.search.ProductReq req){
         return ResponseEntity.ok(service.productService.searchV2(req));
     }
+
+    @Operation(summary = "API GET Related Product")
+    @PostMapping("/relatedProduct")
+    public ResponseEntity<?> getRelatedProduct(@RequestBody ProductRelatedReq req){
+        return ResponseEntity.ok(service.productService.getRelatedProduct(req.getProductId()));
+    }
+
 
 }
