@@ -1,0 +1,3 @@
+INSERT INTO public.address (id,active,combination,created_by,created_date,district_code,district_name,exact,is_default,province_code,province_name,updated_by,updated_date,user_id,ward_code,ward_name) VALUES
+	 ('e62be07e-490b-4d0f-b72c-f8d5da94bfca',true,'Phường Phúc Xá, Quận Ba Đình, Thành phố Hà Nội',NULL,'2022-06-26 10:26:45.13','1','Quận Ba Đình','Số nhà 200',false,'1','Thành phố Hà Nội',NULL,'2022-06-26 10:26:45.13','6fac7f97-6c5c-44d5-9ed0-5bfc66326f2b','1','Phường Phúc Xá'),
+	 ('743eb8f9-0026-4956-9976-8198d5ad6349',true,'Phường Trúc Bạch, Quận Ba Đình, Thành phố Hà Nội',NULL,'2022-06-26 10:26:45.349','1','Quận Ba Đình','Số nhà 170',false,'1','Thành phố Hà Nội',NULL,'2022-06-26 10:26:45.349','c37f89a1-932c-4350-baed-7eb0d1fb30be','4','Phường Trúc Bạch');

@@ -13,8 +13,8 @@ public class UserDto {
     private String email;
     private String password;
     private String phone;
-    private RoleEnum role;
+    private String role;
     private Boolean gender;
-    private byte[] avatar;
+    private String avatar;
     private Date dob;
 }

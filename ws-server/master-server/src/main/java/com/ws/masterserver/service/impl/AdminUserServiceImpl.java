@@ -73,10 +73,4 @@ public class AdminUserServiceImpl implements AdminUserService {
                 .build();
     }
 
-    @Override
-    public Object create(CurrentUser currentUser, UserDto dto) {
-        AuthValidator.checkAdmin(currentUser);
-        AdminUserValidator.validDto(dto);
-        return null;
-    }
 }
