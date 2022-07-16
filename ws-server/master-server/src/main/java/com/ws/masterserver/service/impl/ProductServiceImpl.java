@@ -1,5 +1,6 @@
 package com.ws.masterserver.service.impl;
 
+import com.ws.masterserver.dto.customer.product.ProductRelatedRes;
 import com.ws.masterserver.dto.customer.product.ProductReq;
 import com.ws.masterserver.dto.admin.product.ProductDetailResponse;
 import com.ws.masterserver.dto.admin.product_option.ProductOptionResponse;
@@ -120,5 +121,13 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Object searchV2(com.ws.masterserver.dto.customer.product.search.ProductReq req) {
         return repository.productCustomRepository.searchV2(req);
+    }
+
+    @Override
+    public ResData<List<ProductRelatedRes>> getRelatedProduct(String productId) {
+        ProductEntity product = repository.productRepository.findById(productId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, String.format(WsConst.Messages.NOT_FOUND, WsConst.Nouns.CATEGORY_VI)));
+        List<ProductRelatedRes> productRelated = repository.productRepository.getProductRelated(product.getCategoryId());
+        return new ResData<>(productRelated, WsCode.OK);
     }
 }

@@ -38,7 +38,15 @@
                 <div class="tab-content jump">
                     <div id="shop-1" class="tab-pane active">
                         <div class="row">
-                            <div class="col-xl-4 col-md-6 col-lg-6 col-sm-6" *ngFor="let product of listProduct">
+                            <div class="col-xl-4 col-md-6 col-lg-6 col-sm-6" *ngFor="let product of listProduct
+                              | paginate
+                              : {
+                                  itemsPerPage: pageSize,
+                                  currentPage: page+1,
+                                  totalItems: totalElements
+                                }
+                            "
+                            >
                                 <div class="product-wrap mb-25 scroll-zoom" data-sr-id="1" style=" visibility: visible;  -webkit-transform: translateY(0) scale(1); opacity: 1;transform: translateY(0) scale(1); opacity: 1;-webkit-transition: -webkit-transform 0.8s cubic-bezier(0.6, 0.2, 0.1, 1) 0s, opacity 0.8s cubic-bezier(0.6, 0.2, 0.1, 1) 0s; transition: transform 0.8s cubic-bezier(0.6, 0.2, 0.1, 1) 0s, opacity 0.8s cubic-bezier(0.6, 0.2, 0.1, 1) 0s; ">
                                     <div class="product-img">
                                       <a [routerLink]="['/product-detail/'+product.id]">
@@ -60,15 +68,8 @@
                                     </div>
                                     <div class="product-content text-center">
                                         <h3><a [routerLink]="['/product-detail/'+product.id]">{{product.name}}</a></h3>
-                                        <div class="product-rating">
-                                            <i class="fa fa-star-o yellow"></i>
-                                            <i class="fa fa-star-o yellow"></i>
-                                            <i class="fa fa-star-o yellow"></i>
-                                            <i class="fa fa-star-o"></i>
-                                            <i class="fa fa-star-o"></i>
-                                        </div>
                                         <div class="product-price">
-                                          <span>{{product.maxPrice | vnd }}</span>
+                                          <span style="color: #ee4d2d;">{{product.maxPrice | vnd }}</span>
                                             <!-- <span class="old">$ 60.00</span> -->
                                         </div>
                                     </div>
@@ -77,14 +78,14 @@
                         </div>
                     </div>
                 </div>
-                <div class="pro-pagination-style text-center mt-30">
-                    <ul>
-                        <li><a class="prev" href="#"><i class="fa fa-angle-double-left"></i></a></li>
-                        <li><a class="active" href="#">1</a></li>
-                        <li><a href="#">2</a></li>
-                        <li><a class="next" href="#"><i class="fa fa-angle-double-right"></i></a></li>
-                    </ul>
-                </div>
+
+                <pagination-controls
+                    class="text-center my-pagination"
+                    previousLabel="Trước"
+                    nextLabel="Sau"
+                    (pageChange)="pageChange((page = $event))"
+                >
+              </pagination-controls>
             </div>
 
           </div>
@@ -129,7 +130,7 @@
                 <div class="sidebar-widget mt-45">
                     <h4 class="pro-sidebar-title">Khoảng giá (VNĐ)</h4>
                     <div class="sidebar-widget-list mt-20">
-                      <ul>
+                      <!-- <ul>
                           <li>
                               <div class="sidebar-widget-list-left">
                                   <input type="checkbox" value=""><a>Nhỏ hơn 100.000đ</a>
@@ -167,8 +168,24 @@
                               <span class="checkmark"></span>
                             </div>
                           </li>
-                      </ul>
-                  </div>
+                      </ul> -->
+                      <label>Giá từ</label>
+                      <div class="price-filter">
+                          <div id="price-slider"></div>
+                          <div class="input-number price-min">
+                              <input id="price-min" type="number" placeholder="">
+
+                          </div>
+                          <span>đến</span>
+                          <div class="input-number price-max">
+                              <input id="price-max" type="number"
+                                     placeholder="">
+                          </div>
+                      </div>
+
+
+
+                    </div>
                   </div>
                 <div class="sidebar-widget mt-50">
                     <h4 class="pro-sidebar-title">Màu sắc</h4>
@@ -213,3 +230,4 @@
       </div>
   </div>
 </div>
+

@@ -12,7 +12,6 @@ import { CartService } from '../../services/cart.service';
 export class CartComponent implements OnInit {
 
   public cart!: Cart[];
-  //totalPrice!: number;
   totalPrice!: string;
 
   constructor(
@@ -68,7 +67,6 @@ export class CartComponent implements OnInit {
     });
   }
 
-  //change the number of products in the cart with event
   changeQuantity(e : any,cart: Cart){
     console.log('e : ',e);
     console.log('cart : ',cart);
@@ -79,7 +77,7 @@ export class CartComponent implements OnInit {
       }
     });
 
-    //if nothing is entered, set quantity equal to 1
+
     if(e.target.value == ''){
       this.cartService.updateCart(cart.productOptionId!, 1).subscribe({
         next: (response:any) => {

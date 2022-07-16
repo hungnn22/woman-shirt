@@ -47,7 +47,7 @@ export class SignInComponent implements OnInit {
     const formData = new FormData();
     formData.append('email', email);
     formData.append('password', password);
-    this.http.post('http://localhost:9999/api/v1/login',formData).subscribe(
+    this.http.post('http://localhost:8080/api/v1/login',formData).subscribe(
       (res:any) => {
         const {accessToken, refreshToken} = res;
         this.tokenStorage.saveToken(accessToken);

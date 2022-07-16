@@ -22,21 +22,6 @@ public interface ProductOptionRepository extends JpaRepository<ProductOptionEnti
     @Query(value = "SELECT * FROM product_option po WHERE po.size_id = ?1 AND po.color_id = ?2 AND po.product_id = ?3",nativeQuery = true)
     ProductOptionEntity findBySizeAndColorId(String sizeId, String color,String productId);
 
-//    @Query(value = "SELECT DISTINCT c.id AS colorId, c.name AS colorName\n" +
-//            "FROM product_option po\n" +
-//            "JOIN color c on po.color_id = c.id\n" +
-//            "WHERE size = ?1",nativeQuery = true)
-
-     //List<ColorResponse> getListColorNameBySize(@Param("size") String size);
-
-//    @Query("select DISTINCT new com.ws.masterserver.dto.customer.product.ColorResponse(" +
-//            "c.id,\n" +
-//            "c.name)\n" +
-//            "from ProductOptionEntity po\n" +
-//            "JOIN ColorEntity c on po.colorId = c.id\n" +
-//            "where po.size = :size")
-//    List<ColorResponse> getListColorNameBySize(@Param("size") SizeEnum size);
-
     @Query("select DISTINCT new com.ws.masterserver.dto.customer.product.ColorResponse(" +
         "c.id,\n" +
         "c.name)\n" +

@@ -25,6 +25,7 @@ import { WishListComponent } from './components/wish-list/wish-list.component';
 import { JwtModule } from '@auth0/angular-jwt';
 import { CurrencyPipe } from './pipes/currency.pipe';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { CheckoutComponent } from './components/checkout/checkout.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -39,7 +40,8 @@ import { NgxPaginationModule } from 'ngx-pagination';
     SizeComponent,
     PriceComponent,
     WishListComponent,
-    CurrencyPipe
+    CurrencyPipe,
+    CheckoutComponent
   ],
   imports: [
     BrowserModule,

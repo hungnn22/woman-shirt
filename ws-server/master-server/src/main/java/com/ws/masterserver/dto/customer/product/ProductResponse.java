@@ -19,9 +19,7 @@ public class ProductResponse {
     private String categoryName;
     private String des;
     private String materialName;
-//    private String typeName;
     private Date createdDate;
     private String createdBy;
     private String createdName;
-//    private List<ProductOptionRes> productOptionResList;
 }

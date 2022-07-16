@@ -1,5 +1,6 @@
 package com.ws.masterserver.repository;
 
+import com.ws.masterserver.dto.customer.product.ProductRelatedRes;
 import com.ws.masterserver.entity.ProductEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -19,4 +20,12 @@ public interface ProductRepository extends JpaRepository<ProductEntity, String> 
             "where p.id = :id\n" +
             "group by p.id")
     Long countSellNumber(@Param("id") String id);
+
+
+    @Query(value = "select distinct on (p.id) p.id AS productId,p.name AS productName,po.price AS price,po.image AS image \n" +
+            "from product p \n" +
+            "join category c on p.category_id = c.id \n" +
+            "join product_option po on p.id = po.product_id \n" +
+            "where p.category_id = ?1",nativeQuery = true)
+    List<ProductRelatedRes> getProductRelated(String categoryId);
 }
