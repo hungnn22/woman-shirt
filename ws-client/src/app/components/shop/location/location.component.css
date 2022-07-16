@@ -9,4 +9,11 @@
 .location{
   background-color:white;
   border: 1px solid ;
+  width: 146px;
+  padding-left:4px
 }
+.item-location:cli{
+/* color: red  ; */
+background-color: aqua;
+}
+
