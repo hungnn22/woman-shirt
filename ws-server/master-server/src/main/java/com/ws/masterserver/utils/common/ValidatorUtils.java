@@ -166,13 +166,13 @@ public class ValidatorUtils {
         if (null != minAge) {
             now = now.minusYears(minAge);
             if (dob.compareTo(now) > 0) {
-                throw new WsException(WsCode.BAD_REQUEST, fieldName + MUST_MORE + minAge);
+                throw new WsException(WsCode.AGE_MUST_MORE, WsCode.AGE_MUST_MORE.getMessage() + " " + minAge);
             }
         }
         if (null != maxAge) {
             now = now.minusYears(maxAge);
             if (dob.compareTo(now) < 0) {
-                throw new WsException(WsCode.BAD_REQUEST, fieldName + MUST_LESS + maxAge);
+                throw new WsException(WsCode.AGE_MUST_LESS, WsCode.AGE_MUST_LESS.getMessage() + " " + minAge);
             }
         }
     }

@@ -18,7 +18,9 @@ public enum WsCode {
     SIZE_SUGGEST_NOT_FOUND("400", "Không tìm thấy size phù hợp"),
     EMAIL_EXISTS("400", "Email đã tồn tại"),
     PHONE_EXISTS("400", "SDT đã tồn tại"),
-    DOB_NOT_MORE_NOW("400", "Ngảy sinh không được lớn hơn hiện tại");
+    DOB_NOT_MORE_NOW("400", "Ngảy sinh không được lớn hơn hiện tại"),
+    AGE_MUST_MORE("400", "Tuổi phải lớn hơn"),
+    AGE_MUST_LESS("400", "Tuổi phải nhỏ hơn");
     private final String code;
     private final String message;
 
