@@ -5,5 +5,5 @@ import com.ws.masterserver.utils.base.rest.CurrentUser;
 
 public interface AdminUserInfoService {
     Object create(CurrentUser currentUser, UserDto dto);
-
+    Object update(CurrentUser currentUser, UserDto dto);
 }

@@ -1,6 +1,5 @@
 package com.ws.masterserver.service.impl;
 
-import com.ws.masterserver.dto.admin.user.action.UserDto;
 import com.ws.masterserver.dto.admin.user.search.UserReq;
 import com.ws.masterserver.dto.admin.user.search.UserRes;
 import com.ws.masterserver.entity.UserEntity;
@@ -15,7 +14,6 @@ import com.ws.masterserver.utils.common.PageableUtils;
 import com.ws.masterserver.utils.constants.WsCode;
 import com.ws.masterserver.utils.constants.enums.RoleEnum;
 import com.ws.masterserver.utils.validator.AuthValidator;
-import com.ws.masterserver.utils.validator.user.AdminUserValidator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -63,13 +61,14 @@ public class AdminUserServiceImpl implements AdminUserService {
     private UserRes getUserResFromUserEntity(UserEntity user) {
         return UserRes.builder()
                 .id(user.getId())
-                .name(user.getFirstName() + " " + user.getLastName())
+                .combinationName(user.getFirstName() + " " + user.getLastName())
                 .email(user.getEmail())
                 .phone(user.getPhone())
-                .type(user.getRole().getName())
+                .roleValue(user.getRole().getName())
                 .active(user.getActive())
-                .createdDate(DateUtils.toStr(user.getCreatedDate(), DateUtils.F_DDMMYYYYHHMM))
-                .createdBy(repository.userRepository.findNameById(user.getCreatedBy()))
+                .createdDateValue(DateUtils.toStr(user.getCreatedDate(), DateUtils.F_DDMMYYYYHHMM))
+                .createdByValue(repository.userRepository.findNameById(user.getCreatedBy()))
+                .avatar(user.getAvatar())
                 .build();
     }
 

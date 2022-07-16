@@ -35,4 +35,11 @@ public class AdminUserController extends WsController {
         log.info("start api /api/v1/admin/user/create with dto: {}", JsonUtils.toJson(dto));
         return ResponseEntity.ok(service.adminUserInfoService.create(getCurrentUser(), dto));
     }
+
+    @Operation(summary = "API update user cho admin")
+    @PostMapping("/update")
+    public ResponseEntity<Object> update(@RequestBody UserDto dto) {
+        log.info("start api /api/v1/admin/user/update with dto: {}", JsonUtils.toJson(dto));
+        return ResponseEntity.ok(service.adminUserInfoService.update(getCurrentUser(), dto));
+    }
 }

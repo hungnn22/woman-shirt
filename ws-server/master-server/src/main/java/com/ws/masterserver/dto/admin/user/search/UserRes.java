@@ -11,11 +11,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class UserRes {
     private String id;
-    private String name;
+    private String combinationName;
     private String email;
     private String phone;
-    private String type;
+    private String roleValue;
     private Boolean active;
-    private String createdDate;
-    private String createdBy;
+    private String createdDateValue;
+    private String createdByValue;
+    private String avatar;
 }

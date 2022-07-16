@@ -8,10 +8,7 @@ import com.ws.masterserver.utils.base.WsException;
 import com.ws.masterserver.utils.base.WsRepository;
 import com.ws.masterserver.utils.base.rest.CurrentUser;
 import com.ws.masterserver.utils.base.rest.ResData;
-import com.ws.masterserver.utils.common.BeanUtils;
-import com.ws.masterserver.utils.common.JsonUtils;
-import com.ws.masterserver.utils.common.StringUtils;
-import com.ws.masterserver.utils.common.UidUtils;
+import com.ws.masterserver.utils.common.*;
 import com.ws.masterserver.utils.constants.WsCode;
 import com.ws.masterserver.utils.constants.enums.RoleEnum;
 import com.ws.masterserver.utils.validator.AuthValidator;
@@ -59,6 +56,36 @@ public class AdminUserInfoServiceImpl implements AdminUserInfoService {
             return ResData.ok(user.getId());
         } catch (Exception e) {
             log.error("AdminUserInfoServiceImpl create error: {}", e.getMessage());
+            throw new WsException(WsCode.INTERNAL_SERVER);
+        }
+    }
+
+    @Override
+    public Object update(CurrentUser currentUser, UserDto dto) {
+        log.info("AdminUserInfoServiceImpl update start dto: {}", JsonUtils.toJson(dto));
+        AuthValidator.checkAdmin(currentUser);
+        AdminUserValidator.validUpdate(dto);
+        CompletableFuture<String> future = null;
+        if (!StringUtils.isNullOrEmpty(dto.getAvatar())) {
+            future = CompletableFuture.supplyAsync(() -> cloudProxy.uploadImage(dto.getAvatar()));
+        }
+        var user = repository.userRepository.findById(dto.getId()).orElseThrow(() -> {
+            throw new WsException(WsCode.USER_NOT_FOUND);
+        });
+        try {
+            user.setFirstName(dto.getFirstName().trim())
+                    .setLastName(dto.getLastName().trim())
+                    .setPhone(dto.getPhone().trim())
+                    .setRole(RoleEnum.valueOf(dto.getRole()))
+                    .setGender(dto.getGender())
+                    .setAvatar(future != null ? future.get() : null)
+                    .setDob(dto.getDob());
+            log.info("AdminUserInfoServiceImpl update user before save: {}", JsonUtils.toJson(user));
+            repository.userRepository.save(user);
+            log.info("AdminUserInfoServiceImpl update user after save: {}", JsonUtils.toJson(user));
+            return ResData.ok(user.getId());
+        } catch (Exception e) {
+            log.error("AdminUserInfoServiceImpl update error: {}", e.getMessage());
             throw new WsException(WsCode.INTERNAL_SERVER);
         }
     }
