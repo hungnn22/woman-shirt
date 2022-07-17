@@ -1,32 +1,31 @@
 package com.ws.masterserver.controller;
 
-import com.ws.masterserver.dto.customer.user.ChangeProfileDto;
-import com.ws.masterserver.dto.customer.user.RegisterDto;
+import com.ws.masterserver.dto.customer.user.ProfileDto;
 import com.ws.masterserver.utils.base.WsController;
+import com.ws.masterserver.utils.common.JsonUtils;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/user")
 @RequiredArgsConstructor
+@Slf4j
 public class UserController extends WsController {
 
-    /**
-     * API KH đăng ký tài khoản
-     */
-    @PostMapping("/customer/register")
-    public ResponseEntity<Object> register(@RequestBody RegisterDto body) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(service.userService.registerCustomer(body));
+    @Operation(summary = "update thông tin cá nhân")
+    @PostMapping("/update-profile")
+    public ResponseEntity<Object> updateProfile(@RequestBody ProfileDto dto) {
+        log.info("start api /api/v1/user/update-profile with dto: {}", JsonUtils.toJson(dto));
+        return ResponseEntity.ok(service.userInfoService.updateProfile(getCurrentUser(), dto));
     }
 
-    /**
-     * API KH đổi thông tin cá nhân
-     * */
-    @PutMapping("/customer/change-profile")
-    public ResponseEntity<Object> changeProfile(@RequestBody ChangeProfileDto body) {
-        return ResponseEntity.status(HttpStatus.OK).body(service.userService.changeCustomerProfile(getCurrentUser(), body));
+    @Operation(summary = "thông tin cá nhân")
+    @GetMapping("/personal")
+    public ResponseEntity<Object> personal() {
+        log.info("start api /api/v1/user/personal");
+        return ResponseEntity.ok(service.userInfoService.personal(getCurrentUser()));
     }
-
 }

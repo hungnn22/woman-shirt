@@ -1,6 +1,6 @@
 package com.ws.masterserver.controller.admin;
 
-import com.ws.masterserver.dto.admin.user.action.UserDto;
+import com.ws.masterserver.dto.admin.user.info.UserDto;
 import com.ws.masterserver.dto.admin.user.search.UserReq;
 import com.ws.masterserver.utils.base.WsController;
 import com.ws.masterserver.utils.common.JsonUtils;
@@ -50,5 +50,7 @@ public class AdminUserController extends WsController {
         log.info("start api /api/v1/admin/user/change-status with req: {}", id);
         return ResponseEntity.ok(service.adminUserInfoService.changeStatus(getCurrentUser(), id));
     }
+
+
 
 }

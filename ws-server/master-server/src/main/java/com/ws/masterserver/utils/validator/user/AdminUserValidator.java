@@ -1,48 +1,46 @@
 package com.ws.masterserver.utils.validator.user;
 
-import com.ws.masterserver.dto.admin.user.action.UserDto;
+import com.ws.masterserver.dto.admin.user.info.UserDto;
 import com.ws.masterserver.utils.base.WsException;
 import com.ws.masterserver.utils.base.WsRepository;
 import com.ws.masterserver.utils.common.BeanUtils;
 import com.ws.masterserver.utils.common.ValidatorUtils;
 import com.ws.masterserver.utils.constants.WsCode;
+import com.ws.masterserver.utils.constants.field.UserFields;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class AdminUserValidator {
-    private static final String FIRST_NAME = "Họ";
-    private static final String LAST_NAME = "Tên";
-    private static final String EMAIL = "Email";
-    private static final String PASSWORD = "Mật khẩu";
-    private static final String PHONE = "SDT";
-    private static final String ROLE = "Quyền";
-    private static final String GENDER = "Giới tính";
-    private static final String AVATAR = "Ảnh đại diện";
-    private static final String DOB = "Ngày sinh";
+    private AdminUserValidator() {
+    }
 
     public static void validCreate(UserDto dto) {
         log.info("AdminUserValidator validCreate start");
         validCreateOrUpdate(dto);
-        ValidatorUtils.validNullOrEmpty(EMAIL, dto.getEmail());
-        ValidatorUtils.validLength(EMAIL, dto.getEmail(), 6, 250);
-        ValidatorUtils.validEmail(EMAIL, dto.getEmail());
-        ValidatorUtils.validNullOrEmpty(PASSWORD, dto.getPassword());
-        ValidatorUtils.validLength(PASSWORD, dto.getPassword(), 6, 100);
+        validOnlyCreate(dto);
         var repository = BeanUtils.getBean(WsRepository.class);
         validEmailMustBeUnique(repository, dto.getEmail().trim());
         validPhoneMustBeUnique(repository, dto.getPhone().trim());
     }
 
-    private static void validPhoneMustBeUnique(WsRepository repository, String phone) {
+    public static void validOnlyCreate(UserDto dto) {
+        ValidatorUtils.validNullOrEmpty(UserFields.EMAIL, dto.getEmail());
+        ValidatorUtils.validLength(UserFields.EMAIL, dto.getEmail(), 6, 250);
+        ValidatorUtils.validEmail(UserFields.EMAIL, dto.getEmail());
+        ValidatorUtils.validNullOrEmpty(UserFields.PASSWORD, dto.getPassword());
+        ValidatorUtils.validLength(UserFields.PASSWORD, dto.getPassword(), 6, 100);
+    }
+
+    public static void validPhoneMustBeUnique(WsRepository repository, String phone) {
         log.info("AdminUserValidator validPhoneMustBeUnique start");
-        if (repository.userRepository.existsByPhone(phone)) {
+        if (repository.userRepository.existsByPhone(phone.trim())) {
             throw new WsException(WsCode.PHONE_EXISTS);
         }
     }
 
-    private static void validEmailMustBeUnique(WsRepository repository, String email) {
+    public static void validEmailMustBeUnique(WsRepository repository, String email) {
         log.info("AdminUserValidator validEmailMustBeUnique start");
-        if (repository.userRepository.existsByEmailIgnoreCase(email)) {
+        if (repository.userRepository.existsByEmailIgnoreCase(email.trim())) {
             throw new WsException(WsCode.EMAIL_EXISTS);
         }
     }
@@ -58,30 +56,37 @@ public class AdminUserValidator {
         validPhoneMustBeUnique(repository, dto.getPhone(), dto.getId());
     }
 
-    private static void validPhoneMustBeUnique(WsRepository repository, String phone, String id) {
+    public static void validPhoneMustBeUnique(WsRepository repository, String phone, String id) {
         log.info("AdminUserValidator validPhoneMustBeUnique start");
-        if (repository.userRepository.existsByPhoneAndIdNot(phone, id)) {
+        if (repository.userRepository.existsByPhoneAndIdNot(phone.trim(), id)) {
             throw new WsException(WsCode.PHONE_EXISTS);
         }
     }
 
-    private static void validCreateOrUpdate(UserDto dto) {
-        ValidatorUtils.validNullOrEmpty(FIRST_NAME, dto.getFirstName());
-        ValidatorUtils.validLength(FIRST_NAME, dto.getFirstName(), 100, true);
-        ValidatorUtils.validOnlyCharacter(FIRST_NAME, dto.getFirstName());
-        ValidatorUtils.validNullOrEmpty(LAST_NAME, dto.getLastName());
-        ValidatorUtils.validLength(LAST_NAME, dto.getLastName(), 100, true);
-        ValidatorUtils.validOnlyCharacter(LAST_NAME, dto.getLastName());
-        ValidatorUtils.validNullOrEmpty(PHONE, dto.getPhone());
-        ValidatorUtils.validPhone(PHONE, dto.getPhone());
-        ValidatorUtils.validRole(ROLE, dto.getRole());
-        ValidatorUtils.validBooleanType(GENDER, dto.getGender());
-        ValidatorUtils.validAgeBetween(DOB, dto.getDob(), 14, 115);
+    public static void validCreateOrUpdate(UserDto dto) {
+        ValidatorUtils.validNullOrEmpty(UserFields.FIRST_NAME, dto.getFirstName());
+        ValidatorUtils.validLength(UserFields.FIRST_NAME, dto.getFirstName(), 100, true);
+        ValidatorUtils.validOnlyCharacter(UserFields.FIRST_NAME, dto.getFirstName());
+        ValidatorUtils.validNullOrEmpty(UserFields.LAST_NAME, dto.getLastName());
+        ValidatorUtils.validLength(UserFields.LAST_NAME, dto.getLastName(), 100, true);
+        ValidatorUtils.validOnlyCharacter(UserFields.LAST_NAME, dto.getLastName());
+        ValidatorUtils.validNullOrEmpty(UserFields.PHONE, dto.getPhone());
+        ValidatorUtils.validPhone(UserFields.PHONE, dto.getPhone());
+        ValidatorUtils.validRole(UserFields.ROLE, dto.getRole());
+        ValidatorUtils.validBooleanType(UserFields.GENDER, dto.getGender());
+        ValidatorUtils.validAgeBetween(UserFields.DOB, dto.getDob(), 14, 115);
     }
 
-    private static void validExists(WsRepository repository, String id) {
+    public static void validExists(WsRepository repository, String id) {
         if (!repository.userRepository.existsByIdAndActive(id, true)) {
             throw new WsException(WsCode.USER_NOT_FOUND);
+        }
+    }
+
+    public static void validEmailMustBeUnique(WsRepository repository, String email, String id) {
+        log.info("AdminUserValidator validEmailMustBeUnique start");
+        if (repository.userRepository.existsByEmailIgnoreCaseAndIdNot(email.trim(), id)) {
+            throw new WsException(WsCode.EMAIL_EXISTS);
         }
     }
 }

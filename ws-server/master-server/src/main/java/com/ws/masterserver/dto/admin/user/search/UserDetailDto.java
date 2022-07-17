@@ -1,4 +1,4 @@
-package com.ws.masterserver.dto.admin.user.detail;
+package com.ws.masterserver.dto.admin.user.search;
 
 import com.ws.masterserver.dto.admin.user.search.UserRes;
 import lombok.experimental.Accessors;

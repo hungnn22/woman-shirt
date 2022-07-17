@@ -47,8 +47,16 @@ public class AuthValidator {
 
     public static void checkRole(CurrentUser currentUser, RoleEnum... roleAvailableList) {
         log.info("AuthValidator checkRole: {}, roleAvailableList: {}", JsonUtils.toJson(currentUser), JsonUtils.toJson(roleAvailableList));
-        if (!Arrays.stream(roleAvailableList).anyMatch(role -> role.equals(currentUser.getRole())))
+        if (!Arrays.stream(roleAvailableList).anyMatch(role -> role.equals(currentUser.getRole()))) {
             throw new WsException(WsCode.FORBIDDEN);
+        }
 
+    }
+
+    public static void checkLogin(CurrentUser currentUser) {
+        log.info("AuthValidator checkLogin: {}", JsonUtils.toJson(currentUser));
+        if (currentUser == null) {
+            throw new WsException(WsCode.FORBIDDEN);
+        }
     }
 }

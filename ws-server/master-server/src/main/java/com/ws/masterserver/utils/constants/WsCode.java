@@ -21,7 +21,10 @@ public enum WsCode {
     DOB_NOT_MORE_NOW("400", "Ngảy sinh không được lớn hơn hiện tại"),
     AGE_MUST_MORE("400", "Tuổi phải lớn hơn"),
     AGE_MUST_LESS("400", "Tuổi phải nhỏ hơn"),
-    DONT_CHANGE_YOURSELF("400", "Không được thay đổi chính mình");
+    DONT_CHANGE_YOURSELF("400", "Không được thay đổi chính mình"),
+    USER_LOCKED("500", "Tài khoản của bạn đã bị xóa hoặc vô hiệu hóa"),
+    NEW_PASS_NOT_SAME_OLD("400", "Mật khẩu mới không được trùng mật khẩu cũ"),
+    PASSWORD_WRONG("400", "Mật khẩu không chính xác");
     private final String code;
     private final String message;
 

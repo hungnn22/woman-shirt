@@ -3,7 +3,6 @@ package com.ws.masterserver.utils.common;
 import com.ws.masterserver.utils.base.WsException;
 import com.ws.masterserver.utils.constants.WsCode;
 import com.ws.masterserver.utils.constants.enums.RoleEnum;
-
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
@@ -22,20 +21,19 @@ public class ValidatorUtils {
     private static final String INVALID = " không hợp lệ";
     private static final String MUST_LENGTH_LESS = " phải ít hơn ";
     private static final String MUST_LENGTH_MORE = " phải nhiều hơn ";
-    private static final String CHARACTER = " ký tự ";
+    private static final String CHARACTER = " ký tự";
     private static final String MUST_MORE = " phải lớn hơn ";
     private static final String MUST_LESS = " phải nhỏ hơn ";
 
     public static void validNullOrEmpty(String fieldName, String value) {
         if (StringUtils.isNullOrEmpty(value)) {
-            throw new WsException(WsCode.BAD_REQUEST, NOT_BLANK + fieldName.toLowerCase());
+            throw new WsException(WsCode.BAD_REQUEST, NOT_BLANK + fieldName);
         }
     }
 
     public static void validNullOrEmpty(String fieldName, List<String> values) {
         if (values == null || values.isEmpty()) {
-            fieldName = fieldName.charAt(0) + fieldName.substring(1);
-            throw new WsException(WsCode.BAD_REQUEST, NOT_BLANK + fieldName.toLowerCase());
+            throw new WsException(WsCode.BAD_REQUEST, NOT_BLANK + fieldName);
         }
         for (var value : values) {
             validNullOrEmpty(fieldName, value);
@@ -44,14 +42,12 @@ public class ValidatorUtils {
 
     public static void validNullOrEmptyList(String fieldName, List<Object> values) {
         if (values == null || values.isEmpty()) {
-            fieldName = fieldName.charAt(0) + fieldName.substring(1);
-            throw new WsException(WsCode.BAD_REQUEST, NOT_BLANK + fieldName.toLowerCase());
+            throw new WsException(WsCode.BAD_REQUEST, NOT_BLANK + fieldName);
         }
     }
 
     public static void validOnlyCharacterAndNumber(String fieldName, String value) {
         if (!StringUtils.isOnlyCharacterAndNumber(value)) {
-            fieldName = fieldName.charAt(0) + fieldName.substring(1);
             throw new WsException(WsCode.BAD_REQUEST, fieldName + INVALID);
         }
     }
@@ -174,6 +170,12 @@ public class ValidatorUtils {
             if (dob.compareTo(now) < 0) {
                 throw new WsException(WsCode.AGE_MUST_LESS, WsCode.AGE_MUST_LESS.getMessage() + " " + minAge);
             }
+        }
+    }
+
+    public static void validNewPassNotSameOldPass(String password, String newPassword) {
+        if (newPassword.equals(password)) {
+            throw new WsException(WsCode.NEW_PASS_NOT_SAME_OLD);
         }
     }
 }
