@@ -10,19 +10,19 @@ import java.util.HashMap;
  */
 public class CloudUtils {
     @Value("${cloud.name}")
-    private static String name;
+    private String name;
 
     @Value("${cloud.api.key}")
-    private static String apiKey;
+    private String apiKey;
 
     @Value("${cloud.api.secret}")
-    private static String apiSecret;
+    private String apiSecret;
 
     public static Cloudinary getCloudinary() {
-        var config = new HashMap<>();
-        config.put("cloud_name", name);
-        config.put("api_key", apiKey);
-        config.put("api_secret", apiSecret);
-        return new Cloudinary(config);
+//        var config = new HashMap<>();
+//        config.put("cloud_name", name);
+//        config.put("api_key", apiKey);
+//        config.put("api_secret", apiSecret);
+        return new Cloudinary("cloudinary://384426152519968:WjFBrrrKlAs1vU42mePi4FJLPW0@hungnn22cloudinary");
     }
 }

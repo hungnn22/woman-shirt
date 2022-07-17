@@ -1,20 +1,27 @@
-package com.ws.masterserver.dto.admin.user.action;
+package com.ws.masterserver.dto.admin.user.info;
 
-import com.ws.masterserver.utils.constants.enums.RoleEnum;
 import lombok.Data;
-import org.springframework.web.multipart.MultipartFile;
-
 import java.util.Date;
 
 @Data
 public class UserDto {
+    /**
+     * 1: có thể update
+     * */
+
+    private String id;
+    //1
     private String firstName;
+    //1
     private String lastName;
     private String email;
     private String password;
+    //1
     private String phone;
-    private RoleEnum role;
+    //1
+    private String role;
+    //1
     private Boolean gender;
-    private MultipartFile avatar;
+    //1
     private Date dob;
 }

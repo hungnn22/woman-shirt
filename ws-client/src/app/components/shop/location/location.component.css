@@ -1,0 +1,12 @@
+.listLocation{
+  border: 1px solid;
+  padding:10px;
+  height: 438px;
+  overflow-y: scroll;
+
+}
+
+.location{
+  background-color:white;
+  border: 1px solid ;
+}

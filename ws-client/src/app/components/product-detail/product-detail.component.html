@@ -16,7 +16,6 @@
       <div class="row">
         <div class="col-lg-6 col-md-6">
           <div class="product-details dec-img-wrap">
-              <!-- <img src="https://bizweb.sapocdn.net/100/438/408/products/apm5089-vag-4-7aa701c0-aef2-4f16-b4bd-bfc495f66e62.jpg?v=1646820667967" alt=""> -->
               <owl-carousel-o [options]="customOptions">
                 <ng-container *ngFor="let slide of imageProduct">
                   <ng-template class="slide" carouselSlide [id]="slide.id">
@@ -29,7 +28,7 @@
       </div>
           <div class="col-lg-6 col-md-6">
               <div class="product-details-content ml-70">
-                  <h2>{{productDetail.productName}}</h2>
+                  <h2>{{productDetail?.productName}}</h2>
                   <div class="product-details-price">
                       <span>{{priceOption | vnd }}</span>
                       <!-- <span class="old">$20.00</span> -->
@@ -42,16 +41,16 @@
                           <i class="fa fa-star-o"></i>
                           <i class="fa fa-star-o"></i>
                       </div>
-                      <span><a href="#">{{productDetail.countRating}} đánh giá </a></span>
+                      <span><a href="#">{{productDetail?.countRating}} đánh giá </a></span>
                   </div>
                   <h4>Đặc điểm sản phẩm</h4>
                   <div *ngFor="let des of description" class="tick-line">
                     <p>{{des}}</p>
                   </div>
 
-                  <p>Chất liệu : {{productDetail.material}}</p>
+                  <p>Chất liệu : {{productDetail?.material}}</p>
                   <br/>
-                  <p>Loại sản phẩm : {{productDetail.categoryName}}</p>
+                  <p>Loại sản phẩm : {{productDetail?.categoryName}}</p>
 
 
                   <div class="single-product product-size d-flex align-items-center mt-4">

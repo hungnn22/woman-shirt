@@ -18,10 +18,11 @@ public class StringUtils {
     public static final String PAS_REGEX = "^(?=.*[A-Z])(?=.*[0-9])(?=.*[\\u005C$#^><%&!/`\\[*|\\-{=}+\\]+:?\"()_;.,~@'])+[\\u005C$#^><%&/!`*\\[|\\-{=}+\\]:;?\"()_.,~@'a-zA-Z0-9]{6,32}$";
     public static final String ONLY_NUMBER_REGEX = "[0-9]+";
 
-    private StringUtils() {}
+    private StringUtils() {
+    }
 
-    public static boolean isNullOrEmpty(String email) {
-        return email == null || email.isBlank();
+    public static boolean isNullOrEmpty(String value) {
+        return value == null || value.isBlank();
     }
 
     /*Chuyen doi ten tieng Viet co dau sang khong co dau*/
@@ -57,11 +58,34 @@ public class StringUtils {
         return matcher.matches();
     }
 
-    public static boolean isOnlyNumber(final String number) {
-        if (StringUtils.isNullOrEmpty(number)) {
+    public static boolean isOnlyNumber(final String value) {
+        if (StringUtils.isNullOrEmpty(value)) {
             return false;
         }
-        return isCheck(number, ONLY_NUMBER_REGEX);
+        return isCheck(value, ONLY_NUMBER_REGEX);
     }
 
+    public static boolean isOnlyCharacter(String value) {
+        if (StringUtils.isNullOrEmpty(value)) {
+            return false;
+        }
+        return value
+                .replaceAll("\\s", "")
+                .chars().allMatch(Character::isLetter);
+    }
+
+    public static boolean isValidEmail(String value) {
+        if (StringUtils.isNullOrEmpty(value)) {
+            return false;
+        }
+        return isCheck(value, EMAIL_REGEX);
+    }
+
+    public static boolean isValidPhone(String value) {
+        if (StringUtils.isNullOrEmpty(value)) {
+            return false;
+        }
+        return value.replaceAll("\\s", "").length() == 10 &&
+                isCheck(value, PHONE_NUMBER_REGEX);
+    }
 }

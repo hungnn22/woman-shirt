@@ -1,3 +1,4 @@
+import { LocationService } from './../../services/location.service';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
@@ -29,12 +30,26 @@ export class ShopComponent implements OnInit {
   public sizeIds : string [] = [];
 
   //page
-  page !: number ;
+  page : number = 0 ;
   pageSize !: number ;
-  totalPages!: number ;
+  totalPages : number = 0 ;
   totalElements!: number;
 
   //request
+  // req: any = {
+  //   "textSearch": "",
+  //   "minPrice": "",
+  //   "maxPrice": "",
+  //   "sizeIds":[],
+  //   "colorIds": [],
+  //   "pageReq": {
+  //     "page": 0,
+  //     "pageSize": 9,
+  //     "sortField": "",
+  //     "sortDirection": ""
+  //   }
+  // }
+
   req: any = {
     "textSearch": "",
     "minPrice": "",
@@ -55,7 +70,9 @@ export class ShopComponent implements OnInit {
     private router: Router,
     private activeRoute: ActivatedRoute,
     private sizeService: SizeService,
-    private colorService: ColorService
+    private colorService: ColorService,
+    private locationService: LocationService,
+
   ) {}
 
   ngOnInit(): void {
@@ -73,6 +90,16 @@ export class ShopComponent implements OnInit {
       }
     })
   }
+
+  getListLocation() {
+    this.locationService.getListLocation().subscribe({
+      next: (response: any) => {
+        console.log('size', response);
+        this.sizes = response.data;
+      }
+    })
+  }
+
 
   getListColor() {
     this.colorService.getListColor().subscribe({
@@ -93,6 +120,10 @@ export class ShopComponent implements OnInit {
         this.pageSize = response.pageSize;
         this.totalPages = response.totalPages;
         this.totalElements = response.totalElements;
+        console.log('page : ',this.page);
+        console.log('pageSize : ',this.pageSize);
+        console.log('totalPages : ',this.totalPages);
+        console.log('totalElements : ',this.totalElements);
 
         console.log('listProduct', this.listProduct);
       },error: (err) => {
@@ -135,9 +166,10 @@ export class ShopComponent implements OnInit {
     this.getListProduct(this.req);
   }
 
-  pageChange(event: any){
-    this.req.page = event - 1;
-    console.log('req pagechange : ',this.req);
+
+  pageChange(page: any){
+    this.req.pageReq.page = page-1;
+    console.log('req page change',this.req);
     this.getListProduct(this.req);
   }
 
@@ -147,7 +179,5 @@ export class ShopComponent implements OnInit {
     console.log('search change : ',this.req);
     this.getListProduct(this.req);
   }
-
-
 
 }

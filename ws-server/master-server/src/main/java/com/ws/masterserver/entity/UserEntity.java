@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
@@ -20,6 +21,7 @@ import java.util.Date;
 @NoArgsConstructor
 @Builder
 @EntityListeners(AuditingEntityListener.class)
+@Accessors(chain = true)
 public class UserEntity {
     /**
      * type: uuid
@@ -37,7 +39,7 @@ public class UserEntity {
     @Column(name = "last_name")
     private String lastName;
 
-    private Long dob;
+    private Date dob;
 
     private Boolean gender;
 

@@ -1,4 +1,4 @@
-package com.ws.masterserver.config.freemaker;
+package com.ws.masterserver.config.free_maker;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;

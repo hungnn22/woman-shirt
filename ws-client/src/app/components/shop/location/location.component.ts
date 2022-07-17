@@ -1,26 +1,39 @@
+import { Location } from './../../../models/location';
+import { LocationService } from './../../../services/location.service';
 import { Component, OnInit } from '@angular/core';
+import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browser';
 
-interface Location {
-  value: string;
-  viewValue: string;
-}
+
 @Component({
   selector: 'app-location',
   templateUrl: './location.component.html',
   styleUrls: ['./location.component.css']
 })
+
+
 export class LocationComponent implements OnInit {
 
-  constructor() { }
-
-  ngOnInit(): void {
+  locations: any[] = [];
+  count:number=0;
+  constructor(private locationService: LocationService, private sanitizer: DomSanitizer) {
   }
 
+  ngOnInit(): void {
+    this.getLocation();
+  }
+  trustedDashboardUrl: SafeUrl = "";
+  getLocation() {
+    this.locationService.getListLocation().subscribe((data: any) => {
+      this.locations = data.data.data;
+      this.count =this.locations.length;
+      console.log(this.locations);
 
-  location: Location[] = [
-    {value: 'steak-0', viewValue: 'Steak'},
-    {value: 'pizza-1', viewValue: 'Pizza'},
-    {value: 'tacos-2', viewValue: 'Tacos'},
-  ];
+    });
+  }
 
+  uploadLocation(item: any) {
+    console.log("lấy được: " + item.addressLink);
+    // this.linkLocation = item.addressLink;
+    this.trustedDashboardUrl = this.sanitizer.bypassSecurityTrustResourceUrl(item.addressLink);
+  }
 }
