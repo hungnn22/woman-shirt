@@ -2,6 +2,7 @@ import { Location } from './../../../models/location';
 import { LocationService } from './../../../services/location.service';
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browser';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
 
 @Component({
@@ -12,7 +13,7 @@ import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browse
 
 
 export class LocationComponent implements OnInit {
-
+  searchText:any;
   locations: any[] = [];
   count:number=0;
   constructor(private locationService: LocationService, private sanitizer: DomSanitizer) {

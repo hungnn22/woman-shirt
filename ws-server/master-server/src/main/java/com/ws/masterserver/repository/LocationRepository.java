@@ -19,6 +19,7 @@ public interface LocationRepository extends JpaRepository<LocationEntity,String>
     @Query("select new com.ws.masterserver.dto.customer.location.LocationDto(\n" +
             "c.id,\n" +
             "c.addressName,\n" +
+            "c.addressDetail,\n" +
             "c.hotline,\n" +
             "c.addressLink,\n" +
             "c.directLink) from LocationEntity c\n")

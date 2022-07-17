@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 public class LocationDto {
     private String id;
     private String addressName;
+    private String addressDetail;
     private String hotline;
     private String addressLink;
     private String directLink;

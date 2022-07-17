@@ -42,11 +42,13 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
 
 @NgModule({
   declarations: [],
   imports: [
+    Ng2SearchPipeModule,
     CommonModule,
     MatAutocompleteModule,
     MatCheckboxModule,

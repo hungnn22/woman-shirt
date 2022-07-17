@@ -32,6 +32,9 @@ public class LocationEntity {
     @Column(name = "address_name")
     private String addressName;
 
+    @Column(name = "address_details")
+    private String addressDetail;
+
     @Column(name = "hotline")
     private String hotline;
 

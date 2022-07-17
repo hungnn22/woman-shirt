@@ -1,3 +1,4 @@
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { NgModule,CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
@@ -47,6 +48,7 @@ import { LocationComponent } from './components/shop/location/location.component
     BrowserModule,
     HttpClientModule,
     ReactiveFormsModule,
+    Ng2SearchPipeModule,
     FormsModule,
     BrowserAnimationsModule,
     AppRoutingModule,

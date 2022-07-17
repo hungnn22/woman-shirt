@@ -1,48 +1,40 @@
-<div class="container" style="width:100%;height: 100%;">
-  <div class="header" style="text-align: center;margin-top: 10px;margin-bottom: 20px;">
+<div class="" style="width:90%;margin:auto;height: 100%;">
+  <div class="header" style="text-align: center;margin-top: 10px;margin-bottom: 25px;">
     <h3>Danh sách cửa hàng</h3>
   </div>
-  <div class="left" style="width:50% ;float: left;padding-right:20px">
-    <select style="width:45%;float: left;" class="form-select" aria-label="Default select example">
-      <option selected>Tỉnh/Thành phố</option>
-      <option value="1">One</option>
-      <option value="2">Two</option>
-      <option value="3">Three</option>
-    </select>
 
-    <select style="width:50%;float: right" class="form-select" aria-label="Default select example">
-      <option selected>Quận/Huyện</option>
-      <option value="1">One</option>
-      <option value="2">Two</option>
-      <option value="3">Three</option>
-    </select>
 
-    <div style="margin-top: 50px;">
-      <select class="form-select" style="width:100%;" aria-label="Default select example">
-        <option selected>Tìm kiếm cửa hàng</option>
-        <option value="1">One</option>
-        <option value="2">Two</option>
-        <option value="3">Three</option>
-      </select>
-    </div>
+  <div class="left" style="width:50% ;float: left;padding-right:50px">
+
+    <input class="form-control" type="text" name="search" [(ngModel)]="searchText" autocomplete="off"
+      placeholder="Tìm kiếm cửa hàng theo tên hoặc tỉnh thành">
     <br>
     <h4>Cửa hàng({{count}})</h4>
     <div class="listLocation">
-      <a class="item-location" *ngFor="let item of locations" (click)="uploadLocation(item)">
-        <div>
-          <h4>Cơ sở {{item.id}}:</h4>
-          {{item.addressName}}
-          <br>
-          Mở cửa: 9:30 - Đóng cửa: 21:30 <br>
-          Hotline: {{item.hotline}}<i class=""></i>
+      <div class="item-location" *ngFor="let item of locations | filter:searchText" (click)="uploadLocation(item)">
+        <div class="hoverDiv">
+
+            <h4>{{item.addressName}}</h4>
+            <div style="color:rgb(113, 112, 112) ;">{{item.addressDetail}}
+              <br>
+              Mở cửa : 09:30:00 - Đóng cửa : 22:00:00 <br>
+              Hotline: {{item.hotline}}</div>
+
+
+          <div style="width: 300px;height:30px;">
+            <a type="button" style="" href="tel:{{item.hotline}}" style="margin-right:5px;" class="location"><i
+                class="pe-7s-call"></i> LIÊN HỆ HOTLINE </a>
+            <a type="button" href="{{item.directLink}}" target="_blank" class="location"><i
+                class="pe-7s-map-marker red"></i> XEM CHỈ ĐƯỜNG </a>
+
+          </div>
+          <div></div>
+
         </div>
-        <br>
-       <div style="width: 300px;height:30px">
-        <a type="button" style="" href="tel:{{item.hotline}}" style="margin-right:5px;" class="location"><i class="pe-7s-call"></i>  LIÊN HỆ HOTLINE  </a>
-        <a type="button" href="{{item.directLink}}"  target="_blank" class="location"><i class="pe-7s-map-marker red"></i>  XEM CHỈ ĐƯỜNG  </a>
-       </div>
-        <hr>
-      </a>
+
+      </div>
+
+      <!-- <hr> -->
     </div>
   </div>
 

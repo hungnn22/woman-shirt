@@ -1,19 +1,38 @@
-.listLocation{
+.listLocation {
   border: 1px solid;
-  padding:10px;
-  height: 438px;
+  height: 481px;
   overflow-y: scroll;
-
+  color: #ababab;
+  /* margin-top: 20px; */
 }
 
-.location{
-  background-color:white;
-  border: 1px solid ;
+.location {
+  background-color: white;
+  border: 1px solid rgb(197, 197, 197);
   width: 146px;
-  padding-left:4px
-}
-.item-location:cli{
-/* color: red  ; */
-background-color: aqua;
+  padding-left: 4px
 }
 
+.location:hover {
+  color: black;
+  background-color: rgb(180, 179, 179);
+}
+.item-location{
+  margin-top: 0px;
+}
+
+.hoverDiv:hover {
+  background-color: rgb(231, 231, 231);
+  ;
+}
+.hoverDiv:active {
+  background-color: rgb(231, 231, 231);
+  ;
+}
+.hoverDiv {
+  padding: 10px;
+}
+.right{
+  color: #ababab;
+
+}
