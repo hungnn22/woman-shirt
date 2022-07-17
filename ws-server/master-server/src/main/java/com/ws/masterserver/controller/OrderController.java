@@ -42,7 +42,9 @@ public class OrderController extends WsController {
         return ResponseEntity.status(HttpStatus.OK).body(service.orderService.getMyOrder(getCurrentUser(), request));
     }
 
-    @Operation(summary = "API thêm sản phẩm vào giỏ hàng")
+    @Deprecated(forRemoval = true)
+    @Operation(summary = "API thêm sản phẩm vào giỏ hàng",
+            deprecated = true)
     @PostMapping("/add-to-cart")
     public ResponseEntity<ResData<AddToCartResponse>> addToCart(@RequestBody AddToCartDto body) {
         log.info("START API /api/v1/order/add-to-cart");

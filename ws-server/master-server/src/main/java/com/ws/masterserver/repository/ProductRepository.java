@@ -3,6 +3,7 @@ package com.ws.masterserver.repository;
 import com.ws.masterserver.dto.customer.product.ProductRelatedRes;
 import com.ws.masterserver.entity.ProductEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -28,4 +29,10 @@ public interface ProductRepository extends JpaRepository<ProductEntity, String> 
             "join product_option po on p.id = po.product_id \n" +
             "where p.category_id = ?1",nativeQuery = true)
     List<ProductRelatedRes> getProductRelated(String categoryId);
+
+    @Modifying
+    @Query(value = "update product\n" +
+            "set view_number = view_number + 1\n" +
+            "where id = ?1", nativeQuery = true)
+    void increaseViewNumberByProductOptionId(String id);
 }

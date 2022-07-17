@@ -1,6 +1,5 @@
 package com.ws.masterserver.entity;
 
-import com.ws.masterserver.utils.constants.enums.TypeEnum;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -55,4 +54,7 @@ public class ProductEntity {
     @LastModifiedBy
     @Column(name = "updated_by")
     private String updatedBy;
+
+    @Column(name = "view_number", columnDefinition = "int8 default 0")
+    private Long viewNumber = 0L;
 }

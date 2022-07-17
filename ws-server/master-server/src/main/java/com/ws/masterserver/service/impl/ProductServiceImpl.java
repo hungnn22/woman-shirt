@@ -20,6 +20,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
+
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -32,6 +34,7 @@ public class ProductServiceImpl implements ProductService {
 
 
     @Override
+    @Transactional
     public ResData<ProductDetailResponse> getProductDetail(String id) {
 
         ProductDetailResponse response = new ProductDetailResponse();
@@ -106,15 +109,16 @@ public class ProductServiceImpl implements ProductService {
                 }).collect(Collectors.toList())
         );
 
+        //increase +1 viewNumber
+        log.info("getProductDetail increase viewNumber with ProductId: {}", id);
+        repository.productRepository.increaseViewNumberByProductOptionId(id);
+
         return new ResData<>(response, WsCode.OK);
     }
 
     @Override
     public PageData<ProductResponse> search( ProductReq req) {
         //Nếu là khách hàng thì không cho search theo trạng thái
-//        if (req.getActive() != null && RoleEnum.ROLE_CUSTOMER.equals(currentUser.getRole())) {
-//            return new PageData<>(true);
-//        }
         return repository.productCustomRepository.search( req);
     }
 

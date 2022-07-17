@@ -33,4 +33,5 @@ public class WsService {
     public final AdminUserService adminUserService;
     public final AdminUserInfoService adminUserInfoService;
     public final UserInfoService userInfoService;
+    public final AdminReportService adminReportService;
 }
