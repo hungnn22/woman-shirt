@@ -38,4 +38,7 @@ public class LocationEntity {
     @Column(name = "address_link")
     private String addressLink;
 
+    @Column(name = "direct_link")
+    private String directLink;
+
 }

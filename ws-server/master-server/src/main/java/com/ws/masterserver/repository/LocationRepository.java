@@ -20,7 +20,8 @@ public interface LocationRepository extends JpaRepository<LocationEntity,String>
             "c.id,\n" +
             "c.addressName,\n" +
             "c.hotline,\n" +
-            "c.addressLink) from LocationEntity c\n")
+            "c.addressLink,\n" +
+            "c.directLink) from LocationEntity c\n")
     List<LocationDto> findAllLocations();
 
 

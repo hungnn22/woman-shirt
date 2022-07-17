@@ -14,5 +14,6 @@ public class LocationDto {
     private String addressName;
     private String hotline;
     private String addressLink;
+    private String directLink;
 
 }
