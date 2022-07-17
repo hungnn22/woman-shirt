@@ -55,4 +55,7 @@ public class ProductEntity {
     @LastModifiedBy
     @Column(name = "updated_by")
     private String updatedBy;
+
+    @Column(name = "view_number", columnDefinition = "int8 default 0")
+    private Long viewNumber = 0L;
 }
