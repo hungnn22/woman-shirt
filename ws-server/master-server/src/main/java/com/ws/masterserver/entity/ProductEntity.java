@@ -1,6 +1,5 @@
 package com.ws.masterserver.entity;
 
-import com.ws.masterserver.utils.constants.enums.TypeEnum;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
