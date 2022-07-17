@@ -10,29 +10,18 @@ public class UserDto {
      * */
 
     private String id;
-
     //1
     private String firstName;
-
     //1
     private String lastName;
-
-
     private String email;
     private String password;
-
     //1
     private String phone;
-
     //1
     private String role;
-
     //1
     private Boolean gender;
-
-    //1
-    private String avatar;
-
     //1
     private Date dob;
 }

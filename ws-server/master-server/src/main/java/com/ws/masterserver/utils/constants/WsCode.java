@@ -20,7 +20,8 @@ public enum WsCode {
     PHONE_EXISTS("400", "SDT đã tồn tại"),
     DOB_NOT_MORE_NOW("400", "Ngảy sinh không được lớn hơn hiện tại"),
     AGE_MUST_MORE("400", "Tuổi phải lớn hơn"),
-    AGE_MUST_LESS("400", "Tuổi phải nhỏ hơn");
+    AGE_MUST_LESS("400", "Tuổi phải nhỏ hơn"),
+    DONT_CHANGE_YOURSELF("400", "Không được thay đổi chính mình");
     private final String code;
     private final String message;
 
