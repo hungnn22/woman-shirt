@@ -32,8 +32,6 @@ public class ChainSeeder implements Seeder {
         var types = initTypes();
         var colors = initColors();
         var materials = initMaterials();
-        var promotionTypes = initPromotionTypes();
-        var promotions = initPromotions(promotionTypes);
         var category = initCategory(types);
         var product = initProduct(category, materials);
         var productOptions = initProductOptions(product, colors);
@@ -42,64 +40,6 @@ public class ChainSeeder implements Seeder {
             initOrderDetails(order, productOptions);
         });
 
-    }
-
-    private List<OrderPromotionEntity> initOrderPromotions(OrderEntity order, List<PromotionEntity> promotions) {
-        var orderPromotions = List.of(
-                OrderPromotionEntity.builder()
-                        .id(UidUtils.generateUid())
-                        .orderId(order.getId())
-                        .promotionId(promotions.get(getRandomIndex(promotions.size())).getId())
-                        .build()
-        );
-        repository.orderPromotionRepository.saveAll(orderPromotions);
-
-        return orderPromotions;
-    }
-
-    private List<PromotionEntity> initPromotions(List<PromotionTypeEntity> promotionTypes) {
-        var promotions = List.of(
-                PromotionEntity.builder()
-                        .id(UidUtils.generateUid())
-                        .active(true)
-                        .name("Free ship nội thành")
-                        .expiredDate(new Date())
-                        .percentDiscount(100.0)
-                        .useLimit(1L)
-                        .voucher(UidUtils.generateVoucher())
-                        .promotionTypeId(promotionTypes.get(0).getId())
-                        .build(),
-                PromotionEntity.builder()
-                        .id(UidUtils.generateUid())
-                        .active(true)
-                        .name("Giảm 5% giá trị đơn hàng")
-                        .expiredDate(new Date())
-                        .percentDiscount(5.0)
-                        .useLimit(1L)
-                        .voucher(UidUtils.generateVoucher())
-                        .promotionTypeId(promotionTypes.get(1).getId())
-                        .build()
-        );
-        log.info("5. save promotion list: {}", JsonUtils.toJson(promotions));
-        repository.promotionRepository.saveAll(promotions);
-        return promotions;
-    }
-
-    private List<PromotionTypeEntity> initPromotionTypes() {
-        var promotionTypes = List.of(
-                PromotionTypeEntity.builder()
-                        .id(UidUtils.generateUid())
-                        .active(true)
-                        .name(PromotionTypeEnum.TYPE1.name())
-                        .build(),
-                PromotionTypeEntity.builder()
-                        .id(UidUtils.generateUid())
-                        .active(true)
-                        .name(PromotionTypeEnum.TYPE2.name())
-                        .build());
-        log.info("4. save promotion type list: {}", JsonUtils.toJson(promotionTypes));
-        repository.promotionTypeRepository.saveAll(promotionTypes);
-        return promotionTypes;
     }
 
     private List<TypeEntity> initTypes() {

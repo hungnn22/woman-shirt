@@ -168,28 +168,16 @@ public class OrderCustomRepositoryImpl implements OrderCustomRepository {
         if (!repository.orderRepository.existsById(id)) {
             return new ResData<>(true);
         }
-        var shipPrice = repository.orderRepository.findPriceShipById(id);
         var res = DetailRes.builder().id(id);
-        var shopPrice = 0L;
 
         List<ItemDto> items = repository.orderDetailRepository.getItemList(id);
         if (!items.isEmpty()) {
             for (var obj : items) {
                 obj.setPriceFmt(MoneyUtils.format(obj.getPrice()));
                 obj.setTotalFmt(MoneyUtils.format(obj.getTotal()));
-                shopPrice += obj.getTotal();
             }
         }
         res.items(items);
-
-        var promotions = repository.orderPromotionRepository.findByOrderId(id);
-        promotions = promotions.stream().peek(p -> p.setTypeName(PromotionTypeUtils.getName(p.getTypeCode()))).collect(Collectors.toList());
-
-        res.promotions(promotions);
-
-        var result = OrderUtils.getResultDto(shopPrice, shipPrice, promotions);
-
-        res.result(result);
 
         var orderStatusList = repository.orderStatusRepository.findHistory(id);
         if (!orderStatusList.isEmpty()) {

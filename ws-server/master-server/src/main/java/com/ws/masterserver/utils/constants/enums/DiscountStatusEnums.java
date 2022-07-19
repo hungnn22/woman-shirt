@@ -3,14 +3,14 @@ package com.ws.masterserver.utils.constants.enums;
 /**
  * @author myname
  */
-public enum DiscountStatusEnum {
+public enum DiscountStatusEnums {
     PENDING("Chưa áp dụng"),
     ACTIVE("Đang áp dụng"),
     DE_ACTIVE("Ngừng áp dụng");
 
     private String name;
 
-    DiscountStatusEnum(String name) {
+    DiscountStatusEnums(String name) {
         this.name = name;
     }
 

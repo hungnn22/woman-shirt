@@ -1,9 +1,9 @@
-package com.ws.masterserver.dto.admin.discount.apply;
+package com.ws.masterserver.dto.admin.discount.type;
 
 import lombok.Data;
 
 @Data
-public class ApplyTypeValue01 {
+public class DiscountTypeValue01 extends DiscountTypeDto {
 
     /**
      * Giá trị km

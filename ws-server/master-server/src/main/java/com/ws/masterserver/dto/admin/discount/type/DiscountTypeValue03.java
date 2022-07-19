@@ -1,11 +1,11 @@
-package com.ws.masterserver.dto.admin.discount.apply;
+package com.ws.masterserver.dto.admin.discount.type;
 
 import lombok.Data;
 
 import java.util.List;
 
 @Data
-public class ApplyTypeValue03 {
+public class DiscountTypeValue03 extends DiscountTypeDto {
         /**
          * Miễn phi tối đa
          */

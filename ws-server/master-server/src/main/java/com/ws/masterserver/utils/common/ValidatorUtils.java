@@ -3,6 +3,7 @@ package com.ws.masterserver.utils.common;
 import com.ws.masterserver.utils.base.WsException;
 import com.ws.masterserver.utils.constants.WsCode;
 import com.ws.masterserver.utils.constants.enums.RoleEnum;
+
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
@@ -176,6 +177,28 @@ public class ValidatorUtils {
     public static void validNewPassNotSameOldPass(String password, String newPassword) {
         if (newPassword.equals(password)) {
             throw new WsException(WsCode.NEW_PASS_NOT_SAME_OLD);
+        }
+    }
+
+    public static void validLongValueBetween(String fieldName, String value, Long minValue, Long maxValue) {
+        try {
+            Long percent = Long.valueOf(value);
+            if (percent < 0 || percent > 100) {
+                throw new WsException(WsCode.PERCENT_MUST_BETWEEN_0_AND_100);
+            }
+        } catch (Exception e) {
+            throw new WsException(WsCode.BAD_REQUEST, fieldName + " " + INVALID);
+        }
+    }
+
+    public static void validLongValueMustBeMore(String fieldName, String value, Long minValue) {
+        try {
+            Long percent = Long.valueOf(value);
+            if (percent < 0 || percent > 100) {
+                throw new WsException(WsCode.PERCENT_MUST_BETWEEN_0_AND_100);
+            }
+        } catch (Exception e) {
+            throw new WsException(WsCode.BAD_REQUEST, fieldName + MUST_MORE + minValue);
         }
     }
 }

@@ -17,7 +17,7 @@ public interface ProductRepository extends JpaRepository<ProductEntity, String> 
             "from OrderDetailEntity od\n" +
             "left join OrderEntity o on o.id = od.orderId and o.payed = true\n" +
             "left join ProductOptionEntity po on po.id = od.productOptionId\n" +
-            "left join PromotionEntity p on p.id = po.productId and p.active = true\n" +
+            "left join ProductEntity p on p.id = po.productId and p.active = true\n" +
             "where p.id = :id\n" +
             "group by p.id")
     Long countSellNumber(@Param("id") String id);

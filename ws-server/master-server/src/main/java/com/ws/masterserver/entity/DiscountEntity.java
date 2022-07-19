@@ -1,6 +1,8 @@
 package com.ws.masterserver.entity;
 
 import com.ws.masterserver.utils.constants.enums.ApplyTypeEnum;
+import com.ws.masterserver.utils.constants.enums.DiscountCustomerTypeEnums;
+import com.ws.masterserver.utils.constants.enums.DiscountStatusEnums;
 import com.ws.masterserver.utils.constants.enums.PrerequisiteTypeEnum;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -34,13 +36,8 @@ public class DiscountEntity {
     @Column(name = "apply_code")
     private ApplyTypeEnum applyCode;
 
-    //Giá trị loại được áp dụng KM
-    //Danh sách loại sản phẩm hoặc dsach sản phẩm
-    @Column(name = "apply_data", length = 500)
-    private String applyData;
-
     /**
-     * Mã giảm giá sẽ được tính 1 lần trên mỗi đơn hàng hay không:
+     * Mã giảm giá sẽ được tính 1 lần trên mỗi đơn hàng hay không:(khong tinh th giam gia van chuyen)
      * true: tính theo cả đơn hàng
      * false: Tính theo từng sản phẩm trong đơn hàng
      */
@@ -50,15 +47,10 @@ public class DiscountEntity {
      * Loại khách hàng áp dụng
      */
 
-    //mã loại khách hàng áp dụng KM. Nếu null => tất cả
-    @Column(name = "customer_type_id")
-    private String customerTypeId;
-
-    /**
-     * Danh danh nhóm KM được áp dụng KM
-     */
-    @Column(name = "customer_type_data", length = 500)
-    private String customerTypeData;
+    //mã loại khách hàng áp dụng KM
+    @Column(name = "customer_type_code")
+    @Enumerated(EnumType.STRING)
+    private DiscountCustomerTypeEnums customerTypeCode;
 
     /**
      * giới hạn số lần mã giảm giá được áp dụng hay không?
@@ -104,6 +96,7 @@ public class DiscountEntity {
      * loại điều kiện áp dụng khuyết mãi
      */
     @Column(name = "prerequisite_type_code")
+    @Enumerated(EnumType.STRING)
     private PrerequisiteTypeEnum prerequisiteTypeCode;
 
     /**
@@ -111,11 +104,12 @@ public class DiscountEntity {
      * Tổng giá trị đơn hàng tối thiệu / Số lượng sản phẩm tối thiểu
      */
     @Column(name = "prerequisite_type_value")
-    private Long prerequisiteTypeValue;
+    private String prerequisiteTypeValue;
 
     /**
      * trạng thái
-     * Ngung áp dụng: -1 / đang áp dụng / chua ap dung
+     * Ngung áp dụng/ đang áp dụng / chua ap dung
      */
-    private Boolean active;
+    @Enumerated(EnumType.STRING)
+    private DiscountStatusEnums status;
 }

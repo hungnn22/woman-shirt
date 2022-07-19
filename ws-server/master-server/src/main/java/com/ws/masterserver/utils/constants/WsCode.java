@@ -24,7 +24,8 @@ public enum WsCode {
     DONT_CHANGE_YOURSELF("400", "Không được thay đổi chính mình"),
     USER_LOCKED("500", "Tài khoản của bạn đã bị xóa hoặc vô hiệu hóa"),
     NEW_PASS_NOT_SAME_OLD("400", "Mật khẩu mới không được trùng mật khẩu cũ"),
-    PASSWORD_WRONG("400", "Mật khẩu không chính xác");
+    PASSWORD_WRONG("400", "Mật khẩu không chính xác"),
+    PERCENT_MUST_BETWEEN_0_AND_100("400", "Giá trị khuyến mãi phải từ 0 - 100");
     private final String code;
     private final String message;
 
