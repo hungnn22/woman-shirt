@@ -26,18 +26,39 @@ public class DiscountEntity {
 
     private String code;
 
+    /**
+     * Áp dụng cho
+     */
+    //Loại áp dụng: loại sản phẩm / sản phẩm
     @Enumerated(EnumType.STRING)
     @Column(name = "apply_code")
     private ApplyTypeEnum applyCode;
 
-    @Column(name = "apply_value")
-    private String applyValue;
+    //Giá trị loại được áp dụng KM
+    //Danh sách loại sản phẩm hoặc dsach sản phẩm
+    @Column(name = "apply_data", length = 500)
+    private String applyData;
+
+    /**
+     * Mã giảm giá sẽ được tính 1 lần trên mỗi đơn hàng hay không:
+     * true: tính theo cả đơn hàng
+     * false: Tính theo từng sản phẩm trong đơn hàng
+     */
+    private Boolean isApplyAcross;
 
     /**
      * Loại khách hàng áp dụng
      */
+
+    //mã loại khách hàng áp dụng KM. Nếu null => tất cả
     @Column(name = "customer_type_id")
     private String customerTypeId;
+
+    /**
+     * Danh danh nhóm KM được áp dụng KM
+     */
+    @Column(name = "customer_type_data", length = 500)
+    private String customerTypeData;
 
     /**
      * giới hạn số lần mã giảm giá được áp dụng hay không?
@@ -46,13 +67,14 @@ public class DiscountEntity {
     private Boolean hasUsageLimit;
 
     /**
-     * Số lần mã giám giá được áp dụng
+     * Nếu giới hạn số lần mã giảm giá được áp dụng
+     * => Số lần mã giám giá được áp dụng
      */
     @Column(name = "usage_limit")
     private Long usageLimit;
 
     /**
-     * Giói hạn mỗi khách hàng chỉ được sử dụng mã này 1 lần hay không(Kiểm tra bằng email)
+     * Giói hạn mỗi khách hàng chỉ được sử dụng mã này 1 lần hay không(Kiểm tra bằng email) ?
      */
     @Column(name = "once_per_customer")
     private Boolean oncePerCustomer;
@@ -77,23 +99,6 @@ public class DiscountEntity {
      */
     private LocalTime endTime;
 
-    @Column(name = "apply_type_id")
-    private String applyTypeId;
-
-
-    ////Loai KM theo %
-    /**
-     * % khuyến mãi(max 100%)
-     */
-    @Column(name = "percentage_value")
-    private Integer percentageValue;
-
-    /**
-     * Giá trị giảm tối đa
-     */
-    @Column(name = "value_limit_amount")
-    private Long valueLimitAmount;
-
     //Điều kiện áp dụng khuyến mãi
     /**
      * loại điều kiện áp dụng khuyết mãi
@@ -103,8 +108,14 @@ public class DiscountEntity {
 
     /**
      * Giá trị để thỏa màn đièu kiện áp dụng khuyến mãi
+     * Tổng giá trị đơn hàng tối thiệu / Số lượng sản phẩm tối thiểu
      */
     @Column(name = "prerequisite_type_value")
     private Long prerequisiteTypeValue;
 
+    /**
+     * trạng thái
+     * Ngung áp dụng: -1 / đang áp dụng / chua ap dung
+     */
+    private Boolean active;
 }
