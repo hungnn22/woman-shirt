@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
-import data from "./MOCK_DATA.json";
-import ButtonDelete from "../../component/button/ButtonDelete";
+import data from "./MOCK_DATA (1).json";
 import ButtonInfo from "../../component/button/ButtonInfo";
 
-const Category = () => {
+const Customer = () => {
   const [keySearch, setkeySearch] = useState("");
 
   useEffect(() => {
@@ -12,12 +11,12 @@ const Category = () => {
 
   return (
     <div className="container-fluid">
-      <h1 className="h3 mb-2 text-gray-800">Quản lý danh mục</h1>
+      <h1 className="h3 mb-2 text-gray-800">Quản lý danh sách khách hàng</h1>
 
       <div className="card shadow mb-4">
         <div className="card-header py-3 d-flex justify-content-between align-items-center">
           <h6 className="m-0 font-weight-bold text-primary">
-            Quản lý danh mục
+            Quản lý khách hàng
           </h6>
           <input
             type="text"
@@ -36,9 +35,11 @@ const Category = () => {
               <thead>
                 <tr>
                   <th>ID</th>
-                  <th>Tên danh mục</th>
-                  <th>Tổng số sản phẩm</th>
-                  <th>Tạo bởi</th>
+                  <th>Tên khách hàng</th>
+                  <th>Tuổi</th>
+                  <th>Giới tính</th>
+                  <th>Số điện thoại</th>
+                  <th>Số đơn đã đặt</th>
                   <th>Hành động</th>
                 </tr>
               </thead>
@@ -46,7 +47,7 @@ const Category = () => {
                 {data &&
                   data
                     .filter((ele) =>
-                      ele.categoryName
+                      ele.fullname
                         .toString()
                         .toLowerCase()
                         .includes(keySearch.toString().toLowerCase())
@@ -54,16 +55,17 @@ const Category = () => {
                     .map((e, index) => (
                       <tr key={index}>
                         <td>{e.id}</td>
-                        <td>{e.categoryName}</td>
-                        <td>{e.categoryItems}</td>
-                        <td>{e.create_by}</td>
+                        <td>{e.fullname}</td>
+                        <td>{e.age}</td>
+                        <td>{e.gender}</td>
+                        <td>{e.phone}</td>
+                        <td>{e.total_orders}</td>
                         <td>
                           <ButtonInfo
                             title="Xem chi tiết"
                             link="abc"
                             className="mr-2"
                           />
-                          <ButtonDelete title="Xóa danh mục" />
                         </td>
                       </tr>
                     ))}
@@ -76,4 +78,4 @@ const Category = () => {
   );
 };
 
-export default Category;
+export default Customer;
