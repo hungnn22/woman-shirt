@@ -10,6 +10,8 @@ import { useEffect } from "react";
 import AuthService from "./service/AuthService";
 import Account from "./page/acccount/Account";
 import AccountDetails from "./page/acccount/AccountDetails";
+import Category from "./page/category/Category";
+import Customer from "./page/customer/Customer";
 
 function App() {
   const navigate = useNavigate();
@@ -36,6 +38,10 @@ function App() {
             <Route path="order/detail/:id" element={<OrderDetailPage />} />
             <Route path="account" element={<Account />} />
             <Route path="account/:id" element={<AccountDetails />} />
+            <Route path="category" element={<Category />} />
+            <Route path="category/:id" element={<AccountDetails />} />
+            <Route path="customer" element={<Customer />} />
+            <Route path="customer/:id" element={<AccountDetails />} />
             <Route path="notification" element={<NotificationPage />} />
           </Route>
         </Routes>
