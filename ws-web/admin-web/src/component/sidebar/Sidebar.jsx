@@ -74,15 +74,18 @@ const Sidebar = () => {
         >
           <div className="bg-white py-2 collapse-inner rounded">
             {/* <h6 className="collapse-header">Custom Utilities:</h6> */}
-            <NavLink to="./category" className="collapse-item">
+            <Link to="./category-items" className="collapse-item">
               Loại sản phẩm
-            </NavLink>
-            <NavLink to="./account" className="collapse-item">
+            </Link>
+            <Link
+              to="./account"
+              className="collapse-item" 
+            >
               Tài khoản
-            </NavLink>
-            <NavLink className="collapse-item" to="./customer">
+            </Link>
+            <a className="collapse-item" href="utilities-animation.html">
               Khách hàng
-            </NavLink>
+            </a>
             <a className="collapse-item" href="utilities-other.html">
               Nhà cung cấp
             </a>
@@ -111,9 +114,9 @@ const Sidebar = () => {
         >
           <div className="bg-white py-2 collapse-inner rounded">
             <h6 className="collapse-header">Login Screens:</h6>
-            <Link className="collapse-item" to="/login">
+            <a className="collapse-item" href="login.html">
               Login
-            </Link>
+            </a>
             <a className="collapse-item" href="register.html">
               Register
             </a>
