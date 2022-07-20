@@ -25,7 +25,12 @@ public enum WsCode {
     USER_LOCKED("500", "Tài khoản của bạn đã bị xóa hoặc vô hiệu hóa"),
     NEW_PASS_NOT_SAME_OLD("400", "Mật khẩu mới không được trùng mật khẩu cũ"),
     PASSWORD_WRONG("400", "Mật khẩu không chính xác"),
-    PERCENT_MUST_BETWEEN_0_AND_100("400", "Giá trị khuyến mãi phải từ 0 - 100");
+    PERCENT_MUST_BETWEEN_0_AND_100("400", "Giá trị khuyến mãi phải từ 0 - 100"),
+    MUST_SELECT_PREREQUISITE("400", "Vui lòng chọn điều kiện áp dụng"),
+    MUST_SELECT_CUSTOMER_TYPE("400", "Vui lòng chọn nhóm khách hàng"),
+    MUST_SELECT_DISCOUNT_TYPE("400", "Vui lòng chọn lại khuyến mãi"),
+    MUST_SELECT_APPLY_TYPE("400", "Vui lòng chọn loại áp dụng khuyến mãi"),
+    DATE_FORMAT_INVALID("400", "Định dạng ngày tháng không hợp lê");
     private final String code;
     private final String message;
 

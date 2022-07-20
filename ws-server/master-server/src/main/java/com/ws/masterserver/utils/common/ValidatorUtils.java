@@ -6,6 +6,7 @@ import com.ws.masterserver.utils.constants.enums.RoleEnum;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 
@@ -183,7 +184,7 @@ public class ValidatorUtils {
     public static void validLongValueBetween(String fieldName, String value, Long minValue, Long maxValue) {
         try {
             Long percent = Long.valueOf(value);
-            if (percent < 0 || percent > 100) {
+            if (percent < minValue || percent > maxValue) {
                 throw new WsException(WsCode.PERCENT_MUST_BETWEEN_0_AND_100);
             }
         } catch (Exception e) {
@@ -194,11 +195,26 @@ public class ValidatorUtils {
     public static void validLongValueMustBeMore(String fieldName, String value, Long minValue) {
         try {
             Long percent = Long.valueOf(value);
-            if (percent < 0 || percent > 100) {
-                throw new WsException(WsCode.PERCENT_MUST_BETWEEN_0_AND_100);
+            if (percent < minValue) {
+                throw new WsException(WsCode.BAD_REQUEST, fieldName + MUST_MORE + minValue);
             }
         } catch (Exception e) {
             throw new WsException(WsCode.BAD_REQUEST, fieldName + MUST_MORE + minValue);
         }
+    }
+    public static void validDateFormat(String fieldName, String value) {
+        try {
+            var sdf = DateTimeFormatter.ofPattern(DateUtils.F_DDMMYYYY);
+            LocalDate localDate = LocalDate.parse(value, sdf);
+        } catch (Exception e) {
+            throw new WsException(WsCode.DATE_FORMAT_INVALID);
+        }
+    }
+
+    public static void validTimeFormat(String fieldName, String value) {
+
+    }
+
+    public static void validDateMoreDateAndTimeMoreTime(String startDate, String startDateValue, String endDate, String endDateValue, String startTime, String startTimeValue, String endTime, String endTimeValue) {
     }
 }
