@@ -1,9 +1,6 @@
 package com.ws.masterserver.dto.admin.discount.create;
 
 import com.ws.masterserver.dto.admin.discount.type.DiscountTypeDto;
-import com.ws.masterserver.utils.constants.enums.ApplyTypeEnum;
-import com.ws.masterserver.utils.constants.enums.DiscountCustomerTypeEnums;
-import com.ws.masterserver.utils.constants.enums.PrerequisiteTypeEnum;
 import lombok.Data;
 
 import java.util.List;
@@ -22,7 +19,7 @@ public class DiscountDto {
     private DiscountTypeDto typeValues;
 
     //áp dụng cho
-    private ApplyTypeEnum applyType;
+    private String applyType;
 
     //dsasch áp dụng
     private List<String> applyTypeIds;
@@ -31,13 +28,13 @@ public class DiscountDto {
     private Boolean appliesAcross;
 
     //loại điều kiện áp dụng
-    private PrerequisiteTypeEnum prerequisiteType;
+    private String prerequisiteType;
 
     //điều kiện áp dụng
     private String prerequisiteTypeValue;
 
     //loại KH áp dụng
-    private DiscountCustomerTypeEnums customerType;
+    private String customerType;
 
     //danh sách KH
     private List<String> customerTypeIds;
@@ -65,6 +62,5 @@ public class DiscountDto {
 
     //thời gian kết thúc
     private String endTime;
-
 
 }
