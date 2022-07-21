@@ -21,7 +21,7 @@ public class DiscountEntity {
     @Id
     private String id;
 
-    private String name;
+    private String des;
 
     private String code;
 

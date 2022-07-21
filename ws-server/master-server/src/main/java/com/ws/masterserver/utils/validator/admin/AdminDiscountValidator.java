@@ -30,7 +30,7 @@ public class AdminDiscountValidator {
         validPrerequisite(payload.getPrerequisiteType(), payload.getPrerequisiteTypeValue());
 
         //nhoimm KH
-        validCustomerType(payload.getCustomerType(), payload.getCustomerTypeIds());
+        validCustomerType(payload.getCustomerType(), payload.getCustomerIds());
 
         //gioi han su dung
         if (payload.getHasUsageLimit()) {
@@ -99,13 +99,13 @@ public class AdminDiscountValidator {
         var type = DiscountTypeEnum.valueOf(payload.getType());
         switch (type) {
             case PERCENT:
-                validPercentType(payload.getTypeValues());
+                validPercentType(payload.getTypeValue());
                 break;
             case PRICE:
-                validPriceType(payload.getTypeValues());
+                validPriceType(payload.getTypeValue());
                 break;
             case SHIP:
-                validShipType(payload.getTypeValues());
+                validShipType(payload.getTypeValue());
                 break;
             default:
                 throw new WsException(WsCode.MUST_SELECT_DISCOUNT_TYPE);
@@ -142,7 +142,7 @@ public class AdminDiscountValidator {
             if (ProvinceSelectionEnums.SELECTION.equals(selectionType)) {
                 ValidatorUtils.validNullOrEmptyList(DiscountFields.ADDRESS_LIST, Collections.singletonList(dto.getProvinceIds()));
             }
-            if (dto.getHasMaximumShippingRate()) {
+            if (!StringUtils.isNullOrEmpty(dto.getMaximumShippingRate())) {
                 ValidatorUtils.validNullOrEmpty(DiscountFields.MAXIMUM_SHIPPING_RATE, dto.getMaximumShippingRate());
                 ValidatorUtils.validLongValueBetween(DiscountFields.MAXIMUM_SHIPPING_RATE, dto.getMaximumShippingRate(), 0L, 999999999999999L);
             }

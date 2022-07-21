@@ -24,7 +24,7 @@ public class DiscountTypeValue03 extends DiscountTypeDto {
         /**
          * Có Áp dụng với phí vận chuyển dưới ${maximumShippingRate} hay không?
          */
-        private Boolean hasMaximumShippingRate;
+//        private Boolean hasMaximumShippingRate;
 
         /**
          * Phí vận chuyện tối đa để có thể áp dụng
