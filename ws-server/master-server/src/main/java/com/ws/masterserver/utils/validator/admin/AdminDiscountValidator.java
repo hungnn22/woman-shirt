@@ -77,7 +77,7 @@ public class AdminDiscountValidator {
     }
 
     private static void validPrerequisite(String prerequisiteType, String prerequisiteTypeValue) {
-        var preType = PrerequisiteTypeEnum.valueOf(prerequisiteType);
+        var preType = PrerequisiteTypeEnums.valueOf(prerequisiteType);
         if (null == preType) {
             throw new WsException(WsCode.MUST_SELECT_PREREQUISITE);
         }
