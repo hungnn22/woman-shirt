@@ -32,7 +32,7 @@ function App() {
         <Routes>
           <Route path="/login" element={<LoginPage />} />
           <Route path="" element={<AdminLayout />}>
-            <Route path="/" element={<Dashboard />} />
+            <Route path="/" element={<Account />} />
             <Route path="order" element={<OrderPage />} />
             <Route path="order/:status" element={<OrderPage />} />
             <Route path="order/detail/:id" element={<OrderDetailPage />} />

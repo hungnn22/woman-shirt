@@ -23,13 +23,13 @@ const Account = () => {
             >
               <thead>
                 <tr>
-                  <th>Name</th>
-                  <th>Position</th>
-                  <th>Office</th>
-                  <th>Age</th>
-                  <th>Start date</th>
+                  <th>Tên</th>
+                  <th>Tài khoản</th>
+                  <th>Phân quyền</th>
+                  <th>Đặt hàng</th>
+                  <th>Ngày tạo</th>
                   <th>Salary</th>
-                  <th>Actions</th>
+                  <th>Hành động</th>
                 </tr>
               </thead>
               <tfoot>
