@@ -22,7 +22,6 @@ public class UserUtils {
     }
 
     public static String getCustomerInfo(Boolean gender, String fullName) {
-        var prefix = "(" + (gender ? "Anh" : "Chị") + ") ";
-        return prefix + fullName;
+        return fullName;
     }
 }

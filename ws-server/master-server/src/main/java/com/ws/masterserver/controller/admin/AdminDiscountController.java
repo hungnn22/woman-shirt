@@ -1,6 +1,7 @@
 package com.ws.masterserver.controller.admin;
 
 import com.ws.masterserver.dto.admin.discount.create.DiscountDto;
+import com.ws.masterserver.dto.admin.discount.search.DiscountRequest;
 import com.ws.masterserver.utils.base.WsController;
 import com.ws.masterserver.utils.common.JsonUtils;
 import io.swagger.v3.oas.annotations.Operation;
@@ -22,7 +23,14 @@ public class AdminDiscountController extends WsController {
     @Operation(summary = "tao moi ma KM")
     public ResponseEntity<Object> create(@RequestBody DiscountDto payload) {
       log.info("start api /api/v1/admin/discount/create with payload: {}", JsonUtils.toJson(payload));
-      return ResponseEntity.ok(service.discountService.create(getCurrentUser(), payload));
+      return ResponseEntity.ok(service.adminDiscountService.create(getCurrentUser(), payload));
+    }
+
+    @PostMapping("/search")
+    @Operation(summary = "tim kiem")
+    public ResponseEntity<Object> search(@RequestBody DiscountRequest payload) {
+        log.info("start api /api/v1/admin/discount/search with payload: {}", JsonUtils.toJson(payload));
+        return ResponseEntity.ok(service.adminDiscountService.search(getCurrentUser(), payload));
     }
 
 }
