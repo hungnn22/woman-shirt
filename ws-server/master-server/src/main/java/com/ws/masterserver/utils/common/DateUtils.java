@@ -3,9 +3,11 @@ package com.ws.masterserver.utils.common;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.time.DateFormatUtils;
 
+import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.YearMonth;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -235,5 +237,9 @@ public class DateUtils {
             }
         }
         return false;
+    }
+
+    public static Date localDateTimeToDate(LocalDateTime ldtValue) {
+        return Timestamp.valueOf(ldtValue);
     }
 }

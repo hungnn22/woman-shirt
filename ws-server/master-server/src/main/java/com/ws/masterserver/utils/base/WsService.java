@@ -34,9 +34,10 @@ public class WsService {
     public final AdminUserInfoService adminUserInfoService;
     public final UserInfoService userInfoService;
     public final AdminReportService adminReportService;
-    public final AdminDiscountService adminDiscountService;
+    public final DiscountService discountService;
     public final DiscountCategoryService discountCategoryService;
     public final DiscountCustomerTypeService discountCustomerTypeService;
     public final DiscountProductService discountProductService;
     public final OrderDiscountService orderDiscountService;
+    public final DiscountDetailService discountDetailService;
 }

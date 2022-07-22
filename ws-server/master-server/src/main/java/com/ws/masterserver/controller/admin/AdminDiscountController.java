@@ -23,14 +23,14 @@ public class AdminDiscountController extends WsController {
     @Operation(summary = "tao moi ma KM")
     public ResponseEntity<Object> create(@RequestBody DiscountDto payload) {
       log.info("start api /api/v1/admin/discount/create with payload: {}", JsonUtils.toJson(payload));
-      return ResponseEntity.ok(service.adminDiscountService.create(getCurrentUser(), payload));
+      return ResponseEntity.ok(service.discountService.create(getCurrentUser(), payload));
     }
 
     @PostMapping("/search")
     @Operation(summary = "tim kiem")
     public ResponseEntity<Object> search(@RequestBody DiscountRequest payload) {
         log.info("start api /api/v1/admin/discount/search with payload: {}", JsonUtils.toJson(payload));
-        return ResponseEntity.ok(service.adminDiscountService.search(getCurrentUser(), payload));
+        return ResponseEntity.ok(service.discountDetailService.search(getCurrentUser(), payload));
     }
 
 }

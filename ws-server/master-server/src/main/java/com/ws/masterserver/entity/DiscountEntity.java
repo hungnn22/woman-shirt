@@ -1,6 +1,5 @@
 package com.ws.masterserver.entity;
 
-import com.ws.masterserver.utils.constants.enums.ApplyTypeEnum;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -29,12 +28,17 @@ public class DiscountEntity {
 
     private String code;
 
+    private String type;
+
+    @Column(name = "type_value")
+    private String typeValue;
+
     /**
      * Áp dụng cho
      */
     //Loại áp dụng: loại sản phẩm / sản phẩm
-    @Column(name = "apply_code")
-    private String applyCode;
+    @Column(name = "apply_type")
+    private String applyType;
 
     /**
      * Mã giảm giá sẽ được tính 1 lần trên mỗi đơn hàng hay không:(khong tinh th giam gia van chuyen)
@@ -48,8 +52,8 @@ public class DiscountEntity {
      */
 
     //mã loại khách hàng áp dụng KM
-    @Column(name = "customer_type_code")
-    private String customerTypeCode;
+    @Column(name = "customer_type")
+    private String customerType;
 
     /**
      * giới hạn số lần mã giảm giá được áp dụng hay không?
@@ -73,24 +77,14 @@ public class DiscountEntity {
     /**
      * Ngày bắt đầu
      */
-    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "start_date")
     private Date startDate;
-
-    /**
-     * Thời gian bắt đầu
-     */
-//    private LocalTime startTime;
 
     /**
      * Ngày kết thúc
      */
-    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "end_date")
     private Date endDate;
-
-    /**
-     * Thời gian kết thúc
-     */
-//    private LocalTime endTime;
 
     //Điều kiện áp dụng khuyến mãi
     /**
@@ -103,8 +97,8 @@ public class DiscountEntity {
      * Giá trị để thỏa màn đièu kiện áp dụng khuyến mãi
      * Tổng giá trị đơn hàng tối thiệu / Số lượng sản phẩm tối thiểu
      */
-    @Column(name = "prerequisite_type_value")
-    private String prerequisiteTypeValue;
+    @Column(name = "prerequisite_value")
+    private String prerequisiteValue;
 
     /**
      * trạng thái

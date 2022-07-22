@@ -16,7 +16,7 @@ public class DiscountDto {
     private String type;
 
     //giá trị loại km
-    private DiscountTypeDto typeValues;
+    private DiscountTypeDto typeValue;
 
     //áp dụng cho
     private String applyType;
@@ -25,7 +25,7 @@ public class DiscountDto {
     private List<String> applyTypeIds;
 
     //được tính 1 lần trên mỗi đơn hàng hhay k
-    private Boolean appliesAcross;
+    private Boolean isApplyAcross;
 
     //loại điều kiện áp dụng
     private String prerequisiteType;
@@ -37,7 +37,7 @@ public class DiscountDto {
     private String customerType;
 
     //danh sách KH
-    private List<String> customerTypeIds;
+    private List<String> customerIds;
 
     //giới hạn số lần mã giảm giá được sử dụng hay k
     private Boolean hasUsageLimit;
