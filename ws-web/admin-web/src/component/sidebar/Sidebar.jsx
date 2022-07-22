@@ -45,12 +45,12 @@ const Sidebar = () => {
         >
           <div className="bg-white py-2 collapse-inner rounded">
             {/* <h6 className="collapse-header">Danh sách đơn hàng</h6> */}
-            <NavLink to="order" className="collapse-item" href="buttons.html">
+            <NavLink to="order" className="collapse-item">
               Danh sách đơn hàng
             </NavLink>
-            <a className="collapse-item" href="cards.html">
-              Danh sách đơn hàng
-            </a>
+            <NavLink to="discount" className="collapse-item">
+              Khuyến mãi
+            </NavLink>
           </div>
         </div>
       </li>
