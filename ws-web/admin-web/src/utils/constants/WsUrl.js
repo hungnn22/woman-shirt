@@ -34,4 +34,5 @@ export default {
     ADMIN_NOTIFICATION_READ: '/admin/notification/read',
 
     ADMIN_WEB_SOCKET: 'http://localhost:8080/ws',
+    ADMIN_DISCOUNT_SEARCH: '/admin/discount/search'
 }
