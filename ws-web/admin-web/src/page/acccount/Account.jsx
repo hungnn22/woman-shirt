@@ -1,17 +1,37 @@
 import React from "react";
-import ButtonDelete from "../../component/button/ButtonDelete";
-import ButtonInfo from "../../component/button/ButtonInfo";
+// import ButtonDelete from "../../component/button/ButtonDelete";
+// import ButtonInfo from "../../component/button/ButtonInfo";
+import { NavLink } from "react-router-dom";
 
+// const [keySearch, setkeySearch] = useState("");
 const Account = () => {
   return (
     <div className="container-fluid">
       <h1 className="h3 mb-2 text-gray-800">Quản lý tài khoản</h1>
 
       <div className="card shadow mb-4">
-        <div className="card-header py-3">
+        <div className="card-header py-3 d-flex justify-content-between align-items-center">
           <h6 className="m-0 font-weight-bold text-primary">
             Quản lý tài khoản người dùng
           </h6>
+          <form className="d-none d-sm-inline-block form-inline navbar-search col-4">
+            <div className="input-group">
+              <input
+                // onChange={(e) => setkeySearch(e.target.value)}
+                type="text"
+                className="form-control bg-light border-1 small"
+                placeholder="Tìm kiếm..."
+                aria-label="Search"
+                aria-describedby="basic-addon2"
+                defaultValue=""
+              />
+              <div className="input-group-append">
+                <button className="btn btn-primary" type="submit">
+                  <i className="fas fa-search fa-sm" />
+                </button>
+              </div>
+            </div>
+          </form>
         </div>
         <div className="card-body">
           <div className="table-responsive">
@@ -32,16 +52,7 @@ const Account = () => {
                   <th>Hành động</th>
                 </tr>
               </thead>
-              <tfoot>
-                <tr>
-                  <th>Name</th>
-                  <th>Position</th>
-                  <th>Office</th>
-                  <th>Age</th>
-                  <th>Start date</th>
-                  <th>Salary</th>
-                </tr>
-              </tfoot>
+
               <tbody>
                 <tr>
                   <td>Tiger Nixon</td>
@@ -50,13 +61,40 @@ const Account = () => {
                   <td>61</td>
                   <td>2011/04/25</td>
                   <td>$320,800</td>
-                  <td>
-                    <ButtonInfo
-                      title="Xem chi tiết"
-                      link="abc"
-                      className="mr-2"
-                    />
-                    <ButtonDelete title="Xóa tài khoản"/>
+                  <td className="d-flex justify-content-center">
+                    <div className="btn-group dropleft">
+                      <a
+                        className="btn text-dark"
+                        type="button"
+                        id="dropdownMenuButton"
+                        data-toggle="dropdown"
+                        // aria-haspopup="true"
+                        aria-expanded="false"
+                        href=" "
+                      >
+                        <i className="fa fa-ellipsis-h" aria-hidden="true" />
+                      </a>
+                      <div
+                        className="dropdown-menu"
+                        aria-labelledby="dropdownMenuButton"
+                      >
+                        <NavLink
+                          to="./abc"
+                          className="dropdown-item"
+                          href="/src/page/acccount/AccountDetails.jsx"
+                          data-toggle="modal"
+                        >
+                          Chi tiết
+                        </NavLink>
+                        <a
+                          className="dropdown-item"
+                          href=" "
+                          data-toggle="modal"
+                        >
+                          Chỉnh sửa trạng thái
+                        </a>
+                      </div>
+                    </div>
                   </td>
                 </tr>
                 <tr>
@@ -66,13 +104,40 @@ const Account = () => {
                   <td>63</td>
                   <td>2011/07/25</td>
                   <td>$170,750</td>
-                  <td>
-                    <ButtonInfo
-                      title="Xem chi tiết"
-                      link="abc"
-                      className="mr-2"
-                    />
-                    <ButtonDelete title="Xóa tài khoản"/>
+                  <td className="d-flex justify-content-center">
+                    <div className="btn-group dropleft">
+                      <a
+                        className="btn text-dark"
+                        type="button"
+                        id="dropdownMenuButton"
+                        data-toggle="dropdown"
+                        // aria-haspopup="true"
+                        aria-expanded="false"
+                        href=" "
+                      >
+                        <i className="fa fa-ellipsis-h" aria-hidden="true" />
+                      </a>
+                      <div
+                        className="dropdown-menu"
+                        aria-labelledby="dropdownMenuButton"
+                      >
+                        <NavLink
+                          to="./abc"
+                          className="dropdown-item"
+                          href="/src/page/acccount/AccountDetails.jsx"
+                          data-toggle="modal"
+                        >
+                          Chi tiết
+                        </NavLink>
+                        <a
+                          className="dropdown-item"
+                          href=" "
+                          data-toggle="modal"
+                        >
+                          Chỉnh sửa trạng thái
+                        </a>
+                      </div>
+                    </div>
                   </td>
                 </tr>
                 <tr>
@@ -82,13 +147,40 @@ const Account = () => {
                   <td>66</td>
                   <td>2009/01/12</td>
                   <td>$86,000</td>
-                  <td>
-                    <ButtonInfo
-                      title="Xem chi tiết"
-                      link="abc"
-                      className="mr-2"
-                    />
-                    <ButtonDelete title="Xóa tài khoản"/>
+                  <td className="d-flex justify-content-center">
+                    <div className="btn-group dropleft">
+                      <a
+                        className="btn text-dark"
+                        type="button"
+                        id="dropdownMenuButton"
+                        data-toggle="dropdown"
+                        // aria-haspopup="true"
+                        aria-expanded="false"
+                        href=" "
+                      >
+                        <i className="fa fa-ellipsis-h" aria-hidden="true" />
+                      </a>
+                      <div
+                        className="dropdown-menu"
+                        aria-labelledby="dropdownMenuButton"
+                      >
+                        <NavLink
+                          to="./abc"
+                          className="dropdown-item"
+                          href="/src/page/acccount/AccountDetails.jsx"
+                          data-toggle="modal"
+                        >
+                          Chi tiết
+                        </NavLink>
+                        <a
+                          className="dropdown-item"
+                          href=" "
+                          data-toggle="modal"
+                        >
+                          Chỉnh sửa trạng thái
+                        </a>
+                      </div>
+                    </div>
                   </td>
                 </tr>
                 <tr>
@@ -98,13 +190,40 @@ const Account = () => {
                   <td>22</td>
                   <td>2012/03/29</td>
                   <td>$433,060</td>
-                  <td>
-                    <ButtonInfo
-                      title="Xem chi tiết"
-                      link="abc"
-                      className="mr-2"
-                    />
-                    <ButtonDelete title="Xóa tài khoản"/>
+                  <td className="d-flex justify-content-center">
+                    <div className="btn-group dropleft">
+                      <a
+                        className="btn text-dark"
+                        type="button"
+                        id="dropdownMenuButton"
+                        data-toggle="dropdown"
+                        // aria-haspopup="true"
+                        aria-expanded="false"
+                        href=" "
+                      >
+                        <i className="fa fa-ellipsis-h" aria-hidden="true" />
+                      </a>
+                      <div
+                        className="dropdown-menu"
+                        aria-labelledby="dropdownMenuButton"
+                      >
+                        <NavLink
+                          to="./abc"
+                          className="dropdown-item"
+                          href="/src/page/acccount/AccountDetails.jsx"
+                          data-toggle="modal"
+                        >
+                          Chi tiết
+                        </NavLink>
+                        <a
+                          className="dropdown-item"
+                          href=" "
+                          data-toggle="modal"
+                        >
+                          Chỉnh sửa trạng thái
+                        </a>
+                      </div>
+                    </div>
                   </td>
                 </tr>
                 <tr>
@@ -114,13 +233,40 @@ const Account = () => {
                   <td>33</td>
                   <td>2008/11/28</td>
                   <td>$162,700</td>
-                  <td>
-                    <ButtonInfo
-                      title="Xem chi tiết"
-                      link="abc"
-                      className="mr-2"
-                    />
-                    <ButtonDelete title="Xóa tài khoản"/>
+                  <td className="d-flex justify-content-center">
+                    <div className="btn-group dropleft">
+                      <a
+                        className="btn text-dark"
+                        type="button"
+                        id="dropdownMenuButton"
+                        data-toggle="dropdown"
+                        // aria-haspopup="true"
+                        aria-expanded="false"
+                        href=" "
+                      >
+                        <i className="fa fa-ellipsis-h" aria-hidden="true" />
+                      </a>
+                      <div
+                        className="dropdown-menu"
+                        aria-labelledby="dropdownMenuButton"
+                      >
+                        <NavLink
+                          to="./abc"
+                          className="dropdown-item"
+                          href="/src/page/acccount/AccountDetails.jsx"
+                          data-toggle="modal"
+                        >
+                          Chi tiết
+                        </NavLink>
+                        <a
+                          className="dropdown-item"
+                          href=" "
+                          data-toggle="modal"
+                        >
+                          Chỉnh sửa trạng thái
+                        </a>
+                      </div>
+                    </div>
                   </td>
                 </tr>
                 <tr>
@@ -130,13 +276,40 @@ const Account = () => {
                   <td>61</td>
                   <td>2012/12/02</td>
                   <td>$372,000</td>
-                  <td>
-                    <ButtonInfo
-                      title="Xem chi tiết"
-                      link="abc"
-                      className="mr-2"
-                    />
-                    <ButtonDelete title="Xóa tài khoản"/>
+                  <td className="d-flex justify-content-center">
+                    <div className="btn-group dropleft">
+                      <a
+                        className="btn text-dark"
+                        type="button"
+                        id="dropdownMenuButton"
+                        data-toggle="dropdown"
+                        // aria-haspopup="true"
+                        aria-expanded="false"
+                        href=" "
+                      >
+                        <i className="fa fa-ellipsis-h" aria-hidden="true" />
+                      </a>
+                      <div
+                        className="dropdown-menu"
+                        aria-labelledby="dropdownMenuButton"
+                      >
+                        <NavLink
+                          to="./abc"
+                          className="dropdown-item"
+                          href="/src/page/acccount/AccountDetails.jsx"
+                          data-toggle="modal"
+                        >
+                          Chi tiết
+                        </NavLink>
+                        <a
+                          className="dropdown-item"
+                          href=" "
+                          data-toggle="modal"
+                        >
+                          Chỉnh sửa trạng thái
+                        </a>
+                      </div>
+                    </div>
                   </td>
                 </tr>
                 <tr>
@@ -146,13 +319,40 @@ const Account = () => {
                   <td>59</td>
                   <td>2012/08/06</td>
                   <td>$137,500</td>
-                  <td>
-                    <ButtonInfo
-                      title="Xem chi tiết"
-                      link="abc"
-                      className="mr-2"
-                    />
-                    <ButtonDelete title="Xóa tài khoản"/>
+                  <td className="d-flex justify-content-center">
+                    <div className="btn-group dropleft">
+                      <a
+                        className="btn text-dark"
+                        type="button"
+                        id="dropdownMenuButton"
+                        data-toggle="dropdown"
+                        // aria-haspopup="true"
+                        aria-expanded="false"
+                        href=" "
+                      >
+                        <i className="fa fa-ellipsis-h" aria-hidden="true" />
+                      </a>
+                      <div
+                        className="dropdown-menu"
+                        aria-labelledby="dropdownMenuButton"
+                      >
+                        <NavLink
+                          to="./abc"
+                          className="dropdown-item"
+                          href="/src/page/acccount/AccountDetails.jsx"
+                          data-toggle="modal"
+                        >
+                          Chi tiết
+                        </NavLink>
+                        <a
+                          className="dropdown-item"
+                          href=" "
+                          data-toggle="modal"
+                        >
+                          Chỉnh sửa trạng thái
+                        </a>
+                      </div>
+                    </div>
                   </td>
                 </tr>
                 <tr>
@@ -162,13 +362,40 @@ const Account = () => {
                   <td>55</td>
                   <td>2010/10/14</td>
                   <td>$327,900</td>
-                  <td>
-                    <ButtonInfo
-                      title="Xem chi tiết"
-                      link="abc"
-                      className="mr-2"
-                    />
-                    <ButtonDelete title="Xóa tài khoản"/>
+                  <td className="d-flex justify-content-center">
+                    <div className="btn-group dropleft">
+                      <a
+                        className="btn text-dark"
+                        type="button"
+                        id="dropdownMenuButton"
+                        data-toggle="dropdown"
+                        // aria-haspopup="true"
+                        aria-expanded="false"
+                        href=" "
+                      >
+                        <i className="fa fa-ellipsis-h" aria-hidden="true" />
+                      </a>
+                      <div
+                        className="dropdown-menu"
+                        aria-labelledby="dropdownMenuButton"
+                      >
+                        <NavLink
+                          to="./abc"
+                          className="dropdown-item"
+                          href="/src/page/acccount/AccountDetails.jsx"
+                          data-toggle="modal"
+                        >
+                          Chi tiết
+                        </NavLink>
+                        <a
+                          className="dropdown-item"
+                          href=" "
+                          data-toggle="modal"
+                        >
+                          Chỉnh sửa trạng thái
+                        </a>
+                      </div>
+                    </div>
                   </td>
                 </tr>
                 <tr>
@@ -178,13 +405,40 @@ const Account = () => {
                   <td>39</td>
                   <td>2009/09/15</td>
                   <td>$205,500</td>
-                  <td>
-                    <ButtonInfo
-                      title="Xem chi tiết"
-                      link="abc"
-                      className="mr-2"
-                    />
-                    <ButtonDelete title="Xóa tài khoản"/>
+                  <td className="d-flex justify-content-center">
+                    <div className="btn-group dropleft">
+                      <a
+                        className="btn text-dark"
+                        type="button"
+                        id="dropdownMenuButton"
+                        data-toggle="dropdown"
+                        // aria-haspopup="true"
+                        aria-expanded="false"
+                        href=" "
+                      >
+                        <i className="fa fa-ellipsis-h" aria-hidden="true" />
+                      </a>
+                      <div
+                        className="dropdown-menu"
+                        aria-labelledby="dropdownMenuButton"
+                      >
+                        <NavLink
+                          to="./abc"
+                          className="dropdown-item"
+                          href="/src/page/acccount/AccountDetails.jsx"
+                          data-toggle="modal"
+                        >
+                          Chi tiết
+                        </NavLink>
+                        <a
+                          className="dropdown-item"
+                          href=" "
+                          data-toggle="modal"
+                        >
+                          Chỉnh sửa trạng thái
+                        </a>
+                      </div>
+                    </div>
                   </td>
                 </tr>
                 <tr>
@@ -194,13 +448,40 @@ const Account = () => {
                   <td>23</td>
                   <td>2008/12/13</td>
                   <td>$103,600</td>
-                  <td>
-                    <ButtonInfo
-                      title="Xem chi tiết"
-                      link="abc"
-                      className="mr-2"
-                    />
-                    <ButtonDelete title="Xóa tài khoản"/>
+                  <td className="d-flex justify-content-center">
+                    <div className="btn-group dropleft">
+                      <a
+                        className="btn text-dark"
+                        type="button"
+                        id="dropdownMenuButton"
+                        data-toggle="dropdown"
+                        // aria-haspopup="true"
+                        aria-expanded="false"
+                        href=" "
+                      >
+                        <i className="fa fa-ellipsis-h" aria-hidden="true" />
+                      </a>
+                      <div
+                        className="dropdown-menu"
+                        aria-labelledby="dropdownMenuButton"
+                      >
+                        <NavLink
+                          to="./abc"
+                          className="dropdown-item"
+                          href="/src/page/acccount/AccountDetails.jsx"
+                          data-toggle="modal"
+                        >
+                          Chi tiết
+                        </NavLink>
+                        <a
+                          className="dropdown-item"
+                          href=" "
+                          data-toggle="modal"
+                        >
+                          Chỉnh sửa trạng thái
+                        </a>
+                      </div>
+                    </div>
                   </td>
                 </tr>
                 <tr>
@@ -210,13 +491,40 @@ const Account = () => {
                   <td>30</td>
                   <td>2008/12/19</td>
                   <td>$90,560</td>
-                  <td>
-                    <ButtonInfo
-                      title="Xem chi tiết"
-                      link="abc"
-                      className="mr-2"
-                    />
-                    <ButtonDelete title="Xóa tài khoản"/>
+                  <td className="d-flex justify-content-center">
+                    <div className="btn-group dropleft">
+                      <a
+                        className="btn text-dark"
+                        type="button"
+                        id="dropdownMenuButton"
+                        data-toggle="dropdown"
+                        // aria-haspopup="true"
+                        aria-expanded="false"
+                        href=" "
+                      >
+                        <i className="fa fa-ellipsis-h" aria-hidden="true" />
+                      </a>
+                      <div
+                        className="dropdown-menu"
+                        aria-labelledby="dropdownMenuButton"
+                      >
+                        <NavLink
+                          to="./abc"
+                          className="dropdown-item"
+                          href="/src/page/acccount/AccountDetails.jsx"
+                          data-toggle="modal"
+                        >
+                          Chi tiết
+                        </NavLink>
+                        <a
+                          className="dropdown-item"
+                          href=" "
+                          data-toggle="modal"
+                        >
+                          Chỉnh sửa trạng thái
+                        </a>
+                      </div>
+                    </div>
                   </td>
                 </tr>
                 <tr>
@@ -226,13 +534,40 @@ const Account = () => {
                   <td>22</td>
                   <td>2013/03/03</td>
                   <td>$342,000</td>
-                  <td>
-                    <ButtonInfo
-                      title="Xem chi tiết"
-                      link="abc"
-                      className="mr-2"
-                    />
-                    <ButtonDelete title="Xóa tài khoản"/>
+                  <td className="d-flex justify-content-center">
+                    <div className="btn-group dropleft">
+                      <a
+                        className="btn text-dark"
+                        type="button"
+                        id="dropdownMenuButton"
+                        data-toggle="dropdown"
+                        // aria-haspopup="true"
+                        aria-expanded="false"
+                        href=" "
+                      >
+                        <i className="fa fa-ellipsis-h" aria-hidden="true" />
+                      </a>
+                      <div
+                        className="dropdown-menu"
+                        aria-labelledby="dropdownMenuButton"
+                      >
+                        <NavLink
+                          to="./abc"
+                          className="dropdown-item"
+                          href="/src/page/acccount/AccountDetails.jsx"
+                          data-toggle="modal"
+                        >
+                          Chi tiết
+                        </NavLink>
+                        <a
+                          className="dropdown-item"
+                          href=" "
+                          data-toggle="modal"
+                        >
+                          Chỉnh sửa trạng thái
+                        </a>
+                      </div>
+                    </div>
                   </td>
                 </tr>
                 <tr>
@@ -242,13 +577,40 @@ const Account = () => {
                   <td>36</td>
                   <td>2008/10/16</td>
                   <td>$470,600</td>
-                  <td>
-                    <ButtonInfo
-                      title="Xem chi tiết"
-                      link="abc"
-                      className="mr-2"
-                    />
-                    <ButtonDelete title="Xóa tài khoản"/>
+                  <td className="d-flex justify-content-center">
+                    <div className="btn-group dropleft">
+                      <a
+                        className="btn text-dark"
+                        type="button"
+                        id="dropdownMenuButton"
+                        data-toggle="dropdown"
+                        // aria-haspopup="true"
+                        aria-expanded="false"
+                        href=" "
+                      >
+                        <i className="fa fa-ellipsis-h" aria-hidden="true" />
+                      </a>
+                      <div
+                        className="dropdown-menu"
+                        aria-labelledby="dropdownMenuButton"
+                      >
+                        <NavLink
+                          to="./abc"
+                          className="dropdown-item"
+                          href="/src/page/acccount/AccountDetails.jsx"
+                          data-toggle="modal"
+                        >
+                          Chi tiết
+                        </NavLink>
+                        <a
+                          className="dropdown-item"
+                          href=" "
+                          data-toggle="modal"
+                        >
+                          Chỉnh sửa trạng thái
+                        </a>
+                      </div>
+                    </div>
                   </td>
                 </tr>
                 <tr>
@@ -258,13 +620,40 @@ const Account = () => {
                   <td>43</td>
                   <td>2012/12/18</td>
                   <td>$313,500</td>
-                  <td>
-                    <ButtonInfo
-                      title="Xem chi tiết"
-                      link="abc"
-                      className="mr-2"
-                    />
-                    <ButtonDelete title="Xóa tài khoản"/>
+                  <td className="d-flex justify-content-center">
+                    <div className="btn-group dropleft">
+                      <a
+                        className="btn text-dark"
+                        type="button"
+                        id="dropdownMenuButton"
+                        data-toggle="dropdown"
+                        // aria-haspopup="true"
+                        aria-expanded="false"
+                        href=" "
+                      >
+                        <i className="fa fa-ellipsis-h" aria-hidden="true" />
+                      </a>
+                      <div
+                        className="dropdown-menu"
+                        aria-labelledby="dropdownMenuButton"
+                      >
+                        <NavLink
+                          to="./abc"
+                          className="dropdown-item"
+                          href="/src/page/acccount/AccountDetails.jsx"
+                          data-toggle="modal"
+                        >
+                          Chi tiết
+                        </NavLink>
+                        <a
+                          className="dropdown-item"
+                          href=" "
+                          data-toggle="modal"
+                        >
+                          Chỉnh sửa trạng thái
+                        </a>
+                      </div>
+                    </div>
                   </td>
                 </tr>
                 <tr>
@@ -274,13 +663,40 @@ const Account = () => {
                   <td>19</td>
                   <td>2010/03/17</td>
                   <td>$385,750</td>
-                  <td>
-                    <ButtonInfo
-                      title="Xem chi tiết"
-                      link="abc"
-                      className="mr-2"
-                    />
-                    <ButtonDelete title="Xóa tài khoản"/>
+                  <td className="d-flex justify-content-center">
+                    <div className="btn-group dropleft">
+                      <a
+                        className="btn text-dark"
+                        type="button"
+                        id="dropdownMenuButton"
+                        data-toggle="dropdown"
+                        // aria-haspopup="true"
+                        aria-expanded="false"
+                        href=" "
+                      >
+                        <i className="fa fa-ellipsis-h" aria-hidden="true" />
+                      </a>
+                      <div
+                        className="dropdown-menu"
+                        aria-labelledby="dropdownMenuButton"
+                      >
+                        <NavLink
+                          to="./abc"
+                          className="dropdown-item"
+                          href="/src/page/acccount/AccountDetails.jsx"
+                          data-toggle="modal"
+                        >
+                          Chi tiết
+                        </NavLink>
+                        <a
+                          className="dropdown-item"
+                          href=" "
+                          data-toggle="modal"
+                        >
+                          Chỉnh sửa trạng thái
+                        </a>
+                      </div>
+                    </div>
                   </td>
                 </tr>
                 <tr>
@@ -290,13 +706,40 @@ const Account = () => {
                   <td>66</td>
                   <td>2012/11/27</td>
                   <td>$198,500</td>
-                  <td>
-                    <ButtonInfo
-                      title="Xem chi tiết"
-                      link="abc"
-                      className="mr-2"
-                    />
-                    <ButtonDelete title="Xóa tài khoản"/>
+                  <td className="d-flex justify-content-center">
+                    <div className="btn-group dropleft">
+                      <a
+                        className="btn text-dark"
+                        type="button"
+                        id="dropdownMenuButton"
+                        data-toggle="dropdown"
+                        // aria-haspopup="true"
+                        aria-expanded="false"
+                        href=" "
+                      >
+                        <i className="fa fa-ellipsis-h" aria-hidden="true" />
+                      </a>
+                      <div
+                        className="dropdown-menu"
+                        aria-labelledby="dropdownMenuButton"
+                      >
+                        <NavLink
+                          to="./abc"
+                          className="dropdown-item"
+                          href="/src/page/acccount/AccountDetails.jsx"
+                          data-toggle="modal"
+                        >
+                          Chi tiết
+                        </NavLink>
+                        <a
+                          className="dropdown-item"
+                          href=" "
+                          data-toggle="modal"
+                        >
+                          Chỉnh sửa trạng thái
+                        </a>
+                      </div>
+                    </div>
                   </td>
                 </tr>
                 <tr>
@@ -306,13 +749,40 @@ const Account = () => {
                   <td>64</td>
                   <td>2010/06/09</td>
                   <td>$725,000</td>
-                  <td>
-                    <ButtonInfo
-                      title="Xem chi tiết"
-                      link="abc"
-                      className="mr-2"
-                    />
-                    <ButtonDelete title="Xóa tài khoản"/>
+                  <td className="d-flex justify-content-center">
+                    <div className="btn-group dropleft">
+                      <a
+                        className="btn text-dark"
+                        type="button"
+                        id="dropdownMenuButton"
+                        data-toggle="dropdown"
+                        // aria-haspopup="true"
+                        aria-expanded="false"
+                        href=" "
+                      >
+                        <i className="fa fa-ellipsis-h" aria-hidden="true" />
+                      </a>
+                      <div
+                        className="dropdown-menu"
+                        aria-labelledby="dropdownMenuButton"
+                      >
+                        <NavLink
+                          to="./abc"
+                          className="dropdown-item"
+                          href="/src/page/acccount/AccountDetails.jsx"
+                          data-toggle="modal"
+                        >
+                          Chi tiết
+                        </NavLink>
+                        <a
+                          className="dropdown-item"
+                          href=" "
+                          data-toggle="modal"
+                        >
+                          Chỉnh sửa trạng thái
+                        </a>
+                      </div>
+                    </div>
                   </td>
                 </tr>
                 <tr>
@@ -322,13 +792,40 @@ const Account = () => {
                   <td>59</td>
                   <td>2009/04/10</td>
                   <td>$237,500</td>
-                  <td>
-                    <ButtonInfo
-                      title="Xem chi tiết"
-                      link="abc"
-                      className="mr-2"
-                    />
-                    <ButtonDelete title="Xóa tài khoản"/>
+                  <td className="d-flex justify-content-center">
+                    <div className="btn-group dropleft">
+                      <a
+                        className="btn text-dark"
+                        type="button"
+                        id="dropdownMenuButton"
+                        data-toggle="dropdown"
+                        // aria-haspopup="true"
+                        aria-expanded="false"
+                        href=" "
+                      >
+                        <i className="fa fa-ellipsis-h" aria-hidden="true" />
+                      </a>
+                      <div
+                        className="dropdown-menu"
+                        aria-labelledby="dropdownMenuButton"
+                      >
+                        <NavLink
+                          to="./abc"
+                          className="dropdown-item"
+                          href="/src/page/acccount/AccountDetails.jsx"
+                          data-toggle="modal"
+                        >
+                          Chi tiết
+                        </NavLink>
+                        <a
+                          className="dropdown-item"
+                          href=" "
+                          data-toggle="modal"
+                        >
+                          Chỉnh sửa trạng thái
+                        </a>
+                      </div>
+                    </div>
                   </td>
                 </tr>
                 <tr>
@@ -338,13 +835,40 @@ const Account = () => {
                   <td>41</td>
                   <td>2012/10/13</td>
                   <td>$132,000</td>
-                  <td>
-                    <ButtonInfo
-                      title="Xem chi tiết"
-                      link="abc"
-                      className="mr-2"
-                    />
-                    <ButtonDelete title="Xóa tài khoản"/>
+                  <td className="d-flex justify-content-center">
+                    <div className="btn-group dropleft">
+                      <a
+                        className="btn text-dark"
+                        type="button"
+                        id="dropdownMenuButton"
+                        data-toggle="dropdown"
+                        // aria-haspopup="true"
+                        aria-expanded="false"
+                        href=" "
+                      >
+                        <i className="fa fa-ellipsis-h" aria-hidden="true" />
+                      </a>
+                      <div
+                        className="dropdown-menu"
+                        aria-labelledby="dropdownMenuButton"
+                      >
+                        <NavLink
+                          to="./abc"
+                          className="dropdown-item"
+                          href="/src/page/acccount/AccountDetails.jsx"
+                          data-toggle="modal"
+                        >
+                          Chi tiết
+                        </NavLink>
+                        <a
+                          className="dropdown-item"
+                          href=" "
+                          data-toggle="modal"
+                        >
+                          Chỉnh sửa trạng thái
+                        </a>
+                      </div>
+                    </div>
                   </td>
                 </tr>
                 <tr>
@@ -354,13 +878,40 @@ const Account = () => {
                   <td>35</td>
                   <td>2012/09/26</td>
                   <td>$217,500</td>
-                  <td>
-                    <ButtonInfo
-                      title="Xem chi tiết"
-                      link="abc"
-                      className="mr-2"
-                    />
-                    <ButtonDelete title="Xóa tài khoản"/>
+                  <td className="d-flex justify-content-center">
+                    <div className="btn-group dropleft">
+                      <a
+                        className="btn text-dark"
+                        type="button"
+                        id="dropdownMenuButton"
+                        data-toggle="dropdown"
+                        // aria-haspopup="true"
+                        aria-expanded="false"
+                        href=" "
+                      >
+                        <i className="fa fa-ellipsis-h" aria-hidden="true" />
+                      </a>
+                      <div
+                        className="dropdown-menu"
+                        aria-labelledby="dropdownMenuButton"
+                      >
+                        <NavLink
+                          to="./abc"
+                          className="dropdown-item"
+                          href="/src/page/acccount/AccountDetails.jsx"
+                          data-toggle="modal"
+                        >
+                          Chi tiết
+                        </NavLink>
+                        <a
+                          className="dropdown-item"
+                          href=" "
+                          data-toggle="modal"
+                        >
+                          Chỉnh sửa trạng thái
+                        </a>
+                      </div>
+                    </div>
                   </td>
                 </tr>
                 <tr>
@@ -370,13 +921,40 @@ const Account = () => {
                   <td>30</td>
                   <td>2011/09/03</td>
                   <td>$345,000</td>
-                  <td>
-                    <ButtonInfo
-                      title="Xem chi tiết"
-                      link="abc"
-                      className="mr-2"
-                    />
-                    <ButtonDelete title="Xóa tài khoản"/>
+                  <td className="d-flex justify-content-center">
+                    <div className="btn-group dropleft">
+                      <a
+                        className="btn text-dark"
+                        type="button"
+                        id="dropdownMenuButton"
+                        data-toggle="dropdown"
+                        // aria-haspopup="true"
+                        aria-expanded="false"
+                        href=" "
+                      >
+                        <i className="fa fa-ellipsis-h" aria-hidden="true" />
+                      </a>
+                      <div
+                        className="dropdown-menu"
+                        aria-labelledby="dropdownMenuButton"
+                      >
+                        <NavLink
+                          to="./abc"
+                          className="dropdown-item"
+                          href="/src/page/acccount/AccountDetails.jsx"
+                          data-toggle="modal"
+                        >
+                          Chi tiết
+                        </NavLink>
+                        <a
+                          className="dropdown-item"
+                          href=" "
+                          data-toggle="modal"
+                        >
+                          Chỉnh sửa trạng thái
+                        </a>
+                      </div>
+                    </div>
                   </td>
                 </tr>
                 <tr>
@@ -386,13 +964,40 @@ const Account = () => {
                   <td>40</td>
                   <td>2009/06/25</td>
                   <td>$675,000</td>
-                  <td>
-                    <ButtonInfo
-                      title="Xem chi tiết"
-                      link="abc"
-                      className="mr-2"
-                    />
-                    <ButtonDelete title="Xóa tài khoản"/>
+                  <td className="d-flex justify-content-center">
+                    <div className="btn-group dropleft">
+                      <a
+                        className="btn text-dark"
+                        type="button"
+                        id="dropdownMenuButton"
+                        data-toggle="dropdown"
+                        // aria-haspopup="true"
+                        aria-expanded="false"
+                        href=" "
+                      >
+                        <i className="fa fa-ellipsis-h" aria-hidden="true" />
+                      </a>
+                      <div
+                        className="dropdown-menu"
+                        aria-labelledby="dropdownMenuButton"
+                      >
+                        <NavLink
+                          to="./abc"
+                          className="dropdown-item"
+                          href="/src/page/acccount/AccountDetails.jsx"
+                          data-toggle="modal"
+                        >
+                          Chi tiết
+                        </NavLink>
+                        <a
+                          className="dropdown-item"
+                          href=" "
+                          data-toggle="modal"
+                        >
+                          Chỉnh sửa trạng thái
+                        </a>
+                      </div>
+                    </div>
                   </td>
                 </tr>
                 <tr>
@@ -402,13 +1007,40 @@ const Account = () => {
                   <td>21</td>
                   <td>2011/12/12</td>
                   <td>$106,450</td>
-                  <td>
-                    <ButtonInfo
-                      title="Xem chi tiết"
-                      link="abc"
-                      className="mr-2"
-                    />
-                    <ButtonDelete title="Xóa tài khoản"/>
+                  <td className="d-flex justify-content-center">
+                    <div className="btn-group dropleft">
+                      <a
+                        className="btn text-dark"
+                        type="button"
+                        id="dropdownMenuButton"
+                        data-toggle="dropdown"
+                        // aria-haspopup="true"
+                        aria-expanded="false"
+                        href=" "
+                      >
+                        <i className="fa fa-ellipsis-h" aria-hidden="true" />
+                      </a>
+                      <div
+                        className="dropdown-menu"
+                        aria-labelledby="dropdownMenuButton"
+                      >
+                        <NavLink
+                          to="./abc"
+                          className="dropdown-item"
+                          href="/src/page/acccount/AccountDetails.jsx"
+                          data-toggle="modal"
+                        >
+                          Chi tiết
+                        </NavLink>
+                        <a
+                          className="dropdown-item"
+                          href=" "
+                          data-toggle="modal"
+                        >
+                          Chỉnh sửa trạng thái
+                        </a>
+                      </div>
+                    </div>
                   </td>
                 </tr>
                 <tr>
@@ -418,13 +1050,40 @@ const Account = () => {
                   <td>23</td>
                   <td>2010/09/20</td>
                   <td>$85,600</td>
-                  <td>
-                    <ButtonInfo
-                      title="Xem chi tiết"
-                      link="abc"
-                      className="mr-2"
-                    />
-                    <ButtonDelete title="Xóa tài khoản"/>
+                  <td className="d-flex justify-content-center">
+                    <div className="btn-group dropleft">
+                      <a
+                        className="btn text-dark"
+                        type="button"
+                        id="dropdownMenuButton"
+                        data-toggle="dropdown"
+                        // aria-haspopup="true"
+                        aria-expanded="false"
+                        href=" "
+                      >
+                        <i className="fa fa-ellipsis-h" aria-hidden="true" />
+                      </a>
+                      <div
+                        className="dropdown-menu"
+                        aria-labelledby="dropdownMenuButton"
+                      >
+                        <NavLink
+                          to="./abc"
+                          className="dropdown-item"
+                          href="/src/page/acccount/AccountDetails.jsx"
+                          data-toggle="modal"
+                        >
+                          Chi tiết
+                        </NavLink>
+                        <a
+                          className="dropdown-item"
+                          href=" "
+                          data-toggle="modal"
+                        >
+                          Chỉnh sửa trạng thái
+                        </a>
+                      </div>
+                    </div>
                   </td>
                 </tr>
                 <tr>
@@ -434,13 +1093,40 @@ const Account = () => {
                   <td>47</td>
                   <td>2009/10/09</td>
                   <td>$1,200,000</td>
-                  <td>
-                    <ButtonInfo
-                      title="Xem chi tiết"
-                      link="abc"
-                      className="mr-2"
-                    />
-                    <ButtonDelete title="Xóa tài khoản"/>
+                  <td className="d-flex justify-content-center">
+                    <div className="btn-group dropleft">
+                      <a
+                        className="btn text-dark"
+                        type="button"
+                        id="dropdownMenuButton"
+                        data-toggle="dropdown"
+                        // aria-haspopup="true"
+                        aria-expanded="false"
+                        href=" "
+                      >
+                        <i className="fa fa-ellipsis-h" aria-hidden="true" />
+                      </a>
+                      <div
+                        className="dropdown-menu"
+                        aria-labelledby="dropdownMenuButton"
+                      >
+                        <NavLink
+                          to="./abc"
+                          className="dropdown-item"
+                          href="/src/page/acccount/AccountDetails.jsx"
+                          data-toggle="modal"
+                        >
+                          Chi tiết
+                        </NavLink>
+                        <a
+                          className="dropdown-item"
+                          href=" "
+                          data-toggle="modal"
+                        >
+                          Chỉnh sửa trạng thái
+                        </a>
+                      </div>
+                    </div>
                   </td>
                 </tr>
                 <tr>
@@ -450,13 +1136,40 @@ const Account = () => {
                   <td>42</td>
                   <td>2010/12/22</td>
                   <td>$92,575</td>
-                  <td>
-                    <ButtonInfo
-                      title="Xem chi tiết"
-                      link="abc"
-                      className="mr-2"
-                    />
-                    <ButtonDelete title="Xóa tài khoản"/>
+                  <td className="d-flex justify-content-center">
+                    <div className="btn-group dropleft">
+                      <a
+                        className="btn text-dark"
+                        type="button"
+                        id="dropdownMenuButton"
+                        data-toggle="dropdown"
+                        // aria-haspopup="true"
+                        aria-expanded="false"
+                        href=" "
+                      >
+                        <i className="fa fa-ellipsis-h" aria-hidden="true" />
+                      </a>
+                      <div
+                        className="dropdown-menu"
+                        aria-labelledby="dropdownMenuButton"
+                      >
+                        <NavLink
+                          to="./abc"
+                          className="dropdown-item"
+                          href="/src/page/acccount/AccountDetails.jsx"
+                          data-toggle="modal"
+                        >
+                          Chi tiết
+                        </NavLink>
+                        <a
+                          className="dropdown-item"
+                          href=" "
+                          data-toggle="modal"
+                        >
+                          Chỉnh sửa trạng thái
+                        </a>
+                      </div>
+                    </div>
                   </td>
                 </tr>
                 <tr>
@@ -466,13 +1179,40 @@ const Account = () => {
                   <td>28</td>
                   <td>2010/11/14</td>
                   <td>$357,650</td>
-                  <td>
-                    <ButtonInfo
-                      title="Xem chi tiết"
-                      link="abc"
-                      className="mr-2"
-                    />
-                    <ButtonDelete title="Xóa tài khoản"/>
+                  <td className="d-flex justify-content-center">
+                    <div className="btn-group dropleft">
+                      <a
+                        className="btn text-dark"
+                        type="button"
+                        id="dropdownMenuButton"
+                        data-toggle="dropdown"
+                        // aria-haspopup="true"
+                        aria-expanded="false"
+                        href=" "
+                      >
+                        <i className="fa fa-ellipsis-h" aria-hidden="true" />
+                      </a>
+                      <div
+                        className="dropdown-menu"
+                        aria-labelledby="dropdownMenuButton"
+                      >
+                        <NavLink
+                          to="./abc"
+                          className="dropdown-item"
+                          href="/src/page/acccount/AccountDetails.jsx"
+                          data-toggle="modal"
+                        >
+                          Chi tiết
+                        </NavLink>
+                        <a
+                          className="dropdown-item"
+                          href=" "
+                          data-toggle="modal"
+                        >
+                          Chỉnh sửa trạng thái
+                        </a>
+                      </div>
+                    </div>
                   </td>
                 </tr>
                 <tr>
@@ -482,13 +1222,40 @@ const Account = () => {
                   <td>28</td>
                   <td>2011/06/07</td>
                   <td>$206,850</td>
-                  <td>
-                    <ButtonInfo
-                      title="Xem chi tiết"
-                      link="abc"
-                      className="mr-2"
-                    />
-                    <ButtonDelete title="Xóa tài khoản"/>
+                  <td className="d-flex justify-content-center">
+                    <div className="btn-group dropleft">
+                      <a
+                        className="btn text-dark"
+                        type="button"
+                        id="dropdownMenuButton"
+                        data-toggle="dropdown"
+                        // aria-haspopup="true"
+                        aria-expanded="false"
+                        href=" "
+                      >
+                        <i className="fa fa-ellipsis-h" aria-hidden="true" />
+                      </a>
+                      <div
+                        className="dropdown-menu"
+                        aria-labelledby="dropdownMenuButton"
+                      >
+                        <NavLink
+                          to="./abc"
+                          className="dropdown-item"
+                          href="/src/page/acccount/AccountDetails.jsx"
+                          data-toggle="modal"
+                        >
+                          Chi tiết
+                        </NavLink>
+                        <a
+                          className="dropdown-item"
+                          href=" "
+                          data-toggle="modal"
+                        >
+                          Chỉnh sửa trạng thái
+                        </a>
+                      </div>
+                    </div>
                   </td>
                 </tr>
                 <tr>
@@ -498,13 +1265,40 @@ const Account = () => {
                   <td>48</td>
                   <td>2010/03/11</td>
                   <td>$850,000</td>
-                  <td>
-                    <ButtonInfo
-                      title="Xem chi tiết"
-                      link="abc"
-                      className="mr-2"
-                    />
-                    <ButtonDelete title="Xóa tài khoản"/>
+                  <td className="d-flex justify-content-center">
+                    <div className="btn-group dropleft">
+                      <a
+                        className="btn text-dark"
+                        type="button"
+                        id="dropdownMenuButton"
+                        data-toggle="dropdown"
+                        // aria-haspopup="true"
+                        aria-expanded="false"
+                        href=" "
+                      >
+                        <i className="fa fa-ellipsis-h" aria-hidden="true" />
+                      </a>
+                      <div
+                        className="dropdown-menu"
+                        aria-labelledby="dropdownMenuButton"
+                      >
+                        <NavLink
+                          to="./abc"
+                          className="dropdown-item"
+                          href="/src/page/acccount/AccountDetails.jsx"
+                          data-toggle="modal"
+                        >
+                          Chi tiết
+                        </NavLink>
+                        <a
+                          className="dropdown-item"
+                          href=" "
+                          data-toggle="modal"
+                        >
+                          Chỉnh sửa trạng thái
+                        </a>
+                      </div>
+                    </div>
                   </td>
                 </tr>
                 <tr>
@@ -514,13 +1308,40 @@ const Account = () => {
                   <td>20</td>
                   <td>2011/08/14</td>
                   <td>$163,000</td>
-                  <td>
-                    <ButtonInfo
-                      title="Xem chi tiết"
-                      link="abc"
-                      className="mr-2"
-                    />
-                    <ButtonDelete title="Xóa tài khoản"/>
+                  <td className="d-flex justify-content-center">
+                    <div className="btn-group dropleft">
+                      <a
+                        className="btn text-dark"
+                        type="button"
+                        id="dropdownMenuButton"
+                        data-toggle="dropdown"
+                        // aria-haspopup="true"
+                        aria-expanded="false"
+                        href=" "
+                      >
+                        <i className="fa fa-ellipsis-h" aria-hidden="true" />
+                      </a>
+                      <div
+                        className="dropdown-menu"
+                        aria-labelledby="dropdownMenuButton"
+                      >
+                        <NavLink
+                          to="./abc"
+                          className="dropdown-item"
+                          href="/src/page/acccount/AccountDetails.jsx"
+                          data-toggle="modal"
+                        >
+                          Chi tiết
+                        </NavLink>
+                        <a
+                          className="dropdown-item"
+                          href=" "
+                          data-toggle="modal"
+                        >
+                          Chỉnh sửa trạng thái
+                        </a>
+                      </div>
+                    </div>
                   </td>
                 </tr>
                 <tr>
@@ -530,13 +1351,40 @@ const Account = () => {
                   <td>37</td>
                   <td>2011/06/02</td>
                   <td>$95,400</td>
-                  <td>
-                    <ButtonInfo
-                      title="Xem chi tiết"
-                      link="abc"
-                      className="mr-2"
-                    />
-                    <ButtonDelete title="Xóa tài khoản"/>
+                  <td className="d-flex justify-content-center">
+                    <div className="btn-group dropleft">
+                      <a
+                        className="btn text-dark"
+                        type="button"
+                        id="dropdownMenuButton"
+                        data-toggle="dropdown"
+                        // aria-haspopup="true"
+                        aria-expanded="false"
+                        href=" "
+                      >
+                        <i className="fa fa-ellipsis-h" aria-hidden="true" />
+                      </a>
+                      <div
+                        className="dropdown-menu"
+                        aria-labelledby="dropdownMenuButton"
+                      >
+                        <NavLink
+                          to="./abc"
+                          className="dropdown-item"
+                          href="/src/page/acccount/AccountDetails.jsx"
+                          data-toggle="modal"
+                        >
+                          Chi tiết
+                        </NavLink>
+                        <a
+                          className="dropdown-item"
+                          href=" "
+                          data-toggle="modal"
+                        >
+                          Chỉnh sửa trạng thái
+                        </a>
+                      </div>
+                    </div>
                   </td>
                 </tr>
                 <tr>
@@ -546,13 +1394,40 @@ const Account = () => {
                   <td>53</td>
                   <td>2009/10/22</td>
                   <td>$114,500</td>
-                  <td>
-                    <ButtonInfo
-                      title="Xem chi tiết"
-                      link="abc"
-                      className="mr-2"
-                    />
-                    <ButtonDelete title="Xóa tài khoản"/>
+                  <td className="d-flex justify-content-center">
+                    <div className="btn-group dropleft">
+                      <a
+                        className="btn text-dark"
+                        type="button"
+                        id="dropdownMenuButton"
+                        data-toggle="dropdown"
+                        // aria-haspopup="true"
+                        aria-expanded="false"
+                        href=" "
+                      >
+                        <i className="fa fa-ellipsis-h" aria-hidden="true" />
+                      </a>
+                      <div
+                        className="dropdown-menu"
+                        aria-labelledby="dropdownMenuButton"
+                      >
+                        <NavLink
+                          to="./abc"
+                          className="dropdown-item"
+                          href="/src/page/acccount/AccountDetails.jsx"
+                          data-toggle="modal"
+                        >
+                          Chi tiết
+                        </NavLink>
+                        <a
+                          className="dropdown-item"
+                          href=" "
+                          data-toggle="modal"
+                        >
+                          Chỉnh sửa trạng thái
+                        </a>
+                      </div>
+                    </div>
                   </td>
                 </tr>
                 <tr>
@@ -562,13 +1437,40 @@ const Account = () => {
                   <td>27</td>
                   <td>2011/05/07</td>
                   <td>$145,000</td>
-                  <td>
-                    <ButtonInfo
-                      title="Xem chi tiết"
-                      link="abc"
-                      className="mr-2"
-                    />
-                    <ButtonDelete title="Xóa tài khoản"/>
+                  <td className="d-flex justify-content-center">
+                    <div className="btn-group dropleft">
+                      <a
+                        className="btn text-dark"
+                        type="button"
+                        id="dropdownMenuButton"
+                        data-toggle="dropdown"
+                        // aria-haspopup="true"
+                        aria-expanded="false"
+                        href=" "
+                      >
+                        <i className="fa fa-ellipsis-h" aria-hidden="true" />
+                      </a>
+                      <div
+                        className="dropdown-menu"
+                        aria-labelledby="dropdownMenuButton"
+                      >
+                        <NavLink
+                          to="./abc"
+                          className="dropdown-item"
+                          href="/src/page/acccount/AccountDetails.jsx"
+                          data-toggle="modal"
+                        >
+                          Chi tiết
+                        </NavLink>
+                        <a
+                          className="dropdown-item"
+                          href=" "
+                          data-toggle="modal"
+                        >
+                          Chỉnh sửa trạng thái
+                        </a>
+                      </div>
+                    </div>
                   </td>
                 </tr>
                 <tr>
@@ -578,13 +1480,40 @@ const Account = () => {
                   <td>22</td>
                   <td>2008/10/26</td>
                   <td>$235,500</td>
-                  <td>
-                    <ButtonInfo
-                      title="Xem chi tiết"
-                      link="abc"
-                      className="mr-2"
-                    />
-                    <ButtonDelete title="Xóa tài khoản"/>
+                  <td className="d-flex justify-content-center">
+                    <div className="btn-group dropleft">
+                      <a
+                        className="btn text-dark"
+                        type="button"
+                        id="dropdownMenuButton"
+                        data-toggle="dropdown"
+                        // aria-haspopup="true"
+                        aria-expanded="false"
+                        href=" "
+                      >
+                        <i className="fa fa-ellipsis-h" aria-hidden="true" />
+                      </a>
+                      <div
+                        className="dropdown-menu"
+                        aria-labelledby="dropdownMenuButton"
+                      >
+                        <NavLink
+                          to="./abc"
+                          className="dropdown-item"
+                          href="/src/page/acccount/AccountDetails.jsx"
+                          data-toggle="modal"
+                        >
+                          Chi tiết
+                        </NavLink>
+                        <a
+                          className="dropdown-item"
+                          href=" "
+                          data-toggle="modal"
+                        >
+                          Chỉnh sửa trạng thái
+                        </a>
+                      </div>
+                    </div>
                   </td>
                 </tr>
                 <tr>
@@ -594,13 +1523,40 @@ const Account = () => {
                   <td>46</td>
                   <td>2011/03/09</td>
                   <td>$324,050</td>
-                  <td>
-                    <ButtonInfo
-                      title="Xem chi tiết"
-                      link="abc"
-                      className="mr-2"
-                    />
-                    <ButtonDelete title="Xóa tài khoản"/>
+                  <td className="d-flex justify-content-center">
+                    <div className="btn-group dropleft">
+                      <a
+                        className="btn text-dark"
+                        type="button"
+                        id="dropdownMenuButton"
+                        data-toggle="dropdown"
+                        // aria-haspopup="true"
+                        aria-expanded="false"
+                        href=" "
+                      >
+                        <i className="fa fa-ellipsis-h" aria-hidden="true" />
+                      </a>
+                      <div
+                        className="dropdown-menu"
+                        aria-labelledby="dropdownMenuButton"
+                      >
+                        <NavLink
+                          to="./abc"
+                          className="dropdown-item"
+                          href="/src/page/acccount/AccountDetails.jsx"
+                          data-toggle="modal"
+                        >
+                          Chi tiết
+                        </NavLink>
+                        <a
+                          className="dropdown-item"
+                          href=" "
+                          data-toggle="modal"
+                        >
+                          Chỉnh sửa trạng thái
+                        </a>
+                      </div>
+                    </div>
                   </td>
                 </tr>
                 <tr>
@@ -610,13 +1566,40 @@ const Account = () => {
                   <td>47</td>
                   <td>2009/12/09</td>
                   <td>$85,675</td>
-                  <td>
-                    <ButtonInfo
-                      title="Xem chi tiết"
-                      link="abc"
-                      className="mr-2"
-                    />
-                    <ButtonDelete title="Xóa tài khoản"/>
+                  <td className="d-flex justify-content-center">
+                    <div className="btn-group dropleft">
+                      <a
+                        className="btn text-dark"
+                        type="button"
+                        id="dropdownMenuButton"
+                        data-toggle="dropdown"
+                        // aria-haspopup="true"
+                        aria-expanded="false"
+                        href=" "
+                      >
+                        <i className="fa fa-ellipsis-h" aria-hidden="true" />
+                      </a>
+                      <div
+                        className="dropdown-menu"
+                        aria-labelledby="dropdownMenuButton"
+                      >
+                        <NavLink
+                          to="./abc"
+                          className="dropdown-item"
+                          href="/src/page/acccount/AccountDetails.jsx"
+                          data-toggle="modal"
+                        >
+                          Chi tiết
+                        </NavLink>
+                        <a
+                          className="dropdown-item"
+                          href=" "
+                          data-toggle="modal"
+                        >
+                          Chỉnh sửa trạng thái
+                        </a>
+                      </div>
+                    </div>
                   </td>
                 </tr>
                 <tr>
@@ -626,13 +1609,40 @@ const Account = () => {
                   <td>51</td>
                   <td>2008/12/16</td>
                   <td>$164,500</td>
-                  <td>
-                    <ButtonInfo
-                      title="Xem chi tiết"
-                      link="abc"
-                      className="mr-2"
-                    />
-                    <ButtonDelete title="Xóa tài khoản"/>
+                  <td className="d-flex justify-content-center">
+                    <div className="btn-group dropleft">
+                      <a
+                        className="btn text-dark"
+                        type="button"
+                        id="dropdownMenuButton"
+                        data-toggle="dropdown"
+                        // aria-haspopup="true"
+                        aria-expanded="false"
+                        href=" "
+                      >
+                        <i className="fa fa-ellipsis-h" aria-hidden="true" />
+                      </a>
+                      <div
+                        className="dropdown-menu"
+                        aria-labelledby="dropdownMenuButton"
+                      >
+                        <NavLink
+                          to="./abc"
+                          className="dropdown-item"
+                          href="/src/page/acccount/AccountDetails.jsx"
+                          data-toggle="modal"
+                        >
+                          Chi tiết
+                        </NavLink>
+                        <a
+                          className="dropdown-item"
+                          href=" "
+                          data-toggle="modal"
+                        >
+                          Chỉnh sửa trạng thái
+                        </a>
+                      </div>
+                    </div>
                   </td>
                 </tr>
                 <tr>
@@ -642,13 +1652,40 @@ const Account = () => {
                   <td>41</td>
                   <td>2010/02/12</td>
                   <td>$109,850</td>
-                  <td>
-                    <ButtonInfo
-                      title="Xem chi tiết"
-                      link="abc"
-                      className="mr-2"
-                    />
-                    <ButtonDelete title="Xóa tài khoản"/>
+                  <td className="d-flex justify-content-center">
+                    <div className="btn-group dropleft">
+                      <a
+                        className="btn text-dark"
+                        type="button"
+                        id="dropdownMenuButton"
+                        data-toggle="dropdown"
+                        // aria-haspopup="true"
+                        aria-expanded="false"
+                        href=" "
+                      >
+                        <i className="fa fa-ellipsis-h" aria-hidden="true" />
+                      </a>
+                      <div
+                        className="dropdown-menu"
+                        aria-labelledby="dropdownMenuButton"
+                      >
+                        <NavLink
+                          to="./abc"
+                          className="dropdown-item"
+                          href="/src/page/acccount/AccountDetails.jsx"
+                          data-toggle="modal"
+                        >
+                          Chi tiết
+                        </NavLink>
+                        <a
+                          className="dropdown-item"
+                          href=" "
+                          data-toggle="modal"
+                        >
+                          Chỉnh sửa trạng thái
+                        </a>
+                      </div>
+                    </div>
                   </td>
                 </tr>
                 <tr>
@@ -658,13 +1695,40 @@ const Account = () => {
                   <td>62</td>
                   <td>2009/02/14</td>
                   <td>$452,500</td>
-                  <td>
-                    <ButtonInfo
-                      title="Xem chi tiết"
-                      link="abc"
-                      className="mr-2"
-                    />
-                    <ButtonDelete title="Xóa tài khoản"/>
+                  <td className="d-flex justify-content-center">
+                    <div className="btn-group dropleft">
+                      <a
+                        className="btn text-dark"
+                        type="button"
+                        id="dropdownMenuButton"
+                        data-toggle="dropdown"
+                        // aria-haspopup="true"
+                        aria-expanded="false"
+                        href=" "
+                      >
+                        <i className="fa fa-ellipsis-h" aria-hidden="true" />
+                      </a>
+                      <div
+                        className="dropdown-menu"
+                        aria-labelledby="dropdownMenuButton"
+                      >
+                        <NavLink
+                          to="./abc"
+                          className="dropdown-item"
+                          href="/src/page/acccount/AccountDetails.jsx"
+                          data-toggle="modal"
+                        >
+                          Chi tiết
+                        </NavLink>
+                        <a
+                          className="dropdown-item"
+                          href=" "
+                          data-toggle="modal"
+                        >
+                          Chỉnh sửa trạng thái
+                        </a>
+                      </div>
+                    </div>
                   </td>
                 </tr>
                 <tr>
@@ -674,13 +1738,40 @@ const Account = () => {
                   <td>37</td>
                   <td>2008/12/11</td>
                   <td>$136,200</td>
-                  <td>
-                    <ButtonInfo
-                      title="Xem chi tiết"
-                      link="abc"
-                      className="mr-2"
-                    />
-                    <ButtonDelete title="Xóa tài khoản"/>
+                  <td className="d-flex justify-content-center">
+                    <div className="btn-group dropleft">
+                      <a
+                        className="btn text-dark"
+                        type="button"
+                        id="dropdownMenuButton"
+                        data-toggle="dropdown"
+                        // aria-haspopup="true"
+                        aria-expanded="false"
+                        href=" "
+                      >
+                        <i className="fa fa-ellipsis-h" aria-hidden="true" />
+                      </a>
+                      <div
+                        className="dropdown-menu"
+                        aria-labelledby="dropdownMenuButton"
+                      >
+                        <NavLink
+                          to="./abc"
+                          className="dropdown-item"
+                          href="/src/page/acccount/AccountDetails.jsx"
+                          data-toggle="modal"
+                        >
+                          Chi tiết
+                        </NavLink>
+                        <a
+                          className="dropdown-item"
+                          href=" "
+                          data-toggle="modal"
+                        >
+                          Chỉnh sửa trạng thái
+                        </a>
+                      </div>
+                    </div>
                   </td>
                 </tr>
                 <tr>
@@ -690,13 +1781,40 @@ const Account = () => {
                   <td>65</td>
                   <td>2008/09/26</td>
                   <td>$645,750</td>
-                  <td>
-                    <ButtonInfo
-                      title="Xem chi tiết"
-                      link="abc"
-                      className="mr-2"
-                    />
-                    <ButtonDelete title="Xóa tài khoản"/>
+                  <td className="d-flex justify-content-center">
+                    <div className="btn-group dropleft">
+                      <a
+                        className="btn text-dark"
+                        type="button"
+                        id="dropdownMenuButton"
+                        data-toggle="dropdown"
+                        // aria-haspopup="true"
+                        aria-expanded="false"
+                        href=" "
+                      >
+                        <i className="fa fa-ellipsis-h" aria-hidden="true" />
+                      </a>
+                      <div
+                        className="dropdown-menu"
+                        aria-labelledby="dropdownMenuButton"
+                      >
+                        <NavLink
+                          to="./abc"
+                          className="dropdown-item"
+                          href="/src/page/acccount/AccountDetails.jsx"
+                          data-toggle="modal"
+                        >
+                          Chi tiết
+                        </NavLink>
+                        <a
+                          className="dropdown-item"
+                          href=" "
+                          data-toggle="modal"
+                        >
+                          Chỉnh sửa trạng thái
+                        </a>
+                      </div>
+                    </div>
                   </td>
                 </tr>
                 <tr>
@@ -706,13 +1824,40 @@ const Account = () => {
                   <td>64</td>
                   <td>2011/02/03</td>
                   <td>$234,500</td>
-                  <td>
-                    <ButtonInfo
-                      title="Xem chi tiết"
-                      link="abc"
-                      className="mr-2"
-                    />
-                    <ButtonDelete title="Xóa tài khoản"/>
+                  <td className="d-flex justify-content-center">
+                    <div className="btn-group dropleft">
+                      <a
+                        className="btn text-dark"
+                        type="button"
+                        id="dropdownMenuButton"
+                        data-toggle="dropdown"
+                        // aria-haspopup="true"
+                        aria-expanded="false"
+                        href=" "
+                      >
+                        <i className="fa fa-ellipsis-h" aria-hidden="true" />
+                      </a>
+                      <div
+                        className="dropdown-menu"
+                        aria-labelledby="dropdownMenuButton"
+                      >
+                        <NavLink
+                          to="./abc"
+                          className="dropdown-item"
+                          href="/src/page/acccount/AccountDetails.jsx"
+                          data-toggle="modal"
+                        >
+                          Chi tiết
+                        </NavLink>
+                        <a
+                          className="dropdown-item"
+                          href=" "
+                          data-toggle="modal"
+                        >
+                          Chỉnh sửa trạng thái
+                        </a>
+                      </div>
+                    </div>
                   </td>
                 </tr>
                 <tr>
@@ -722,13 +1867,40 @@ const Account = () => {
                   <td>38</td>
                   <td>2011/05/03</td>
                   <td>$163,500</td>
-                  <td>
-                    <ButtonInfo
-                      title="Xem chi tiết"
-                      link="abc"
-                      className="mr-2"
-                    />
-                    <ButtonDelete title="Xóa tài khoản"/>
+                  <td className="d-flex justify-content-center">
+                    <div className="btn-group dropleft">
+                      <a
+                        className="btn text-dark"
+                        type="button"
+                        id="dropdownMenuButton"
+                        data-toggle="dropdown"
+                        // aria-haspopup="true"
+                        aria-expanded="false"
+                        href=" "
+                      >
+                        <i className="fa fa-ellipsis-h" aria-hidden="true" />
+                      </a>
+                      <div
+                        className="dropdown-menu"
+                        aria-labelledby="dropdownMenuButton"
+                      >
+                        <NavLink
+                          to="./abc"
+                          className="dropdown-item"
+                          href="/src/page/acccount/AccountDetails.jsx"
+                          data-toggle="modal"
+                        >
+                          Chi tiết
+                        </NavLink>
+                        <a
+                          className="dropdown-item"
+                          href=" "
+                          data-toggle="modal"
+                        >
+                          Chỉnh sửa trạng thái
+                        </a>
+                      </div>
+                    </div>
                   </td>
                 </tr>
                 <tr>
@@ -738,13 +1910,40 @@ const Account = () => {
                   <td>37</td>
                   <td>2009/08/19</td>
                   <td>$139,575</td>
-                  <td>
-                    <ButtonInfo
-                      title="Xem chi tiết"
-                      link="abc"
-                      className="mr-2"
-                    />
-                    <ButtonDelete title="Xóa tài khoản"/>
+                  <td className="d-flex justify-content-center">
+                    <div className="btn-group dropleft">
+                      <a
+                        className="btn text-dark"
+                        type="button"
+                        id="dropdownMenuButton"
+                        data-toggle="dropdown"
+                        // aria-haspopup="true"
+                        aria-expanded="false"
+                        href=" "
+                      >
+                        <i className="fa fa-ellipsis-h" aria-hidden="true" />
+                      </a>
+                      <div
+                        className="dropdown-menu"
+                        aria-labelledby="dropdownMenuButton"
+                      >
+                        <NavLink
+                          to="./abc"
+                          className="dropdown-item"
+                          href="/src/page/acccount/AccountDetails.jsx"
+                          data-toggle="modal"
+                        >
+                          Chi tiết
+                        </NavLink>
+                        <a
+                          className="dropdown-item"
+                          href=" "
+                          data-toggle="modal"
+                        >
+                          Chỉnh sửa trạng thái
+                        </a>
+                      </div>
+                    </div>
                   </td>
                 </tr>
                 <tr>
@@ -754,13 +1953,40 @@ const Account = () => {
                   <td>61</td>
                   <td>2013/08/11</td>
                   <td>$98,540</td>
-                  <td>
-                    <ButtonInfo
-                      title="Xem chi tiết"
-                      link="abc"
-                      className="mr-2"
-                    />
-                    <ButtonDelete title="Xóa tài khoản"/>
+                  <td className="d-flex justify-content-center">
+                    <div className="btn-group dropleft">
+                      <a
+                        className="btn text-dark"
+                        type="button"
+                        id="dropdownMenuButton"
+                        data-toggle="dropdown"
+                        // aria-haspopup="true"
+                        aria-expanded="false"
+                        href=" "
+                      >
+                        <i className="fa fa-ellipsis-h" aria-hidden="true" />
+                      </a>
+                      <div
+                        className="dropdown-menu"
+                        aria-labelledby="dropdownMenuButton"
+                      >
+                        <NavLink
+                          to="./abc"
+                          className="dropdown-item"
+                          href="/src/page/acccount/AccountDetails.jsx"
+                          data-toggle="modal"
+                        >
+                          Chi tiết
+                        </NavLink>
+                        <a
+                          className="dropdown-item"
+                          href=" "
+                          data-toggle="modal"
+                        >
+                          Chỉnh sửa trạng thái
+                        </a>
+                      </div>
+                    </div>
                   </td>
                 </tr>
                 <tr>
@@ -770,13 +1996,40 @@ const Account = () => {
                   <td>47</td>
                   <td>2009/07/07</td>
                   <td>$87,500</td>
-                  <td>
-                    <ButtonInfo
-                      title="Xem chi tiết"
-                      link="abc"
-                      className="mr-2"
-                    />
-                    <ButtonDelete title="Xóa tài khoản"/>
+                  <td className="d-flex justify-content-center">
+                    <div className="btn-group dropleft">
+                      <a
+                        className="btn text-dark"
+                        type="button"
+                        id="dropdownMenuButton"
+                        data-toggle="dropdown"
+                        // aria-haspopup="true"
+                        aria-expanded="false"
+                        href=" "
+                      >
+                        <i className="fa fa-ellipsis-h" aria-hidden="true" />
+                      </a>
+                      <div
+                        className="dropdown-menu"
+                        aria-labelledby="dropdownMenuButton"
+                      >
+                        <NavLink
+                          to="./abc"
+                          className="dropdown-item"
+                          href="/src/page/acccount/AccountDetails.jsx"
+                          data-toggle="modal"
+                        >
+                          Chi tiết
+                        </NavLink>
+                        <a
+                          className="dropdown-item"
+                          href=" "
+                          data-toggle="modal"
+                        >
+                          Chỉnh sửa trạng thái
+                        </a>
+                      </div>
+                    </div>
                   </td>
                 </tr>
                 <tr>
@@ -786,13 +2039,40 @@ const Account = () => {
                   <td>64</td>
                   <td>2012/04/09</td>
                   <td>$138,575</td>
-                  <td>
-                    <ButtonInfo
-                      title="Xem chi tiết"
-                      link="abc"
-                      className="mr-2"
-                    />
-                    <ButtonDelete title="Xóa tài khoản"/>
+                  <td className="d-flex justify-content-center">
+                    <div className="btn-group dropleft">
+                      <a
+                        className="btn text-dark"
+                        type="button"
+                        id="dropdownMenuButton"
+                        data-toggle="dropdown"
+                        // aria-haspopup="true"
+                        aria-expanded="false"
+                        href=" "
+                      >
+                        <i className="fa fa-ellipsis-h" aria-hidden="true" />
+                      </a>
+                      <div
+                        className="dropdown-menu"
+                        aria-labelledby="dropdownMenuButton"
+                      >
+                        <NavLink
+                          to="./abc"
+                          className="dropdown-item"
+                          href="/src/page/acccount/AccountDetails.jsx"
+                          data-toggle="modal"
+                        >
+                          Chi tiết
+                        </NavLink>
+                        <a
+                          className="dropdown-item"
+                          href=" "
+                          data-toggle="modal"
+                        >
+                          Chỉnh sửa trạng thái
+                        </a>
+                      </div>
+                    </div>
                   </td>
                 </tr>
                 <tr>
@@ -802,13 +2082,40 @@ const Account = () => {
                   <td>63</td>
                   <td>2010/01/04</td>
                   <td>$125,250</td>
-                  <td>
-                    <ButtonInfo
-                      title="Xem chi tiết"
-                      link="abc"
-                      className="mr-2"
-                    />
-                    <ButtonDelete title="Xóa tài khoản"/>
+                  <td className="d-flex justify-content-center">
+                    <div className="btn-group dropleft">
+                      <a
+                        className="btn text-dark"
+                        type="button"
+                        id="dropdownMenuButton"
+                        data-toggle="dropdown"
+                        // aria-haspopup="true"
+                        aria-expanded="false"
+                        href=" "
+                      >
+                        <i className="fa fa-ellipsis-h" aria-hidden="true" />
+                      </a>
+                      <div
+                        className="dropdown-menu"
+                        aria-labelledby="dropdownMenuButton"
+                      >
+                        <NavLink
+                          to="./abc"
+                          className="dropdown-item"
+                          href="/src/page/acccount/AccountDetails.jsx"
+                          data-toggle="modal"
+                        >
+                          Chi tiết
+                        </NavLink>
+                        <a
+                          className="dropdown-item"
+                          href=" "
+                          data-toggle="modal"
+                        >
+                          Chỉnh sửa trạng thái
+                        </a>
+                      </div>
+                    </div>
                   </td>
                 </tr>
                 <tr>
@@ -818,13 +2125,40 @@ const Account = () => {
                   <td>56</td>
                   <td>2012/06/01</td>
                   <td>$115,000</td>
-                  <td>
-                    <ButtonInfo
-                      title="Xem chi tiết"
-                      link="abc"
-                      className="mr-2"
-                    />
-                    <ButtonDelete title="Xóa tài khoản"/>
+                  <td className="d-flex justify-content-center">
+                    <div className="btn-group dropleft">
+                      <a
+                        className="btn text-dark"
+                        type="button"
+                        id="dropdownMenuButton"
+                        data-toggle="dropdown"
+                        // aria-haspopup="true"
+                        aria-expanded="false"
+                        href=" "
+                      >
+                        <i className="fa fa-ellipsis-h" aria-hidden="true" />
+                      </a>
+                      <div
+                        className="dropdown-menu"
+                        aria-labelledby="dropdownMenuButton"
+                      >
+                        <NavLink
+                          to="./abc"
+                          className="dropdown-item"
+                          href="/src/page/acccount/AccountDetails.jsx"
+                          data-toggle="modal"
+                        >
+                          Chi tiết
+                        </NavLink>
+                        <a
+                          className="dropdown-item"
+                          href=" "
+                          data-toggle="modal"
+                        >
+                          Chỉnh sửa trạng thái
+                        </a>
+                      </div>
+                    </div>
                   </td>
                 </tr>
                 <tr>
@@ -834,13 +2168,40 @@ const Account = () => {
                   <td>43</td>
                   <td>2013/02/01</td>
                   <td>$75,650</td>
-                  <td>
-                    <ButtonInfo
-                      title="Xem chi tiết"
-                      link="abc"
-                      className="mr-2"
-                    />
-                    <ButtonDelete title="Xóa tài khoản"/>
+                  <td className="d-flex justify-content-center">
+                    <div className="btn-group dropleft">
+                      <a
+                        className="btn text-dark"
+                        type="button"
+                        id="dropdownMenuButton"
+                        data-toggle="dropdown"
+                        // aria-haspopup="true"
+                        aria-expanded="false"
+                        href=" "
+                      >
+                        <i className="fa fa-ellipsis-h" aria-hidden="true" />
+                      </a>
+                      <div
+                        className="dropdown-menu"
+                        aria-labelledby="dropdownMenuButton"
+                      >
+                        <NavLink
+                          to="./abc"
+                          className="dropdown-item"
+                          href="/src/page/acccount/AccountDetails.jsx"
+                          data-toggle="modal"
+                        >
+                          Chi tiết
+                        </NavLink>
+                        <a
+                          className="dropdown-item"
+                          href=" "
+                          data-toggle="modal"
+                        >
+                          Chỉnh sửa trạng thái
+                        </a>
+                      </div>
+                    </div>
                   </td>
                 </tr>
                 <tr>
@@ -850,13 +2211,40 @@ const Account = () => {
                   <td>46</td>
                   <td>2011/12/06</td>
                   <td>$145,600</td>
-                  <td>
-                    <ButtonInfo
-                      title="Xem chi tiết"
-                      link="abc"
-                      className="mr-2"
-                    />
-                    <ButtonDelete title="Xóa tài khoản"/>
+                  <td className="d-flex justify-content-center">
+                    <div className="btn-group dropleft">
+                      <a
+                        className="btn text-dark"
+                        type="button"
+                        id="dropdownMenuButton"
+                        data-toggle="dropdown"
+                        // aria-haspopup="true"
+                        aria-expanded="false"
+                        href=" "
+                      >
+                        <i className="fa fa-ellipsis-h" aria-hidden="true" />
+                      </a>
+                      <div
+                        className="dropdown-menu"
+                        aria-labelledby="dropdownMenuButton"
+                      >
+                        <NavLink
+                          to="./abc"
+                          className="dropdown-item"
+                          href="/src/page/acccount/AccountDetails.jsx"
+                          data-toggle="modal"
+                        >
+                          Chi tiết
+                        </NavLink>
+                        <a
+                          className="dropdown-item"
+                          href=" "
+                          data-toggle="modal"
+                        >
+                          Chỉnh sửa trạng thái
+                        </a>
+                      </div>
+                    </div>
                   </td>
                 </tr>
                 <tr>
@@ -866,13 +2254,40 @@ const Account = () => {
                   <td>47</td>
                   <td>2011/03/21</td>
                   <td>$356,250</td>
-                  <td>
-                    <ButtonInfo
-                      title="Xem chi tiết"
-                      link="abc"
-                      className="mr-2"
-                    />
-                    <ButtonDelete title="Xóa tài khoản"/>
+                  <td className="d-flex justify-content-center">
+                    <div className="btn-group dropleft">
+                      <a
+                        className="btn text-dark"
+                        type="button"
+                        id="dropdownMenuButton"
+                        data-toggle="dropdown"
+                        // aria-haspopup="true"
+                        aria-expanded="false"
+                        href=" "
+                      >
+                        <i className="fa fa-ellipsis-h" aria-hidden="true" />
+                      </a>
+                      <div
+                        className="dropdown-menu"
+                        aria-labelledby="dropdownMenuButton"
+                      >
+                        <NavLink
+                          to="./abc"
+                          className="dropdown-item"
+                          href="/src/page/acccount/AccountDetails.jsx"
+                          data-toggle="modal"
+                        >
+                          Chi tiết
+                        </NavLink>
+                        <a
+                          className="dropdown-item"
+                          href=" "
+                          data-toggle="modal"
+                        >
+                          Chỉnh sửa trạng thái
+                        </a>
+                      </div>
+                    </div>
                   </td>
                 </tr>
                 <tr>
@@ -882,13 +2297,40 @@ const Account = () => {
                   <td>21</td>
                   <td>2009/02/27</td>
                   <td>$103,500</td>
-                  <td>
-                    <ButtonInfo
-                      title="Xem chi tiết"
-                      link="abc"
-                      className="mr-2"
-                    />
-                    <ButtonDelete title="Xóa tài khoản"/>
+                  <td className="d-flex justify-content-center">
+                    <div className="btn-group dropleft">
+                      <a
+                        className="btn text-dark"
+                        type="button"
+                        id="dropdownMenuButton"
+                        data-toggle="dropdown"
+                        // aria-haspopup="true"
+                        aria-expanded="false"
+                        href=" "
+                      >
+                        <i className="fa fa-ellipsis-h" aria-hidden="true" />
+                      </a>
+                      <div
+                        className="dropdown-menu"
+                        aria-labelledby="dropdownMenuButton"
+                      >
+                        <NavLink
+                          to="./abc"
+                          className="dropdown-item"
+                          href="/src/page/acccount/AccountDetails.jsx"
+                          data-toggle="modal"
+                        >
+                          Chi tiết
+                        </NavLink>
+                        <a
+                          className="dropdown-item"
+                          href=" "
+                          data-toggle="modal"
+                        >
+                          Chỉnh sửa trạng thái
+                        </a>
+                      </div>
+                    </div>
                   </td>
                 </tr>
                 <tr>
@@ -898,13 +2340,40 @@ const Account = () => {
                   <td>30</td>
                   <td>2010/07/14</td>
                   <td>$86,500</td>
-                  <td>
-                    <ButtonInfo
-                      title="Xem chi tiết"
-                      link="abc"
-                      className="mr-2"
-                    />
-                    <ButtonDelete title="Xóa tài khoản"/>
+                  <td className="d-flex justify-content-center">
+                    <div className="btn-group dropleft">
+                      <a
+                        className="btn text-dark"
+                        type="button"
+                        id="dropdownMenuButton"
+                        data-toggle="dropdown"
+                        // aria-haspopup="true"
+                        aria-expanded="false"
+                        href=" "
+                      >
+                        <i className="fa fa-ellipsis-h" aria-hidden="true" />
+                      </a>
+                      <div
+                        className="dropdown-menu"
+                        aria-labelledby="dropdownMenuButton"
+                      >
+                        <NavLink
+                          to="./abc"
+                          className="dropdown-item"
+                          href="/src/page/acccount/AccountDetails.jsx"
+                          data-toggle="modal"
+                        >
+                          Chi tiết
+                        </NavLink>
+                        <a
+                          className="dropdown-item"
+                          href=" "
+                          data-toggle="modal"
+                        >
+                          Chỉnh sửa trạng thái
+                        </a>
+                      </div>
+                    </div>
                   </td>
                 </tr>
                 <tr>
@@ -914,13 +2383,40 @@ const Account = () => {
                   <td>51</td>
                   <td>2008/11/13</td>
                   <td>$183,000</td>
-                  <td>
-                    <ButtonInfo
-                      title="Xem chi tiết"
-                      link="abc"
-                      className="mr-2"
-                    />
-                    <ButtonDelete title="Xóa tài khoản"/>
+                  <td className="d-flex justify-content-center">
+                    <div className="btn-group dropleft">
+                      <a
+                        className="btn text-dark"
+                        type="button"
+                        id="dropdownMenuButton"
+                        data-toggle="dropdown"
+                        // aria-haspopup="true"
+                        aria-expanded="false"
+                        href=" "
+                      >
+                        <i className="fa fa-ellipsis-h" aria-hidden="true" />
+                      </a>
+                      <div
+                        className="dropdown-menu"
+                        aria-labelledby="dropdownMenuButton"
+                      >
+                        <NavLink
+                          to="./abc"
+                          className="dropdown-item"
+                          href="/src/page/acccount/AccountDetails.jsx"
+                          data-toggle="modal"
+                        >
+                          Chi tiết
+                        </NavLink>
+                        <a
+                          className="dropdown-item"
+                          href=" "
+                          data-toggle="modal"
+                        >
+                          Chỉnh sửa trạng thái
+                        </a>
+                      </div>
+                    </div>
                   </td>
                 </tr>
                 <tr>
@@ -930,13 +2426,40 @@ const Account = () => {
                   <td>29</td>
                   <td>2011/06/27</td>
                   <td>$183,000</td>
-                  <td>
-                    <ButtonInfo
-                      title="Xem chi tiết"
-                      link="abc"
-                      className="mr-2"
-                    />
-                    <ButtonDelete title="Xóa tài khoản"/>
+                  <td className="d-flex justify-content-center">
+                    <div className="btn-group dropleft">
+                      <a
+                        className="btn text-dark"
+                        type="button"
+                        id="dropdownMenuButton"
+                        data-toggle="dropdown"
+                        // aria-haspopup="true"
+                        aria-expanded="false"
+                        href=" "
+                      >
+                        <i className="fa fa-ellipsis-h" aria-hidden="true" />
+                      </a>
+                      <div
+                        className="dropdown-menu"
+                        aria-labelledby="dropdownMenuButton"
+                      >
+                        <NavLink
+                          to="./abc"
+                          className="dropdown-item"
+                          href="/src/page/acccount/AccountDetails.jsx"
+                          data-toggle="modal"
+                        >
+                          Chi tiết
+                        </NavLink>
+                        <a
+                          className="dropdown-item"
+                          href=" "
+                          data-toggle="modal"
+                        >
+                          Chỉnh sửa trạng thái
+                        </a>
+                      </div>
+                    </div>
                   </td>
                 </tr>
                 <tr>
@@ -946,17 +2469,64 @@ const Account = () => {
                   <td>27</td>
                   <td>2011/01/25</td>
                   <td>$112,000</td>
-                  <td>
-                    <ButtonInfo
-                      title="Xem chi tiết"
-                      link="abc"
-                      className="mr-2"
-                    />
-                    <ButtonDelete title="Xóa tài khoản"/>
+                  <td className="d-flex justify-content-center">
+                    <div className="btn-group dropleft">
+                      <a
+                        className="btn text-dark"
+                        type="button"
+                        id="dropdownMenuButton"
+                        data-toggle="dropdown"
+                        // aria-haspopup="true"
+                        aria-expanded="false"
+                        href=" "
+                      >
+                        <i className="fa fa-ellipsis-h" aria-hidden="true" />
+                      </a>
+                      <div
+                        className="dropdown-menu"
+                        aria-labelledby="dropdownMenuButton"
+                      >
+                        <NavLink
+                          to="./abc"
+                          className="dropdown-item"
+                          href="/src/page/acccount/AccountDetails.jsx"
+                          data-toggle="modal"
+                        >
+                          Chi tiết
+                        </NavLink>
+                        <a
+                          className="dropdown-item"
+                          href=" "
+                          data-toggle="modal"
+                        >
+                          Chỉnh sửa trạng thái
+                        </a>
+                      </div>
+                    </div>
                   </td>
                 </tr>
               </tbody>
             </table>
+            <div className="d-flex align-items-center justify-content-between">
+              <div className=" d-flex align-items-center">
+                Hiển thị:{" "}
+                <select className="border-1 form-control col-1 mx-2">
+                  <option value={10}>10</option>
+                  <option value={20}>20</option>
+                  <option value={50}>50</option>
+                  <option value={100}>100</option>
+                </select>
+              </div>
+              <div className=" d-flex align-items-center">
+                <button className="btn btn-outline-dark btn-sm mx-1 px-2">
+                  Trước
+                </button>
+                <button className="btn btn-outline-dark btn-sm mx-1 px-2">
+                  Sau
+                </button>
+                <span>Trang</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>

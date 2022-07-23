@@ -389,7 +389,9 @@ const OrderPage = () => {
                         </table>
                     </div>
 
-                    {pageInfo.totalElements > 0 && <div className='p-2 row align-items-center justify-content-between'>
+                    {pageInfo.totalElements > 0 
+                    && 
+                    <div className='p-2 row align-items-center justify-content-between'>
                         <div className='col d-flex align-items-center'>
                             Hiển thị: <select className='border-1 form-control col-1 mx-2'
                                 onChange={handleChangePageSizeFilter}>
@@ -402,15 +404,16 @@ const OrderPage = () => {
                         <div className=''>
                             <button className='btn btn-outline-dark btn-sm mx-1 px-2'
                                 onClick={() => handleChangePageFilter(pageInfo.page - 1)}
-                                disabled={pageInfo.page == 0}>Trước
+                                disabled={pageInfo.page === 0}>Trước
                             </button>
                             <button className='btn btn-outline-dark btn-sm mx-1 px-2'
                                 onClick={() => handleChangePageFilter(pageInfo.page + 1)}
-                                disabled={pageInfo.page == pageInfo.totalPages - 1}>Sau
+                                disabled={pageInfo.page === pageInfo.totalPages - 1}>Sau
                             </button>
                             <span>Trang {pageInfo.page + 1}/{pageInfo.totalPages}</span>
                         </div>
-                    </div>}
+                    </div>
+                    }
                 </div>
             </div>
         </div>

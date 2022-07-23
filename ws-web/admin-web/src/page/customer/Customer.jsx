@@ -18,11 +18,24 @@ const Customer = () => {
           <h6 className="m-0 font-weight-bold text-primary">
             Quản lý khách hàng
           </h6>
-          <input
-            type="text"
-            placeholder="Tìm kiếm"
-            onChange={(e) => setkeySearch(e.target.value)}
-          />
+          <form className="d-none d-sm-inline-block form-inline navbar-search col-4">
+            <div className="input-group">
+              <input
+                onChange={(e) => setkeySearch(e.target.value)}
+                type="text"
+                className="form-control bg-light border-1 small"
+                placeholder="Tìm kiếm..."
+                aria-label="Search"
+                aria-describedby="basic-addon2"
+                defaultValue=""
+              />
+              <div className="input-group-append">
+                <button className="btn btn-primary" type="submit">
+                  <i className="fas fa-search fa-sm" />
+                </button>
+              </div>
+            </div>
+          </form>
         </div>
         <div className="card-body">
           <div className="table-responsive">
@@ -71,6 +84,26 @@ const Customer = () => {
                     ))}
               </tbody>
             </table>
+            <div className="d-flex align-items-center justify-content-between">
+              <div className=" d-flex align-items-center">
+                Hiển thị:{" "}
+                <select className="border-1 form-control col-1 mx-2">
+                  <option value={10}>10</option>
+                  <option value={20}>20</option>
+                  <option value={50}>50</option>
+                  <option value={100}>100</option>
+                </select>
+              </div>
+              <div className=" d-flex align-items-center">
+                <button className="btn btn-outline-dark btn-sm mx-1 px-2">
+                  Trước
+                </button>
+                <button className="btn btn-outline-dark btn-sm mx-1 px-2">
+                  Sau
+                </button>
+                <span>Trang</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
