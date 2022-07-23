@@ -40,4 +40,6 @@ public class WsService {
     public final DiscountProductService discountProductService;
     public final OrderDiscountService orderDiscountService;
     public final DiscountDetailService discountDetailService;
+    public final BlogService blogService;
+    public final TopicService topicService;
 }

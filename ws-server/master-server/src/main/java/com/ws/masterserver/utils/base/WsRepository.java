@@ -43,5 +43,7 @@ public class WsRepository {
     public final OrderCustomRepository orderCustomRepository;
     public final OrderDetailCustomRepository orderDetailCustomRepository;
     public final ProductCustomRepository productCustomRepository;
+    public final BlogRepository blogRepository;
+    public final TopicRepository topicRepository;
 
 }
