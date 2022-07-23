@@ -45,8 +45,10 @@ const Sidebar = () => {
         >
           <div className="bg-white py-2 collapse-inner rounded">
             {/* <h6 className="collapse-header">Danh sách đơn hàng</h6> */}
+
             <NavLink to="order" className="collapse-item">
               Danh sách đơn hàng
+
             </NavLink>
             <NavLink to="discount" className="collapse-item">
               Khuyến mãi
@@ -74,18 +76,15 @@ const Sidebar = () => {
         >
           <div className="bg-white py-2 collapse-inner rounded">
             {/* <h6 className="collapse-header">Custom Utilities:</h6> */}
-            <Link to="./category-items" className="collapse-item">
+            <NavLink to="./category" className="collapse-item">
               Loại sản phẩm
-            </Link>
-            <Link
-              to="./account"
-              className="collapse-item" 
-            >
+            </NavLink>
+            <NavLink to="./account" className="collapse-item">
               Tài khoản
-            </Link>
-            <a className="collapse-item" href="utilities-animation.html">
+            </NavLink>
+            <NavLink className="collapse-item" to="./customer">
               Khách hàng
-            </a>
+            </NavLink>
             <a className="collapse-item" href="utilities-other.html">
               Nhà cung cấp
             </a>
@@ -114,9 +113,9 @@ const Sidebar = () => {
         >
           <div className="bg-white py-2 collapse-inner rounded">
             <h6 className="collapse-header">Login Screens:</h6>
-            <a className="collapse-item" href="login.html">
+            <Link className="collapse-item" to="/login">
               Login
-            </a>
+            </Link>
             <a className="collapse-item" href="register.html">
               Register
             </a>
@@ -125,7 +124,7 @@ const Sidebar = () => {
             </a>
             <div className="collapse-divider" />
             <h6 className="collapse-header">Other Pages:</h6>
-            <a className="collapse-item" href="404.html">
+            <a className="collapse-item" href="404">
               404 Page
             </a>
             <a className="collapse-item" href="blank.html">
