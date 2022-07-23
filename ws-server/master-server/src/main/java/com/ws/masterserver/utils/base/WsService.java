@@ -39,4 +39,5 @@ public class WsService {
     public final DiscountCustomerTypeService discountCustomerTypeService;
     public final DiscountProductService discountProductService;
     public final OrderDiscountService orderDiscountService;
+    public final DiscountDetailService discountDetailService;
 }

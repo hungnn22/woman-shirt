@@ -2,12 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a37591f7-f1db-4755-aaae-e0e9d919efdd" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/ws-web/admin-web/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/ws-web/admin-web/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ws-web/admin-web/src/component/sidebar/Sidebar.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/ws-web/admin-web/src/component/sidebar/Sidebar.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ws-web/admin-web/src/page/category/Category.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/ws-web/admin-web/src/page/category/Category.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ws-web/admin-web/src/page/category/MOCK_DATA.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ws-web/admin-web/src/page/customer/Customer.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ws-web/admin-web/src/page/customer/MOCK_DATA (1).json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,14 +31,14 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/hungnn22/Documents/personal/woman-shirt&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "/home/hungnn22/Documents/personal/woman-shirt/ws-server/master-server"
   }
-}</component>
+}]]></component>
   <component name="RunManager">
     <configuration default="true" type="JetRunConfigurationType">
       <module name="woman-shirt" />
@@ -71,6 +66,7 @@
       <workItem from="1658327773841" duration="476000" />
       <workItem from="1658329330648" duration="650000" />
       <workItem from="1658337128102" duration="47000" />
+      <workItem from="1658497616848" duration="491000" />
     </task>
     <servers />
   </component>

@@ -1,4 +1,4 @@
-package com.ws.master_service.dto.admin.discount.prerequisite;
+package com.ws.masterserver.dto.admin.discount.prerequisite;
 
 import lombok.Builder;
 import lombok.Data;
@@ -9,5 +9,5 @@ public class PrerequisiteType01 extends PrerequisiteDto{
     /**
      * Tổng giá trị đơn hàng tối thiêu
      */
-    private String minimumSaleTotalPrice;
+    private Long minimumSaleTotalPrice;
 }
