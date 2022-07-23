@@ -1,3 +1,0 @@
-INSERT INTO public.orders (id,address_id,code,created_by,created_date,note,payed,ship_price,ship_type_id,total,"type",updated_by,updated_date,user_id) VALUES
-	 ('9763c16d-3174-4415-836e-037ba4c32038','743eb8f9-0026-4956-9976-8198d5ad6349','DH1KH2',NULL,'2022-06-23 09:16:19.225','Giao cuối tuần',true,20000,NULL,380000,'CASH',NULL,'2022-06-26 10:26:51.007','c37f89a1-932c-4350-baed-7eb0d1fb30be'),
-	 ('ffceb60b-b0b5-4d54-b30e-f0d811828e09','e62be07e-490b-4d0f-b72c-f8d5da94bfca','DH1KH1',NULL,'2022-06-24 10:26:49.225','Giao hàng giờ hành chính',true,20000,NULL,380000,'CASH','fb6e037a-9f6b-49e0-826e-d1d1539413f6','2022-06-26 18:15:27.491','6fac7f97-6c5c-44d5-9ed0-5bfc66326f2b');

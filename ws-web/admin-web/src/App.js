@@ -10,6 +10,7 @@ import { useEffect } from "react";
 import AuthService from "./service/AuthService";
 import Account from "./page/acccount/Account";
 import AccountDetails from "./page/acccount/AccountDetails";
+import DiscountListPage from "./page/discount/DiscountListPage";
 
 function App() {
   const navigate = useNavigate();
@@ -37,6 +38,7 @@ function App() {
             <Route path="account" element={<Account />} />
             <Route path="account/:id" element={<AccountDetails />} />
             <Route path="notification" element={<NotificationPage />} />
+            <Route path="discount" element={<DiscountListPage />} />
           </Route>
         </Routes>
         <ToastContainer />

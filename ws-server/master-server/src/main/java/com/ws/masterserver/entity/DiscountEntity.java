@@ -1,17 +1,17 @@
 package com.ws.masterserver.entity;
 
-import com.ws.masterserver.utils.constants.enums.ApplyTypeEnum;
-import com.ws.masterserver.utils.constants.enums.DiscountCustomerTypeEnums;
-import com.ws.masterserver.utils.constants.enums.DiscountStatusEnums;
-import com.ws.masterserver.utils.constants.enums.PrerequisiteTypeEnum;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.*;
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.time.LocalDateTime;
+import java.util.Date;
 
 @Entity
 @Table(name = "discount")
@@ -24,17 +24,21 @@ public class DiscountEntity {
     @Id
     private String id;
 
-    private String name;
+    private String des;
 
     private String code;
+
+    private String type;
+
+    @Column(name = "type_value")
+    private String typeValue;
 
     /**
      * Áp dụng cho
      */
     //Loại áp dụng: loại sản phẩm / sản phẩm
-    @Enumerated(EnumType.STRING)
-    @Column(name = "apply_code")
-    private ApplyTypeEnum applyCode;
+    @Column(name = "apply_type")
+    private String applyType;
 
     /**
      * Mã giảm giá sẽ được tính 1 lần trên mỗi đơn hàng hay không:(khong tinh th giam gia van chuyen)
@@ -48,9 +52,8 @@ public class DiscountEntity {
      */
 
     //mã loại khách hàng áp dụng KM
-    @Column(name = "customer_type_code")
-    @Enumerated(EnumType.STRING)
-    private DiscountCustomerTypeEnums customerTypeCode;
+    @Column(name = "customer_type")
+    private String customerType;
 
     /**
      * giới hạn số lần mã giảm giá được áp dụng hay không?
@@ -74,42 +77,50 @@ public class DiscountEntity {
     /**
      * Ngày bắt đầu
      */
-    private LocalDate startDate;
-
-    /**
-     * Thời gian bắt đầu
-     */
-    private LocalTime startTime;
+    @Column(name = "start_date")
+    private Date startDate;
 
     /**
      * Ngày kết thúc
      */
-    private LocalDate endDate;
-
-    /**
-     * Thời gian kết thúc
-     */
-    private LocalTime endTime;
+    @Column(name = "end_date")
+    private Date endDate;
 
     //Điều kiện áp dụng khuyến mãi
     /**
      * loại điều kiện áp dụng khuyết mãi
      */
-    @Column(name = "prerequisite_type_code")
-    @Enumerated(EnumType.STRING)
-    private PrerequisiteTypeEnum prerequisiteTypeCode;
+    @Column(name = "prerequisite_type")
+    private String prerequisiteType;
 
     /**
      * Giá trị để thỏa màn đièu kiện áp dụng khuyến mãi
      * Tổng giá trị đơn hàng tối thiệu / Số lượng sản phẩm tối thiểu
      */
-    @Column(name = "prerequisite_type_value")
-    private String prerequisiteTypeValue;
+    @Column(name = "prerequisite_value")
+    private String prerequisiteValue;
 
     /**
      * trạng thái
      * Ngung áp dụng/ đang áp dụng / chua ap dung
      */
-    @Enumerated(EnumType.STRING)
-    private DiscountStatusEnums status;
+    private String status;
+
+    @CreatedDate
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "created_date")
+    private Date createdDate;
+
+    @CreatedBy
+    @Column(name = "created_by")
+    private String createdBy;
+
+    @LastModifiedDate
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "updated_date")
+    private Date updatedDate;
+
+    @LastModifiedBy
+    @Column(name = "updated_by")
+    private String updatedBy;
 }

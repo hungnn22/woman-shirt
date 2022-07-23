@@ -77,7 +77,7 @@ public class AdminDiscountValidator {
     }
 
     private static void validPrerequisite(String prerequisiteType, String prerequisiteTypeValue) {
-        var preType = PrerequisiteTypeEnum.valueOf(prerequisiteType);
+        var preType = PrerequisiteTypeEnums.valueOf(prerequisiteType);
         if (null == preType) {
             throw new WsException(WsCode.MUST_SELECT_PREREQUISITE);
         }
@@ -96,7 +96,7 @@ public class AdminDiscountValidator {
     }
 
     private static void validDiscountType(DiscountDto payload) {
-        var type = DiscountTypeEnum.valueOf(payload.getType());
+        var type = DiscountTypeEnums.valueOf(payload.getType());
         switch (type) {
             case PERCENT:
                 validPercentType(payload.getTypeValues());
@@ -111,8 +111,8 @@ public class AdminDiscountValidator {
                 throw new WsException(WsCode.MUST_SELECT_DISCOUNT_TYPE);
         }
 
-        if (!DiscountTypeEnum.SHIP.equals(type)) {
-            var applyType = ApplyTypeEnum.valueOf(payload.getApplyType());
+        if (!DiscountTypeEnums.SHIP.equals(type)) {
+            var applyType = ApplyTypeEnums.valueOf(payload.getApplyType());
             if (null == applyType) {
                 throw new WsException(WsCode.MUST_SELECT_APPLY_TYPE);
             }

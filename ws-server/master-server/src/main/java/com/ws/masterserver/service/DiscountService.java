@@ -8,4 +8,5 @@ import com.ws.masterserver.utils.base.rest.CurrentUser;
  */
 public interface DiscountService {
     Object create(CurrentUser currentUser, DiscountDto payload);
+
 }

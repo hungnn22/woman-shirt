@@ -22,7 +22,7 @@ public class AdminUserController extends WsController {
         return ResponseEntity.ok(service.adminUserService.search(getCurrentUser(), req));
     }
 
-    @Operation(summary = "Chi tiết tài khoarn")
+    @Operation(summary = "Chi tiết tài khoan")
     @GetMapping("/detail/{id}")
     public ResponseEntity<Object> detail(@PathVariable String id) {
         log.info("start api /api/v1/admin/user/detail with id: {}", id);
@@ -50,7 +50,4 @@ public class AdminUserController extends WsController {
         log.info("start api /api/v1/admin/user/change-status with req: {}", id);
         return ResponseEntity.ok(service.adminUserInfoService.changeStatus(getCurrentUser(), id));
     }
-
-
-
 }
