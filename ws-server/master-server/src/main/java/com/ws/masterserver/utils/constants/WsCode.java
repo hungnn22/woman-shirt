@@ -30,7 +30,11 @@ public enum WsCode {
     MUST_SELECT_CUSTOMER_TYPE("400", "Vui lòng chọn nhóm khách hàng"),
     MUST_SELECT_DISCOUNT_TYPE("400", "Vui lòng chọn lại khuyến mãi"),
     MUST_SELECT_APPLY_TYPE("400", "Vui lòng chọn loại áp dụng khuyến mãi"),
-    DATE_FORMAT_INVALID("400", "Định dạng ngày tháng không hợp lê");
+    DATE_FORMAT_INVALID("400", "Định dạng ngày tháng không hợp lê"),
+    BLOG_NOT_FOUND("400", "Không tìm thấy blog!"),
+    BLOG_EXISTS("400", "Blog đã tồn tại!"),
+    TOPIC_NOT_FOUND("400", "Không tìm thấy chủ đề!"),
+    TOPIC_EXISTS_NAME("400", "Tên chủ đề đã tồn tại!");
     private final String code;
     private final String message;
 
