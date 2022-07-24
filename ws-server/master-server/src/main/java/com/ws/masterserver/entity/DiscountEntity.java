@@ -58,8 +58,8 @@ public class DiscountEntity {
     /**
      * giới hạn số lần mã giảm giá được áp dụng hay không?
      */
-    @Column(name = "has_usage_limit")
-    private Boolean hasUsageLimit;
+//    @Column(name = "has_usage_limit")
+//    private Boolean hasUsageLimit;
 
     /**
      * Nếu giới hạn số lần mã giảm giá được áp dụng

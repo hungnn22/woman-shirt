@@ -3,8 +3,6 @@ package com.ws.masterserver.service.impl;
 import com.ws.masterserver.dto.admin.discount.create.DiscountDto;
 import com.ws.masterserver.dto.admin.discount.prerequisite.PrerequisiteType01;
 import com.ws.masterserver.dto.admin.discount.prerequisite.PrerequisiteType02;
-import com.ws.masterserver.dto.admin.discount.search.DiscountRequest;
-import com.ws.masterserver.dto.admin.discount.search.DiscountResponse;
 import com.ws.masterserver.dto.admin.discount.type.DiscountTypeValue01;
 import com.ws.masterserver.dto.admin.discount.type.DiscountTypeValue02;
 import com.ws.masterserver.dto.admin.discount.type.DiscountTypeValue03;
@@ -13,19 +11,15 @@ import com.ws.masterserver.entity.DiscountCustomerTypeEntity;
 import com.ws.masterserver.entity.DiscountEntity;
 import com.ws.masterserver.entity.DiscountProductEntity;
 import com.ws.masterserver.service.DiscountService;
-import com.ws.masterserver.utils.base.WsException;
 import com.ws.masterserver.utils.base.WsRepository;
 import com.ws.masterserver.utils.base.rest.CurrentUser;
-import com.ws.masterserver.utils.base.rest.PageData;
 import com.ws.masterserver.utils.base.rest.ResData;
 import com.ws.masterserver.utils.common.*;
-import com.ws.masterserver.utils.constants.WsCode;
 import com.ws.masterserver.utils.constants.enums.*;
 import com.ws.masterserver.utils.validator.AuthValidator;
 import com.ws.masterserver.utils.validator.admin.AdminDiscountValidator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -33,142 +27,230 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 @Slf4j
 public class DiscountServiceImpl implements DiscountService {
     private final WsRepository repository;
+    private static final String SPACE = " ";
 
     @Override
     @Transactional
     public Object create(CurrentUser currentUser, DiscountDto payload) {
+        log.info("DiscountServiceImpl create() with payload: {}", JsonUtils.toJson(payload));
         AuthValidator.checkAdmin(currentUser);
-        AdminDiscountValidator.validCreate(payload);
+        AdminDiscountValidator.validCreateDtoData(payload);
+        AdminDiscountValidator.validCreateDtoConstraint(payload, repository);
+
         var discount = new DiscountEntity();
         var discountId = UidUtils.generateUid();
-        List<String> des = new ArrayList<>();
-
         discount.setId(discountId);
-
         discount.setCode(payload.getCode().trim());
-        des.add(payload.getCode());
 
         //type
         var type = DiscountTypeEnums.valueOf(payload.getType());
         discount.setType(type.name());
-        this.saveTypeValueAndGetDesItem(payload, discount);
+        this.saveTypeValue(payload, discount);
 
         /**
          * ap dung cho
          * */
         var applyType = ApplyTypeEnums.valueOf(payload.getApplyType());
-
         //5. applyType
         discount.setApplyType(applyType.name());
         this.saveApplyTypeValue(payload, discountId, applyType);
 
-        //dieu kien ap dung
-        var prerequisiteType = PrerequisiteTypeEnums.valueOf(payload.getPrerequisiteType());
-
-        //6: prerequisiteType
+        /**
+         * Điều kiện áp dụng
+         * */
+        var prerequisiteType = DiscountPrerequisiteTypeEnums.valueOf(payload.getPrerequisiteType());
         discount.setPrerequisiteType(prerequisiteType.name());
         this.savePrerequisiteValue(payload, discount, prerequisiteType);
 
-        //nhom KH
+        /**
+         * Nhóm khách hàng
+         * */
         var customerType = DiscountCustomerTypeEnums.valueOf(payload.getCustomerType());
-
-        //8: customerType
         discount.setCustomerType(customerType.name());
         this.saveDiscountCustomerType(payload, discountId, customerType);
-
         //gioi han su dung
-
-        //9: hasUsageLimit
-        discount.setHasUsageLimit(payload.getHasUsageLimit());
-        //10: usageLimit
+        /**
+         * giới hạn số lần mã giảm giá được áp dụng
+         */
         discount.setUsageLimit(Long.valueOf(payload.getUsageLimit()));
-        //11: oncePerCustomer
-        discount.setOncePerCustomer(payload.getOncePerCustomer());
 
+        /**
+         * Giói hạn mỗi khách hàng chỉ được sử dụng mã này 1 lần hay không(Kiểm tra bằng email) ?
+         */
+        discount.setOncePerCustomer(payload.getOncePerCustomer());
+        //mặc định trạng thái = chưa diễn ra
         var status = DiscountStatusEnums.PENDING;
 
-        //thoi gian
-        var startStr = payload.getStartDate() + " " + payload.getStartTime();
+        /**
+         * Thời gian
+         */
+        var startStr = payload.getStartDate() + SPACE + payload.getStartTime();
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(DateUtils.F_DDMMYYYYHHMM);
         var start = LocalDateTime.parse(startStr, dateTimeFormatter);
-
-        //12: startDate
         discount.setStartDate(DateUtils.localDateTimeToDate(start));
+
+        /**
+         * Nếu ngày bắt đầu < hien tai => đang diễn ra
+         * */
         if (start.isBefore(LocalDateTime.now())) {
             status = DiscountStatusEnums.ACTIVE;
         }
-        if (payload.getHasEndsDate()) {
+        if (Boolean.TRUE.equals(payload.getHasEndsDate())) {
             var endStr = payload.getEndDate() + " " + payload.getEndTime();
             var end = LocalDateTime.parse(endStr, dateTimeFormatter);
-
             //13: endDate
             discount.setEndDate(DateUtils.localDateTimeToDate(end));
+
+            /**
+             * Nếu ngày kết thúc < hiện tại => đã hết hạn
+             * */
             if (end.isBefore(LocalDateTime.now())) {
                 status = DiscountStatusEnums.DE_ACTIVE;
             }
         }
-
-        //14: status
         discount.setStatus(status.name());
-
-        //15: isApplyAcross
         discount.setIsApplyAcross(payload.getIsApplyAcross());
-
-        //16: name
-        discount.setDes("");
-
+        this.setDes(discount, payload);
+        log.info("DiscountServiceImpl create() discount before save: {}", JsonUtils.toJson(discount));
+        repository.discountRepository.save(discount);
+        log.info("DiscountServiceImpl create() discount after save: {}", JsonUtils.toJson(discount));
         return ResData.ok(discount.getId());
     }
 
-    private String saveTypeValueAndGetDesItem(DiscountDto payload, DiscountEntity discount) {
-        Object typeValues = payload.getTypeValue();
-        discount.setTypeValue(JsonUtils.toJson(typeValues));
-        var superDto = payload.getTypeValue();
-        var result = "";
-        if (superDto instanceof DiscountTypeValue01) {
-            DiscountTypeValue01 dto = (DiscountTypeValue01) superDto;
-            result = "Giảm " + dto.getPercentageValue() + "% ";
-            if (!StringUtils.isNullOrEmpty(dto.getValueLimitAmount())) {
-                result = "tối đa " + MoneyUtils.format(Long.valueOf(dto.getValueLimitAmount())) + " VND ";
-            }
-        } else if (superDto instanceof DiscountTypeValue02) {
-            DiscountTypeValue02 dto = (DiscountTypeValue02) superDto;
-            result = "Giảm " + MoneyUtils.format(Long.valueOf(dto.getAmountValue())) + " VND ";
-        } else {
-            DiscountTypeValue03 dto = (DiscountTypeValue03) superDto;
-            result = "Miễn phí vận chuyện ";
-            if (!StringUtils.isNullOrEmpty(dto.getValueLimitAmount())) {
-                result += "tối đa " + MoneyUtils.format(Long.valueOf(dto.getValueLimitAmount())) + " VND ";
-            }
-            if (!StringUtils.isNullOrEmpty(dto.getMaximumShippingRate())) {
-                result += "với đơn hàng có phí vận chuyển <= " + MoneyUtils.format(Long.valueOf(dto.getMaximumShippingRate())) + "VND cho ";
-            }
-            var provinceSelectionEnums = ProvinceSelectionEnums.valueOf(dto.getProvinceSelection());
-            switch (provinceSelectionEnums) {
-                case ALL:
-                    result += "toàn quốc ";
-                    break;
-                case SELECTION:
-                    result += dto.getProvinceIds().size() + " khu vực ";
-                    break;
-                default:
-                    break;
-            }
+    private void setDes(DiscountEntity discount, DiscountDto payload) {
+        /**
+         * vd: Giảm 22% tối đa 123₫ cho toàn bộ sản phẩm • Một mã trên mỗi khách hàng
+         * */
+        var applyTypeIdsSize = payload.getApplyTypeIds().size();
+        List<String> desList = new ArrayList<>();
+        var typeStr = "";
+        var type = DiscountTypeEnums.valueOf(payload.getType());
+        switch (type) {
+            case PERCENT:
+                var dto1 = (DiscountTypeValue01) payload.getTypeValue();
+                typeStr = "Giảm" + SPACE + dto1.getPercentageValue() + "%";
+                if (!StringUtils.isNullOrEmpty(dto1.getValueLimitAmount())) {
+                    typeStr += SPACE + MoneyUtils.format(dto1.getValueLimitAmount()) + "VND";
+                }
+                typeStr = getApplyTypeStr(payload, applyTypeIdsSize, typeStr);
+                break;
+            case PRICE:
+                var dto2 = (DiscountTypeValue02) payload.getTypeValue();
+                typeStr = "Giảm" + SPACE + MoneyUtils.format(dto2.getAmountValue()) + "VND";
+                typeStr = getApplyTypeStr(payload, applyTypeIdsSize, typeStr);
+                break;
+            case SHIP:
+                var dto3 = (DiscountTypeValue03) payload.getTypeValue();
+                typeStr = "Miễn phí vận chuyển";
+                if (!StringUtils.isNullOrEmpty(dto3.getValueLimitAmount())) {
+                    typeStr += SPACE + "tối đa" + SPACE + MoneyUtils.format(dto3.getValueLimitAmount()) + "VND";
+                }
+                if (!StringUtils.isNullOrEmpty(dto3.getMaximumShippingRate())) {
+                    typeStr += SPACE + "cho đơn hàng có phí vận chuyện dưới" + SPACE + MoneyUtils.format(dto3.getMaximumShippingRate()) + "VND";
+                }
+                var provinceSelection = DiscountProvinceSelectionEnums.valueOf(dto3.getProvinceSelection());
+                switch (provinceSelection) {
+                    case ALL:
+                        typeStr += SPACE + "với tất cả tỉnh thành";
+                        break;
+                    case SELECTION:
+                        typeStr += SPACE + "với" + SPACE + dto3.getProvinceIds().size() + SPACE + "tỉnh/thành";
+                        break;
+                    default:
+                        break;
+                }
+        }
+        desList.add(typeStr);
+
+        /**
+         *  điều kiện áp dụng
+         * */
+        var prerequisiteStr = "Điều kiện áp dụng:";
+        var prerequisiteType = DiscountPrerequisiteTypeEnums.valueOf(payload.getPrerequisiteType());
+        switch (prerequisiteType) {
+            case NONE:
+                prerequisiteStr += "Không";
+                break;
+            case MIN_TOTAL:
+                prerequisiteStr += prerequisiteType.getName() + ":" + SPACE + MoneyUtils.format(payload.getPrerequisiteTypeValue()) + "VND";
+                break;
+            case MIN_QTY:
+                prerequisiteStr += prerequisiteType.getName() + ":" + SPACE + Long.valueOf(payload.getPrerequisiteTypeValue());
+                break;
+            default:
+                break;
+        }
+        desList.add(prerequisiteStr);
+
+        var customerTypeStr = "Áp dụng cho: ";
+        var customerType = DiscountCustomerTypeEnums.valueOf(payload.getCustomerType());
+        var customerTypeName = customerType.getName();
+        var customerTypeIdSize = payload.getCustomerIds().size();
+        switch (customerType) {
+            case ALL:
+                customerTypeStr += customerTypeName;
+                break;
+            case GROUP:
+            case CUSTOMER:
+                customerTypeStr += customerTypeIdSize + SPACE + customerTypeName;
+                break;
+            default:
+                break;
+        }
+        desList.add(customerTypeStr);
+
+        if (payload.getHasUsageLimit()) {
+            var usageLimitStr = "Mã được phép sử dụng: ";
+            usageLimitStr += Long.valueOf(payload.getUsageLimit()) + SPACE + "lần";
+            desList.add(usageLimitStr);
         }
 
-        return result;
+        if (payload.getOncePerCustomer()) {
+            desList.add("Mỗi khách hàng chỉ được sử dụng 1 lần");
+        }
+
+        /**
+         * Thời gian
+         * */
+        var timeStr = "Thời gian:" + SPACE + DateUtils.toStr(discount.getStartDate(), DateUtils.F_DDMMYYYYHHMM);
+        if (discount.getEndDate() != null) {
+            timeStr += SPACE + "đến" + SPACE + DateUtils.toStr(discount.getEndDate(), DateUtils.F_DDMMYYYYHHMM);
+        }
+        desList.add(timeStr);
+        discount.setDes(String.join(" | ", desList));
     }
 
-    private void savePrerequisiteValue(DiscountDto payload, DiscountEntity discount, PrerequisiteTypeEnums prerequisiteType) {
-        if (!PrerequisiteTypeEnums.NONE.equals(prerequisiteType)) {
+    private String getApplyTypeStr(DiscountDto payload, int applyTypeIdsSize, String typeStr) {
+        var applyType = ApplyTypeEnums.valueOf(payload.getApplyType());
+        switch (applyType) {
+            case ALL_PRODUCT:
+                typeStr += SPACE + "với tất cả sản phẩm";
+                break;
+            case CATEGORY:
+                typeStr += SPACE + "với" + SPACE + applyTypeIdsSize + SPACE + "loại sản phẩm";
+                break;
+            case PRODUCT:
+                typeStr += SPACE + "với" + SPACE + applyTypeIdsSize + SPACE + "sản phẩm";
+                break;
+            default:
+                break;
+        }
+        return typeStr;
+    }
+
+    private void saveTypeValue(DiscountDto payload, DiscountEntity discount) {
+        Object typeValues = payload.getTypeValue();
+        discount.setTypeValue(JsonUtils.toJson(typeValues));
+    }
+
+    private void savePrerequisiteValue(DiscountDto payload, DiscountEntity discount, DiscountPrerequisiteTypeEnums prerequisiteType) {
+        if (!DiscountPrerequisiteTypeEnums.NONE.equals(prerequisiteType)) {
             //7: prerequisiteValue
             switch (prerequisiteType) {
                 case MIN_QTY:
@@ -189,13 +271,12 @@ public class DiscountServiceImpl implements DiscountService {
 
     private void saveDiscountCustomerType(DiscountDto payload, String discountId, DiscountCustomerTypeEnums customerType) {
         if (!DiscountCustomerTypeEnums.ALL.equals(customerType)) {
-            payload.getCustomerIds().forEach(o -> {
-                repository.discountCustomerTypeRepository.save(DiscountCustomerTypeEntity.builder()
-                        .id(UidUtils.generateUid())
-                        .discountId(discountId)
-                        .customerTypeId(o)
-                        .build());
-            });
+            payload.getCustomerIds().forEach(o ->
+                    repository.discountCustomerTypeRepository.save(DiscountCustomerTypeEntity.builder()
+                            .id(UidUtils.generateUid())
+                            .discountId(discountId)
+                            .customerTypeId(o)
+                            .build()));
         }
     }
 
@@ -221,5 +302,4 @@ public class DiscountServiceImpl implements DiscountService {
             }
         });
     }
-
 }

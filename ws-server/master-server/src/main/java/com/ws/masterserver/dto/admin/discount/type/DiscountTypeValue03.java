@@ -1,33 +1,37 @@
 package com.ws.masterserver.dto.admin.discount.type;
 
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import lombok.Data;
 
 import java.util.List;
 
 @Data
+@JsonTypeName("DT03")
 public class DiscountTypeValue03 extends DiscountTypeDto {
-        /**
-         * Miễn phi tối đa
-         */
-        private String valueLimitAmount;
+    /**
+     * Miễn phi tối đa
+     */
+    private String valueLimitAmount;
+    /**
+     * tỉnh/thành: all hoặc list danh sách tỉnh thành
+     */
+    private String provinceSelection;
+    /**
+     * Danh sách tỉnh thành được áp dụng
+     */
+    private List<String> provinceIds;
 
-        /**
-         * tỉnh/thành: all hoặc list danh sách tỉnh thành
-         */
-        private String provinceSelection;
+    /**
+     * Có Áp dụng với phí vận chuyển dưới ${maximumShippingRate} hay không?
+     */
+//        private Boolean hasMaximumShippingRate;
+    /**
+     * Phí vận chuyện tối đa để có thể áp dụng
+     */
+    private String maximumShippingRate;
 
-        /**
-         * Danh sách tỉnh thành được áp dụng
-         */
-        private List<String> provinceIds;
-
-        /**
-         * Có Áp dụng với phí vận chuyển dưới ${maximumShippingRate} hay không?
-         */
-        private Boolean hasMaximumShippingRate;
-
-        /**
-         * Phí vận chuyện tối đa để có thể áp dụng
-         */
-        private String maximumShippingRate;
+    @Override
+    public String getChildType() {
+        return "DT03";
+    }
 }

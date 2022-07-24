@@ -61,7 +61,7 @@ public class DiscountDetailServiceImpl implements DiscountDetailService {
                                             .getName())
                                     .start(DateUtils.toStr(o.getStartDate(), DateUtils.F_DDMMYYYYHHMM))
                                     .end(o.getEndDate() == null ? "-" : DateUtils.toStr(o.getEndDate(), DateUtils.F_DDMMYYYYHHMM))
-                                    .used(this.getUsageNumber(o.getHasUsageLimit(), o.getUsageLimit(), repository.discountRepository.findUsedNumber(o.getId())))
+                                    .usageNumber(this.getUsageNumber(o.getUsageLimit(), repository.discountRepository.findUsedNumber(o.getId())))
                                     .build())
                             .collect(Collectors.toList()),
                     discountEntityPage.getNumber(),
@@ -73,8 +73,8 @@ public class DiscountDetailServiceImpl implements DiscountDetailService {
         }
     }
 
-    private String getUsageNumber(Boolean hasUsageLimit, Long usageLimit, Long usedNumber) {
-        if (!hasUsageLimit && usageLimit == null) {
+    private String getUsageNumber(Long usageLimit, Long usedNumber) {
+        if (usageLimit == null) {
             return usedNumber.toString();
         }
         return usedNumber + "/" + usageLimit;

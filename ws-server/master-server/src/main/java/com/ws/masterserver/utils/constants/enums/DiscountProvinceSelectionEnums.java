@@ -1,12 +1,12 @@
 package com.ws.masterserver.utils.constants.enums;
 
-public enum ProvinceSelectionEnums {
+public enum DiscountProvinceSelectionEnums {
     ALL("Tất cả"),
     SELECTION("Tỉnh.thành được chọn");
 
     private String name;
 
-    ProvinceSelectionEnums(String name) {
+    DiscountProvinceSelectionEnums(String name) {
         this.name = name;
     }
 

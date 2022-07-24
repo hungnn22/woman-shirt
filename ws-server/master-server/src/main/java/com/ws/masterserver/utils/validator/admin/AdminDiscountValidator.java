@@ -1,36 +1,43 @@
 package com.ws.masterserver.utils.validator.admin;
 
 import com.ws.masterserver.dto.admin.discount.create.DiscountDto;
-import com.ws.masterserver.dto.admin.discount.type.DiscountTypeDto;
 import com.ws.masterserver.dto.admin.discount.type.DiscountTypeValue01;
 import com.ws.masterserver.dto.admin.discount.type.DiscountTypeValue02;
 import com.ws.masterserver.dto.admin.discount.type.DiscountTypeValue03;
 import com.ws.masterserver.utils.base.WsException;
+import com.ws.masterserver.utils.base.WsRepository;
 import com.ws.masterserver.utils.common.StringUtils;
 import com.ws.masterserver.utils.common.ValidatorUtils;
 import com.ws.masterserver.utils.constants.WsCode;
 import com.ws.masterserver.utils.constants.enums.*;
 import com.ws.masterserver.utils.constants.field.DiscountFields;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.Collections;
 import java.util.List;
+
 /**
  * @author myname
  */
+@Slf4j
 public class AdminDiscountValidator {
-
-    public static void validCreate(DiscountDto payload) throws WsException {
+    public static void validCreateDtoData(DiscountDto payload) throws WsException {
         ValidatorUtils.validNullOrEmpty(DiscountFields.CODE, payload.getCode());
+        ValidatorUtils.validNotContainSpace(DiscountFields.CODE, payload.getCode());
         ValidatorUtils.validLength(DiscountFields.CODE, payload.getCode(), 4, 50);
+        ValidatorUtils.validOnlyCharacterAndNumber(DiscountFields.CODE, payload.getCode());
 
         //loai khuyen mai
-        validDiscountType(payload);
+        ValidatorUtils.validNullOrEmpty(DiscountFields.TYPE, payload.getType());
+        validDiscountTypeValue(payload);
 
         //dieu kien ap dung
-        validPrerequisite(payload.getPrerequisiteType(), payload.getPrerequisiteTypeValue());
+        ValidatorUtils.validNullOrEmpty(DiscountFields.PREREQUISITE, payload.getPrerequisiteType());
+        validPrerequisiteValue(payload.getPrerequisiteType(), payload.getPrerequisiteTypeValue());
 
         //nhoimm KH
-        validCustomerType(payload.getCustomerType(), payload.getCustomerTypeIds());
+        ValidatorUtils.validNullOrEmpty(DiscountFields.APPLY_CUSTOMER_TYPE, payload.getCustomerType());
+        validCustomerTypeValue(payload.getCustomerType(), payload.getCustomerIds());
 
         //gioi han su dung
         if (payload.getHasUsageLimit()) {
@@ -58,10 +65,9 @@ public class AdminDiscountValidator {
                     DiscountFields.START_TIME, startTime,
                     DiscountFields.END_TIME, endTime);
         }
-
     }
 
-    private static void validCustomerType(String customerType, List<String> customerTypeIds) {
+    private static void validCustomerTypeValue(String customerType, List<String> customerTypeIds) {
         var type = DiscountCustomerTypeEnums.valueOf(customerType);
         if (null == type) {
             throw new WsException(WsCode.MUST_SELECT_CUSTOMER_TYPE);
@@ -76,8 +82,8 @@ public class AdminDiscountValidator {
         }
     }
 
-    private static void validPrerequisite(String prerequisiteType, String prerequisiteTypeValue) {
-        var preType = PrerequisiteTypeEnums.valueOf(prerequisiteType);
+    private static void validPrerequisiteValue(String prerequisiteType, String prerequisiteTypeValue) {
+        var preType = DiscountPrerequisiteTypeEnums.valueOf(prerequisiteType);
         if (null == preType) {
             throw new WsException(WsCode.MUST_SELECT_PREREQUISITE);
         }
@@ -95,17 +101,20 @@ public class AdminDiscountValidator {
         }
     }
 
-    private static void validDiscountType(DiscountDto payload) {
+    private static void validDiscountTypeValue(DiscountDto payload) {
         var type = DiscountTypeEnums.valueOf(payload.getType());
+        if (type == null) {
+            throw new WsException(WsCode.MUST_SELECT_DISCOUNT_TYPE);
+        }
         switch (type) {
             case PERCENT:
-                validPercentType(payload.getTypeValues());
+                validPercentType(payload.getTypeValue());
                 break;
             case PRICE:
-                validPriceType(payload.getTypeValues());
+                validPriceType(payload.getTypeValue());
                 break;
             case SHIP:
-                validShipType(payload.getTypeValues());
+                validShipType(payload.getTypeValue());
                 break;
             default:
                 throw new WsException(WsCode.MUST_SELECT_DISCOUNT_TYPE);
@@ -130,20 +139,19 @@ public class AdminDiscountValidator {
         }
     }
 
-    private static void validShipType(DiscountTypeDto typeValues) {
+    private static void validShipType(Object typeValues) {
         if (typeValues instanceof DiscountTypeValue03) {
             DiscountTypeValue03 dto = (DiscountTypeValue03) typeValues;
             ValidatorUtils.validNullOrEmpty(DiscountFields.VALUE_LIMIT_AMOUNT_SHIP, dto.getValueLimitAmount());
             ValidatorUtils.validLongValueBetween(DiscountFields.VALUE_LIMIT_AMOUNT_SHIP, dto.getValueLimitAmount(), 0L, 999999999999999L);
-            var selectionType = ProvinceSelectionEnums.valueOf(dto.getProvinceSelection());
+            var selectionType = DiscountProvinceSelectionEnums.valueOf(dto.getProvinceSelection());
             if (null == selectionType) {
                 throw new WsException(WsCode.INTERNAL_SERVER);
             }
-            if (ProvinceSelectionEnums.SELECTION.equals(selectionType)) {
+            if (DiscountProvinceSelectionEnums.SELECTION.equals(selectionType)) {
                 ValidatorUtils.validNullOrEmptyList(DiscountFields.ADDRESS_LIST, Collections.singletonList(dto.getProvinceIds()));
             }
-            if (dto.getHasMaximumShippingRate()) {
-                ValidatorUtils.validNullOrEmpty(DiscountFields.MAXIMUM_SHIPPING_RATE, dto.getMaximumShippingRate());
+            if (!StringUtils.isNullOrEmpty(dto.getMaximumShippingRate())) {
                 ValidatorUtils.validLongValueBetween(DiscountFields.MAXIMUM_SHIPPING_RATE, dto.getMaximumShippingRate(), 0L, 999999999999999L);
             }
         } else {
@@ -151,7 +159,7 @@ public class AdminDiscountValidator {
         }
     }
 
-    private static void validPriceType(DiscountTypeDto typeValues) {
+    private static void validPriceType(Object typeValues) {
         if (typeValues instanceof DiscountTypeValue02) {
             DiscountTypeValue02 dto = (DiscountTypeValue02) typeValues;
             ValidatorUtils.validNullOrEmpty(DiscountFields.AMOUNT_VALUE, dto.getAmountValue());
@@ -161,8 +169,8 @@ public class AdminDiscountValidator {
         }
     }
 
-    private static void validPercentType(DiscountTypeDto typeValues) {
-        if (typeValues instanceof DiscountTypeValue01) {
+    private static void validPercentType(Object typeValues) {
+        try {
             DiscountTypeValue01 dto = (DiscountTypeValue01) typeValues;
             ValidatorUtils.validNullOrEmpty(DiscountFields.AMOUNT_VALUE, dto.getPercentageValue());
             ValidatorUtils.validOnlyNumber(DiscountFields.AMOUNT_VALUE, dto.getPercentageValue());
@@ -171,10 +179,15 @@ public class AdminDiscountValidator {
                 ValidatorUtils.validOnlyNumber(DiscountFields.VALUE_LIMIT_AMOUNT_PERCENT, dto.getValueLimitAmount());
                 ValidatorUtils.validLongValueMustBeMore(DiscountFields.VALUE_LIMIT_AMOUNT_PERCENT, dto.getValueLimitAmount(), 0L);
             }
-        } else {
+        } catch (Exception e) {
+            log.error("validPercentType() error: {}", e.getMessage());
             throw new WsException(WsCode.INTERNAL_SERVER);
         }
-
     }
 
+    public static void validCreateDtoConstraint(DiscountDto payload, WsRepository repository) {
+        if (repository.discountRepository.existsByCodeIgnoreCaseAndStatusNot(payload.getCode().trim(), DiscountStatusEnums.DE_ACTIVE.name())) {
+            throw new WsException(WsCode.DISCOUNT_CODE_EXISTS);
+        }
+    }
 }

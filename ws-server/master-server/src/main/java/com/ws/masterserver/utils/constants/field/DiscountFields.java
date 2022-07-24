@@ -23,4 +23,6 @@ public class DiscountFields {
     public static final String TYPE = "Loại khuyến mãi";
     public static final String GROUP_CUSTOMER = "Danh sách nhóm khách hàng";
     public static final String CUSTOMER = "Danh sách khách hàng";
+    public static final String PREREQUISITE = "Loại điều kiện";
+    public static final String APPLY_CUSTOMER_TYPE = "Loại khách hàng được áp dụng";
 }

@@ -13,7 +13,7 @@ public class DiscountResponse {
     private List<String> des;
     private String status;
     private String statusValue;
-    private String used;
+    private String usageNumber;
     private String start;
     private String end;
 }

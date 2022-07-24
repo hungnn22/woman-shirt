@@ -9,6 +9,7 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * @author myname
@@ -216,5 +217,11 @@ public class ValidatorUtils {
     }
 
     public static void validDateMoreDateAndTimeMoreTime(String startDate, String startDateValue, String endDate, String endDateValue, String startTime, String startTimeValue, String endTime, String endTimeValue) {
+    }
+
+    public static void validNotContainSpace(String fieldName, String value) {
+        if (value.contains(" ")) {
+            throw new WsException(WsCode.BAD_REQUEST, fieldName + " " + WsCode.NOT_CONTAIN_SPACE.getMessage().toLowerCase(Locale.ROOT));
+        }
     }
 }
