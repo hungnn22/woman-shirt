@@ -106,6 +106,11 @@ public class DiscountEntity {
      */
     private String status;
 
+    @Column(name = "discount_type_id")
+    private String discountTypeId;
+
+    private Boolean deleted;
+
     @CreatedDate
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_date")

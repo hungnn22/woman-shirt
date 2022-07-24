@@ -37,6 +37,7 @@ public class WsRepository {
     public final DiscountCustomerTypeRepository discountCustomerTypeRepository;
     public final DiscountProductRepository discountProductRepository;
     public final OrderDiscountRepository orderDiscountRepository;
+    public final DiscountTypeRepository discountTypeRepository;
 
     /** custom */
     public final CategoryCustomRepository categoryCustomRepository;

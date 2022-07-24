@@ -77,9 +77,14 @@ public class DateUtils {
         return calendar.getTime();
     }
 
-    public static Date toDate(String date, String format) throws ParseException {
-        var sdf = new SimpleDateFormat(format);
-        return sdf.parse(date);
+    public static Date toDate(String date, String format) {
+        try {
+            var sdf = new SimpleDateFormat(format);
+            return sdf.parse(date);
+        } catch (Exception e) {
+            log.error("toDate error: {}", e.getMessage());
+            return new Date();
+        }
     }
 
     public static Date toDate(String date, String format, Date defaultVal) {

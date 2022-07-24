@@ -186,7 +186,7 @@ public class AdminDiscountValidator {
     }
 
     public static void validCreateDtoConstraint(DiscountDto payload, WsRepository repository) {
-        if (repository.discountRepository.existsByCodeIgnoreCaseAndStatusNot(payload.getCode().trim(), DiscountStatusEnums.DE_ACTIVE.name())) {
+        if (repository.discountRepository.existsByCodeIgnoreCaseAndStatusNotAndDeleted(payload.getCode().trim(), DiscountStatusEnums.DE_ACTIVE.name(), false)) {
             throw new WsException(WsCode.DISCOUNT_CODE_EXISTS);
         }
     }

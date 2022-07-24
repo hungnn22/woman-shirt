@@ -2,9 +2,14 @@ package com.ws.masterserver.utils.common;
 
 import com.ws.masterserver.utils.base.WsException;
 import com.ws.masterserver.utils.constants.WsCode;
+import com.ws.masterserver.utils.constants.WsMessage;
 import com.ws.masterserver.utils.constants.enums.RoleEnum;
+import org.springframework.boot.autoconfigure.web.format.DateTimeFormatters;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
@@ -15,7 +20,6 @@ import java.util.Locale;
  * @author myname
  */
 public class ValidatorUtils {
-
     private ValidatorUtils() {
         super();
     }
@@ -66,7 +70,6 @@ public class ValidatorUtils {
             }
         }
     }
-
 
     public static void validLength(String fieldName, String value, int length, boolean type) {
         if (type && value.length() > length) {
@@ -134,7 +137,7 @@ public class ValidatorUtils {
     }
 
     public static void validPhone(String fieldName, String value) {
-        if (!StringUtils.isValidPhone(value)) {
+        if (!StringUtils.isCheck(value, StringUtils.PHONE_NUMBER_REGEX)) {
             throw new WsException(WsCode.BAD_REQUEST, fieldName + INVALID);
         }
     }
@@ -189,7 +192,7 @@ public class ValidatorUtils {
                 throw new WsException(WsCode.PERCENT_MUST_BETWEEN_0_AND_100);
             }
         } catch (Exception e) {
-            throw new WsException(WsCode.BAD_REQUEST, fieldName + " " + INVALID);
+            throw new WsException(WsCode.BAD_REQUEST, fieldName + INVALID);
         }
     }
 
@@ -203,6 +206,7 @@ public class ValidatorUtils {
             throw new WsException(WsCode.BAD_REQUEST, fieldName + MUST_MORE + minValue);
         }
     }
+
     public static void validDateFormat(String fieldName, String value) {
         try {
             var sdf = DateTimeFormatter.ofPattern(DateUtils.F_DDMMYYYY);
@@ -222,6 +226,21 @@ public class ValidatorUtils {
     public static void validNotContainSpace(String fieldName, String value) {
         if (value.contains(" ")) {
             throw new WsException(WsCode.BAD_REQUEST, fieldName + " " + WsCode.NOT_CONTAIN_SPACE.getMessage().toLowerCase(Locale.ROOT));
+        }
+    }
+
+    public static void validNotMoreNow(String fieldName, String value) {
+        if (DateUtils.toDate(value, DateUtils.F_DDMMYYYY).after(new Date())) {
+            throw new WsException(WsCode.BAD_REQUEST, fieldName + " " + WsMessage.NOT_MORE_NOW.toLowerCase());
+        }
+    }
+
+    public static void validAgeBetween(String fieldName, String value, int minAge, int maxAge) {
+        try {
+            Date dateValue = new SimpleDateFormat("dd/MM/yyyy").parse(value);
+            validAgeBetween(fieldName, dateValue, minAge, maxAge);
+        } catch (Exception e) {
+            throw new WsException(WsCode.BAD_REQUEST, fieldName + INVALID);
         }
     }
 }

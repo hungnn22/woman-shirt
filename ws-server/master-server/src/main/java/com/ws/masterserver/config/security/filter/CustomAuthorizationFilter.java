@@ -4,6 +4,7 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ws.masterserver.utils.base.WsException;
+import com.ws.masterserver.utils.common.JsonUtils;
 import com.ws.masterserver.utils.constants.WsCode;
 import com.ws.masterserver.utils.constants.WsConst;
 import lombok.extern.slf4j.Slf4j;
@@ -25,14 +26,9 @@ import java.util.*;
 
 @Slf4j
 public class CustomAuthorizationFilter extends OncePerRequestFilter {
-
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        if (request.getServletPath().equals("/api/v1/login") ||
-                request.getServletPath().equals("/api/v1/token/refresh") ||
-                request.getServletPath().equals("/api/v1/auth/forgot-password/send-mail") ||
-                request.getServletPath().equals("/api/v1/auth/reset-password") ||
-                request.getServletPath().equals("/api/v1/auth/check-reset-token")) {
+        if (checkNoAuth4EndPoints(request)) {
             filterChain.doFilter(request, response);
         } else {
             var authorizationHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
@@ -68,4 +64,16 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
         }
     }
 
+    private boolean checkNoAuth4EndPoints(HttpServletRequest request) {
+        log.info("checkNoAuth4EndPoints() req: {}", JsonUtils.toJson(request));
+        List<String> noAuthEndPoints = List.of(
+                "/api/v1/login",
+                "/api/v1/token/refresh",
+                "/api/v1/auth/forgot-password/send-mail",
+                "/api/v1/auth/reset-password",
+                "/api/v1/auth/check-reset-token",
+                "/api/v1/user/customer/register"
+        );
+        return noAuthEndPoints.stream().anyMatch(request.getServletPath()::equals);
+    }
 }

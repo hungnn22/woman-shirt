@@ -1,6 +1,7 @@
 package com.ws.masterserver.controller;
 
 import com.ws.masterserver.dto.customer.user.ProfileDto;
+import com.ws.masterserver.dto.customer.user.register.RegisterDto;
 import com.ws.masterserver.utils.base.WsController;
 import com.ws.masterserver.utils.common.JsonUtils;
 import io.swagger.v3.oas.annotations.Operation;
@@ -27,5 +28,12 @@ public class UserController extends WsController {
     public ResponseEntity<Object> personal() {
         log.info("start api /api/v1/user/personal");
         return ResponseEntity.ok(service.userInfoService.personal(getCurrentUser()));
+    }
+
+    @Operation(summary = "dang ky")
+    @PostMapping("/customer/register")
+    public ResponseEntity<Object> register(@RequestBody RegisterDto payload) {
+        log.info("start api /api/v1/user/customer/register with payload: {}", JsonUtils.toJson(payload));
+        return ResponseEntity.ok(service.customerDetailService.register(payload));
     }
 }
