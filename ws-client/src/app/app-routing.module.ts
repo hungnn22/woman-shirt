@@ -1,3 +1,5 @@
+import { ChangePasswordComponent } from './components/authentication/account/change-password/change-password.component';
+import { AccountComponent } from './components/authentication/account/account.component';
 import { LocationComponent } from './components/shop/location/location.component';
 import { SizeComponent } from './components/shop/size/size.component';
 import { NgModule } from '@angular/core';
@@ -9,23 +11,29 @@ import { ContactComponent } from './components/contact/contact.component';
 import { ShopComponent } from './components/shop/shop.component';
 import { WishListComponent } from './components/wish-list/wish-list.component';
 import { AuthGuard } from './guards/auth.guard';
-import { CheckoutComponent } from './components/checkout/checkout.component';
+// import { CheckoutComponent } from './components/checkout/checkout.component';
 
 
 const routes: Routes = [
-  { path: '', redirectTo: '/home',pathMatch: 'full'},
-  { path:'home', component: HomeComponent },
-  { path:'product-detail/:id', component: ProductDetailComponent},
-  { path:'cart', component: CartComponent, canActivate: [AuthGuard] },
-  { path:'contact', component: ContactComponent},
-  { path:'checkout', component: CheckoutComponent },
-  { path:'wishlist', component: WishListComponent,canActivate: [AuthGuard] },
-  { path:'shop', component: ShopComponent},
-  { path:'location', component: LocationComponent},
+  { path: '', redirectTo: '/home', pathMatch: 'full' },
+  { path: 'home', component: HomeComponent },
+  { path: 'product-detail/:id', component: ProductDetailComponent },
+  { path: 'cart', component: CartComponent, canActivate: [AuthGuard] },
+  { path: 'contact', component: ContactComponent },
+  // { path:'checkout', component: CheckoutComponent },
+  { path: 'wishlist', component: WishListComponent, canActivate: [AuthGuard] },
+  { path: 'shop', component: ShopComponent },
+  { path: 'location', component: LocationComponent },
+  { path: 'account', component: AccountComponent },
+  { path: 'change-password', component: ChangePasswordComponent},
 
-  { path:'size', component: SizeComponent},
 
-  { path: '',
+
+
+  { path: 'size', component: SizeComponent },
+
+  {
+    path: '',
     loadChildren: () => import('./components/authentication/authentication.module').then(m => m.AuthenticationModule)
   }
 ];

@@ -1,3 +1,4 @@
+import { AccountComponent } from './components/authentication/account/account.component';
 import { NgModule,CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
@@ -25,7 +26,7 @@ import { WishListComponent } from './components/wish-list/wish-list.component';
 import { JwtModule } from '@auth0/angular-jwt';
 import { CurrencyPipe } from './pipes/currency.pipe';
 import { NgxPaginationModule } from 'ngx-pagination';
-import { CheckoutComponent } from './components/checkout/checkout.component';
+// import { CheckoutComponent } from './components/checkout/checkout.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -41,7 +42,7 @@ import { CheckoutComponent } from './components/checkout/checkout.component';
     PriceComponent,
     WishListComponent,
     CurrencyPipe,
-    CheckoutComponent
+    // CheckoutComponent
   ],
   imports: [
     BrowserModule,

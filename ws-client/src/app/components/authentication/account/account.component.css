@@ -1,0 +1,34 @@
+.container{
+  padding-left:100px;
+  padding-top:50px;
+  padding-right:100px
+
+}
+aside{
+/* background-color: red; */
+}
+
+.info{
+  background-color: #f9f9f9;
+  height: 98%;
+  padding: 30px;
+  padding-top: 51px;
+}
+button{
+  height: 3rem;
+  background-color: black;
+  color: #f9f9f9;
+}
+button:hover{
+  height: 3rem;
+  background-color: rgb(215, 215, 215);
+  color: black;
+}
+.info__link{
+  line-height: 2;
+  margin-top:10px
+}
+
+.info__link:hover{
+text-decoration: underline;
+}

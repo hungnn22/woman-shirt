@@ -11,7 +11,7 @@ import { ToastrService } from 'ngx-toastr';
 import { ProductOptionIdRes } from '../../models/productOptionIdRes';
 import { OwlOptions } from 'ngx-owl-carousel-o';
 import { ProductImage } from 'src/app/models/productImage';
-import { ProductRelated } from '../../models/product-related';
+// import { ProductRelated } from '../../models/product-related';
 
 @Component({
   selector: 'app-product-detail',
@@ -38,7 +38,7 @@ export class ProductDetailComponent implements OnInit {
   quantityProduct!:number;
   priceProduct!:string;
 
-  productRelated : ProductRelated[] = [];
+  // productRelated : ProductRelated[] = [];
 
   public imageProduct!: ProductImage[];
 
@@ -76,7 +76,7 @@ export class ProductDetailComponent implements OnInit {
     this.id = this.activeRoute.snapshot.params['id'];
     this.getProductDetail();
     this.getListSize();
-    this.getRelatedProduct();
+    // this.getRelatedProduct();
   }
 
 
@@ -114,16 +114,16 @@ export class ProductDetailComponent implements OnInit {
     });
   }
 
-  getRelatedProduct(){
-    this.product.getProductRelated(this.id).subscribe({
-      next: (response:any) => {
-        this.productRelated = response.data;
-        console.log('productRelated: ', this.productRelated);
-      },error: (err) => {
-        console.log('err getRelatedProduct : ',err);
-      }
-    });
-  }
+  // getRelatedProduct(){
+  //   this.product.getProductRelated(this.id).subscribe({
+  //     next: (response:any) => {
+  //       this.productRelated = response.data;
+  //       console.log('productRelated: ', this.productRelated);
+  //     },error: (err) => {
+  //       console.log('err getRelatedProduct : ',err);
+  //     }
+  //   });
+  // }
 
   addToCart(){
     if (!this.auth.isAuthenticated()) {

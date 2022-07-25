@@ -63,17 +63,16 @@
                       <div *ngIf="isLoggedIn">
                         <ul class="account_header">
                           <li>
-                            <a routerLink="/">Tài khoản</a>
+                            <a routerLink="/account">Tài khoản</a>
                           </li>
-                          <li>
+                          <!-- <li>
                             <a routerLink="/">Đổi mật khẩu</a>
-                          </li>
+                          </li> -->
                           <li>
                             <a (click)="logout()">Đăng xuất</a>
                           </li>
                         </ul>
                       </div>
-
                   </div>
                     <div class="same-style header-wishlist" *ngIf="isLoggedIn">
                       <a routerLink="/wishlist"><i class="pe-7s-like"></i></a>

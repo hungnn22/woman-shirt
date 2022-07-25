@@ -1,0 +1,34 @@
+<div class="row" style="height:100%">
+  <article class="col-9">
+    <div class="container">
+      <app-change-password *ngIf='isScreenChangePass'></app-change-password>
+      <app-info *ngIf="isScreenInfo"></app-info>
+    </div>
+
+  </article>
+  <aside class="col-3" style="height:100%">
+
+
+    <div class="info">
+      <i class="bi bi-fingerprint"></i>
+      <h3> Xin chào, Vũ Đức Anh</h3>
+      <hr>
+
+      <div (click)="info()" class="info__link">Thông tin cá nhân <i class="pe-7s-info fa-2x" style=" float:right"></i></div>
+
+      <div class="info__link">Lịch sử đơn hàng <i class="pe-7s-cart fa-2x" style=" float:right"></i></div>
+
+
+      <div (click)="changePass()" class="info__link">Thay đổi mật khẩu <i class="pe-7s-keypad fa-2x"
+          style="float:right"></i></div>
+
+      <div style="margin-top: 20px;">
+        <button style="width:100%;position: relative;">ĐĂNG XUẤT</button>
+
+      </div>
+    </div>
+
+
+  </aside>
+
+</div>
